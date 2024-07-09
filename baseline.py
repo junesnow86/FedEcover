@@ -1,10 +1,113 @@
+from typing import Dict, List
+
 import numpy as np
-import pandas as pd
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from sklearn.model_selection import StratifiedKFold
-from sklearn.preprocessing import LabelEncoder
+
+
+def prune_linear_layer(layer, p):
+    """
+    Prune a linear layer by randomly dropping a proportion p of input and output neurons.
+
+    Parameters:
+    - layer: The linear layer to prune (an instance of torch.nn.Linear).
+    - p: The proportion of neurons to drop.
+
+    Returns:
+    - new_layer: The new linear layer with pruned neurons.
+    - pruned_indices: A dictionary with keys 'input' and 'output', indicating the indices of pruned neurons.
+    """
+    # Calculate the number of neurons to keep
+    input_features = layer.in_features
+    output_features = layer.out_features
+    input_neurons_to_keep = int(input_features * (1 - p))
+    output_neurons_to_keep = int(output_features * (1 - p))
+
+    # Randomly select the neurons to keep
+    input_indices_to_keep = np.sort(
+        np.random.choice(range(input_features), input_neurons_to_keep, replace=False)
+    )
+    output_indices_to_keep = np.sort(
+        np.random.choice(range(output_features), output_neurons_to_keep, replace=False)
+    )
+
+    print(input_indices_to_keep)
+    print(output_indices_to_keep)
+
+    # Extract the weights and biases for the remaining neurons
+    new_weight = layer.weight.data[output_indices_to_keep, :][:, input_indices_to_keep]
+    new_bias = (
+        layer.bias.data[output_indices_to_keep] if layer.bias is not None else None
+    )
+
+    # Create a new Linear layer with the pruned neurons
+    new_layer = torch.nn.Linear(input_neurons_to_keep, output_neurons_to_keep)
+    new_layer.weight = torch.nn.Parameter(new_weight)
+    new_layer.bias = torch.nn.Parameter(new_bias) if new_bias is not None else None
+
+    # Record the pruned indices
+    pruned_indices = {
+        "input": np.setdiff1d(range(input_features), input_indices_to_keep),
+        "output": np.setdiff1d(range(output_features), output_indices_to_keep),
+    }
+
+    return new_layer, pruned_indices
+
+
+def aggregate_linear_layers(
+    global_layer, layers, pruned_indices: List[Dict[str, np.ndarray]]
+):
+    global_output_size = global_layer.weight.data.shape[0]
+    global_input_size = global_layer.weight.data.shape[1]
+
+    # 遍历每个裁剪后的线性层及其对应的裁剪索引
+    for layer, indices in zip(layers, pruned_indices):
+        # 获取当前层的权重
+        layer_weights = layer.weight.data
+
+        # 获取被裁剪的输出神经元的索引
+        pruned_input_indices = indices["input"]
+        pruned_output_indices = indices["output"]
+
+        # 获取未被裁剪的输入神经元的索引
+        unpruned_input_indices = np.setdiff1d(
+            range(global_input_size), pruned_input_indices
+        )
+        unpruned_output_indices = np.setdiff1d(
+            range(global_output_size), pruned_output_indices
+        )
+
+        # 创建索引映射表
+        input_index_map = {
+            original_idx: new_idx
+            for new_idx, original_idx in enumerate(unpruned_input_indices)
+        }
+        output_index_map = {
+            original_idx: new_idx
+            for new_idx, original_idx in enumerate(unpruned_output_indices)
+        }
+
+        # 对于每个被裁剪的输出神经元索引
+        for out_idx_global in unpruned_output_indices:
+            for in_idx_global in unpruned_input_indices:
+                out_idx_layer = output_index_map[out_idx_global]
+                in_idx_layer = input_index_map[in_idx_global]
+                # 将当前层的权重加到global_layer的对应位置
+                global_layer.weight.data[out_idx_global, in_idx_global] += (
+                    layer_weights[out_idx_layer, in_idx_layer]
+                )
+
+        # 检查并聚合bias
+        if layer.bias is not None:
+            # 确保global_layer有bias
+            if global_layer.bias is None:
+                raise ValueError("Global layer does not have bias")
+
+            layer_bias = layer.bias.data
+            for out_idx_global in unpruned_output_indices:
+                out_idx_layer = output_index_map[out_idx_global]
+                global_layer.bias.data[out_idx_global] += layer_bias[out_idx_layer]
 
 
 def calculate_model_size(model):
@@ -24,19 +127,9 @@ def calculate_model_size(model):
     )
 
 
-# Read data
-data = pd.read_csv("sonar.csv", header=None)
-X = data.iloc[:, 0:60]
-y = data.iloc[:, 60]
-
-# Label encode the target from string to integer
-encoder = LabelEncoder()
-encoder.fit(y)
-y = encoder.transform(y)
-
-# Convert to 2D PyTorch tensors
-X = torch.tensor(X.values, dtype=torch.float32)
-y = torch.tensor(y, dtype=torch.float32).reshape(-1, 1)
+def print_named_parameters(model):
+    for name, param in model.named_parameters():
+        print(name, param.shape)
 
 
 # Define PyTorch model, with dropout at hidden layers
@@ -115,34 +208,60 @@ def model_train(model, X_train, y_train, X_val, y_val, n_epochs=300, batch_size=
     return acc
 
 
-# run 10-fold cross validation
-kfold = StratifiedKFold(n_splits=10, shuffle=True)
-accuracies = []
-pruned_accuracies = []
-for train, test in kfold.split(X, y):
-    # create model, train, and get accuracy
-    model = SonarModel()
-    acc = model_train(model, X[train], y[train], X[test], y[test])
-    print("Accuracy: %.2f" % acc)
-    accuracies.append(acc)
+if __name__ == "__main__":
+    layer = nn.Linear(10, 10)
+    print(layer.bias.data)
+    # FIXME: 需要按顺序裁剪，否则会出现索引错乱
+    new_layer, pruned_indices = prune_linear_layer(layer, 0.5)
+    print(pruned_indices)
+    print(new_layer.bias.data)
+    aggregate_linear_layers(layer, [new_layer], [pruned_indices])
+    print(layer.bias.data)
 
-    # create pruned model, train, and get accuracy
-    pruned_model = PrunedSonarModel()
-    acc = model_train(pruned_model, X[train], y[train], X[test], y[test])
-    print("Pruned Accuracy: %.2f" % acc)
-    pruned_accuracies.append(acc)
+    # # Read data
+    # data = pd.read_csv("sonar.csv", header=None)
+    # X = data.iloc[:, 0:60]
+    # y = data.iloc[:, 60]
 
-# evaluate the model
-mean = np.mean(accuracies)
-std = np.std(accuracies)
-print("Baseline: %.2f%% (+/- %.2f%%)" % (mean * 100, std * 100))
+    # # Label encode the target from string to integer
+    # encoder = LabelEncoder()
+    # encoder.fit(y)
+    # y = encoder.transform(y)
 
-# evaluate the pruned model
-mean = np.mean(pruned_accuracies)
-std = np.std(pruned_accuracies)
-print("Pruned: %.2f%% (+/- %.2f%%)" % (mean * 100, std * 100))
+    # # Convert to 2D PyTorch tensors
+    # X = torch.tensor(X.values, dtype=torch.float32)
+    # y = torch.tensor(y, dtype=torch.float32).reshape(-1, 1)
 
-model = SonarModel()
-pruned_model = PrunedSonarModel()
-calculate_model_size(model)
-calculate_model_size(pruned_model)
+    # # run 10-fold cross validation
+    # kfold = StratifiedKFold(n_splits=10, shuffle=True)
+    # accuracies = []
+    # pruned_accuracies = []
+    # for train, test in kfold.split(X, y):
+    #     # create model, train, and get accuracy
+    #     model = SonarModel()
+    #     acc = model_train(model, X[train], y[train], X[test], y[test])
+    #     print("Accuracy: %.2f" % acc)
+    #     accuracies.append(acc)
+
+    #     # create pruned model, train, and get accuracy
+    #     pruned_model = PrunedSonarModel()
+    #     acc = model_train(pruned_model, X[train], y[train], X[test], y[test])
+    #     print("Pruned Accuracy: %.2f" % acc)
+    #     pruned_accuracies.append(acc)
+
+    # # evaluate the model
+    # mean = np.mean(accuracies)
+    # std = np.std(accuracies)
+    # print("Baseline: %.2f%% (+/- %.2f%%)" % (mean * 100, std * 100))
+
+    # # evaluate the pruned model
+    # mean = np.mean(pruned_accuracies)
+    # std = np.std(pruned_accuracies)
+    # print("Pruned: %.2f%% (+/- %.2f%%)" % (mean * 100, std * 100))
+
+    # model = SonarModel()
+    # pruned_model = PrunedSonarModel()
+    # calculate_model_size(model)
+    # calculate_model_size(pruned_model)
+    # print_named_parameters(model)
+    # print_named_parameters(pruned_model)
