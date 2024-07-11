@@ -4,28 +4,16 @@ import numpy as np
 import torch
 
 
-# FIXME: 相邻层的剪枝神经元不一致，比如说都是裁剪2个神经元，但是前一层随机裁剪了0, 3，后一层随机裁剪了1, 2
-# input pruning由前一层决定，但是output pruning还是需要按比例抽样
-def prune_linear_layer(
-    layer,
-    pruned_indices=None,
-):
+def prune_linear_layer(layer, pruned_indices=None):
     """
-    Prune a linear layer by either:
-    - Using provided pruned_indices to directly select neurons to drop.
-    - Randomly dropping a proportion p of input and output neurons.
-    - Dropping a specific number of neurons if use_absolute_number is True.
+    Prune a linear layer by using provided pruned_indices to directly select neurons to drop.
 
     Parameters:
     - layer: The linear layer to prune (an instance of torch.nn.Linear).
     - pruned_indices: A dictionary with keys 'input' and 'output', indicating the indices of neurons to prune directly.
-    - p: The proportion of neurons to drop.
-    - num_neurons_to_prune: A dictionary with keys 'input' and 'output', indicating the number of neurons to prune.
-    - use_absolute_number: A boolean indicating whether to use the absolute number of neurons to prune.
 
     Returns:
     - new_layer: The new linear layer with pruned neurons.
-    - pruned_indices: A dictionary with keys 'input' and 'output', indicating the indices of pruned neurons.
     """
     input_features = layer.in_features
     output_features = layer.out_features
@@ -38,41 +26,6 @@ def prune_linear_layer(
         output_indices_to_keep = np.setdiff1d(
             range(output_features), pruned_indices.get("output", np.array([]))
         )
-    # else:
-    #     if use_absolute_number:
-    #         if prune_input:
-    #             input_neurons_to_keep = input_features - num_neurons_to_prune.get(
-    #                 "input", 0
-    #             )
-    #         else:
-    #             input_neurons_to_keep = input_features
-    #         if prune_output:
-    #             output_neurons_to_keep = output_features - num_neurons_to_prune.get(
-    #                 "output", 0
-    #             )
-    #         else:
-    #             output_neurons_to_keep = output_features
-    #     else:
-    #         if prune_input:
-    #             input_neurons_to_keep = int(input_features * (1 - p))
-    #         else:
-    #             input_neurons_to_keep = input_features
-    #         if prune_output:
-    #             output_neurons_to_keep = int(output_features * (1 - p))
-    #         else:
-    #             output_neurons_to_keep = output_features
-
-    #     # Randomly select the neurons to keep
-    #     input_indices_to_keep = np.sort(
-    #         np.random.choice(
-    #             range(input_features), input_neurons_to_keep, replace=False
-    #         )
-    #     )
-    #     output_indices_to_keep = np.sort(
-    #         np.random.choice(
-    #             range(output_features), output_neurons_to_keep, replace=False
-    #         )
-    #     )
 
     # Extract the weights and biases for the remaining neurons
     new_weight = layer.weight.data[output_indices_to_keep, :][:, input_indices_to_keep]
@@ -85,36 +38,31 @@ def prune_linear_layer(
     new_layer.weight = torch.nn.Parameter(new_weight)
     new_layer.bias = torch.nn.Parameter(new_bias) if new_bias is not None else None
 
-    # # Record the pruned indices
-    # if pruned_indices is None:
-    #     pruned_indices = {
-    #         "input": np.setdiff1d(range(input_features), input_indices_to_keep),
-    #         "output": np.setdiff1d(range(output_features), output_indices_to_keep),
-    #     }
-
-    return new_layer, pruned_indices
+    return new_layer
 
 
-def prune_conv_layer(conv_layer, p=0.5, prune_input=True, prune_output=True):
-    # Calculate the number of filters to keep
+def prune_conv_layer(conv_layer, pruned_indices=None):
+    """
+    Prune a convolution layer by using provided pruned_indices to directly select channels to drop.
+
+    Parameters:
+    - layer: The convolution layer to prune (an instance of torch.nn.Conv2d).
+    - pruned_indices: A dictionary with keys 'input' and 'output', indicating the indices of channels to prune directly.
+
+    Returns:
+    - new_layer: The new convolution layer with pruned channels.
+    """
     in_channels = conv_layer.in_channels
     out_channels = conv_layer.out_channels
-    if prune_input:
-        in_channels_to_keep = int(in_channels * (1 - p))
-    else:
-        in_channels_to_keep = in_channels
-    if prune_output:
-        out_channels_to_keep = int(out_channels * (1 - p))
-    else:
-        out_channels_to_keep = out_channels
 
-    # Randomly select the filters to keep
-    in_indices_to_keep = np.sort(
-        np.random.choice(range(in_channels), in_channels_to_keep, replace=False)
-    )
-    out_indices_to_keep = np.sort(
-        np.random.choice(range(out_channels), out_channels_to_keep, replace=False)
-    )
+    if pruned_indices is not None:
+        # Make sure the pruned indices are in relative order
+        in_indices_to_keep = np.setdiff1d(
+            range(in_channels), pruned_indices.get("input", np.array([]))
+        )
+        out_indices_to_keep = np.setdiff1d(
+            range(out_channels), pruned_indices.get("output", np.array([]))
+        )
 
     # Extract the weights and biases for the remaining filters
     new_weight = conv_layer.weight.data[out_indices_to_keep, :][
@@ -128,8 +76,8 @@ def prune_conv_layer(conv_layer, p=0.5, prune_input=True, prune_output=True):
 
     # Create a new Conv layer with the pruned filters
     new_conv_layer = torch.nn.Conv2d(
-        in_channels_to_keep,
-        out_channels_to_keep,
+        len(in_indices_to_keep),
+        len(out_indices_to_keep),
         conv_layer.kernel_size,
         stride=conv_layer.stride,
         padding=conv_layer.padding,
@@ -137,13 +85,7 @@ def prune_conv_layer(conv_layer, p=0.5, prune_input=True, prune_output=True):
     new_conv_layer.weight = torch.nn.Parameter(new_weight)
     new_conv_layer.bias = torch.nn.Parameter(new_bias) if new_bias is not None else None
 
-    # Record the pruned indices
-    pruned_indices = {
-        "input": np.setdiff1d(range(in_channels), in_indices_to_keep),
-        "output": np.setdiff1d(range(out_channels), out_indices_to_keep),
-    }
-
-    return new_conv_layer, pruned_indices
+    return new_conv_layer
 
 
 def aggregate_linear_layers(
@@ -247,17 +189,18 @@ def aggregate_conv_layers(
 
     # Initialize accumulator for weights and biases with zeros
     weight_accumulator = torch.zeros_like(global_conv_layer.weight.data)
+    weight_sample_accumulator = torch.zeros((global_out_channels, global_in_channels))
     if global_conv_layer.bias is not None:
         bias_accumulator = torch.zeros_like(global_conv_layer.bias.data)
-    sample_accumulator = torch.zeros((global_out_channels, global_in_channels))
+        bias_sample_accumulator = torch.zeros(global_out_channels)
 
     for conv_layer, pruned_indices, num_samples in zip(
         conv_layer_list, pruned_indices_list, num_samples_list
     ):
         layer_weights = conv_layer.weight.data
 
-        pruned_in_indices = pruned_indices["input"]
-        pruned_out_indices = pruned_indices["output"]
+        pruned_in_indices = pruned_indices.get("input", np.array([]))
+        pruned_out_indices = pruned_indices.get("output", np.array([]))
 
         unpruned_in_indices = np.setdiff1d(range(global_in_channels), pruned_in_indices)
         unpruned_out_indices = np.setdiff1d(
@@ -280,7 +223,7 @@ def aggregate_conv_layers(
                 weight_accumulator[out_idx_global, in_idx_global, :, :] += (
                     layer_weights[out_idx_layer, in_idx_layer, :, :] * num_samples
                 )
-                sample_accumulator[out_idx_global, in_idx_global] += num_samples
+                weight_sample_accumulator[out_idx_global, in_idx_global] += num_samples
 
         if conv_layer.bias is not None:
             layer_bias = conv_layer.bias.data
@@ -289,24 +232,25 @@ def aggregate_conv_layers(
                 bias_accumulator[out_idx_global] += (
                     layer_bias[out_idx_layer] * num_samples
                 )
+                bias_sample_accumulator[out_idx_global] += num_samples
 
         # Normalize the accumulated weights and biases by the number of samples
         for out_idx_global in unpruned_out_indices:
             for in_idx_global in unpruned_in_indices:
-                if sample_accumulator[out_idx_global, in_idx_global] > 0:
+                if weight_sample_accumulator[out_idx_global, in_idx_global] > 0:
                     global_conv_layer.weight.data[
                         out_idx_global, in_idx_global, :, :
                     ] = (
                         weight_accumulator[out_idx_global, in_idx_global, :, :]
-                        / sample_accumulator[out_idx_global, in_idx_global]
+                        / weight_sample_accumulator[out_idx_global, in_idx_global]
                     )
 
         if global_conv_layer.bias is not None:
             for out_idx_global in unpruned_out_indices:
-                if sample_accumulator[out_idx_global].sum() > 0:
+                if bias_sample_accumulator[out_idx_global].sum() > 0:
                     global_conv_layer.bias.data[out_idx_global] = (
                         bias_accumulator[out_idx_global]
-                        / sample_accumulator[out_idx_global, :].sum()
+                        / bias_sample_accumulator[out_idx_global]
                     )
 
 

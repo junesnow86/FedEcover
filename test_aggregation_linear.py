@@ -24,14 +24,10 @@ layer1_output_indices_to_prune = np.sort(
     )
 )
 layer1_pruned_indices = {"output": layer1_output_indices_to_prune}
-pruned_layer1, pruned_indices1 = prune_linear_layer(
-    original_layer1, layer1_pruned_indices
-)
+pruned_layer1 = prune_linear_layer(original_layer1, layer1_pruned_indices)
 
-pruned_indices2 = {"input": pruned_indices1["output"]}
-pruned_layer2, pruned_indices2 = prune_linear_layer(
-    original_layer2, pruned_indices=pruned_indices2
-)
+pruned_indices2 = {"input": layer1_output_indices_to_prune}
+pruned_layer2 = prune_linear_layer(original_layer2, pruned_indices=pruned_indices2)
 
 pruned_layers = nn.Sequential(pruned_layer1, pruned_layer2)
 
@@ -42,7 +38,7 @@ original_layer1.weight.data = torch.zeros_like(original_layer1.weight.data)
 original_layer1.bias.data = torch.zeros_like(original_layer1.bias.data)
 original_layer2.weight.data = torch.zeros_like(original_layer2.weight.data)
 original_layer2.bias.data = torch.zeros_like(original_layer2.bias.data)
-aggregate_linear_layers(original_layer1, [pruned_layer1], [pruned_indices1], [1])
+aggregate_linear_layers(original_layer1, [pruned_layer1], [layer1_pruned_indices], [1])
 aggregate_linear_layers(original_layer2, [pruned_layer2], [pruned_indices2], [1])
 aggregated_layers = nn.Sequential(original_layer1, original_layer2)
 aggregated_out = aggregated_layers(x)
@@ -61,6 +57,7 @@ print("-----")
 
 print(pruned_out)
 print(aggregated_out)
+print(torch.equal(pruned_out, aggregated_out))
 
 # local_linear2, pruned_indices2 = prune_linear_layer(global_linear, 0.5)
 # aggregate_linear_layers(
