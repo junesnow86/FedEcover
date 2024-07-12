@@ -1,3 +1,5 @@
+from time import time
+
 import numpy as np
 import torch
 import torch.nn as nn
@@ -6,7 +8,6 @@ import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 
-from modules.models import CNN
 from modules.utils import (
     aggregate_conv_layers,
     aggregate_linear_layers,
@@ -14,14 +15,81 @@ from modules.utils import (
     prune_linear_layer,
 )
 
+
+class CNN(nn.Module):
+    def __init__(self):
+        super(CNN, self).__init__()
+        self.layer1 = nn.Sequential(
+            nn.Conv2d(3, 64, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+        )
+        self.layer2 = nn.Sequential(
+            nn.Conv2d(64, 128, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+        )
+        self.layer3 = nn.Sequential(
+            nn.Conv2d(128, 256, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+        )
+        self.fc = nn.Linear(256 * 4 * 4, 10)
+
+    def forward(self, x):
+        out = self.layer1(x)
+        out = self.layer2(out)
+        out = self.layer3(out)
+        out = out.view(out.size(0), -1)
+        out = self.fc(out)
+        return out
+
+
+# Training function
+def train(model, device, train_loader, optimizer, criterion, epochs=30):
+    model.train()
+    for epoch in range(epochs):
+        total_loss = 0
+        for batch_idx, (data, target) in enumerate(train_loader):
+            data, target = data.to(device), target.to(device)
+            optimizer.zero_grad()
+            output = model(data)
+            loss = criterion(output, target)
+            loss.backward()
+            optimizer.step()
+            total_loss += loss.item()
+
+        avg_loss = total_loss / len(train_loader)
+        print(f"Train Epoch: {epoch} \tAverage Loss: {avg_loss:.6f}")
+
+
+# Testing function
+def test(model, device, test_loader, criterion):
+    model.eval()
+    test_loss = 0
+    correct = 0
+    with torch.no_grad():
+        for data, target in test_loader:
+            data, target = data.to(device), target.to(device)
+            output = model(data)
+            test_loss += criterion(output, target).item()
+            pred = output.argmax(dim=1, keepdim=True)
+            correct += pred.eq(target.view_as(pred)).sum().item()
+
+    test_loss /= len(test_loader.dataset)
+    print(
+        f"\nTest set: Average loss: {test_loss:.4f}, Accuracy: {correct}/{len(test_loader.dataset)} ({100. * correct / len(test_loader.dataset):.0f}%)\n"
+    )
+
+
 BATCH_SIZE = 128
 EPOCHS = 10
 LEARNING_RATE = 0.001
 
 transform = transforms.Compose(
     [
-        transforms.RandomHorizontalFlip(),
-        transforms.RandomCrop(32, padding=4),
+        # transforms.RandomHorizontalFlip(),
+        # transforms.RandomCrop(32, padding=4),
         transforms.ToTensor(),
         transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
     ]
@@ -30,12 +98,12 @@ transform = transforms.Compose(
 train_dataset = torchvision.datasets.CIFAR10(
     root="./data", train=True, download=False, transform=transform
 )
-train_loader = DataLoader(
-    train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=2
-)
-
 test_dataset = torchvision.datasets.CIFAR10(
     root="./data", train=False, download=False, transform=transform
+)
+
+train_loader = DataLoader(
+    train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=2
 )
 test_loader = DataLoader(
     test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=2
@@ -45,219 +113,126 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 original_cnn = CNN()
 
-# Evaluate the original model
-original_cnn.to(device)
-original_cnn.eval()
-correct = 0
-total = 0
-# with torch.no_grad():
-#     for images, labels in test_loader:
-#         images = images.to(device)
-#         labels = labels.to(device)
-#         outputs = original_cnn(images)
-#         _, predicted = torch.max(outputs.data, 1)
-#         total += labels.size(0)
-#         correct += (predicted == labels).sum().item()
-
-# accuracy = 100 * correct / total
-# print(f"Accuracy of the original model on the test images: {accuracy:.2f}%")
-
+# Prune the model
 dropout_rate = 0.5
 
-layer1_output_channels_to_prune = int(
-    original_cnn.layer1[0].out_channels * dropout_rate
+conv1 = original_cnn.layer1[0]
+num_output_channels_to_prune_conv1 = int(conv1.out_channels * dropout_rate)
+output_indices_to_prune_conv1 = np.random.choice(
+    conv1.out_channels, num_output_channels_to_prune_conv1, replace=False
 )
-layer1_output_indices_to_prune = np.sort(
-    np.random.choice(
-        range(original_cnn.layer1[0].out_channels),
-        layer1_output_channels_to_prune,
-        replace=False,
-    )
-)
-layer1_pruned_indices = {"output": layer1_output_indices_to_prune}
-pruned_layer1 = prune_conv_layer(original_cnn.layer1[0], layer1_pruned_indices)
+indices_to_prune_conv1 = {"output": output_indices_to_prune_conv1}
+pruned_layer1 = prune_conv_layer(conv1, indices_to_prune_conv1)
 
-layer2_output_channels_to_prune = int(
-    original_cnn.layer2[0].out_channels * dropout_rate
+conv2 = original_cnn.layer2[0]
+num_output_channels_to_prune_conv2 = int(conv2.out_channels * dropout_rate)
+output_indices_to_prune_conv2 = np.random.choice(
+    conv2.out_channels, num_output_channels_to_prune_conv2, replace=False
 )
-layer2_output_indices_to_prune = np.sort(
-    np.random.choice(
-        range(original_cnn.layer2[0].out_channels),
-        layer2_output_channels_to_prune,
-        replace=False,
-    )
-)
-layer2_pruned_indices = {
-    "input": layer1_output_indices_to_prune,
-    "output": layer2_output_indices_to_prune,
+indices_to_prune_conv2 = {
+    "input": output_indices_to_prune_conv1,
+    "output": output_indices_to_prune_conv2,
 }
-pruned_layer2 = prune_conv_layer(original_cnn.layer2[0], layer2_pruned_indices)
+pruned_layer2 = prune_conv_layer(conv2, indices_to_prune_conv2)
 
-layer3_output_channels_to_prune = int(
-    original_cnn.layer3[0].out_channels * dropout_rate
+conv3 = original_cnn.layer3[0]
+num_output_channels_to_prune_conv3 = int(conv3.out_channels * dropout_rate)
+output_indices_to_prune_conv3 = np.random.choice(
+    conv3.out_channels, num_output_channels_to_prune_conv3, replace=False
 )
-layer3_output_indices_to_prune = np.sort(
-    np.random.choice(
-        range(original_cnn.layer3[0].out_channels),
-        layer3_output_channels_to_prune,
-        replace=False,
-    )
-)
-layer3_pruned_indices = {
-    "input": layer2_output_indices_to_prune,
-    "output": layer3_output_indices_to_prune,
+indices_to_prune_conv3 = {
+    "input": output_indices_to_prune_conv2,
+    "output": output_indices_to_prune_conv3,
 }
-pruned_layer3 = prune_conv_layer(original_cnn.layer3[0], layer3_pruned_indices)
+pruned_layer3 = prune_conv_layer(conv3, indices_to_prune_conv3)
 
-fc_pruned_indices = []
-for channel_index in layer3_output_indices_to_prune:
+fc = original_cnn.fc
+input_indices_to_prune_fc = []
+for channel_index in output_indices_to_prune_conv3:
     start_index = channel_index * 4 * 4
     end_index = (channel_index + 1) * 4 * 4
-    fc_pruned_indices.extend(list(range(start_index, end_index)))
-fc_input_indices_to_prune = np.sort(fc_pruned_indices)
-pruned_fc = prune_linear_layer(original_cnn.fc, {"input": fc_input_indices_to_prune})
+    input_indices_to_prune_fc.extend(list(range(start_index, end_index)))
+input_indices_to_prune_fc = np.sort(input_indices_to_prune_fc)
+indices_to_prune_fc = {"input": input_indices_to_prune_fc}
+pruned_fc = prune_linear_layer(fc, indices_to_prune_fc)
 
 pruned_cnn = CNN()
-pruned_cnn.layer1[0] = nn.Conv2d(
-    in_channels=pruned_layer1.in_channels,
-    out_channels=pruned_layer1.out_channels,
-    kernel_size=pruned_layer1.kernel_size,
-    stride=pruned_layer1.stride,
-    padding=pruned_layer1.padding,
-    dilation=pruned_layer1.dilation,
-    groups=pruned_layer1.groups,
-    bias=(pruned_layer1.bias is not None),
-)
-pruned_cnn.layer1[1] = nn.BatchNorm2d(layer1_output_channels_to_prune)
-pruned_cnn.layer2[0] = nn.Conv2d(
-    in_channels=pruned_layer2.in_channels,
-    out_channels=pruned_layer2.out_channels,
-    kernel_size=pruned_layer2.kernel_size,
-    stride=pruned_layer2.stride,
-    padding=pruned_layer2.padding,
-    dilation=pruned_layer2.dilation,
-    groups=pruned_layer2.groups,
-    bias=(pruned_layer2.bias is not None),
-)
-pruned_cnn.layer2[1] = nn.BatchNorm2d(layer2_output_channels_to_prune)
-pruned_cnn.layer3[0] = nn.Conv2d(
-    in_channels=pruned_layer3.in_channels,
-    out_channels=pruned_layer3.out_channels,
-    kernel_size=pruned_layer3.kernel_size,
-    stride=pruned_layer3.stride,
-    padding=pruned_layer3.padding,
-    dilation=pruned_layer3.dilation,
-    groups=pruned_layer3.groups,
-    bias=(pruned_layer3.bias is not None),
-)
-pruned_cnn.layer3[1] = nn.BatchNorm2d(layer3_output_channels_to_prune)
-pruned_cnn.fc = nn.Linear(pruned_fc.in_features, pruned_fc.out_features)
+pruned_cnn.layer1[0] = pruned_layer1
+pruned_cnn.layer2[0] = pruned_layer2
+pruned_cnn.layer3[0] = pruned_layer3
+pruned_cnn.fc = pruned_fc
 
-
-pruned_cnn.to(device)
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(pruned_cnn.parameters(), lr=LEARNING_RATE)
 
-# Training
-for epoch in range(EPOCHS):
-    pruned_cnn.train()
-    running_loss = 0.0
-    for images, labels in train_loader:
-        images = images.to(device)
-        labels = labels.to(device)
+# Train and test the pruned model
+pruned_cnn.to(device)
+train(pruned_cnn, device, train_loader, optimizer, criterion, epochs=EPOCHS)
+print("Testing the pruned model")
+test(pruned_cnn, device, test_loader, criterion)
 
-        outputs = pruned_cnn(images)
-        loss = criterion(outputs, labels)
+# Test the original model
+original_cnn.to(device)
+print("Testing the original model")
+test(original_cnn, device, test_loader, criterion)
 
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-
-        running_loss += loss.item()
-
-    print(f"Epoch [{epoch + 1}/{EPOCHS}], Loss: {running_loss / len(train_loader):.4f}")
-
+# Make all the parameters of the original CNN zero
+for param in original_cnn.parameters():
+    param.data = torch.zeros_like(param.data, device=param.device)
 
 # Aggregation
-original_cnn.layer1[0].weight.data = torch.zeros_like(
-    original_cnn.layer1[0].weight.data, device=original_cnn.layer1[0].weight.device
-)
-original_cnn.layer1[0].bias.data = torch.zeros_like(
-    original_cnn.layer1[0].bias.data, device=original_cnn.layer1[0].bias.device
-)
-original_cnn.layer2[0].weight.data = torch.zeros_like(
-    original_cnn.layer2[0].weight.data, device=original_cnn.layer2[0].weight.device
-)
-original_cnn.layer2[0].bias.data = torch.zeros_like(
-    original_cnn.layer2[0].bias.data, device=original_cnn.layer2[0].bias.device
-)
-original_cnn.layer3[0].weight.data = torch.zeros_like(
-    original_cnn.layer3[0].weight.data, device=original_cnn.layer3[0].weight.device
-)
-original_cnn.layer3[0].bias.data = torch.zeros_like(
-    original_cnn.layer3[0].bias.data, device=original_cnn.layer3[0].bias.device
-)
-original_cnn.fc.weight.data = torch.zeros_like(
-    original_cnn.fc.weight.data, device=original_cnn.fc.weight.device
-)
-original_cnn.fc.bias.data = torch.zeros_like(
-    original_cnn.fc.bias.data, device=original_cnn.fc.bias.device
-)
-
 aggregate_conv_layers(
-    original_cnn.layer1[0], [pruned_cnn.layer1[0]], [layer1_pruned_indices], [1]
+    original_cnn.layer1[0],
+    [
+        pruned_cnn.layer1[0],
+    ],
+    [
+        indices_to_prune_conv1,
+    ],
+    [
+        len(train_dataset),
+    ],
 )
 aggregate_conv_layers(
-    original_cnn.layer2[0], [pruned_cnn.layer2[0]], [layer2_pruned_indices], [1]
+    original_cnn.layer2[0],
+    [
+        pruned_cnn.layer2[0],
+    ],
+    [
+        indices_to_prune_conv2,
+    ],
+    [
+        len(train_dataset),
+    ],
 )
 aggregate_conv_layers(
-    original_cnn.layer3[0], [pruned_cnn.layer3[0]], [layer3_pruned_indices], [1]
+    original_cnn.layer3[0],
+    [
+        pruned_cnn.layer3[0],
+    ],
+    [
+        indices_to_prune_conv3,
+    ],
+    [
+        len(train_dataset),
+    ],
 )
+start = time()
 aggregate_linear_layers(
-    original_cnn.fc, [pruned_cnn.fc], [{"input": fc_input_indices_to_prune}], [1]
+    original_cnn.fc,
+    [
+        pruned_cnn.fc,
+    ],
+    [
+        indices_to_prune_fc,
+    ],
+    [
+        len(train_dataset),
+    ],
 )
+print(f"Time to aggregate the models: {time() - start:.4f}")
 
+# Test the aggregated model
 original_cnn.to(device)
-pruned_cnn.eval()
-original_cnn.eval()
-
-correct = 0
-total = 0
-with torch.no_grad():
-    for images, labels in test_loader:
-        images = images.to(device)
-        labels = labels.to(device)
-        outputs = pruned_cnn(images)
-        _, predicted = torch.max(outputs.data, 1)
-        total += labels.size(0)
-        correct += (predicted == labels).sum().item()
-
-accuracy = 100 * correct / total
-print(f"Accuracy of the pruned model on the test images: {accuracy:.2f}%")
-
-correct = 0
-total = 0
-with torch.no_grad():
-    for images, labels in test_loader:
-        images = images.to(device)
-        labels = labels.to(device)
-        outputs = original_cnn(images)
-        pruned_cnn_outputs = pruned_cnn(images)
-        _, predicted = torch.max(outputs.data, 1)
-        total += labels.size(0)
-        correct += (predicted == labels).sum().item()
-
-accuracy = 100 * correct / total
-print(f"Accuracy of the aggregated model on the test images: {accuracy:.2f}%")
-
-# Check inequality
-with torch.no_grad():
-    for images, labels in test_loader:
-        images = images[0].unsqueeze(0).to(device)
-        labels = labels[0].unsqueeze(0).to(device)
-        outputs = original_cnn(images)
-        pruned_cnn_outputs = pruned_cnn(images)
-        assert torch.equal(
-            outputs, pruned_cnn_outputs
-        ), f"Original CNN output: \n{outputs}\nPruned CNN output: \n{pruned_cnn_outputs}"
-        break
+print("Testing the aggregated model")
+test(original_cnn, device, test_loader, criterion)
