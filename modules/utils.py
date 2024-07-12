@@ -4,19 +4,23 @@ import numpy as np
 import torch
 
 
-def prune_linear_layer(layer, pruned_indices=None):
+def prune_linear_layer(linear_layer, pruned_indices=None):
     """
     Prune a linear layer by using provided pruned_indices to directly select neurons to drop.
 
     Parameters:
-    - layer: The linear layer to prune (an instance of torch.nn.Linear).
+    - linear_layer: The linear layer to prune (an instance of torch.nn.Linear).
     - pruned_indices: A dictionary with keys 'input' and 'output', indicating the indices of neurons to prune directly.
 
     Returns:
     - new_layer: The new linear layer with pruned neurons.
     """
-    input_features = layer.in_features
-    output_features = layer.out_features
+    assert isinstance(
+        linear_layer, torch.nn.Linear
+    ), "Input linear_layer must be an instance of torch.nn.Linear"
+
+    input_features = linear_layer.in_features
+    output_features = linear_layer.out_features
 
     if pruned_indices is not None:
         # Make sure the pruned indices are in relative order
@@ -28,15 +32,20 @@ def prune_linear_layer(layer, pruned_indices=None):
         )
 
     # Extract the weights and biases for the remaining neurons
-    new_weight = layer.weight.data[output_indices_to_keep, :][:, input_indices_to_keep]
+    new_weight = linear_layer.weight.data[output_indices_to_keep, :][
+        :, input_indices_to_keep
+    ]
     new_bias = (
-        layer.bias.data[output_indices_to_keep] if layer.bias is not None else None
+        linear_layer.bias.data[output_indices_to_keep]
+        if linear_layer.bias is not None
+        else None
     )
 
     # Create a new Linear layer with the pruned neurons
     new_layer = torch.nn.Linear(len(input_indices_to_keep), len(output_indices_to_keep))
-    new_layer.weight = torch.nn.Parameter(new_weight)
-    new_layer.bias = torch.nn.Parameter(new_bias) if new_bias is not None else None
+    new_layer.weight.data = new_weight
+    if new_bias is not None:
+        new_layer.bias.data = new_bias
 
     return new_layer
 
@@ -52,6 +61,10 @@ def prune_conv_layer(conv_layer, pruned_indices=None):
     Returns:
     - new_layer: The new convolution layer with pruned channels.
     """
+    assert isinstance(
+        conv_layer, torch.nn.Conv2d
+    ), "Input layer must be an instance of torch.nn.Conv2d"
+
     in_channels = conv_layer.in_channels
     out_channels = conv_layer.out_channels
 
@@ -78,21 +91,25 @@ def prune_conv_layer(conv_layer, pruned_indices=None):
     new_conv_layer = torch.nn.Conv2d(
         len(in_indices_to_keep),
         len(out_indices_to_keep),
-        conv_layer.kernel_size,
+        kernel_size=conv_layer.kernel_size,
         stride=conv_layer.stride,
         padding=conv_layer.padding,
+        dilation=conv_layer.dilation,
+        groups=conv_layer.groups,
+        bias=(conv_layer.bias is not None),
     )
-    new_conv_layer.weight = torch.nn.Parameter(new_weight)
-    new_conv_layer.bias = torch.nn.Parameter(new_bias) if new_bias is not None else None
+    new_conv_layer.weight.data = new_weight
+    if new_bias is not None:
+        new_conv_layer.bias.data = new_bias
 
     return new_conv_layer
 
 
 def aggregate_linear_layers(
     global_linear_layer,
-    linear_layer_list,
+    linear_layer_list: List[torch.nn.Linear],
     pruned_indices_list: List[Dict[str, np.ndarray]],
-    num_samples_list,
+    num_samples_list: List[int],
 ):
     assert len(linear_layer_list) == len(
         pruned_indices_list
@@ -116,14 +133,11 @@ def aggregate_linear_layers(
     ):
         layer_weights = linear_layer.weight.data
 
-        pruned_input_indices = pruned_indices.get("input", np.array([]))
-        pruned_output_indices = pruned_indices.get("output", np.array([]))
-
         unpruned_input_indices = np.setdiff1d(
-            range(global_input_size), pruned_input_indices
+            range(global_input_size), pruned_indices.get("input", np.array([]))
         )
         unpruned_output_indices = np.setdiff1d(
-            range(global_output_size), pruned_output_indices
+            range(global_output_size), pruned_indices.get("output", np.array([]))
         )
 
         input_index_map = {
@@ -173,9 +187,9 @@ def aggregate_linear_layers(
 
 def aggregate_conv_layers(
     global_conv_layer,
-    conv_layer_list,
+    conv_layer_list: List[torch.nn.Conv2d],
     pruned_indices_list: List[Dict[str, np.ndarray]],
-    num_samples_list,
+    num_samples_list: List[int],
 ):
     assert len(conv_layer_list) == len(
         pruned_indices_list
@@ -199,12 +213,11 @@ def aggregate_conv_layers(
     ):
         layer_weights = conv_layer.weight.data
 
-        pruned_in_indices = pruned_indices.get("input", np.array([]))
-        pruned_out_indices = pruned_indices.get("output", np.array([]))
-
-        unpruned_in_indices = np.setdiff1d(range(global_in_channels), pruned_in_indices)
+        unpruned_in_indices = np.setdiff1d(
+            range(global_in_channels), pruned_indices.get("input", np.array([]))
+        )
         unpruned_out_indices = np.setdiff1d(
-            range(global_out_channels), pruned_out_indices
+            range(global_out_channels), pruned_indices.get("output", np.array([]))
         )
 
         input_index_map = {
