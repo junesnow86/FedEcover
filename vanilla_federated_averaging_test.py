@@ -9,11 +9,11 @@ import torchvision.transforms as transforms
 from torch.utils.data import DataLoader, Subset
 
 from modules.models import CNN
-from modules.utils import aggregate_cnn, prune_cnn, test, train
+from modules.utils import prune_cnn, test, train, vanilla_federated_averaging
 
-ROUNDS = 100
+ROUNDS = 10
 BATCH_SIZE = 128
-EPOCHS = 1
+EPOCHS = 10
 LEARNING_RATE = 0.001
 
 # ---------------------- Prepare the dataset ----------------------
@@ -64,10 +64,18 @@ global_cnn = CNN()
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 criterion = nn.CrossEntropyLoss()
 
-# Test the global model
-global_cnn.to(device)
+# Prune and test the global model
+global_dropout_rate = 0.8
+(
+    pruned_global_cnn,
+    indices_to_prune_conv1_global,
+    indices_to_prune_conv2_global,
+    indices_to_prune_conv3_global,
+    indices_to_prune_fc_global,
+) = prune_cnn(global_cnn, dropout_rate=global_dropout_rate)
+pruned_global_cnn.to(device)
 test_loss_original_cnn, accuracy_original_cnn, class_accuracy_original_cnn = test(
-    global_cnn, device, test_loader, criterion
+    pruned_global_cnn, device, test_loader, criterion
 )
 print(
     f"Original model test loss: {test_loss_original_cnn:.6f}, accuracy: {accuracy_original_cnn:.6f}, class accuracy: {class_accuracy_original_cnn}"
@@ -81,15 +89,24 @@ for round in range(ROUNDS):
 
     # Prune two models with different dropout rates each round
     # ---------------------- Party 1 ---------------------
-    dropout_rate1 = 0.2
+    dropout_rate1 = global_dropout_rate
 
     (
         pruned_cnn1,
-        indices_to_prune_conv1_cnn1,
-        indices_to_prune_conv2_cnn1,
-        indices_to_prune_conv3_cnn1,
-        indices_to_prune_fc_cnn1,
-    ) = prune_cnn(global_cnn, dropout_rate=dropout_rate1)
+        _,
+        _,
+        _,
+        _,
+    ) = prune_cnn(
+        global_cnn,
+        dropout_rate=dropout_rate1,
+        indices_to_prune_conv1=indices_to_prune_conv1_global,
+        indices_to_prune_conv2=indices_to_prune_conv2_global,
+        indices_to_prune_conv3=indices_to_prune_conv3_global,
+        indices_to_prune_fc=indices_to_prune_fc_global,
+    )
+
+    pruned_cnn1.load_state_dict(pruned_global_cnn.state_dict())
 
     optimizer1 = torch.optim.Adam(pruned_cnn1.parameters(), lr=LEARNING_RATE)
 
@@ -101,15 +118,24 @@ for round in range(ROUNDS):
     )
 
     # ---------------------- Party 2 ---------------------
-    dropout_rate2 = 0.8
+    dropout_rate2 = global_dropout_rate
 
     (
         pruned_cnn2,
-        indices_to_prune_conv1_cnn2,
-        indices_to_prune_conv2_cnn2,
-        indices_to_prune_conv3_cnn2,
-        indices_to_prune_fc_cnn2,
-    ) = prune_cnn(global_cnn, dropout_rate=dropout_rate2)
+        _,
+        _,
+        _,
+        _,
+    ) = prune_cnn(
+        global_cnn,
+        dropout_rate=dropout_rate2,
+        indices_to_prune_conv1=indices_to_prune_conv1_global,
+        indices_to_prune_conv2=indices_to_prune_conv2_global,
+        indices_to_prune_conv3=indices_to_prune_conv3_global,
+        indices_to_prune_fc=indices_to_prune_fc_global,
+    )
+
+    pruned_cnn2.load_state_dict(pruned_global_cnn.state_dict())
 
     optimizer2 = torch.optim.Adam(pruned_cnn2.parameters(), lr=LEARNING_RATE)
 
@@ -121,32 +147,38 @@ for round in range(ROUNDS):
     )
 
     # Aggregation
-    aggregate_cnn(
-        global_cnn,
-        [pruned_cnn1, pruned_cnn2],
-        [len(subset1), len(subset2)],
-        [dropout_rate1, dropout_rate2],
-        {
-            "indices_to_prune_conv1": [
-                indices_to_prune_conv1_cnn1,
-                indices_to_prune_conv1_cnn2,
-            ],
-            "indices_to_prune_conv2": [
-                indices_to_prune_conv2_cnn1,
-                indices_to_prune_conv2_cnn2,
-            ],
-            "indices_to_prune_conv3": [
-                indices_to_prune_conv3_cnn1,
-                indices_to_prune_conv3_cnn2,
-            ],
-            "indices_to_prune_fc": [indices_to_prune_fc_cnn1, indices_to_prune_fc_cnn2],
-        },
+    # aggregate_cnn(
+    #     global_cnn,
+    #     [pruned_cnn1, pruned_cnn2],
+    #     [len(subset1), len(subset2)],
+    #     [dropout_rate1, dropout_rate2],
+    #     {
+    #         "indices_to_prune_conv1": [
+    #             indices_to_prune_conv1_cnn1,
+    #             indices_to_prune_conv1_cnn2,
+    #         ],
+    #         "indices_to_prune_conv2": [
+    #             indices_to_prune_conv2_cnn1,
+    #             indices_to_prune_conv2_cnn2,
+    #         ],
+    #         "indices_to_prune_conv3": [
+    #             indices_to_prune_conv3_cnn1,
+    #             indices_to_prune_conv3_cnn2,
+    #         ],
+    #         "indices_to_prune_fc": [indices_to_prune_fc_cnn1, indices_to_prune_fc_cnn2],
+    #     },
+    # )
+    pruned_global_cnn.load_state_dict(
+        vanilla_federated_averaging(
+            [pruned_cnn1.state_dict(), pruned_cnn2.state_dict()],
+            [len(subset1), len(subset2)],
+        )
     )
 
     # Test the aggregated model
-    global_cnn.to(device)
+    pruned_global_cnn.to(device)
     test_loss_aggregated, accuracy_aggregated, class_accuracy_aggregated = test(
-        global_cnn, device, test_loader, criterion
+        pruned_global_cnn, device, test_loader, criterion
     )
 
     print(

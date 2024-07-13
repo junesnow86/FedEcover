@@ -358,45 +358,54 @@ def test(model, device, test_loader, criterion, num_classes=10):
     return test_loss, accuracy, class_accuracy
 
 
-def prune_cnn(original_cnn, dropout_rate=0.5):
+def prune_cnn(original_cnn, dropout_rate=0.5, **indices_to_prune):
+    indices_to_prune_conv1 = indices_to_prune.get("indices_to_prune_conv1", None)
+    indices_to_prune_conv2 = indices_to_prune.get("indices_to_prune_conv2", None)
+    indices_to_prune_conv3 = indices_to_prune.get("indices_to_prune_conv3", None)
+    indices_to_prune_fc = indices_to_prune.get("indices_to_prune_fc", None)
+
     conv1 = original_cnn.layer1[0]
-    num_output_channels_to_prune_conv1 = int(conv1.out_channels * dropout_rate)
-    output_indices_to_prune_conv1 = np.random.choice(
-        conv1.out_channels, num_output_channels_to_prune_conv1, replace=False
-    )
-    indices_to_prune_conv1 = {"output": output_indices_to_prune_conv1}
+    if indices_to_prune_conv1 is None:
+        num_output_channels_to_prune_conv1 = int(conv1.out_channels * dropout_rate)
+        output_indices_to_prune_conv1 = np.random.choice(
+            conv1.out_channels, num_output_channels_to_prune_conv1, replace=False
+        )
+        indices_to_prune_conv1 = {"output": output_indices_to_prune_conv1}
     pruned_layer1 = prune_conv_layer(conv1, indices_to_prune_conv1)
 
     conv2 = original_cnn.layer2[0]
-    num_output_channels_to_prune_conv2 = int(conv2.out_channels * dropout_rate)
-    output_indices_to_prune_conv2 = np.random.choice(
-        conv2.out_channels, num_output_channels_to_prune_conv2, replace=False
-    )
-    indices_to_prune_conv2 = {
-        "input": output_indices_to_prune_conv1,
-        "output": output_indices_to_prune_conv2,
-    }
+    if indices_to_prune_conv2 is None:
+        num_output_channels_to_prune_conv2 = int(conv2.out_channels * dropout_rate)
+        output_indices_to_prune_conv2 = np.random.choice(
+            conv2.out_channels, num_output_channels_to_prune_conv2, replace=False
+        )
+        indices_to_prune_conv2 = {
+            "input": output_indices_to_prune_conv1,
+            "output": output_indices_to_prune_conv2,
+        }
     pruned_layer2 = prune_conv_layer(conv2, indices_to_prune_conv2)
 
     conv3 = original_cnn.layer3[0]
-    num_output_channels_to_prune_conv3 = int(conv3.out_channels * dropout_rate)
-    output_indices_to_prune_conv3 = np.random.choice(
-        conv3.out_channels, num_output_channels_to_prune_conv3, replace=False
-    )
-    indices_to_prune_conv3 = {
-        "input": output_indices_to_prune_conv2,
-        "output": output_indices_to_prune_conv3,
-    }
+    if indices_to_prune_conv3 is None:
+        num_output_channels_to_prune_conv3 = int(conv3.out_channels * dropout_rate)
+        output_indices_to_prune_conv3 = np.random.choice(
+            conv3.out_channels, num_output_channels_to_prune_conv3, replace=False
+        )
+        indices_to_prune_conv3 = {
+            "input": output_indices_to_prune_conv2,
+            "output": output_indices_to_prune_conv3,
+        }
     pruned_layer3 = prune_conv_layer(conv3, indices_to_prune_conv3)
 
     fc = original_cnn.fc
-    input_indices_to_prune_fc = []
-    for channel_index in output_indices_to_prune_conv3:
-        start_index = channel_index * 4 * 4
-        end_index = (channel_index + 1) * 4 * 4
-        input_indices_to_prune_fc.extend(list(range(start_index, end_index)))
-    input_indices_to_prune_fc = np.sort(input_indices_to_prune_fc)
-    indices_to_prune_fc = {"input": input_indices_to_prune_fc}
+    if indices_to_prune_fc is None:
+        input_indices_to_prune_fc = []
+        for channel_index in output_indices_to_prune_conv3:
+            start_index = channel_index * 4 * 4
+            end_index = (channel_index + 1) * 4 * 4
+            input_indices_to_prune_fc.extend(list(range(start_index, end_index)))
+        input_indices_to_prune_fc = np.sort(input_indices_to_prune_fc)
+        indices_to_prune_fc = {"input": input_indices_to_prune_fc}
     pruned_fc = prune_linear_layer(fc, indices_to_prune_fc)
 
     scale_factor = 1 / (1 - dropout_rate)
