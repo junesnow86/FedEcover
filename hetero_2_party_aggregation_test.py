@@ -76,6 +76,7 @@ print("-" * 80)
 
 
 # ---------------------- Pruning, local training and aggregation ---------------------
+count = 0
 for round in range(ROUNDS):
     print(f"Round {round + 1}/{ROUNDS}")
 
@@ -121,27 +122,48 @@ for round in range(ROUNDS):
     )
 
     # Aggregation
-    aggregate_cnn(
-        global_cnn,
-        [pruned_cnn1, pruned_cnn2],
-        [len(subset1), len(subset2)],
-        [dropout_rate1, dropout_rate2],
-        {
-            "indices_to_prune_conv1": [
-                indices_to_prune_conv1_cnn1,
-                indices_to_prune_conv1_cnn2,
-            ],
-            "indices_to_prune_conv2": [
-                indices_to_prune_conv2_cnn1,
-                indices_to_prune_conv2_cnn2,
-            ],
-            "indices_to_prune_conv3": [
-                indices_to_prune_conv3_cnn1,
-                indices_to_prune_conv3_cnn2,
-            ],
-            "indices_to_prune_fc": [indices_to_prune_fc_cnn1, indices_to_prune_fc_cnn2],
-        },
-    )
+    count += 1
+    if count == 4:
+        print("Aggregate the two pruned models")
+        aggregate_cnn(
+            global_cnn,
+            [pruned_cnn1, pruned_cnn2],
+            [len(subset1), len(subset2)],
+            [dropout_rate1, dropout_rate2],
+            {
+                "indices_to_prune_conv1": [
+                    indices_to_prune_conv1_cnn1,
+                    indices_to_prune_conv1_cnn2,
+                ],
+                "indices_to_prune_conv2": [
+                    indices_to_prune_conv2_cnn1,
+                    indices_to_prune_conv2_cnn2,
+                ],
+                "indices_to_prune_conv3": [
+                    indices_to_prune_conv3_cnn1,
+                    indices_to_prune_conv3_cnn2,
+                ],
+                "indices_to_prune_fc": [
+                    indices_to_prune_fc_cnn1,
+                    indices_to_prune_fc_cnn2,
+                ],
+            },
+        )
+        count = 0
+    else:
+        # Only aggregate the one with higher dropout rate
+        aggregate_cnn(
+            global_cnn,
+            [pruned_cnn2],
+            [len(subset2)],
+            [dropout_rate2],
+            {
+                "indices_to_prune_conv1": [indices_to_prune_conv1_cnn2],
+                "indices_to_prune_conv2": [indices_to_prune_conv2_cnn2],
+                "indices_to_prune_conv3": [indices_to_prune_conv3_cnn2],
+                "indices_to_prune_fc": [indices_to_prune_fc_cnn2],
+            },
+        )
 
     # Test the aggregated model
     global_cnn.to(device)
