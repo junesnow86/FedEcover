@@ -2,6 +2,7 @@ from typing import Dict, List
 
 import numpy as np
 import torch
+from tqdm import tqdm
 
 from modules.models import CNN
 
@@ -269,7 +270,7 @@ def aggregate_conv_layers(
                     )
 
 
-def federated_averaging(model_weights, sample_numbers):
+def vanilla_federated_averaging(model_weights, sample_numbers):
     assert len(model_weights) == len(sample_numbers), "Length mismatch"
     avg_weights = {}
     keys = model_weights[0].keys()
@@ -283,10 +284,6 @@ def federated_averaging(model_weights, sample_numbers):
         avg_weights[key] = layer_weights_avg
 
     return avg_weights
-
-
-def hetero_federated_averaging():
-    pass
 
 
 def calculate_model_size(model):
@@ -307,9 +304,11 @@ def calculate_model_size(model):
 
 
 # Training function
-def train(model, device, train_loader, optimizer, criterion, epochs=30):
+def train(
+    model, device, train_loader, optimizer, criterion, epochs=30, print_log=False
+):
     model.train()
-    for epoch in range(epochs):
+    for epoch in tqdm(range(epochs), leave=False):
         total_loss = 0
         for batch_idx, (data, target) in enumerate(train_loader):
             data, target = data.to(device), target.to(device)
@@ -320,8 +319,9 @@ def train(model, device, train_loader, optimizer, criterion, epochs=30):
             optimizer.step()
             total_loss += loss.item()
 
-        avg_loss = total_loss / len(train_loader)
-        print(f"Train Epoch: {epoch}/{epochs} \tAverage Loss: {avg_loss:.6f}")
+        if print_log:
+            avg_loss = total_loss / len(train_loader)
+            print(f"Train Epoch: {epoch}/{epochs} \tAverage Loss: {avg_loss:.6f}")
 
 
 # Testing function
