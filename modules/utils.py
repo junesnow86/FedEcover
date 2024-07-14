@@ -1,4 +1,5 @@
-from typing import Dict, List
+import copy
+from typing import Dict, List, Tuple
 
 import numpy as np
 import torch
@@ -270,6 +271,205 @@ def aggregate_conv_layers(
                     )
 
 
+def prune_cnn(original_cnn: CNN, dropout_rate=0.5, **indices_to_prune):
+    indices_to_prune_conv1 = indices_to_prune.get("indices_to_prune_conv1", None)
+    indices_to_prune_conv2 = indices_to_prune.get("indices_to_prune_conv2", None)
+    indices_to_prune_conv3 = indices_to_prune.get("indices_to_prune_conv3", None)
+    indices_to_prune_fc = indices_to_prune.get("indices_to_prune_fc", None)
+
+    conv1 = copy.deepcopy(original_cnn.layer1[0])
+    if indices_to_prune_conv1 is None:
+        num_output_channels_to_prune_conv1 = int(conv1.out_channels * dropout_rate)
+        output_indices_to_prune_conv1 = np.random.choice(
+            conv1.out_channels, num_output_channels_to_prune_conv1, replace=False
+        )
+        indices_to_prune_conv1 = {"output": output_indices_to_prune_conv1}
+    pruned_layer1 = prune_conv_layer(conv1, indices_to_prune_conv1)
+
+    conv2 = copy.deepcopy(original_cnn.layer2[0])
+    if indices_to_prune_conv2 is None:
+        num_output_channels_to_prune_conv2 = int(conv2.out_channels * dropout_rate)
+        output_indices_to_prune_conv2 = np.random.choice(
+            conv2.out_channels, num_output_channels_to_prune_conv2, replace=False
+        )
+        indices_to_prune_conv2 = {
+            "input": output_indices_to_prune_conv1,
+            "output": output_indices_to_prune_conv2,
+        }
+    pruned_layer2 = prune_conv_layer(conv2, indices_to_prune_conv2)
+
+    conv3 = copy.deepcopy(original_cnn.layer3[0])
+    if indices_to_prune_conv3 is None:
+        num_output_channels_to_prune_conv3 = int(conv3.out_channels * dropout_rate)
+        output_indices_to_prune_conv3 = np.random.choice(
+            conv3.out_channels, num_output_channels_to_prune_conv3, replace=False
+        )
+        indices_to_prune_conv3 = {
+            "input": output_indices_to_prune_conv2,
+            "output": output_indices_to_prune_conv3,
+        }
+    pruned_layer3 = prune_conv_layer(conv3, indices_to_prune_conv3)
+
+    fc = copy.deepcopy(original_cnn.fc)
+    if indices_to_prune_fc is None:
+        input_indices_to_prune_fc = []
+        for channel_index in output_indices_to_prune_conv3:
+            start_index = channel_index * 4 * 4
+            end_index = (channel_index + 1) * 4 * 4
+            input_indices_to_prune_fc.extend(list(range(start_index, end_index)))
+        input_indices_to_prune_fc = np.sort(input_indices_to_prune_fc)
+        indices_to_prune_fc = {"input": input_indices_to_prune_fc}
+    pruned_fc = prune_linear_layer(fc, indices_to_prune_fc)
+
+    scale_factor = 1 / (1 - dropout_rate)
+    pruned_layer1.weight.data *= scale_factor
+    pruned_layer2.weight.data *= scale_factor
+    pruned_layer3.weight.data *= scale_factor
+    # pruned_fc.weight.data *= scale_factor
+
+    pruned_cnn = CNN()
+    pruned_cnn.layer1[0] = pruned_layer1
+    pruned_cnn.layer2[0] = pruned_layer2
+    pruned_cnn.layer3[0] = pruned_layer3
+    pruned_cnn.fc = pruned_fc
+
+    return (
+        pruned_cnn,
+        indices_to_prune_conv1,
+        indices_to_prune_conv2,
+        indices_to_prune_conv3,
+        indices_to_prune_fc,
+    )
+
+
+def create_random_even_groups(num_total_elements, num_groups):
+    num_elements_per_group = num_total_elements // num_groups
+    indices = np.arange(num_total_elements)
+    np.random.shuffle(indices)
+    indices = indices[: num_elements_per_group * num_groups]
+    return np.array_split(indices, num_groups)
+
+
+def select_random_group(groups):
+    group_index = np.random.choice(len(groups))
+    selected_group = groups.pop(group_index)
+    return selected_group, groups
+
+
+def prune_cnn_into_groups(
+    original_cnn: CNN, dropout_rate=0.5
+) -> Tuple[List[CNN], List[Dict]]:
+    num_groups = max(int(1 / (1 - dropout_rate)), 1)
+    pruned_models = []
+    indices_to_prune_list = []
+
+    conv1 = copy.deepcopy(original_cnn.layer1[0])
+    conv2 = copy.deepcopy(original_cnn.layer2[0])
+    conv3 = copy.deepcopy(original_cnn.layer3[0])
+    fc = copy.deepcopy(original_cnn.fc)
+
+    groups_conv1 = create_random_even_groups(conv1.out_channels, num_groups)
+    groups_conv2 = create_random_even_groups(conv2.out_channels, num_groups)
+    groups_conv3 = create_random_even_groups(conv3.out_channels, num_groups)
+
+    for _ in range(num_groups):
+        group_conv1, groups_conv1 = select_random_group(groups_conv1)
+        group_conv2, groups_conv2 = select_random_group(groups_conv2)
+        group_conv3, groups_conv3 = select_random_group(groups_conv3)
+
+        indices_to_prune_conv1 = {"output": group_conv1}
+        indices_to_prune_conv2 = {
+            "input": group_conv1,
+            "output": group_conv2,
+        }
+        indices_to_prune_conv3 = {
+            "input": group_conv2,
+            "output": group_conv3,
+        }
+
+        input_indices_to_prune_fc = []
+        for channel_index in group_conv3:
+            start_index = channel_index * 4 * 4
+            end_index = (channel_index + 1) * 4 * 4
+            input_indices_to_prune_fc.extend(list(range(start_index, end_index)))
+        input_indices_to_prune_fc = np.sort(input_indices_to_prune_fc)
+        indices_to_prune_fc = {"input": input_indices_to_prune_fc}
+
+        pruned_layer1 = prune_conv_layer(conv1, indices_to_prune_conv1)
+        pruned_layer2 = prune_conv_layer(conv2, indices_to_prune_conv2)
+        pruned_layer3 = prune_conv_layer(conv3, indices_to_prune_conv3)
+        pruned_fc = prune_linear_layer(fc, indices_to_prune_fc)
+
+        scale_factor = 1 / (1 - dropout_rate)
+        pruned_layer1.weight.data *= scale_factor
+        pruned_layer2.weight.data *= scale_factor
+        pruned_layer3.weight.data *= scale_factor
+        # pruned_fc.weight.data *= scale_factor
+
+        pruned_cnn = CNN()
+        pruned_cnn.layer1[0] = pruned_layer1
+        pruned_cnn.layer2[0] = pruned_layer2
+        pruned_cnn.layer3[0] = pruned_layer3
+        pruned_cnn.fc = pruned_fc
+
+        pruned_models.append(pruned_cnn)
+        indices_to_prune_list.append(
+            {
+                "indices_to_prune_conv1": indices_to_prune_conv1,
+                "indices_to_prune_conv2": indices_to_prune_conv2,
+                "indices_to_prune_conv3": indices_to_prune_conv3,
+                "indices_to_prune_fc": indices_to_prune_fc,
+            }
+        )
+
+    return pruned_models, indices_to_prune_list
+
+
+def aggregate_cnn(
+    original_cnn: CNN,
+    pruned_cnn_list: List[CNN],
+    num_samples_list,
+    dropout_rate_list,
+    indices_to_prune_dict: Dict[str, list],
+):
+    indices_to_prune_conv1 = indices_to_prune_dict["indices_to_prune_conv1"]
+    indices_to_prune_conv2 = indices_to_prune_dict["indices_to_prune_conv2"]
+    indices_to_prune_conv3 = indices_to_prune_dict["indices_to_prune_conv3"]
+    indices_to_prune_fc = indices_to_prune_dict["indices_to_prune_fc"]
+
+    for i in range(len(pruned_cnn_list)):
+        scale_factor = 1 - dropout_rate_list[i]
+        pruned_cnn_list[i].layer1[0].weight.data *= scale_factor
+        pruned_cnn_list[i].layer2[0].weight.data *= scale_factor
+        pruned_cnn_list[i].layer3[0].weight.data *= scale_factor
+        # pruned_cnn_list[i].fc.weight.data *= scale_factor
+
+    aggregate_conv_layers(
+        original_cnn.layer1[0],
+        [pruned_cnn.layer1[0] for pruned_cnn in pruned_cnn_list],
+        indices_to_prune_conv1,
+        num_samples_list,
+    )
+    aggregate_conv_layers(
+        original_cnn.layer2[0],
+        [pruned_cnn.layer2[0] for pruned_cnn in pruned_cnn_list],
+        indices_to_prune_conv2,
+        num_samples_list,
+    )
+    aggregate_conv_layers(
+        original_cnn.layer3[0],
+        [pruned_cnn.layer3[0] for pruned_cnn in pruned_cnn_list],
+        indices_to_prune_conv3,
+        num_samples_list,
+    )
+    aggregate_linear_layers(
+        original_cnn.fc,
+        [pruned_cnn.fc for pruned_cnn in pruned_cnn_list],
+        indices_to_prune_fc,
+        num_samples_list,
+    )
+
+
 def vanilla_federated_averaging(model_weights, sample_numbers):
     assert len(model_weights) == len(sample_numbers), "Length mismatch"
     avg_weights = {}
@@ -307,7 +507,10 @@ def calculate_model_size(model):
 def train(
     model, device, train_loader, optimizer, criterion, epochs=30, print_log=False
 ):
+    original_model_device = next(model.parameters()).device
+    model.to(device)
     model.train()
+
     for epoch in tqdm(range(epochs), leave=False):
         total_loss = 0
         for batch_idx, (data, target) in enumerate(train_loader):
@@ -323,9 +526,13 @@ def train(
             avg_loss = total_loss / len(train_loader)
             print(f"Train Epoch: {epoch}/{epochs} \tAverage Loss: {avg_loss:.6f}")
 
+    model.to(original_model_device)
+
 
 # Testing function
 def test(model, device, test_loader, criterion, num_classes=10):
+    original_model_device = next(model.parameters()).device
+    model.to(device)
     model.eval()
     test_loss = 0
     correct = 0
@@ -355,120 +562,5 @@ def test(model, device, test_loader, criterion, num_classes=10):
     class_accuracy = {
         cls: class_correct[cls] / class_total[cls] for cls in sorted(class_total)
     }
+    model.to(original_model_device)
     return test_loss, accuracy, class_accuracy
-
-
-def prune_cnn(original_cnn, dropout_rate=0.5, **indices_to_prune):
-    indices_to_prune_conv1 = indices_to_prune.get("indices_to_prune_conv1", None)
-    indices_to_prune_conv2 = indices_to_prune.get("indices_to_prune_conv2", None)
-    indices_to_prune_conv3 = indices_to_prune.get("indices_to_prune_conv3", None)
-    indices_to_prune_fc = indices_to_prune.get("indices_to_prune_fc", None)
-
-    conv1 = original_cnn.layer1[0]
-    if indices_to_prune_conv1 is None:
-        num_output_channels_to_prune_conv1 = int(conv1.out_channels * dropout_rate)
-        output_indices_to_prune_conv1 = np.random.choice(
-            conv1.out_channels, num_output_channels_to_prune_conv1, replace=False
-        )
-        indices_to_prune_conv1 = {"output": output_indices_to_prune_conv1}
-    pruned_layer1 = prune_conv_layer(conv1, indices_to_prune_conv1)
-
-    conv2 = original_cnn.layer2[0]
-    if indices_to_prune_conv2 is None:
-        num_output_channels_to_prune_conv2 = int(conv2.out_channels * dropout_rate)
-        output_indices_to_prune_conv2 = np.random.choice(
-            conv2.out_channels, num_output_channels_to_prune_conv2, replace=False
-        )
-        indices_to_prune_conv2 = {
-            "input": output_indices_to_prune_conv1,
-            "output": output_indices_to_prune_conv2,
-        }
-    pruned_layer2 = prune_conv_layer(conv2, indices_to_prune_conv2)
-
-    conv3 = original_cnn.layer3[0]
-    if indices_to_prune_conv3 is None:
-        num_output_channels_to_prune_conv3 = int(conv3.out_channels * dropout_rate)
-        output_indices_to_prune_conv3 = np.random.choice(
-            conv3.out_channels, num_output_channels_to_prune_conv3, replace=False
-        )
-        indices_to_prune_conv3 = {
-            "input": output_indices_to_prune_conv2,
-            "output": output_indices_to_prune_conv3,
-        }
-    pruned_layer3 = prune_conv_layer(conv3, indices_to_prune_conv3)
-
-    fc = original_cnn.fc
-    if indices_to_prune_fc is None:
-        input_indices_to_prune_fc = []
-        for channel_index in output_indices_to_prune_conv3:
-            start_index = channel_index * 4 * 4
-            end_index = (channel_index + 1) * 4 * 4
-            input_indices_to_prune_fc.extend(list(range(start_index, end_index)))
-        input_indices_to_prune_fc = np.sort(input_indices_to_prune_fc)
-        indices_to_prune_fc = {"input": input_indices_to_prune_fc}
-    pruned_fc = prune_linear_layer(fc, indices_to_prune_fc)
-
-    scale_factor = 1 / (1 - dropout_rate)
-    pruned_layer1.weight.data *= scale_factor
-    pruned_layer2.weight.data *= scale_factor
-    pruned_layer3.weight.data *= scale_factor
-    pruned_fc.weight.data *= scale_factor
-
-    pruned_cnn = CNN()
-    pruned_cnn.layer1[0] = pruned_layer1
-    pruned_cnn.layer2[0] = pruned_layer2
-    pruned_cnn.layer3[0] = pruned_layer3
-    pruned_cnn.fc = pruned_fc
-
-    return (
-        pruned_cnn,
-        indices_to_prune_conv1,
-        indices_to_prune_conv2,
-        indices_to_prune_conv3,
-        indices_to_prune_fc,
-    )
-
-
-def aggregate_cnn(
-    original_cnn,
-    pruned_cnn_list,
-    num_samples_list,
-    dropout_rate_list,
-    indices_to_prune_dict: Dict[str, list],
-):
-    indices_to_prune_conv1 = indices_to_prune_dict["indices_to_prune_conv1"]
-    indices_to_prune_conv2 = indices_to_prune_dict["indices_to_prune_conv2"]
-    indices_to_prune_conv3 = indices_to_prune_dict["indices_to_prune_conv3"]
-    indices_to_prune_fc = indices_to_prune_dict["indices_to_prune_fc"]
-
-    for i in range(len(pruned_cnn_list)):
-        scale_factor = 1 - dropout_rate_list[i]
-        pruned_cnn_list[i].layer1[0].weight.data *= scale_factor
-        pruned_cnn_list[i].layer2[0].weight.data *= scale_factor
-        pruned_cnn_list[i].layer3[0].weight.data *= scale_factor
-        pruned_cnn_list[i].fc.weight.data *= scale_factor
-
-    aggregate_conv_layers(
-        original_cnn.layer1[0],
-        [pruned_cnn.layer1[0] for pruned_cnn in pruned_cnn_list],
-        indices_to_prune_conv1,
-        num_samples_list,
-    )
-    aggregate_conv_layers(
-        original_cnn.layer2[0],
-        [pruned_cnn.layer2[0] for pruned_cnn in pruned_cnn_list],
-        indices_to_prune_conv2,
-        num_samples_list,
-    )
-    aggregate_conv_layers(
-        original_cnn.layer3[0],
-        [pruned_cnn.layer3[0] for pruned_cnn in pruned_cnn_list],
-        indices_to_prune_conv3,
-        num_samples_list,
-    )
-    aggregate_linear_layers(
-        original_cnn.fc,
-        [pruned_cnn.fc for pruned_cnn in pruned_cnn_list],
-        indices_to_prune_fc,
-        num_samples_list,
-    )

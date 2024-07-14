@@ -1,4 +1,3 @@
-import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -6,208 +5,17 @@ import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 
+from modules.models import CNN
 from modules.utils import (
-    aggregate_conv_layers,
-    aggregate_linear_layers,
-    prune_conv_layer,
-    prune_linear_layer,
+    aggregate_cnn,
+    prune_cnn_into_groups,
+    test,
+    train,
 )
-
-
-class CNN(nn.Module):
-    def __init__(self):
-        super(CNN, self).__init__()
-        self.layer1 = nn.Sequential(
-            nn.Conv2d(3, 64, kernel_size=3, padding=1),
-            nn.ReLU(),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-        )
-        self.layer2 = nn.Sequential(
-            nn.Conv2d(64, 128, kernel_size=3, padding=1),
-            nn.ReLU(),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-        )
-        self.layer3 = nn.Sequential(
-            nn.Conv2d(128, 256, kernel_size=3, padding=1),
-            nn.ReLU(),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-        )
-        self.fc = nn.Linear(256 * 4 * 4, 10)
-
-    def forward(self, x):
-        out = self.layer1(x)
-        out = self.layer2(out)
-        out = self.layer3(out)
-        out = out.view(out.size(0), -1)
-        out = self.fc(out)
-        return out
-
-
-# Training function
-def train(model, device, train_loader, optimizer, criterion, epochs=30):
-    model.train()
-    for epoch in range(epochs):
-        total_loss = 0
-        for batch_idx, (data, target) in enumerate(train_loader):
-            data, target = data.to(device), target.to(device)
-            optimizer.zero_grad()
-            output = model(data)
-            loss = criterion(output, target)
-            loss.backward()
-            optimizer.step()
-            total_loss += loss.item()
-
-        avg_loss = total_loss / len(train_loader)
-        print(f"Train Epoch: {epoch}/{epochs} \tAverage Loss: {avg_loss:.6f}")
-
-
-# Testing function
-def test(model, device, test_loader, criterion):
-    model.eval()
-    test_loss = 0
-    correct = 0
-    with torch.no_grad():
-        for data, target in test_loader:
-            data, target = data.to(device), target.to(device)
-            output = model(data)
-            test_loss += criterion(output, target).item()
-            pred = output.argmax(dim=1, keepdim=True)
-            correct += pred.eq(target.view_as(pred)).sum().item()
-
-    test_loss /= len(test_loader.dataset)
-    accuracy = correct / len(test_loader.dataset)
-    return test_loss, accuracy
-
-
-def prune_cnn(original_cnn, dropout_rate=0.5):
-    scale_factor = 1 / (1 - dropout_rate)
-
-    conv1 = original_cnn.layer1[0]
-    num_output_channels_to_prune_conv1 = int(conv1.out_channels * dropout_rate)
-    output_indices_to_prune_conv1 = np.random.choice(
-        conv1.out_channels, num_output_channels_to_prune_conv1, replace=False
-    )
-    indices_to_prune_conv1 = {"output": output_indices_to_prune_conv1}
-    pruned_layer1 = prune_conv_layer(conv1, indices_to_prune_conv1)
-    pruned_layer1.weight.data *= scale_factor
-
-    conv2 = original_cnn.layer2[0]
-    num_output_channels_to_prune_conv2 = int(conv2.out_channels * dropout_rate)
-    output_indices_to_prune_conv2 = np.random.choice(
-        conv2.out_channels, num_output_channels_to_prune_conv2, replace=False
-    )
-    indices_to_prune_conv2 = {
-        "input": output_indices_to_prune_conv1,
-        "output": output_indices_to_prune_conv2,
-    }
-    pruned_layer2 = prune_conv_layer(conv2, indices_to_prune_conv2)
-    pruned_layer2.weight.data *= scale_factor
-
-    conv3 = original_cnn.layer3[0]
-    num_output_channels_to_prune_conv3 = int(conv3.out_channels * dropout_rate)
-    output_indices_to_prune_conv3 = np.random.choice(
-        conv3.out_channels, num_output_channels_to_prune_conv3, replace=False
-    )
-    indices_to_prune_conv3 = {
-        "input": output_indices_to_prune_conv2,
-        "output": output_indices_to_prune_conv3,
-    }
-    pruned_layer3 = prune_conv_layer(conv3, indices_to_prune_conv3)
-    pruned_layer3.weight.data *= scale_factor
-
-    fc = original_cnn.fc
-    input_indices_to_prune_fc = []
-    for channel_index in output_indices_to_prune_conv3:
-        start_index = channel_index * 4 * 4
-        end_index = (channel_index + 1) * 4 * 4
-        input_indices_to_prune_fc.extend(list(range(start_index, end_index)))
-    input_indices_to_prune_fc = np.sort(input_indices_to_prune_fc)
-    indices_to_prune_fc = {"input": input_indices_to_prune_fc}
-    pruned_fc = prune_linear_layer(fc, indices_to_prune_fc)
-    pruned_fc.weight.data *= scale_factor
-
-    pruned_cnn = CNN()
-    pruned_cnn.layer1[0] = pruned_layer1
-    pruned_cnn.layer2[0] = pruned_layer2
-    pruned_cnn.layer3[0] = pruned_layer3
-    pruned_cnn.fc = pruned_fc
-
-    return (
-        pruned_cnn,
-        indices_to_prune_conv1,
-        indices_to_prune_conv2,
-        indices_to_prune_conv3,
-        indices_to_prune_fc,
-    )
-
-
-def aggregate_cnn(
-    original_cnn, pruned_cnn, num_samples, dropout_rate, **indices_to_prune
-):
-    indices_to_prune_conv1 = indices_to_prune["indices_to_prune_conv1"]
-    indices_to_prune_conv2 = indices_to_prune["indices_to_prune_conv2"]
-    indices_to_prune_conv3 = indices_to_prune["indices_to_prune_conv3"]
-    indices_to_prune_fc = indices_to_prune["indices_to_prune_fc"]
-
-    scale_factor = 1 - dropout_rate
-    pruned_cnn.layer1[0].weight.data *= scale_factor
-    pruned_cnn.layer2[0].weight.data *= scale_factor
-    pruned_cnn.layer3[0].weight.data *= scale_factor
-    pruned_cnn.fc.weight.data *= scale_factor
-
-    aggregate_conv_layers(
-        original_cnn.layer1[0],
-        [
-            pruned_cnn.layer1[0],
-        ],
-        [
-            indices_to_prune_conv1,
-        ],
-        [
-            num_samples,
-        ],
-    )
-    aggregate_conv_layers(
-        original_cnn.layer2[0],
-        [
-            pruned_cnn.layer2[0],
-        ],
-        [
-            indices_to_prune_conv2,
-        ],
-        [
-            num_samples,
-        ],
-    )
-    aggregate_conv_layers(
-        original_cnn.layer3[0],
-        [
-            pruned_cnn.layer3[0],
-        ],
-        [
-            indices_to_prune_conv3,
-        ],
-        [
-            num_samples,
-        ],
-    )
-    aggregate_linear_layers(
-        original_cnn.fc,
-        [
-            pruned_cnn.fc,
-        ],
-        [
-            indices_to_prune_fc,
-        ],
-        [
-            num_samples,
-        ],
-    )
-
 
 ROUNDS = 100
 BATCH_SIZE = 128
-EPOCHS = 5
+EPOCHS = 1
 LEARNING_RATE = 0.001
 
 train_transform = transforms.Compose(
@@ -247,7 +55,7 @@ criterion = nn.CrossEntropyLoss()
 
 # Test the original model
 original_cnn.to(device)
-test_loss_original_cnn, accuracy_original_cnn = test(
+test_loss_original_cnn, accuracy_original_cnn, _ = test(
     original_cnn, device, test_loader, criterion
 )
 print(
@@ -255,55 +63,117 @@ print(
 )
 print("-" * 80)
 
+accumulated_pruned_components = []
+dropout_rate = 0.7
+num_groups = max(1, int(1 / (1 - dropout_rate)))
+pruned_models = []
+indices_to_prune_list = []
+
+print(f"Number of groups: {num_groups}")
+
 for round in range(ROUNDS):
     print(f"Round {round + 1}/{ROUNDS}")
 
-    # Prune a model each round
-    dropout_rate = 0.5
+    if round % num_groups == 0:
+        pruned_models, indices_to_prune_list = prune_cnn_into_groups(
+            original_cnn, dropout_rate
+        )
 
-    (
-        pruned_cnn,
-        indices_to_prune_conv1,
-        indices_to_prune_conv2,
-        indices_to_prune_conv3,
-        indices_to_prune_fc,
-    ) = prune_cnn(original_cnn, dropout_rate=dropout_rate)
+    # (
+    #     pruned_cnn,
+    #     indices_to_prune_conv1,
+    #     indices_to_prune_conv2,
+    #     indices_to_prune_conv3,
+    #     indices_to_prune_fc,
+    # ) = prune_cnn(original_cnn, dropout_rate=dropout_rate)
+    pruned_cnn = pruned_models[round % num_groups]
+    indices_to_prune_conv1 = indices_to_prune_list[round % num_groups][
+        "indices_to_prune_conv1"
+    ]
+    indices_to_prune_conv2 = indices_to_prune_list[round % num_groups][
+        "indices_to_prune_conv2"
+    ]
+    indices_to_prune_conv3 = indices_to_prune_list[round % num_groups][
+        "indices_to_prune_conv3"
+    ]
+    indices_to_prune_fc = indices_to_prune_list[round % num_groups][
+        "indices_to_prune_fc"
+    ]
 
     optimizer = optim.Adam(pruned_cnn.parameters(), lr=LEARNING_RATE)
 
     # Train and test the pruned model
     pruned_cnn.to(device)
     train(pruned_cnn, device, train_loader, optimizer, criterion, epochs=EPOCHS)
-    test_loss_pruned_cnn, accuracy_pruned_cnn = test(
+    test_loss_pruned_cnn, accuracy_pruned_cnn, _ = test(
         pruned_cnn, device, test_loader, criterion
     )
-
-    # # Make all the parameters of the original CNN zero
-    # for param in original_cnn.parameters():
-    #     param.data = torch.zeros_like(param.data, device=param.device)
+    print(f"Pruned model test accuracy: {accuracy_pruned_cnn:.6f}")
 
     # Aggregation
-    aggregate_cnn(
-        original_cnn,
-        pruned_cnn,
-        len(train_dataset),
-        dropout_rate,
-        indices_to_prune_conv1=indices_to_prune_conv1,
-        indices_to_prune_conv2=indices_to_prune_conv2,
-        indices_to_prune_conv3=indices_to_prune_conv3,
-        indices_to_prune_fc=indices_to_prune_fc,
-    )
+    # aggregate_cnn(
+    #     original_cnn,
+    #     [pruned_cnn],
+    #     [len(train_dataset)],
+    #     [dropout_rate],
+    #     {
+    #         "indices_to_prune_conv1": [indices_to_prune_conv1],
+    #         "indices_to_prune_conv2": [indices_to_prune_conv2],
+    #         "indices_to_prune_conv3": [indices_to_prune_conv3],
+    #         "indices_to_prune_fc": [indices_to_prune_fc],
+    #     },
+    # )
+    if round % num_groups == num_groups - 1:
+        print("*" * 80)
+        print("Aggregating models")
 
-    # Test the aggregated model
-    original_cnn.to(device)
-    test_loss_aggregated, accuracy_aggregated = test(
-        original_cnn, device, test_loader, criterion
-    )
+        indices_to_prune_dict = {
+            "indices_to_prune_conv1": [],
+            "indices_to_prune_conv2": [],
+            "indices_to_prune_conv3": [],
+            "indices_to_prune_fc": [],
+        }
+        for i in range(num_groups):
+            indices_to_prune_dict["indices_to_prune_conv1"].append(
+                indices_to_prune_list[i]["indices_to_prune_conv1"]
+            )
+            indices_to_prune_dict["indices_to_prune_conv2"].append(
+                indices_to_prune_list[i]["indices_to_prune_conv2"]
+            )
+            indices_to_prune_dict["indices_to_prune_conv3"].append(
+                indices_to_prune_list[i]["indices_to_prune_conv3"]
+            )
+            indices_to_prune_dict["indices_to_prune_fc"].append(
+                indices_to_prune_list[i]["indices_to_prune_fc"]
+            )
 
-    print(
-        f"Pruned model test loss: {test_loss_pruned_cnn:.6f}, accuracy: {accuracy_pruned_cnn:.6f}"
-    )
-    print(
-        f"Aggregated model test loss: {test_loss_aggregated:.6f}, accuracy: {accuracy_aggregated:.6f}"
-    )
+        aggregate_cnn(
+            original_cnn,
+            pruned_models,
+            [len(train_dataset)] * num_groups,
+            [dropout_rate] * num_groups,
+            indices_to_prune_dict,
+        )
+
+        # Test the aggregated model
+        original_cnn.to(device)
+        test_loss_aggregated, accuracy_aggregated, _ = test(
+            original_cnn, device, test_loader, criterion
+        )
+
+        print(f"Aggregated model test accuracy: {accuracy_aggregated:.6f}")
+        print("*" * 80)
     print("-" * 80)
+
+    if round == 10:
+        original_cnn.eval()
+        pruned_cnn.eval()
+        with torch.no_grad():
+            for data, target in test_loader:
+                data, target = data.to(device), target.to(device)
+                output_original = original_cnn(data)
+                output_pruned = pruned_cnn(data)
+                print(
+                    f"Original model output: {output_original.cpu().numpy()} Pruned model output: {output_pruned.cpu().numpy()}"
+                )
+                break

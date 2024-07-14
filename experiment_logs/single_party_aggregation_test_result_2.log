@@ -1,0 +1,804 @@
+dropout_rate = 0.8
+
+Original model test loss: 0.018186, accuracy: 0.102400
+--------------------------------------------------------------------------------
+Round 1/200
+Pruned model test accuracy: 0.362900
+Aggregated model test accuracy: 0.125800
+--------------------------------------------------------------------------------
+Round 2/200
+Pruned model test accuracy: 0.404800
+Aggregated model test accuracy: 0.112700
+--------------------------------------------------------------------------------
+Round 3/200
+Pruned model test accuracy: 0.410300
+Aggregated model test accuracy: 0.100100
+--------------------------------------------------------------------------------
+Round 4/200
+Pruned model test accuracy: 0.411900
+Aggregated model test accuracy: 0.100200
+--------------------------------------------------------------------------------
+Round 5/200
+Pruned model test accuracy: 0.388600
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 6/200
+Pruned model test accuracy: 0.400200
+Aggregated model test accuracy: 0.100100
+--------------------------------------------------------------------------------
+Round 7/200
+Pruned model test accuracy: 0.431100
+Aggregated model test accuracy: 0.100400
+--------------------------------------------------------------------------------
+Round 8/200
+Pruned model test accuracy: 0.430900
+Aggregated model test accuracy: 0.100100
+--------------------------------------------------------------------------------
+Round 9/200
+Pruned model test accuracy: 0.433200
+Aggregated model test accuracy: 0.109400
+--------------------------------------------------------------------------------
+Round 10/200
+Pruned model test accuracy: 0.450400
+Aggregated model test accuracy: 0.108800
+--------------------------------------------------------------------------------
+Round 11/200
+Pruned model test accuracy: 0.431800
+Aggregated model test accuracy: 0.112700
+--------------------------------------------------------------------------------
+Round 12/200
+Pruned model test accuracy: 0.433600
+Aggregated model test accuracy: 0.114400
+--------------------------------------------------------------------------------
+Round 13/200
+Pruned model test accuracy: 0.456100
+Aggregated model test accuracy: 0.104200
+--------------------------------------------------------------------------------
+Round 14/200
+Pruned model test accuracy: 0.442500
+Aggregated model test accuracy: 0.110800
+--------------------------------------------------------------------------------
+Round 15/200
+Pruned model test accuracy: 0.436500
+Aggregated model test accuracy: 0.115500
+--------------------------------------------------------------------------------
+Round 16/200
+Pruned model test accuracy: 0.458400
+Aggregated model test accuracy: 0.111200
+--------------------------------------------------------------------------------
+Round 17/200
+Pruned model test accuracy: 0.469900
+Aggregated model test accuracy: 0.115300
+--------------------------------------------------------------------------------
+Round 18/200
+Pruned model test accuracy: 0.445200
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 19/200
+Pruned model test accuracy: 0.459100
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 20/200
+Pruned model test accuracy: 0.476800
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 21/200
+Pruned model test accuracy: 0.442600
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 22/200
+Pruned model test accuracy: 0.455500
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 23/200
+Pruned model test accuracy: 0.440500
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 24/200
+Pruned model test accuracy: 0.443800
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 25/200
+Pruned model test accuracy: 0.463400
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 26/200
+Pruned model test accuracy: 0.478200
+Aggregated model test accuracy: 0.111900
+--------------------------------------------------------------------------------
+Round 27/200
+Pruned model test accuracy: 0.467900
+Aggregated model test accuracy: 0.122300
+--------------------------------------------------------------------------------
+Round 28/200
+Pruned model test accuracy: 0.445300
+Aggregated model test accuracy: 0.106400
+--------------------------------------------------------------------------------
+Round 29/200
+Pruned model test accuracy: 0.454300
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 30/200
+Pruned model test accuracy: 0.460100
+Aggregated model test accuracy: 0.123600
+--------------------------------------------------------------------------------
+Round 31/200
+Pruned model test accuracy: 0.465100
+Aggregated model test accuracy: 0.118800
+--------------------------------------------------------------------------------
+Round 32/200
+Pruned model test accuracy: 0.470400
+Aggregated model test accuracy: 0.123200
+--------------------------------------------------------------------------------
+Round 33/200
+Pruned model test accuracy: 0.469600
+Aggregated model test accuracy: 0.124600
+--------------------------------------------------------------------------------
+Round 34/200
+Pruned model test accuracy: 0.477000
+Aggregated model test accuracy: 0.106300
+--------------------------------------------------------------------------------
+Round 35/200
+Pruned model test accuracy: 0.476200
+Aggregated model test accuracy: 0.099800
+--------------------------------------------------------------------------------
+Round 36/200
+Pruned model test accuracy: 0.476200
+Aggregated model test accuracy: 0.099600
+--------------------------------------------------------------------------------
+Round 37/200
+Pruned model test accuracy: 0.482100
+Aggregated model test accuracy: 0.118200
+--------------------------------------------------------------------------------
+Round 38/200
+Pruned model test accuracy: 0.479300
+Aggregated model test accuracy: 0.125300
+--------------------------------------------------------------------------------
+Round 39/200
+Pruned model test accuracy: 0.473800
+Aggregated model test accuracy: 0.123400
+--------------------------------------------------------------------------------
+Round 40/200
+Pruned model test accuracy: 0.475100
+Aggregated model test accuracy: 0.103000
+--------------------------------------------------------------------------------
+Round 41/200
+Pruned model test accuracy: 0.471400
+Aggregated model test accuracy: 0.106700
+--------------------------------------------------------------------------------
+Round 42/200
+Pruned model test accuracy: 0.468200
+Aggregated model test accuracy: 0.099800
+--------------------------------------------------------------------------------
+Round 43/200
+Pruned model test accuracy: 0.477400
+Aggregated model test accuracy: 0.099900
+--------------------------------------------------------------------------------
+Round 44/200
+Pruned model test accuracy: 0.474600
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 45/200
+Pruned model test accuracy: 0.487700
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 46/200
+Pruned model test accuracy: 0.469600
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 47/200
+Pruned model test accuracy: 0.479100
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 48/200
+Pruned model test accuracy: 0.469700
+Aggregated model test accuracy: 0.100400
+--------------------------------------------------------------------------------
+Round 49/200
+Pruned model test accuracy: 0.480900
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 50/200
+Pruned model test accuracy: 0.479900
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 51/200
+Pruned model test accuracy: 0.483400
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 52/200
+Pruned model test accuracy: 0.470800
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 53/200
+Pruned model test accuracy: 0.483600
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 54/200
+Pruned model test accuracy: 0.481000
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 55/200
+Pruned model test accuracy: 0.466300
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 56/200
+Pruned model test accuracy: 0.480600
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 57/200
+Pruned model test accuracy: 0.442800
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 58/200
+Pruned model test accuracy: 0.456400
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 59/200
+Pruned model test accuracy: 0.496100
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 60/200
+Pruned model test accuracy: 0.465800
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 61/200
+Pruned model test accuracy: 0.483100
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 62/200
+Pruned model test accuracy: 0.465900
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 63/200
+Pruned model test accuracy: 0.471900
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 64/200
+Pruned model test accuracy: 0.447300
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 65/200
+Pruned model test accuracy: 0.466800
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 66/200
+Pruned model test accuracy: 0.496900
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 67/200
+Pruned model test accuracy: 0.498300
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 68/200
+Pruned model test accuracy: 0.468700
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 69/200
+Pruned model test accuracy: 0.500800
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 70/200
+Pruned model test accuracy: 0.480100
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 71/200
+Pruned model test accuracy: 0.463900
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 72/200
+Pruned model test accuracy: 0.492700
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 73/200
+Pruned model test accuracy: 0.481000
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 74/200
+Pruned model test accuracy: 0.492600
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 75/200
+Pruned model test accuracy: 0.490700
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 76/200
+Pruned model test accuracy: 0.469500
+Aggregated model test accuracy: 0.108700
+--------------------------------------------------------------------------------
+Round 77/200
+Pruned model test accuracy: 0.487000
+Aggregated model test accuracy: 0.103600
+--------------------------------------------------------------------------------
+Round 78/200
+Pruned model test accuracy: 0.488000
+Aggregated model test accuracy: 0.099900
+--------------------------------------------------------------------------------
+Round 79/200
+Pruned model test accuracy: 0.481700
+Aggregated model test accuracy: 0.100200
+--------------------------------------------------------------------------------
+Round 80/200
+Pruned model test accuracy: 0.479900
+Aggregated model test accuracy: 0.103100
+--------------------------------------------------------------------------------
+Round 81/200
+Pruned model test accuracy: 0.485600
+Aggregated model test accuracy: 0.099700
+--------------------------------------------------------------------------------
+Round 82/200
+Pruned model test accuracy: 0.484600
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 83/200
+Pruned model test accuracy: 0.483400
+Aggregated model test accuracy: 0.099900
+--------------------------------------------------------------------------------
+Round 84/200
+Pruned model test accuracy: 0.487100
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 85/200
+Pruned model test accuracy: 0.485000
+Aggregated model test accuracy: 0.100100
+--------------------------------------------------------------------------------
+Round 86/200
+Pruned model test accuracy: 0.492600
+Aggregated model test accuracy: 0.100100
+--------------------------------------------------------------------------------
+Round 87/200
+Pruned model test accuracy: 0.491500
+Aggregated model test accuracy: 0.099900
+--------------------------------------------------------------------------------
+Round 88/200
+Pruned model test accuracy: 0.474500
+Aggregated model test accuracy: 0.100100
+--------------------------------------------------------------------------------
+Round 89/200
+Pruned model test accuracy: 0.475000
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 90/200
+Pruned model test accuracy: 0.503400
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 91/200
+Pruned model test accuracy: 0.491300
+Aggregated model test accuracy: 0.100300
+--------------------------------------------------------------------------------
+Round 92/200
+Pruned model test accuracy: 0.508600
+Aggregated model test accuracy: 0.099800
+--------------------------------------------------------------------------------
+Round 93/200
+Pruned model test accuracy: 0.507000
+Aggregated model test accuracy: 0.100200
+--------------------------------------------------------------------------------
+Round 94/200
+Pruned model test accuracy: 0.495700
+Aggregated model test accuracy: 0.101600
+--------------------------------------------------------------------------------
+Round 95/200
+Pruned model test accuracy: 0.482700
+Aggregated model test accuracy: 0.109900
+--------------------------------------------------------------------------------
+Round 96/200
+Pruned model test accuracy: 0.497500
+Aggregated model test accuracy: 0.113300
+--------------------------------------------------------------------------------
+Round 97/200
+Pruned model test accuracy: 0.503600
+Aggregated model test accuracy: 0.101100
+--------------------------------------------------------------------------------
+Round 98/200
+Pruned model test accuracy: 0.509100
+Aggregated model test accuracy: 0.100700
+--------------------------------------------------------------------------------
+Round 99/200
+Pruned model test accuracy: 0.515600
+Aggregated model test accuracy: 0.100700
+--------------------------------------------------------------------------------
+Round 100/200
+Pruned model test accuracy: 0.513200
+Aggregated model test accuracy: 0.100100
+--------------------------------------------------------------------------------
+Round 101/200
+Pruned model test accuracy: 0.487900
+Aggregated model test accuracy: 0.100100
+--------------------------------------------------------------------------------
+Round 102/200
+Pruned model test accuracy: 0.490900
+Aggregated model test accuracy: 0.100300
+--------------------------------------------------------------------------------
+Round 103/200
+Pruned model test accuracy: 0.471800
+Aggregated model test accuracy: 0.100100
+--------------------------------------------------------------------------------
+Round 104/200
+Pruned model test accuracy: 0.490700
+Aggregated model test accuracy: 0.100500
+--------------------------------------------------------------------------------
+Round 105/200
+Pruned model test accuracy: 0.499700
+Aggregated model test accuracy: 0.100900
+--------------------------------------------------------------------------------
+Round 106/200
+Pruned model test accuracy: 0.489900
+Aggregated model test accuracy: 0.100900
+--------------------------------------------------------------------------------
+Round 107/200
+Pruned model test accuracy: 0.455800
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 108/200
+Pruned model test accuracy: 0.500500
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 109/200
+Pruned model test accuracy: 0.476900
+Aggregated model test accuracy: 0.121300
+--------------------------------------------------------------------------------
+Round 110/200
+Pruned model test accuracy: 0.504400
+Aggregated model test accuracy: 0.099800
+--------------------------------------------------------------------------------
+Round 111/200
+Pruned model test accuracy: 0.498200
+Aggregated model test accuracy: 0.101300
+--------------------------------------------------------------------------------
+Round 112/200
+Pruned model test accuracy: 0.498100
+Aggregated model test accuracy: 0.101900
+--------------------------------------------------------------------------------
+Round 113/200
+Pruned model test accuracy: 0.499300
+Aggregated model test accuracy: 0.109800
+--------------------------------------------------------------------------------
+Round 114/200
+Pruned model test accuracy: 0.481700
+Aggregated model test accuracy: 0.139300
+--------------------------------------------------------------------------------
+Round 115/200
+Pruned model test accuracy: 0.506100
+Aggregated model test accuracy: 0.117300
+--------------------------------------------------------------------------------
+Round 116/200
+Pruned model test accuracy: 0.501100
+Aggregated model test accuracy: 0.105200
+--------------------------------------------------------------------------------
+Round 117/200
+Pruned model test accuracy: 0.490800
+Aggregated model test accuracy: 0.102800
+--------------------------------------------------------------------------------
+Round 118/200
+Pruned model test accuracy: 0.486000
+Aggregated model test accuracy: 0.107000
+--------------------------------------------------------------------------------
+Round 119/200
+Pruned model test accuracy: 0.490500
+Aggregated model test accuracy: 0.100400
+--------------------------------------------------------------------------------
+Round 120/200
+Pruned model test accuracy: 0.487400
+Aggregated model test accuracy: 0.101800
+--------------------------------------------------------------------------------
+Round 121/200
+Pruned model test accuracy: 0.498500
+Aggregated model test accuracy: 0.100300
+--------------------------------------------------------------------------------
+Round 122/200
+Pruned model test accuracy: 0.491500
+Aggregated model test accuracy: 0.102400
+--------------------------------------------------------------------------------
+Round 123/200
+Pruned model test accuracy: 0.487600
+Aggregated model test accuracy: 0.100300
+--------------------------------------------------------------------------------
+Round 124/200
+Pruned model test accuracy: 0.513000
+Aggregated model test accuracy: 0.100300
+--------------------------------------------------------------------------------
+Round 125/200
+Pruned model test accuracy: 0.497500
+Aggregated model test accuracy: 0.100700
+--------------------------------------------------------------------------------
+Round 126/200
+Pruned model test accuracy: 0.497800
+Aggregated model test accuracy: 0.100400
+--------------------------------------------------------------------------------
+Round 127/200
+Pruned model test accuracy: 0.489800
+Aggregated model test accuracy: 0.101000
+--------------------------------------------------------------------------------
+Round 128/200
+Pruned model test accuracy: 0.510100
+Aggregated model test accuracy: 0.100800
+--------------------------------------------------------------------------------
+Round 129/200
+Pruned model test accuracy: 0.505700
+Aggregated model test accuracy: 0.100300
+--------------------------------------------------------------------------------
+Round 130/200
+Pruned model test accuracy: 0.505400
+Aggregated model test accuracy: 0.100100
+--------------------------------------------------------------------------------
+Round 131/200
+Pruned model test accuracy: 0.510900
+Aggregated model test accuracy: 0.100100
+--------------------------------------------------------------------------------
+Round 132/200
+Pruned model test accuracy: 0.501600
+Aggregated model test accuracy: 0.100100
+--------------------------------------------------------------------------------
+Round 133/200
+Pruned model test accuracy: 0.489300
+Aggregated model test accuracy: 0.100100
+--------------------------------------------------------------------------------
+Round 134/200
+Pruned model test accuracy: 0.493100
+Aggregated model test accuracy: 0.100100
+--------------------------------------------------------------------------------
+Round 135/200
+Pruned model test accuracy: 0.497700
+Aggregated model test accuracy: 0.100200
+--------------------------------------------------------------------------------
+Round 136/200
+Pruned model test accuracy: 0.510800
+Aggregated model test accuracy: 0.100100
+--------------------------------------------------------------------------------
+Round 137/200
+Pruned model test accuracy: 0.501700
+Aggregated model test accuracy: 0.100200
+--------------------------------------------------------------------------------
+Round 138/200
+Pruned model test accuracy: 0.518600
+Aggregated model test accuracy: 0.100400
+--------------------------------------------------------------------------------
+Round 139/200
+Pruned model test accuracy: 0.508200
+Aggregated model test accuracy: 0.100100
+--------------------------------------------------------------------------------
+Round 140/200
+Pruned model test accuracy: 0.513400
+Aggregated model test accuracy: 0.100500
+--------------------------------------------------------------------------------
+Round 141/200
+Pruned model test accuracy: 0.503700
+Aggregated model test accuracy: 0.100600
+--------------------------------------------------------------------------------
+Round 142/200
+Pruned model test accuracy: 0.494500
+Aggregated model test accuracy: 0.100300
+--------------------------------------------------------------------------------
+Round 143/200
+Pruned model test accuracy: 0.486800
+Aggregated model test accuracy: 0.100300
+--------------------------------------------------------------------------------
+Round 144/200
+Pruned model test accuracy: 0.490000
+Aggregated model test accuracy: 0.100200
+--------------------------------------------------------------------------------
+Round 145/200
+Pruned model test accuracy: 0.513800
+Aggregated model test accuracy: 0.100200
+--------------------------------------------------------------------------------
+Round 146/200
+Pruned model test accuracy: 0.500700
+Aggregated model test accuracy: 0.100200
+--------------------------------------------------------------------------------
+Round 147/200
+Pruned model test accuracy: 0.492700
+Aggregated model test accuracy: 0.100100
+--------------------------------------------------------------------------------
+Round 148/200
+Pruned model test accuracy: 0.495900
+Aggregated model test accuracy: 0.108300
+--------------------------------------------------------------------------------
+Round 149/200
+Pruned model test accuracy: 0.495300
+Aggregated model test accuracy: 0.100500
+--------------------------------------------------------------------------------
+Round 150/200
+Pruned model test accuracy: 0.476100
+Aggregated model test accuracy: 0.100200
+--------------------------------------------------------------------------------
+Round 151/200
+Pruned model test accuracy: 0.491600
+Aggregated model test accuracy: 0.100200
+--------------------------------------------------------------------------------
+Round 152/200
+Pruned model test accuracy: 0.496500
+Aggregated model test accuracy: 0.100200
+--------------------------------------------------------------------------------
+Round 153/200
+Pruned model test accuracy: 0.510600
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 154/200
+Pruned model test accuracy: 0.507200
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 155/200
+Pruned model test accuracy: 0.506200
+Aggregated model test accuracy: 0.100000
+--------------------------------------------------------------------------------
+Round 156/200
+Pruned model test accuracy: 0.503000
+Aggregated model test accuracy: 0.100200
+--------------------------------------------------------------------------------
+Round 157/200
+Pruned model test accuracy: 0.521800
+Aggregated model test accuracy: 0.100100
+--------------------------------------------------------------------------------
+Round 158/200
+Pruned model test accuracy: 0.502900
+Aggregated model test accuracy: 0.100900
+--------------------------------------------------------------------------------
+Round 159/200
+Pruned model test accuracy: 0.503700
+Aggregated model test accuracy: 0.109100
+--------------------------------------------------------------------------------
+Round 160/200
+Pruned model test accuracy: 0.513900
+Aggregated model test accuracy: 0.104400
+--------------------------------------------------------------------------------
+Round 161/200
+Pruned model test accuracy: 0.492700
+Aggregated model test accuracy: 0.105600
+--------------------------------------------------------------------------------
+Round 162/200
+Pruned model test accuracy: 0.505000
+Aggregated model test accuracy: 0.115500
+--------------------------------------------------------------------------------
+Round 163/200
+Pruned model test accuracy: 0.509900
+Aggregated model test accuracy: 0.130500
+--------------------------------------------------------------------------------
+Round 164/200
+Pruned model test accuracy: 0.510600
+Aggregated model test accuracy: 0.134200
+--------------------------------------------------------------------------------
+Round 165/200
+Pruned model test accuracy: 0.498900
+Aggregated model test accuracy: 0.164300
+--------------------------------------------------------------------------------
+Round 166/200
+Pruned model test accuracy: 0.513600
+Aggregated model test accuracy: 0.126800
+--------------------------------------------------------------------------------
+Round 167/200
+Pruned model test accuracy: 0.506200
+Aggregated model test accuracy: 0.156300
+--------------------------------------------------------------------------------
+Round 168/200
+Pruned model test accuracy: 0.513000
+Aggregated model test accuracy: 0.146900
+--------------------------------------------------------------------------------
+Round 169/200
+Pruned model test accuracy: 0.511400
+Aggregated model test accuracy: 0.140300
+--------------------------------------------------------------------------------
+Round 170/200
+Pruned model test accuracy: 0.507900
+Aggregated model test accuracy: 0.153400
+--------------------------------------------------------------------------------
+Round 171/200
+Pruned model test accuracy: 0.515900
+Aggregated model test accuracy: 0.141800
+--------------------------------------------------------------------------------
+Round 172/200
+Pruned model test accuracy: 0.509800
+Aggregated model test accuracy: 0.147000
+--------------------------------------------------------------------------------
+Round 173/200
+Pruned model test accuracy: 0.489900
+Aggregated model test accuracy: 0.152300
+--------------------------------------------------------------------------------
+Round 174/200
+Pruned model test accuracy: 0.533200
+Aggregated model test accuracy: 0.152400
+--------------------------------------------------------------------------------
+Round 175/200
+Pruned model test accuracy: 0.514100
+Aggregated model test accuracy: 0.145100
+--------------------------------------------------------------------------------
+Round 176/200
+Pruned model test accuracy: 0.515000
+Aggregated model test accuracy: 0.146000
+--------------------------------------------------------------------------------
+Round 177/200
+Pruned model test accuracy: 0.505000
+Aggregated model test accuracy: 0.143200
+--------------------------------------------------------------------------------
+Round 178/200
+Pruned model test accuracy: 0.525600
+Aggregated model test accuracy: 0.136400
+--------------------------------------------------------------------------------
+Round 179/200
+Pruned model test accuracy: 0.514900
+Aggregated model test accuracy: 0.121100
+--------------------------------------------------------------------------------
+Round 180/200
+Pruned model test accuracy: 0.532200
+Aggregated model test accuracy: 0.108200
+--------------------------------------------------------------------------------
+Round 181/200
+Pruned model test accuracy: 0.513400
+Aggregated model test accuracy: 0.106900
+--------------------------------------------------------------------------------
+Round 182/200
+Pruned model test accuracy: 0.518200
+Aggregated model test accuracy: 0.116700
+--------------------------------------------------------------------------------
+Round 183/200
+Pruned model test accuracy: 0.515100
+Aggregated model test accuracy: 0.137400
+--------------------------------------------------------------------------------
+Round 184/200
+Pruned model test accuracy: 0.523400
+Aggregated model test accuracy: 0.120400
+--------------------------------------------------------------------------------
+Round 185/200
+Pruned model test accuracy: 0.528600
+Aggregated model test accuracy: 0.105500
+--------------------------------------------------------------------------------
+Round 186/200
+Pruned model test accuracy: 0.527300
+Aggregated model test accuracy: 0.105300
+--------------------------------------------------------------------------------
+Round 187/200
+Pruned model test accuracy: 0.510500
+Aggregated model test accuracy: 0.112500
+--------------------------------------------------------------------------------
+Round 188/200
+Pruned model test accuracy: 0.502900
+Aggregated model test accuracy: 0.108000
+--------------------------------------------------------------------------------
+Round 189/200
+Pruned model test accuracy: 0.509000
+Aggregated model test accuracy: 0.136700
+--------------------------------------------------------------------------------
+Round 190/200
+Pruned model test accuracy: 0.506900
+Aggregated model test accuracy: 0.110400
+--------------------------------------------------------------------------------
+Round 191/200
+Pruned model test accuracy: 0.501700
+Aggregated model test accuracy: 0.120300
+--------------------------------------------------------------------------------
+Round 192/200
+Pruned model test accuracy: 0.511500
+Aggregated model test accuracy: 0.130100
+--------------------------------------------------------------------------------
+Round 193/200
+Pruned model test accuracy: 0.507100
+Aggregated model test accuracy: 0.126500
+--------------------------------------------------------------------------------
+Round 194/200
+Pruned model test accuracy: 0.497700
+Aggregated model test accuracy: 0.107500
+--------------------------------------------------------------------------------
+Round 195/200
+Pruned model test accuracy: 0.512700
+Aggregated model test accuracy: 0.100800
+--------------------------------------------------------------------------------
+Round 196/200
+Pruned model test accuracy: 0.513700
+Aggregated model test accuracy: 0.117300
+--------------------------------------------------------------------------------
+Round 197/200
+Pruned model test accuracy: 0.540600
+Aggregated model test accuracy: 0.121100
+--------------------------------------------------------------------------------
+Round 198/200
+Pruned model test accuracy: 0.506400
+Aggregated model test accuracy: 0.100400
+--------------------------------------------------------------------------------
+Round 199/200
+Pruned model test accuracy: 0.526500
+Aggregated model test accuracy: 0.099800
+--------------------------------------------------------------------------------
+Round 200/200
+Pruned model test accuracy: 0.510500
+Aggregated model test accuracy: 0.100300
+--------------------------------------------------------------------------------
