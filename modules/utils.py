@@ -5,7 +5,7 @@ import numpy as np
 import torch
 from tqdm import tqdm
 
-from modules.models import CNN
+from modules.models import CNN, DropoutScaling
 
 
 def prune_linear_layer(linear_layer, pruned_indices=None):
@@ -321,10 +321,10 @@ def prune_cnn(original_cnn: CNN, dropout_rate=0.5, **indices_to_prune):
         indices_to_prune_fc = {"input": input_indices_to_prune_fc}
     pruned_fc = prune_linear_layer(fc, indices_to_prune_fc)
 
-    scale_factor = 1 / (1 - dropout_rate)
-    pruned_layer1.weight.data *= scale_factor
-    pruned_layer2.weight.data *= scale_factor
-    pruned_layer3.weight.data *= scale_factor
+    # scale_factor = 1 / (1 - dropout_rate)
+    # pruned_layer1.weight.data *= scale_factor
+    # pruned_layer2.weight.data *= scale_factor
+    # pruned_layer3.weight.data *= scale_factor
     # pruned_fc.weight.data *= scale_factor
 
     pruned_cnn = CNN()
@@ -332,6 +332,9 @@ def prune_cnn(original_cnn: CNN, dropout_rate=0.5, **indices_to_prune):
     pruned_cnn.layer2[0] = pruned_layer2
     pruned_cnn.layer3[0] = pruned_layer3
     pruned_cnn.fc = pruned_fc
+    pruned_cnn.layer1.add_module("scaling", DropoutScaling(dropout_rate))
+    pruned_cnn.layer2.add_module("scaling", DropoutScaling(dropout_rate))
+    pruned_cnn.layer3.add_module("scaling", DropoutScaling(dropout_rate))
 
     return (
         pruned_cnn,
@@ -400,17 +403,14 @@ def prune_cnn_into_groups(
         pruned_layer3 = prune_conv_layer(conv3, indices_to_prune_conv3)
         pruned_fc = prune_linear_layer(fc, indices_to_prune_fc)
 
-        scale_factor = 1 / (1 - dropout_rate)
-        pruned_layer1.weight.data *= scale_factor
-        pruned_layer2.weight.data *= scale_factor
-        pruned_layer3.weight.data *= scale_factor
-        # pruned_fc.weight.data *= scale_factor
-
         pruned_cnn = CNN()
         pruned_cnn.layer1[0] = pruned_layer1
         pruned_cnn.layer2[0] = pruned_layer2
         pruned_cnn.layer3[0] = pruned_layer3
         pruned_cnn.fc = pruned_fc
+        pruned_cnn.layer1.add_module("scaling", DropoutScaling(dropout_rate))
+        pruned_cnn.layer2.add_module("scaling", DropoutScaling(dropout_rate))
+        pruned_cnn.layer3.add_module("scaling", DropoutScaling(dropout_rate))
 
         pruned_models.append(pruned_cnn)
         indices_to_prune_list.append(
@@ -428,8 +428,8 @@ def prune_cnn_into_groups(
 def aggregate_cnn(
     original_cnn: CNN,
     pruned_cnn_list: List[CNN],
-    num_samples_list,
-    dropout_rate_list,
+    dropout_rate_list: List[float],
+    num_samples_list: List[int],
     indices_to_prune_dict: Dict[str, list],
 ):
     indices_to_prune_conv1 = indices_to_prune_dict["indices_to_prune_conv1"]
@@ -437,12 +437,12 @@ def aggregate_cnn(
     indices_to_prune_conv3 = indices_to_prune_dict["indices_to_prune_conv3"]
     indices_to_prune_fc = indices_to_prune_dict["indices_to_prune_fc"]
 
-    for i in range(len(pruned_cnn_list)):
-        scale_factor = 1 - dropout_rate_list[i]
-        pruned_cnn_list[i].layer1[0].weight.data *= scale_factor
-        pruned_cnn_list[i].layer2[0].weight.data *= scale_factor
-        pruned_cnn_list[i].layer3[0].weight.data *= scale_factor
-        # pruned_cnn_list[i].fc.weight.data *= scale_factor
+    # for i in range(len(pruned_cnn_list)):
+    #     scale_factor = 1 - dropout_rate_list[i]
+    #     pruned_cnn_list[i].layer1[0].weight.data *= scale_factor
+    #     pruned_cnn_list[i].layer2[0].weight.data *= scale_factor
+    #     pruned_cnn_list[i].layer3[0].weight.data *= scale_factor
+    # pruned_cnn_list[i].fc.weight.data *= scale_factor
 
     aggregate_conv_layers(
         original_cnn.layer1[0],
@@ -513,7 +513,7 @@ def train(
 
     for epoch in tqdm(range(epochs), leave=False):
         total_loss = 0
-        for batch_idx, (data, target) in enumerate(train_loader):
+        for _, (data, target) in enumerate(train_loader):
             data, target = data.to(device), target.to(device)
             optimizer.zero_grad()
             output = model(data)
@@ -523,8 +523,17 @@ def train(
             total_loss += loss.item()
 
         if print_log:
+            correct = 0
+            with torch.no_grad():
+                for data, target in train_loader:
+                    data, target = data.to(device), target.to(device)
+                    output = model(data)
+                    pred = output.argmax(dim=1, keepdim=True)
+                    correct += pred.eq(target.view_as(pred)).sum().item()
             avg_loss = total_loss / len(train_loader)
-            print(f"Train Epoch: {epoch}/{epochs} \tAverage Loss: {avg_loss:.6f}")
+            print(
+                f"Train Epoch: {epoch}/{epochs}\tAverage Loss: {avg_loss:.6f}\tAccuracy: {correct}/{len(train_loader.dataset)} ({100. * correct / len(train_loader.dataset):.0f}%)"
+            )
 
     model.to(original_model_device)
 
@@ -557,7 +566,7 @@ def test(model, device, test_loader, criterion, num_classes=10):
 
                 class_total[label.item()] += 1
 
-    test_loss /= len(test_loader.dataset)
+    test_loss /= len(test_loader)
     accuracy = correct / len(test_loader.dataset)
     class_accuracy = {
         cls: class_correct[cls] / class_total[cls] for cls in sorted(class_total)
