@@ -329,28 +329,28 @@ def prune_cnn(original_cnn: CNN, dropout_rate=0.5, **indices_to_prune):
     # pruned_fc.weight.data *= scale_factor
 
     pruned_cnn = CNN()
-    layer_names = ["layer1", "layer2", "layer3"]
-    pruned_conv_layers = [pruned_layer1, pruned_layer2, pruned_layer3]
-    for layer_name, pruned_conv_layer in zip(layer_names, pruned_conv_layers):
-        original_sequential = getattr(original_cnn, layer_name)
-        out_channels = pruned_conv_layer.out_channels
-        new_sequential = nn.Sequential(
-            pruned_conv_layer,
-            DropoutScaling(dropout_rate),
-            nn.BatchNorm2d(out_channels),
-            original_sequential[2],
-            original_sequential[3],
-        )
-        setattr(pruned_cnn, layer_name, new_sequential)
-    # pruned_cnn.layer1[0] = pruned_layer1
-    # pruned_cnn.layer1[1] = nn.BatchNorm2d(pruned_layer1.out_channels)
-    # pruned_cnn.layer1.add_module("scaling", DropoutScaling(dropout_rate))
-    # pruned_cnn.layer2[0] = pruned_layer2
-    # pruned_cnn.layer2[1] = nn.BatchNorm2d(pruned_layer2.out_channels)
-    # pruned_cnn.layer2.add_module("scaling", DropoutScaling(dropout_rate))
-    # pruned_cnn.layer3[0] = pruned_layer3
-    # pruned_cnn.layer3[1] = nn.BatchNorm2d(pruned_layer3.out_channels)
-    # pruned_cnn.layer3.add_module("scaling", DropoutScaling(dropout_rate))
+    # layer_names = ["layer1", "layer2", "layer3"]
+    # pruned_conv_layers = [pruned_layer1, pruned_layer2, pruned_layer3]
+    # for layer_name, pruned_conv_layer in zip(layer_names, pruned_conv_layers):
+    #     original_sequential = getattr(original_cnn, layer_name)
+    #     out_channels = pruned_conv_layer.out_channels
+    #     new_sequential = nn.Sequential(
+    #         pruned_conv_layer,
+    #         DropoutScaling(dropout_rate),
+    #         nn.BatchNorm2d(out_channels),
+    #         original_sequential[2],
+    #         original_sequential[3],
+    #     )
+    #     setattr(pruned_cnn, layer_name, new_sequential)
+    pruned_cnn.layer1[0] = pruned_layer1
+    pruned_cnn.layer1[1] = nn.BatchNorm2d(pruned_layer1.out_channels)
+    pruned_cnn.layer1.add_module("scaling", DropoutScaling(dropout_rate))
+    pruned_cnn.layer2[0] = pruned_layer2
+    pruned_cnn.layer2[1] = nn.BatchNorm2d(pruned_layer2.out_channels)
+    pruned_cnn.layer2.add_module("scaling", DropoutScaling(dropout_rate))
+    pruned_cnn.layer3[0] = pruned_layer3
+    pruned_cnn.layer3[1] = nn.BatchNorm2d(pruned_layer3.out_channels)
+    pruned_cnn.layer3.add_module("scaling", DropoutScaling(dropout_rate))
     pruned_cnn.fc = pruned_fc
 
     return (
@@ -421,28 +421,28 @@ def prune_cnn_into_groups(
         pruned_fc = prune_linear_layer(fc, indices_to_prune_fc)
 
         pruned_cnn = CNN()
-        layer_names = ["layer1", "layer2", "layer3"]
-        pruned_conv_layers = [pruned_layer1, pruned_layer2, pruned_layer3]
-        for layer_name, pruned_conv_layer in zip(layer_names, pruned_conv_layers):
-            original_sequential = getattr(original_cnn, layer_name)
-            out_channels = pruned_conv_layer.out_channels
-            new_sequential = nn.Sequential(
-                pruned_conv_layer,
-                DropoutScaling(dropout_rate),
-                nn.BatchNorm2d(out_channels),
-                original_sequential[2],
-                original_sequential[3],
-            )
-            setattr(pruned_cnn, layer_name, new_sequential)
-        # pruned_cnn.layer1[0] = pruned_layer1
-        # pruned_cnn.layer1[1] = nn.BatchNorm2d(pruned_layer1.out_channels)
-        # pruned_cnn.layer1.add_module("scaling", DropoutScaling(dropout_rate))
-        # pruned_cnn.layer2[0] = pruned_layer2
-        # pruned_cnn.layer2[1] = nn.BatchNorm2d(pruned_layer2.out_channels)
-        # pruned_cnn.layer2.add_module("scaling", DropoutScaling(dropout_rate))
-        # pruned_cnn.layer3[0] = pruned_layer3
-        # pruned_cnn.layer3[1] = nn.BatchNorm2d(pruned_layer3.out_channels)
-        # pruned_cnn.layer3.add_module("scaling", DropoutScaling(dropout_rate))
+        # layer_names = ["layer1", "layer2", "layer3"]
+        # pruned_conv_layers = [pruned_layer1, pruned_layer2, pruned_layer3]
+        # for layer_name, pruned_conv_layer in zip(layer_names, pruned_conv_layers):
+        #     original_sequential = getattr(original_cnn, layer_name)
+        #     out_channels = pruned_conv_layer.out_channels
+        #     new_sequential = nn.Sequential(
+        #         pruned_conv_layer,
+        #         DropoutScaling(dropout_rate),
+        #         nn.BatchNorm2d(out_channels),
+        #         original_sequential[2],
+        #         original_sequential[3],
+        #     )
+        #     setattr(pruned_cnn, layer_name, new_sequential)
+        pruned_cnn.layer1[0] = pruned_layer1
+        pruned_cnn.layer1[1] = nn.BatchNorm2d(pruned_layer1.out_channels)
+        pruned_cnn.layer1.add_module("scaling", DropoutScaling(dropout_rate))
+        pruned_cnn.layer2[0] = pruned_layer2
+        pruned_cnn.layer2[1] = nn.BatchNorm2d(pruned_layer2.out_channels)
+        pruned_cnn.layer2.add_module("scaling", DropoutScaling(dropout_rate))
+        pruned_cnn.layer3[0] = pruned_layer3
+        pruned_cnn.layer3[1] = nn.BatchNorm2d(pruned_layer3.out_channels)
+        pruned_cnn.layer3.add_module("scaling", DropoutScaling(dropout_rate))
         pruned_cnn.fc = pruned_fc
 
         pruned_models.append(pruned_cnn)
