@@ -15,7 +15,7 @@ from modules.utils import (
 
 ROUNDS = 100
 BATCH_SIZE = 128
-EPOCHS = 5
+EPOCHS = 1
 LEARNING_RATE = 0.001
 
 train_transform = transforms.Compose(

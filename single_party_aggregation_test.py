@@ -13,9 +13,9 @@ from modules.utils import (
     train,
 )
 
-ROUNDS = 10
+ROUNDS = 100
 BATCH_SIZE = 128
-EPOCHS = 10
+EPOCHS = 5
 LEARNING_RATE = 0.001
 
 train_transform = transforms.Compose(
@@ -55,7 +55,6 @@ criterion = nn.CrossEntropyLoss()
 original_cnn = CNN()
 
 # Test the original model
-original_cnn.to(device)
 test_loss_original_cnn, accuracy_original_cnn, _ = test(
     original_cnn, device, test_loader, criterion
 )
@@ -64,7 +63,7 @@ print(
 )
 print("-" * 80)
 
-dropout_rate = 0.8
+dropout_rate = 0.2
 
 for round in range(ROUNDS):
     print(f"Round {round + 1}/{ROUNDS}")

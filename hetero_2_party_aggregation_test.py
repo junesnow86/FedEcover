@@ -40,9 +40,6 @@ test_dataset = torchvision.datasets.CIFAR10(
     root="./data", train=False, download=False, transform=test_transform
 )
 
-# train_loader = DataLoader(
-#     train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=2
-# )
 test_loader = DataLoader(
     test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=2
 )
@@ -59,13 +56,11 @@ train_loader2 = DataLoader(subset2, batch_size=BATCH_SIZE, shuffle=True, num_wor
 
 
 # ---------------------- Prepare the global model ---------------------
-global_cnn = CNN()
-
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 criterion = nn.CrossEntropyLoss()
 
+global_cnn = CNN()
 # Test the global model
-global_cnn.to(device)
 test_loss_original_cnn, accuracy_original_cnn, class_accuracy_original_cnn = test(
     global_cnn, device, test_loader, criterion
 )
@@ -76,13 +71,12 @@ print("-" * 80)
 
 
 # ---------------------- Pruning, local training and aggregation ---------------------
-count = 0
 for round in range(ROUNDS):
     print(f"Round {round + 1}/{ROUNDS}")
 
     # Prune two models with different dropout rates each round
     # ---------------------- Party 1 ---------------------
-    dropout_rate1 = 0.2
+    dropout_rate1 = 0.5
 
     (
         pruned_cnn1,
@@ -95,14 +89,13 @@ for round in range(ROUNDS):
     optimizer1 = torch.optim.Adam(pruned_cnn1.parameters(), lr=LEARNING_RATE)
 
     # Train and test the pruned model
-    pruned_cnn1.to(device)
     train(pruned_cnn1, device, train_loader1, optimizer1, criterion, epochs=EPOCHS)
     test_loss_pruned_cnn1, accuracy_pruned_cnn1, class_accuracy_pruned_cnn1 = test(
         pruned_cnn1, device, test_loader, criterion
     )
 
     # ---------------------- Party 2 ---------------------
-    dropout_rate2 = 0.8
+    dropout_rate2 = 0.5
 
     (
         pruned_cnn2,
@@ -115,58 +108,38 @@ for round in range(ROUNDS):
     optimizer2 = torch.optim.Adam(pruned_cnn2.parameters(), lr=LEARNING_RATE)
 
     # Train and test the pruned model
-    pruned_cnn2.to(device)
     train(pruned_cnn2, device, train_loader2, optimizer2, criterion, epochs=EPOCHS)
     test_loss_pruned_cnn2, accuracy_pruned_cnn2, class_accuracy_pruned_cnn2 = test(
         pruned_cnn2, device, test_loader, criterion
     )
 
     # Aggregation
-    count += 1
-    if count == 4:
-        print("Aggregate the two pruned models")
-        aggregate_cnn(
-            global_cnn,
-            [pruned_cnn1, pruned_cnn2],
-            [len(subset1), len(subset2)],
-            [dropout_rate1, dropout_rate2],
-            {
-                "indices_to_prune_conv1": [
-                    indices_to_prune_conv1_cnn1,
-                    indices_to_prune_conv1_cnn2,
-                ],
-                "indices_to_prune_conv2": [
-                    indices_to_prune_conv2_cnn1,
-                    indices_to_prune_conv2_cnn2,
-                ],
-                "indices_to_prune_conv3": [
-                    indices_to_prune_conv3_cnn1,
-                    indices_to_prune_conv3_cnn2,
-                ],
-                "indices_to_prune_fc": [
-                    indices_to_prune_fc_cnn1,
-                    indices_to_prune_fc_cnn2,
-                ],
-            },
-        )
-        count = 0
-    else:
-        # Only aggregate the one with higher dropout rate
-        aggregate_cnn(
-            global_cnn,
-            [pruned_cnn2],
-            [len(subset2)],
-            [dropout_rate2],
-            {
-                "indices_to_prune_conv1": [indices_to_prune_conv1_cnn2],
-                "indices_to_prune_conv2": [indices_to_prune_conv2_cnn2],
-                "indices_to_prune_conv3": [indices_to_prune_conv3_cnn2],
-                "indices_to_prune_fc": [indices_to_prune_fc_cnn2],
-            },
-        )
+    aggregate_cnn(
+        global_cnn,
+        [pruned_cnn1, pruned_cnn2],
+        [len(subset1), len(subset2)],
+        [dropout_rate1, dropout_rate2],
+        {
+            "indices_to_prune_conv1": [
+                indices_to_prune_conv1_cnn1,
+                indices_to_prune_conv1_cnn2,
+            ],
+            "indices_to_prune_conv2": [
+                indices_to_prune_conv2_cnn1,
+                indices_to_prune_conv2_cnn2,
+            ],
+            "indices_to_prune_conv3": [
+                indices_to_prune_conv3_cnn1,
+                indices_to_prune_conv3_cnn2,
+            ],
+            "indices_to_prune_fc": [
+                indices_to_prune_fc_cnn1,
+                indices_to_prune_fc_cnn2,
+            ],
+        },
+    )
 
     # Test the aggregated model
-    global_cnn.to(device)
     test_loss_aggregated, accuracy_aggregated, class_accuracy_aggregated = test(
         global_cnn, device, test_loader, criterion
     )
