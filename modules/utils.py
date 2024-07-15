@@ -3,6 +3,7 @@ from typing import Dict, List, Tuple
 
 import numpy as np
 import torch
+import torch.nn as nn
 from tqdm import tqdm
 
 from modules.models import CNN, DropoutScaling
@@ -329,12 +330,15 @@ def prune_cnn(original_cnn: CNN, dropout_rate=0.5, **indices_to_prune):
 
     pruned_cnn = CNN()
     pruned_cnn.layer1[0] = pruned_layer1
-    pruned_cnn.layer2[0] = pruned_layer2
-    pruned_cnn.layer3[0] = pruned_layer3
-    pruned_cnn.fc = pruned_fc
+    pruned_cnn.layer1[1] = nn.BatchNorm2d(pruned_layer1.out_channels)
     pruned_cnn.layer1.add_module("scaling", DropoutScaling(dropout_rate))
+    pruned_cnn.layer2[0] = pruned_layer2
+    pruned_cnn.layer2[1] = nn.BatchNorm2d(pruned_layer2.out_channels)
     pruned_cnn.layer2.add_module("scaling", DropoutScaling(dropout_rate))
+    pruned_cnn.layer3[0] = pruned_layer3
+    pruned_cnn.layer3[1] = nn.BatchNorm2d(pruned_layer3.out_channels)
     pruned_cnn.layer3.add_module("scaling", DropoutScaling(dropout_rate))
+    pruned_cnn.fc = pruned_fc
 
     return (
         pruned_cnn,
@@ -405,12 +409,15 @@ def prune_cnn_into_groups(
 
         pruned_cnn = CNN()
         pruned_cnn.layer1[0] = pruned_layer1
-        pruned_cnn.layer2[0] = pruned_layer2
-        pruned_cnn.layer3[0] = pruned_layer3
-        pruned_cnn.fc = pruned_fc
+        pruned_cnn.layer1[1] = nn.BatchNorm2d(pruned_layer1.out_channels)
         pruned_cnn.layer1.add_module("scaling", DropoutScaling(dropout_rate))
+        pruned_cnn.layer2[0] = pruned_layer2
+        pruned_cnn.layer2[1] = nn.BatchNorm2d(pruned_layer2.out_channels)
         pruned_cnn.layer2.add_module("scaling", DropoutScaling(dropout_rate))
+        pruned_cnn.layer3[0] = pruned_layer3
+        pruned_cnn.layer3[1] = nn.BatchNorm2d(pruned_layer3.out_channels)
         pruned_cnn.layer3.add_module("scaling", DropoutScaling(dropout_rate))
+        pruned_cnn.fc = pruned_fc
 
         pruned_models.append(pruned_cnn)
         indices_to_prune_list.append(
