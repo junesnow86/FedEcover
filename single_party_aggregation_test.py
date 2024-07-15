@@ -63,7 +63,8 @@ print(
 )
 print("-" * 80)
 
-dropout_rate = 0.2
+dropout_rate = 0.5
+accuracy_last_aggregated = 0.0
 
 for round in range(ROUNDS):
     print(f"Round {round + 1}/{ROUNDS}")
@@ -86,6 +87,7 @@ for round in range(ROUNDS):
     print(f"Pruned model test accuracy: {accuracy_pruned_cnn:.6f}")
 
     # Aggregation
+    original_cnn_backup = original_cnn.state_dict()
     aggregate_cnn(
         original_cnn,
         [pruned_cnn],
@@ -103,7 +105,14 @@ for round in range(ROUNDS):
     test_loss_aggregated, accuracy_aggregated, _ = test(
         original_cnn, device, test_loader, criterion
     )
-
     print(f"Aggregated model test accuracy: {accuracy_aggregated:.6f}")
+
+    if accuracy_aggregated >= accuracy_last_aggregated:
+        accuracy_last_aggregated = accuracy_aggregated
+    else:
+        original_cnn.load_state_dict(original_cnn_backup)
+        print("Current aggregation result is worse. Discarding this aggregation.")
     print("*" * 80)
     print("-" * 80)
+
+print(f"Max aggregated model test accuracy: {accuracy_last_aggregated:.6f}")

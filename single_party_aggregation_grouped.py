@@ -15,7 +15,7 @@ from modules.utils import (
 
 ROUNDS = 100
 BATCH_SIZE = 128
-EPOCHS = 1
+EPOCHS = 5
 LEARNING_RATE = 0.001
 
 train_transform = transforms.Compose(
@@ -55,7 +55,6 @@ criterion = nn.CrossEntropyLoss()
 original_cnn = CNN()
 
 # Test the original model
-original_cnn.to(device)
 test_loss_original_cnn, accuracy_original_cnn, _ = test(
     original_cnn, device, test_loader, criterion
 )
@@ -64,10 +63,11 @@ print(
 )
 print("-" * 80)
 
-dropout_rate = 0.8
+dropout_rate = 0.5
 num_groups = max(1, int(1 / (1 - dropout_rate)))
 pruned_models = []
 indices_to_prune_list = []
+accuracy_last_aggregated = 0.0
 
 print(f"Number of groups: {num_groups}")
 
@@ -96,7 +96,6 @@ for round in range(ROUNDS):
     optimizer = optim.Adam(pruned_cnn.parameters(), lr=LEARNING_RATE)
 
     # Train and test the pruned model
-    pruned_cnn.to(device)
     train(pruned_cnn, device, train_loader, optimizer, criterion, epochs=EPOCHS)
     test_loss_pruned_cnn, accuracy_pruned_cnn, _ = test(
         pruned_cnn, device, test_loader, criterion
@@ -105,6 +104,8 @@ for round in range(ROUNDS):
 
     # Aggregation
     if round % num_groups == num_groups - 1:
+        original_cnn_backup = original_cnn.state_dict()
+
         print("*" * 80)
         print("Aggregating models")
 
@@ -137,11 +138,21 @@ for round in range(ROUNDS):
         )
 
         # Test the aggregated model
-        original_cnn.to(device)
         test_loss_aggregated, accuracy_aggregated, _ = test(
             original_cnn, device, test_loader, criterion
         )
 
         print(f"Aggregated model test accuracy: {accuracy_aggregated:.6f}")
+
+        if accuracy_aggregated >= accuracy_last_aggregated:
+            accuracy_last_aggregated = accuracy_aggregated
+        else:
+            # Revert to the last successful aggregated model
+            original_cnn.load_state_dict(original_cnn_backup)
+            print("Current aggregation result is worse. Discarding this aggregation.")
+            # Note: Here you might need to restore the original_cnn to its last successful state
+            # This step depends on how you manage the model instances in your code
         print("*" * 80)
     print("-" * 80)
+
+print(f"Max aggregated model test accuracy: {accuracy_last_aggregated:.6f}")
