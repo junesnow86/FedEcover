@@ -63,7 +63,7 @@ print(
 )
 print("-" * 80)
 
-dropout_rate = 0.5
+dropout_rate = 0.2
 accuracy_last_aggregated = 0.0
 
 for round in range(ROUNDS):

@@ -48,7 +48,7 @@ test_loader = DataLoader(
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 criterion = nn.CrossEntropyLoss()
 
-model = CNNWithDropout(dropout_rate=0.8)
+model = CNNWithDropout(dropout_rate=0.2)
 optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
 train(model, device, train_loader, optimizer, criterion, EPOCHS)
 test_loss, accuracy, _ = test(model, device, test_loader, criterion)
