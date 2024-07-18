@@ -128,15 +128,15 @@ def aggregate_linear_layers(
 
     # Initialize accumulator for weights and biases with zeros
     weight_accumulator = torch.zeros_like(global_linear_layer.weight.data)
-    weight_sample_accumulator = torch.zeros((global_output_size, global_input_size))
+    sample_accumulator_weight = torch.zeros((global_output_size, global_input_size))
     if global_linear_layer.bias is not None:
         bias_accumulator = torch.zeros_like(global_linear_layer.bias.data)
-        bias_sample_accumulator = torch.zeros(global_output_size)
+        sample_accumulator_bias = torch.zeros(global_output_size)
 
     for linear_layer, pruned_indices, num_samples in zip(
         linear_layer_list, pruned_indices_list, num_samples_list
     ):
-        layer_weights = linear_layer.weight.data
+        layer_weight = linear_layer.weight.data
 
         unpruned_input_indices = np.setdiff1d(
             range(global_input_size), pruned_indices.get("input", np.array([]))
@@ -145,49 +145,37 @@ def aggregate_linear_layers(
             range(global_output_size), pruned_indices.get("output", np.array([]))
         )
 
-        input_index_map = {
-            original_idx: new_idx
-            for new_idx, original_idx in enumerate(unpruned_input_indices)
-        }
-        output_index_map = {
-            original_idx: new_idx
-            for new_idx, original_idx in enumerate(unpruned_output_indices)
-        }
-
-        for out_idx_global in unpruned_output_indices:
-            for in_idx_global in unpruned_input_indices:
-                out_idx_layer = output_index_map[out_idx_global]
-                in_idx_layer = input_index_map[in_idx_global]
+        for out_idx_layer, out_idx_global in enumerate(unpruned_output_indices):
+            for in_idx_layer, in_idx_global in enumerate(unpruned_input_indices):
                 weight_accumulator[out_idx_global, in_idx_global] += (
-                    layer_weights[out_idx_layer, in_idx_layer] * num_samples
+                    layer_weight[out_idx_layer, in_idx_layer] * num_samples
                 )
-                weight_sample_accumulator[out_idx_global, in_idx_global] += num_samples
+                sample_accumulator_weight[out_idx_global, in_idx_global] += num_samples
 
         if linear_layer.bias is not None:
             layer_bias = linear_layer.bias.data
-            for out_idx_global in unpruned_output_indices:
-                out_idx_layer = output_index_map[out_idx_global]
+            for out_idx_layer, out_idx_global in enumerate(unpruned_output_indices):
                 bias_accumulator[out_idx_global] += (
                     layer_bias[out_idx_layer] * num_samples
                 )
-                bias_sample_accumulator[out_idx_global] += num_samples
+                sample_accumulator_bias[out_idx_global] += num_samples
 
-        # Normalize the accumulated weights and biases by the number of samples
-        for out_idx_global in unpruned_output_indices:
-            for in_idx_global in unpruned_input_indices:
-                if weight_sample_accumulator[out_idx_global, in_idx_global] > 0:
-                    global_linear_layer.weight.data[out_idx_global, in_idx_global] = (
-                        weight_accumulator[out_idx_global, in_idx_global]
-                        / weight_sample_accumulator[out_idx_global, in_idx_global]
-                    )
+    # Normalize the accumulated weights and biases by the number of samples after processing all layers
+    for out_idx_global in range(global_output_size):
+        for in_idx_global in range(global_input_size):
+            if sample_accumulator_weight[out_idx_global, in_idx_global] > 0:
+                global_linear_layer.weight.data[out_idx_global, in_idx_global] = (
+                    weight_accumulator[out_idx_global, in_idx_global]
+                    / sample_accumulator_weight[out_idx_global, in_idx_global]
+                )
 
-        if global_linear_layer.bias is not None:
-            for out_idx_global in unpruned_output_indices:
-                if bias_sample_accumulator[out_idx_global] > 0:
-                    global_linear_layer.bias.data[out_idx_global] = (
-                        bias_accumulator[out_idx_global]
-                        / bias_sample_accumulator[out_idx_global]
-                    )
+    if global_linear_layer.bias is not None:
+        for out_idx_global in range(global_output_size):
+            if sample_accumulator_bias[out_idx_global] > 0:
+                global_linear_layer.bias.data[out_idx_global] = (
+                    bias_accumulator[out_idx_global]
+                    / sample_accumulator_bias[out_idx_global]
+                )
 
 
 def aggregate_conv_layers(
@@ -208,15 +196,15 @@ def aggregate_conv_layers(
 
     # Initialize accumulator for weights and biases with zeros
     weight_accumulator = torch.zeros_like(global_conv_layer.weight.data)
-    weight_sample_accumulator = torch.zeros((global_out_channels, global_in_channels))
+    sample_accumulator_weight = torch.zeros((global_out_channels, global_in_channels))
     if global_conv_layer.bias is not None:
         bias_accumulator = torch.zeros_like(global_conv_layer.bias.data)
-        bias_sample_accumulator = torch.zeros(global_out_channels)
+        sample_accumulator_bias = torch.zeros(global_out_channels)
 
     for conv_layer, pruned_indices, num_samples in zip(
         conv_layer_list, pruned_indices_list, num_samples_list
     ):
-        layer_weights = conv_layer.weight.data
+        layer_weight = conv_layer.weight.data
 
         unpruned_in_indices = np.setdiff1d(
             range(global_in_channels), pruned_indices.get("input", np.array([]))
@@ -225,51 +213,37 @@ def aggregate_conv_layers(
             range(global_out_channels), pruned_indices.get("output", np.array([]))
         )
 
-        input_index_map = {
-            original_idx: new_idx
-            for new_idx, original_idx in enumerate(unpruned_in_indices)
-        }
-        output_index_map = {
-            original_idx: new_idx
-            for new_idx, original_idx in enumerate(unpruned_out_indices)
-        }
-
-        for out_idx_global in unpruned_out_indices:
-            for in_idx_global in unpruned_in_indices:
-                out_idx_layer = output_index_map[out_idx_global]
-                in_idx_layer = input_index_map[in_idx_global]
+        for out_idx_layer, out_idx_global in enumerate(unpruned_out_indices):
+            for in_idx_layer, in_idx_global in enumerate(unpruned_in_indices):
                 weight_accumulator[out_idx_global, in_idx_global, :, :] += (
-                    layer_weights[out_idx_layer, in_idx_layer, :, :] * num_samples
+                    layer_weight[out_idx_layer, in_idx_layer, :, :] * num_samples
                 )
-                weight_sample_accumulator[out_idx_global, in_idx_global] += num_samples
+                sample_accumulator_weight[out_idx_global, in_idx_global] += num_samples
 
         if conv_layer.bias is not None:
             layer_bias = conv_layer.bias.data
-            for out_idx_global in unpruned_out_indices:
-                out_idx_layer = output_index_map[out_idx_global]
+            for out_idx_layer, out_idx_global in enumerate(unpruned_out_indices):
                 bias_accumulator[out_idx_global] += (
                     layer_bias[out_idx_layer] * num_samples
                 )
-                bias_sample_accumulator[out_idx_global] += num_samples
+                sample_accumulator_bias[out_idx_global] += num_samples
 
-        # Normalize the accumulated weights and biases by the number of samples
-        for out_idx_global in unpruned_out_indices:
-            for in_idx_global in unpruned_in_indices:
-                if weight_sample_accumulator[out_idx_global, in_idx_global] > 0:
-                    global_conv_layer.weight.data[
-                        out_idx_global, in_idx_global, :, :
-                    ] = (
-                        weight_accumulator[out_idx_global, in_idx_global, :, :]
-                        / weight_sample_accumulator[out_idx_global, in_idx_global]
-                    )
+    # Normalize the accumulated weights and biases by the number of samples after processing all layers
+    for out_idx_global in range(global_out_channels):
+        for in_idx_global in range(global_in_channels):
+            if sample_accumulator_weight[out_idx_global, in_idx_global] > 0:
+                global_conv_layer.weight.data[out_idx_global, in_idx_global, :, :] = (
+                    weight_accumulator[out_idx_global, in_idx_global, :, :]
+                    / sample_accumulator_weight[out_idx_global, in_idx_global]
+                )
 
-        if global_conv_layer.bias is not None:
-            for out_idx_global in unpruned_out_indices:
-                if bias_sample_accumulator[out_idx_global].sum() > 0:
-                    global_conv_layer.bias.data[out_idx_global] = (
-                        bias_accumulator[out_idx_global]
-                        / bias_sample_accumulator[out_idx_global]
-                    )
+    if global_conv_layer.bias is not None:
+        for out_idx_global in range(global_out_channels):
+            if sample_accumulator_bias[out_idx_global] > 0:
+                global_conv_layer.bias.data[out_idx_global] = (
+                    bias_accumulator[out_idx_global]
+                    / sample_accumulator_bias[out_idx_global]
+                )
 
 
 def prune_cnn(original_cnn: CNN, dropout_rate=0.5, **indices_to_prune):
@@ -503,7 +477,8 @@ def aggregate_cnn(
     )
 
 
-def vanilla_federated_averaging(model_weights, sample_numbers):
+def vanilla_federated_averaging(models, sample_numbers):
+    model_weights = [model.state_dict() for model in models]
     assert len(model_weights) == len(sample_numbers), "Length mismatch"
     avg_weights = {}
     keys = model_weights[0].keys()
