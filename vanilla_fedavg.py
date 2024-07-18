@@ -7,13 +7,9 @@ from torchvision import datasets, transforms
 
 from modules.heterofl_utils import prune_cnn
 from modules.models import CNN
-from modules.utils import (
-    test,
-    train,
-    vanilla_federated_averaging,
-)
+from modules.utils import test, train, vanilla_federated_averaging
 
-ROUNDS = 50
+ROUNDS = 20
 EPOCHS = 1
 LR = 0.001
 BATCH_SIZE = 128
@@ -77,11 +73,11 @@ for round in range(ROUNDS):
         _, local_test_acc, _ = test(local_model, device, test_loader, criterion)
         print(f"Round {round + 1}, Subset {i + 1}, Test Acc: {local_test_acc:.4f}")
 
-    aggregated_weights = vanilla_federated_averaging(
-        models=all_client_models, sample_numbers=subset_sizes
+    aggregated_weight = vanilla_federated_averaging(
+        global_model=global_cnn, models=all_client_models, sample_numbers=subset_sizes
     )
-    global_cnn.load_state_dict(aggregated_weights)
+    global_cnn.load_state_dict(aggregated_weight)
 
     _, test_acc, _ = test(global_cnn, device, test_loader, criterion)
-    print(f"Round {round + 1}, Test Acc: {test_acc:.4f}")
+    print(f"Round {round + 1}, Aggregated Test Acc: {test_acc:.4f}")
     print("=" * 80)

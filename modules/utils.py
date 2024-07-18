@@ -111,8 +111,8 @@ def prune_conv_layer(conv_layer, pruned_indices=None):
 
 
 def aggregate_linear_layers(
-    global_linear_layer,
-    linear_layer_list: List[torch.nn.Linear],
+    global_linear_layer: nn.Linear,
+    linear_layer_list: List[nn.Linear],
     pruned_indices_list: List[Dict[str, np.ndarray]],
     num_samples_list: List[int],
 ):
@@ -179,8 +179,8 @@ def aggregate_linear_layers(
 
 
 def aggregate_conv_layers(
-    global_conv_layer,
-    conv_layer_list: List[torch.nn.Conv2d],
+    global_conv_layer: nn.Conv2d,
+    conv_layer_list: List[nn.Conv2d],
     pruned_indices_list: List[Dict[str, np.ndarray]],
     num_samples_list: List[int],
 ):
@@ -244,6 +244,9 @@ def aggregate_conv_layers(
                     bias_accumulator[out_idx_global]
                     / sample_accumulator_bias[out_idx_global]
                 )
+
+    # print(f"Sample accumulator weight: {sample_accumulator_weight}")
+    # print(f"Sample accumulator bias: {sample_accumulator_bias}")
 
 
 def prune_cnn(original_cnn: CNN, dropout_rate=0.5, **indices_to_prune):
@@ -477,7 +480,7 @@ def aggregate_cnn(
     )
 
 
-def vanilla_federated_averaging(models, sample_numbers):
+def vanilla_federated_averaging(global_model, models, sample_numbers):
     model_weights = [model.state_dict() for model in models]
     assert len(model_weights) == len(sample_numbers), "Length mismatch"
     avg_weights = {}
@@ -491,7 +494,33 @@ def vanilla_federated_averaging(models, sample_numbers):
         layer_weights_avg = sum(layer_weights) / sum(sample_numbers)
         avg_weights[key] = layer_weights_avg
 
+    print(f"Keys aggregated: {set(keys)}")
+
     return avg_weights
+
+    # model_weights = [model.state_dict() for model in models]
+    # assert len(model_weights) == len(sample_numbers), "Length mismatch"
+    # avg_weights = {}
+    # keys = model_weights[0].keys()
+
+    # not_aggregated_keys = set()
+
+    # for key in keys:
+    #     if ".0" in key or "fc" in key:
+    #         layer_weights = [
+    #             model_weight[key].clone().detach() * num
+    #             for model_weight, num in zip(model_weights, sample_numbers)
+    #         ]
+    #         layer_weights_avg = sum(layer_weights) / sum(sample_numbers)
+    #         avg_weights[key] = layer_weights_avg
+    #     else:
+    #         avg_weights[key] = global_model.state_dict()[key]
+    #         not_aggregated_keys.add(key)
+
+    # print(f"Keys not aggregated: {not_aggregated_keys}")
+    # print(f"Keys aggregated: {set(keys) - not_aggregated_keys}")
+
+    # return avg_weights
 
 
 def calculate_model_size(model):

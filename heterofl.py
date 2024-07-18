@@ -12,7 +12,7 @@ from modules.utils import (
     train,
 )
 
-ROUNDS = 50
+ROUNDS = 20
 EPOCHS = 1
 LR = 0.001
 BATCH_SIZE = 128
@@ -46,7 +46,7 @@ dataloaders = [
     DataLoader(
         train_dataset,
         batch_size=BATCH_SIZE,
-        shuffle=False,
+        shuffle=True,
     )
     for subset_indices in subsets_indices
 ]
@@ -57,22 +57,23 @@ dataloaders = [
 #         # 在这里处理每个子集的数据
 #         pass
 
-# original_cnn = CNN()
 global_cnn = CNN()
 
 num_models = 10
-p = 0.9
-num_unpruned = int(num_models * 0.5)
+num_unpruned = int(num_models * 0.2)
 num_pruned = num_models - num_unpruned
-num_unpruned_models = [prune_cnn(global_cnn, p) for _ in range(num_unpruned)]
-# for i in range(num_unpruned):
-#     num_unpruned_models[i].load_state_dict(global_cnn.state_dict())
 
+unpruned_models = [CNN() for _ in range(num_unpruned)]
+for i in range(num_unpruned):
+    unpruned_models[i].load_state_dict(global_cnn.state_dict())
+
+p = 0.9
+
+# unpruned_models = [prune_cnn(global_cnn, p) for _ in range(num_unpruned)]
 pruned_models = [prune_cnn(global_cnn, p) for _ in range(num_pruned)]
-all_client_models = [*num_unpruned_models, *pruned_models]
+all_client_models = [*unpruned_models, *pruned_models]
 
-global_cnn = prune_cnn(global_cnn, p)
-
+# global_cnn = prune_cnn(global_cnn, p)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 criterion = nn.CrossEntropyLoss()
@@ -87,5 +88,5 @@ for round in range(ROUNDS):
     heterofl_aggregate(global_cnn, all_client_models, subset_sizes)
 
     _, test_acc, _ = test(global_cnn, device, test_loader, criterion)
-    print(f"Round {round + 1}, Test Acc: {test_acc:.4f}")
+    print(f"Round {round + 1}, Aggregated Test Acc: {test_acc:.4f}")
     print("=" * 80)

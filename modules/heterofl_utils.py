@@ -265,13 +265,13 @@ def prune_cnn(original_cnn, p):
     )
 
     pruned_cnn.layer1[0] = pruned_conv_layer1
-    pruned_cnn.layer1[1] = nn.BatchNorm2d(pruned_conv_layer1.out_channels)
+    # pruned_cnn.layer1[1] = nn.BatchNorm2d(pruned_conv_layer1.out_channels)
     pruned_cnn.layer1.add_module("dropout", DropoutScaling(p))
     pruned_cnn.layer2[0] = pruned_conv_layer2
-    pruned_cnn.layer2[1] = nn.BatchNorm2d(pruned_conv_layer2.out_channels)
+    # pruned_cnn.layer2[1] = nn.BatchNorm2d(pruned_conv_layer2.out_channels)
     pruned_cnn.layer2.add_module("dropout", DropoutScaling(p))
     pruned_cnn.layer3[0] = pruned_conv_layer3
-    pruned_cnn.layer3[1] = nn.BatchNorm2d(pruned_conv_layer3.out_channels)
+    # pruned_cnn.layer3[1] = nn.BatchNorm2d(pruned_conv_layer3.out_channels)
     pruned_cnn.layer3.add_module("dropout", DropoutScaling(p))
     pruned_cnn.fc = pruned_fc_layer
 
@@ -371,6 +371,44 @@ def heterofl_aggregate(original_cnn, pruned_cnns, weights):
     aggregate_linear_layers(
         original_cnn.fc,
         [cnn.fc for cnn in pruned_cnns],
+        indices_to_prune_fc,
+        weights,
+    )
+
+
+def aggregate_cnn(global_cnn, client_cnns, weights):
+    indices_to_prune_conv1 = []
+    indices_to_prune_conv2 = []
+    indices_to_prune_conv3 = []
+    indices_to_prune_fc = []
+
+    for i, cnn in enumerate(client_cnns):
+        indices_to_prune_conv1.append({})
+        indices_to_prune_conv2.append({})
+        indices_to_prune_conv3.append({})
+        indices_to_prune_fc.append({})
+
+    aggregate_conv_layers(
+        global_cnn.layer1[0],
+        [cnn.layer1[0] for cnn in client_cnns],
+        indices_to_prune_conv1,
+        weights,
+    )
+    aggregate_conv_layers(
+        global_cnn.layer2[0],
+        [cnn.layer2[0] for cnn in client_cnns],
+        indices_to_prune_conv2,
+        weights,
+    )
+    aggregate_conv_layers(
+        global_cnn.layer3[0],
+        [cnn.layer3[0] for cnn in client_cnns],
+        indices_to_prune_conv3,
+        weights,
+    )
+    aggregate_linear_layers(
+        global_cnn.fc,
+        [cnn.fc for cnn in client_cnns],
         indices_to_prune_fc,
         weights,
     )
