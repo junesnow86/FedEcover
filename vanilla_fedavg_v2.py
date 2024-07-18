@@ -1,3 +1,5 @@
+import random
+
 import numpy as np
 import torch
 import torch.nn as nn
@@ -5,14 +7,23 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 
-from modules.heterofl_utils import aggregate_cnn, prune_cnn
+from modules.heterofl_utils import prune_cnn, vanilla_aggregate
 from modules.models import CNN
 from modules.utils import test, train
 
-ROUNDS = 50
+ROUNDS = 20
 EPOCHS = 1
 LR = 0.001
 BATCH_SIZE = 128
+
+seed = 18
+random.seed(seed)
+np.random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+# torch.cuda.manual_seed_all(seed)  # if you are using multi-GPU.
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
 
 transform = transforms.Compose(
     [transforms.ToTensor(), transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]
@@ -60,8 +71,10 @@ original_cnn = CNN()
 
 p = 0.9
 num_models = 10
-global_cnn = prune_cnn(original_cnn, p)
-all_client_models = [prune_cnn(original_cnn, p) for _ in range(num_models)]
+global_cnn = prune_cnn(original_cnn, p, scaling=True)
+all_client_models = [
+    prune_cnn(original_cnn, p, scaling=True) for _ in range(num_models)
+]
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 criterion = nn.CrossEntropyLoss()
@@ -73,7 +86,11 @@ for round in range(ROUNDS):
         _, local_test_acc, _ = test(local_model, device, test_loader, criterion)
         print(f"Round {round + 1}, Subset {i + 1}, Test Acc: {local_test_acc:.4f}")
 
-    aggregate_cnn(global_cnn, all_client_models, subset_sizes)
+    # aggregated_weight = vanilla_federated_averaging(
+    #     global_model=global_cnn, models=all_client_models, sample_numbers=subset_sizes
+    # )
+    # global_cnn.load_state_dict(aggregated_weight)
+    vanilla_aggregate(global_cnn, all_client_models, subset_sizes)
 
     _, test_acc, _ = test(global_cnn, device, test_loader, criterion)
     print(f"Round {round + 1}, Aggregated Test Acc: {test_acc:.4f}")

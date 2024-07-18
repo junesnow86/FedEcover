@@ -240,7 +240,7 @@ def expand_pruned_linear_layer(pruned_linear_layer, original_linear_layer):
     return expanded_linear_layer
 
 
-def prune_cnn(original_cnn, p):
+def prune_cnn(original_cnn, p, scaling=True):
     pruned_cnn = CNN()
 
     pruned_conv_layer1 = prune_conv_layer(
@@ -266,14 +266,19 @@ def prune_cnn(original_cnn, p):
 
     pruned_cnn.layer1[0] = pruned_conv_layer1
     # pruned_cnn.layer1[1] = nn.BatchNorm2d(pruned_conv_layer1.out_channels)
-    pruned_cnn.layer1.add_module("dropout", DropoutScaling(p))
+    # pruned_cnn.layer1.add_module("dropout", DropoutScaling(p))
     pruned_cnn.layer2[0] = pruned_conv_layer2
     # pruned_cnn.layer2[1] = nn.BatchNorm2d(pruned_conv_layer2.out_channels)
-    pruned_cnn.layer2.add_module("dropout", DropoutScaling(p))
+    # pruned_cnn.layer2.add_module("dropout", DropoutScaling(p))
     pruned_cnn.layer3[0] = pruned_conv_layer3
     # pruned_cnn.layer3[1] = nn.BatchNorm2d(pruned_conv_layer3.out_channels)
-    pruned_cnn.layer3.add_module("dropout", DropoutScaling(p))
+    # pruned_cnn.layer3.add_module("dropout", DropoutScaling(p))
     pruned_cnn.fc = pruned_fc_layer
+
+    if scaling:
+        pruned_cnn.layer1.add_module("scaling", DropoutScaling(p))
+        pruned_cnn.layer2.add_module("scaling", DropoutScaling(p))
+        pruned_cnn.layer3.add_module("scaling", DropoutScaling(p))
 
     return pruned_cnn
 
@@ -293,11 +298,11 @@ def expand_cnn(pruned_cnn, original_cnn):
     expanded_fc_layer = expand_pruned_linear_layer(pruned_cnn.fc, original_cnn.fc)
 
     expanded_cnn.layer1[0] = expanded_conv_layer1
-    expanded_cnn.layer1[1] = nn.BatchNorm2d(expanded_conv_layer1.out_channels)
+    # expanded_cnn.layer1[1] = nn.BatchNorm2d(expanded_conv_layer1.out_channels)
     expanded_cnn.layer2[0] = expanded_conv_layer2
-    expanded_cnn.layer2[1] = nn.BatchNorm2d(expanded_conv_layer2.out_channels)
+    # expanded_cnn.layer2[1] = nn.BatchNorm2d(expanded_conv_layer2.out_channels)
     expanded_cnn.layer3[0] = expanded_conv_layer3
-    expanded_cnn.layer3[1] = nn.BatchNorm2d(expanded_conv_layer3.out_channels)
+    # expanded_cnn.layer3[1] = nn.BatchNorm2d(expanded_conv_layer3.out_channels)
     expanded_cnn.fc = expanded_fc_layer
 
     return expanded_cnn
@@ -376,7 +381,7 @@ def heterofl_aggregate(original_cnn, pruned_cnns, weights):
     )
 
 
-def aggregate_cnn(global_cnn, client_cnns, weights):
+def vanilla_aggregate(global_cnn, client_cnns, weights):
     indices_to_prune_conv1 = []
     indices_to_prune_conv2 = []
     indices_to_prune_conv3 = []
