@@ -4,7 +4,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, Subset
 from torchvision import datasets, transforms
 
 from modules.heterofl_utils import heterofl_aggregate, prune_cnn
@@ -55,7 +55,7 @@ subset_sizes = [len(subset) for subset in subsets_indices]
 
 dataloaders = [
     DataLoader(
-        train_dataset,
+        Subset(train_dataset, subset_indices),
         batch_size=BATCH_SIZE,
         shuffle=True,
     )
