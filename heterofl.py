@@ -74,21 +74,24 @@ num_models = 10
 num_unpruned = int(num_models * 0.2)
 num_pruned = num_models - num_unpruned
 
-unpruned_models = [CNN() for _ in range(num_unpruned)]
-for i in range(num_unpruned):
-    unpruned_models[i].load_state_dict(global_cnn.state_dict())
-
-p = 0.9
-
-# unpruned_models = [prune_cnn(global_cnn, p) for _ in range(num_unpruned)]
-pruned_models = [prune_cnn(global_cnn, p) for _ in range(num_pruned)]
-all_client_models = [*unpruned_models, *pruned_models]
-
-# global_cnn = prune_cnn(global_cnn, p)
-
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 criterion = nn.CrossEntropyLoss()
+
 for round in range(ROUNDS):
+    # Load global model's parameters
+    unpruned_models = [CNN() for _ in range(num_unpruned)]
+    for i in range(num_unpruned):
+        unpruned_models[i].load_state_dict(global_cnn.state_dict())
+
+    p = 0.9
+
+    # unpruned_models = [prune_cnn(global_cnn, p) for _ in range(num_unpruned)]
+    pruned_models = [prune_cnn(global_cnn, p) for _ in range(num_pruned)]
+    all_client_models = [*unpruned_models, *pruned_models]
+
+    # global_cnn = prune_cnn(global_cnn, p)
+
+    # Local training
     for i, dataloader in enumerate(dataloaders):
         local_model = all_client_models[i]
         optimizer = optim.Adam(local_model.parameters(), lr=LR)
@@ -96,6 +99,7 @@ for round in range(ROUNDS):
         _, local_test_acc, _ = test(local_model, device, test_loader, criterion)
         print(f"Round {round + 1}, Subset {i + 1}, Test Acc: {local_test_acc:.4f}")
 
+    # Aggregation
     heterofl_aggregate(global_cnn, all_client_models, subset_sizes)
 
     _, test_acc, _ = test(global_cnn, device, test_loader, criterion)

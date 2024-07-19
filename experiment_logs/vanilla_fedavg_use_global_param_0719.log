@@ -1,0 +1,260 @@
+Round 1, Subset 1, Test Acc: 0.5250
+Round 1, Subset 2, Test Acc: 0.5324
+Round 1, Subset 3, Test Acc: 0.5110
+Round 1, Subset 4, Test Acc: 0.5164
+Round 1, Subset 5, Test Acc: 0.5255
+Round 1, Subset 6, Test Acc: 0.5178
+Round 1, Subset 7, Test Acc: 0.5167
+Round 1, Subset 8, Test Acc: 0.5154
+Round 1, Subset 9, Test Acc: 0.5075
+Round 1, Subset 10, Test Acc: 0.5267
+Keys aggregated: {'layer1.0.weight', 'layer1.0.bias', 'layer2.0.weight', 'fc.weight', 'layer3.0.weight', 'layer3.0.bias', 'layer2.0.bias', 'fc.bias'}
+Round 1, Aggregated Test Acc: 0.4553
+================================================================================
+Round 2, Subset 1, Test Acc: 0.5582
+Round 2, Subset 2, Test Acc: 0.5745
+Round 2, Subset 3, Test Acc: 0.5631
+Round 2, Subset 4, Test Acc: 0.5708
+Round 2, Subset 5, Test Acc: 0.5663
+Round 2, Subset 6, Test Acc: 0.5704
+Round 2, Subset 7, Test Acc: 0.5690
+Round 2, Subset 8, Test Acc: 0.5570
+Round 2, Subset 9, Test Acc: 0.5726
+Round 2, Subset 10, Test Acc: 0.5646
+Keys aggregated: {'layer1.0.weight', 'layer1.0.bias', 'layer2.0.weight', 'fc.weight', 'layer3.0.weight', 'layer3.0.bias', 'layer2.0.bias', 'fc.bias'}
+Round 2, Aggregated Test Acc: 0.5868
+================================================================================
+Round 3, Subset 1, Test Acc: 0.5955
+Round 3, Subset 2, Test Acc: 0.5888
+Round 3, Subset 3, Test Acc: 0.5881
+Round 3, Subset 4, Test Acc: 0.5802
+Round 3, Subset 5, Test Acc: 0.5825
+Round 3, Subset 6, Test Acc: 0.5897
+Round 3, Subset 7, Test Acc: 0.5775
+Round 3, Subset 8, Test Acc: 0.5935
+Round 3, Subset 9, Test Acc: 0.5879
+Round 3, Subset 10, Test Acc: 0.5949
+Keys aggregated: {'layer1.0.weight', 'layer1.0.bias', 'layer2.0.weight', 'fc.weight', 'layer3.0.weight', 'layer3.0.bias', 'layer2.0.bias', 'fc.bias'}
+Round 3, Aggregated Test Acc: 0.6158
+================================================================================
+Round 4, Subset 1, Test Acc: 0.5872
+Round 4, Subset 2, Test Acc: 0.6106
+Round 4, Subset 3, Test Acc: 0.6022
+Round 4, Subset 4, Test Acc: 0.5985
+Round 4, Subset 5, Test Acc: 0.6112
+Round 4, Subset 6, Test Acc: 0.6073
+Round 4, Subset 7, Test Acc: 0.6027
+Round 4, Subset 8, Test Acc: 0.6061
+Round 4, Subset 9, Test Acc: 0.6021
+Round 4, Subset 10, Test Acc: 0.6074
+Keys aggregated: {'layer1.0.weight', 'layer1.0.bias', 'layer2.0.weight', 'fc.weight', 'layer3.0.weight', 'layer3.0.bias', 'layer2.0.bias', 'fc.bias'}
+Round 4, Aggregated Test Acc: 0.6291
+================================================================================
+Round 5, Subset 1, Test Acc: 0.6063
+Round 5, Subset 2, Test Acc: 0.6185
+Round 5, Subset 3, Test Acc: 0.6200
+Round 5, Subset 4, Test Acc: 0.6069
+Round 5, Subset 5, Test Acc: 0.6177
+Round 5, Subset 6, Test Acc: 0.6039
+Round 5, Subset 7, Test Acc: 0.6191
+Round 5, Subset 8, Test Acc: 0.6090
+Round 5, Subset 9, Test Acc: 0.6146
+Round 5, Subset 10, Test Acc: 0.6119
+Keys aggregated: {'layer1.0.weight', 'layer1.0.bias', 'layer2.0.weight', 'fc.weight', 'layer3.0.weight', 'layer3.0.bias', 'layer2.0.bias', 'fc.bias'}
+Round 5, Aggregated Test Acc: 0.6400
+================================================================================
+Round 6, Subset 1, Test Acc: 0.6103
+Round 6, Subset 2, Test Acc: 0.6266
+Round 6, Subset 3, Test Acc: 0.6307
+Round 6, Subset 4, Test Acc: 0.6257
+Round 6, Subset 5, Test Acc: 0.6305
+Round 6, Subset 6, Test Acc: 0.6304
+Round 6, Subset 7, Test Acc: 0.6174
+Round 6, Subset 8, Test Acc: 0.6213
+Round 6, Subset 9, Test Acc: 0.6218
+Round 6, Subset 10, Test Acc: 0.6242
+Keys aggregated: {'layer1.0.weight', 'layer1.0.bias', 'layer2.0.weight', 'fc.weight', 'layer3.0.weight', 'layer3.0.bias', 'layer2.0.bias', 'fc.bias'}
+Round 6, Aggregated Test Acc: 0.6487
+================================================================================
+Round 7, Subset 1, Test Acc: 0.6224
+Round 7, Subset 2, Test Acc: 0.6261
+Round 7, Subset 3, Test Acc: 0.6212
+Round 7, Subset 4, Test Acc: 0.6168
+Round 7, Subset 5, Test Acc: 0.6218
+Round 7, Subset 6, Test Acc: 0.6153
+Round 7, Subset 7, Test Acc: 0.6282
+Round 7, Subset 8, Test Acc: 0.6179
+Round 7, Subset 9, Test Acc: 0.6010
+Round 7, Subset 10, Test Acc: 0.6280
+Keys aggregated: {'layer1.0.weight', 'layer1.0.bias', 'layer2.0.weight', 'fc.weight', 'layer3.0.weight', 'layer3.0.bias', 'layer2.0.bias', 'fc.bias'}
+Round 7, Aggregated Test Acc: 0.6475
+================================================================================
+Round 8, Subset 1, Test Acc: 0.6141
+Round 8, Subset 2, Test Acc: 0.6164
+Round 8, Subset 3, Test Acc: 0.6326
+Round 8, Subset 4, Test Acc: 0.6301
+Round 8, Subset 5, Test Acc: 0.6295
+Round 8, Subset 6, Test Acc: 0.6245
+Round 8, Subset 7, Test Acc: 0.6255
+Round 8, Subset 8, Test Acc: 0.6224
+Round 8, Subset 9, Test Acc: 0.6343
+Round 8, Subset 10, Test Acc: 0.6290
+Keys aggregated: {'layer1.0.weight', 'layer1.0.bias', 'layer2.0.weight', 'fc.weight', 'layer3.0.weight', 'layer3.0.bias', 'layer2.0.bias', 'fc.bias'}
+Round 8, Aggregated Test Acc: 0.6517
+================================================================================
+Round 9, Subset 1, Test Acc: 0.6125
+Round 9, Subset 2, Test Acc: 0.6276
+Round 9, Subset 3, Test Acc: 0.6251
+Round 9, Subset 4, Test Acc: 0.6305
+Round 9, Subset 5, Test Acc: 0.6235
+Round 9, Subset 6, Test Acc: 0.6182
+Round 9, Subset 7, Test Acc: 0.6350
+Round 9, Subset 8, Test Acc: 0.6376
+Round 9, Subset 9, Test Acc: 0.6298
+Round 9, Subset 10, Test Acc: 0.6234
+Keys aggregated: {'layer1.0.weight', 'layer1.0.bias', 'layer2.0.weight', 'fc.weight', 'layer3.0.weight', 'layer3.0.bias', 'layer2.0.bias', 'fc.bias'}
+Round 9, Aggregated Test Acc: 0.6551
+================================================================================
+Round 10, Subset 1, Test Acc: 0.6450
+Round 10, Subset 2, Test Acc: 0.6264
+Round 10, Subset 3, Test Acc: 0.6312
+Round 10, Subset 4, Test Acc: 0.6322
+Round 10, Subset 5, Test Acc: 0.6479
+Round 10, Subset 6, Test Acc: 0.6285
+Round 10, Subset 7, Test Acc: 0.6333
+Round 10, Subset 8, Test Acc: 0.6357
+Round 10, Subset 9, Test Acc: 0.6166
+Round 10, Subset 10, Test Acc: 0.6150
+Keys aggregated: {'layer1.0.weight', 'layer1.0.bias', 'layer2.0.weight', 'fc.weight', 'layer3.0.weight', 'layer3.0.bias', 'layer2.0.bias', 'fc.bias'}
+Round 10, Aggregated Test Acc: 0.6575
+================================================================================
+Round 11, Subset 1, Test Acc: 0.6338
+Round 11, Subset 2, Test Acc: 0.6403
+Round 11, Subset 3, Test Acc: 0.6438
+Round 11, Subset 4, Test Acc: 0.6215
+Round 11, Subset 5, Test Acc: 0.6353
+Round 11, Subset 6, Test Acc: 0.6381
+Round 11, Subset 7, Test Acc: 0.6404
+Round 11, Subset 8, Test Acc: 0.6345
+Round 11, Subset 9, Test Acc: 0.6278
+Round 11, Subset 10, Test Acc: 0.6356
+Keys aggregated: {'layer1.0.weight', 'layer1.0.bias', 'layer2.0.weight', 'fc.weight', 'layer3.0.weight', 'layer3.0.bias', 'layer2.0.bias', 'fc.bias'}
+Round 11, Aggregated Test Acc: 0.6599
+================================================================================
+Round 12, Subset 1, Test Acc: 0.6269
+Round 12, Subset 2, Test Acc: 0.6343
+Round 12, Subset 3, Test Acc: 0.6377
+Round 12, Subset 4, Test Acc: 0.6328
+Round 12, Subset 5, Test Acc: 0.6356
+Round 12, Subset 6, Test Acc: 0.6309
+Round 12, Subset 7, Test Acc: 0.6344
+Round 12, Subset 8, Test Acc: 0.6420
+Round 12, Subset 9, Test Acc: 0.6319
+Round 12, Subset 10, Test Acc: 0.6393
+Keys aggregated: {'layer1.0.weight', 'layer1.0.bias', 'layer2.0.weight', 'fc.weight', 'layer3.0.weight', 'layer3.0.bias', 'layer2.0.bias', 'fc.bias'}
+Round 12, Aggregated Test Acc: 0.6593
+================================================================================
+Round 13, Subset 1, Test Acc: 0.6404
+Round 13, Subset 2, Test Acc: 0.6332
+Round 13, Subset 3, Test Acc: 0.6503
+Round 13, Subset 4, Test Acc: 0.6195
+Round 13, Subset 5, Test Acc: 0.6365
+Round 13, Subset 6, Test Acc: 0.6362
+Round 13, Subset 7, Test Acc: 0.6365
+Round 13, Subset 8, Test Acc: 0.6446
+Round 13, Subset 9, Test Acc: 0.6361
+Round 13, Subset 10, Test Acc: 0.6346
+Keys aggregated: {'layer1.0.weight', 'layer1.0.bias', 'layer2.0.weight', 'fc.weight', 'layer3.0.weight', 'layer3.0.bias', 'layer2.0.bias', 'fc.bias'}
+Round 13, Aggregated Test Acc: 0.6599
+================================================================================
+Round 14, Subset 1, Test Acc: 0.6417
+Round 14, Subset 2, Test Acc: 0.6450
+Round 14, Subset 3, Test Acc: 0.6431
+Round 14, Subset 4, Test Acc: 0.6319
+Round 14, Subset 5, Test Acc: 0.6424
+Round 14, Subset 6, Test Acc: 0.6153
+Round 14, Subset 7, Test Acc: 0.6424
+Round 14, Subset 8, Test Acc: 0.6297
+Round 14, Subset 9, Test Acc: 0.6325
+Round 14, Subset 10, Test Acc: 0.6407
+Keys aggregated: {'layer1.0.weight', 'layer1.0.bias', 'layer2.0.weight', 'fc.weight', 'layer3.0.weight', 'layer3.0.bias', 'layer2.0.bias', 'fc.bias'}
+Round 14, Aggregated Test Acc: 0.6627
+================================================================================
+Round 15, Subset 1, Test Acc: 0.6356
+Round 15, Subset 2, Test Acc: 0.6361
+Round 15, Subset 3, Test Acc: 0.6370
+Round 15, Subset 4, Test Acc: 0.6405
+Round 15, Subset 5, Test Acc: 0.6410
+Round 15, Subset 6, Test Acc: 0.6352
+Round 15, Subset 7, Test Acc: 0.6418
+Round 15, Subset 8, Test Acc: 0.6344
+Round 15, Subset 9, Test Acc: 0.6313
+Round 15, Subset 10, Test Acc: 0.6389
+Keys aggregated: {'layer1.0.weight', 'layer1.0.bias', 'layer2.0.weight', 'fc.weight', 'layer3.0.weight', 'layer3.0.bias', 'layer2.0.bias', 'fc.bias'}
+Round 15, Aggregated Test Acc: 0.6604
+================================================================================
+Round 16, Subset 1, Test Acc: 0.6424
+Round 16, Subset 2, Test Acc: 0.6409
+Round 16, Subset 3, Test Acc: 0.6292
+Round 16, Subset 4, Test Acc: 0.6449
+Round 16, Subset 5, Test Acc: 0.6432
+Round 16, Subset 6, Test Acc: 0.6495
+Round 16, Subset 7, Test Acc: 0.6317
+Round 16, Subset 8, Test Acc: 0.6435
+Round 16, Subset 9, Test Acc: 0.6318
+Round 16, Subset 10, Test Acc: 0.6433
+Keys aggregated: {'layer1.0.weight', 'layer1.0.bias', 'layer2.0.weight', 'fc.weight', 'layer3.0.weight', 'layer3.0.bias', 'layer2.0.bias', 'fc.bias'}
+Round 16, Aggregated Test Acc: 0.6637
+================================================================================
+Round 17, Subset 1, Test Acc: 0.6419
+Round 17, Subset 2, Test Acc: 0.6461
+Round 17, Subset 3, Test Acc: 0.6404
+Round 17, Subset 4, Test Acc: 0.6467
+Round 17, Subset 5, Test Acc: 0.6336
+Round 17, Subset 6, Test Acc: 0.6417
+Round 17, Subset 7, Test Acc: 0.6425
+Round 17, Subset 8, Test Acc: 0.6385
+Round 17, Subset 9, Test Acc: 0.6456
+Round 17, Subset 10, Test Acc: 0.6418
+Keys aggregated: {'layer1.0.weight', 'layer1.0.bias', 'layer2.0.weight', 'fc.weight', 'layer3.0.weight', 'layer3.0.bias', 'layer2.0.bias', 'fc.bias'}
+Round 17, Aggregated Test Acc: 0.6678
+================================================================================
+Round 18, Subset 1, Test Acc: 0.6200
+Round 18, Subset 2, Test Acc: 0.6405
+Round 18, Subset 3, Test Acc: 0.6465
+Round 18, Subset 4, Test Acc: 0.6426
+Round 18, Subset 5, Test Acc: 0.6466
+Round 18, Subset 6, Test Acc: 0.6366
+Round 18, Subset 7, Test Acc: 0.6427
+Round 18, Subset 8, Test Acc: 0.6464
+Round 18, Subset 9, Test Acc: 0.6487
+Round 18, Subset 10, Test Acc: 0.6288
+Keys aggregated: {'layer1.0.weight', 'layer1.0.bias', 'layer2.0.weight', 'fc.weight', 'layer3.0.weight', 'layer3.0.bias', 'layer2.0.bias', 'fc.bias'}
+Round 18, Aggregated Test Acc: 0.6627
+================================================================================
+Round 19, Subset 1, Test Acc: 0.6449
+Round 19, Subset 2, Test Acc: 0.6479
+Round 19, Subset 3, Test Acc: 0.6403
+Round 19, Subset 4, Test Acc: 0.6368
+Round 19, Subset 5, Test Acc: 0.6418
+Round 19, Subset 6, Test Acc: 0.6410
+Round 19, Subset 7, Test Acc: 0.6294
+Round 19, Subset 8, Test Acc: 0.6237
+Round 19, Subset 9, Test Acc: 0.6378
+Round 19, Subset 10, Test Acc: 0.6283
+Keys aggregated: {'layer1.0.weight', 'layer1.0.bias', 'layer2.0.weight', 'fc.weight', 'layer3.0.weight', 'layer3.0.bias', 'layer2.0.bias', 'fc.bias'}
+Round 19, Aggregated Test Acc: 0.6629
+================================================================================
+Round 20, Subset 1, Test Acc: 0.6464
+Round 20, Subset 2, Test Acc: 0.6495
+Round 20, Subset 3, Test Acc: 0.6261
+Round 20, Subset 4, Test Acc: 0.6461
+Round 20, Subset 5, Test Acc: 0.6482
+Round 20, Subset 6, Test Acc: 0.6477
+Round 20, Subset 7, Test Acc: 0.6251
+Round 20, Subset 8, Test Acc: 0.6431
+Round 20, Subset 9, Test Acc: 0.6459
+Round 20, Subset 10, Test Acc: 0.6432
+Keys aggregated: {'layer1.0.weight', 'layer1.0.bias', 'layer2.0.weight', 'fc.weight', 'layer3.0.weight', 'layer3.0.bias', 'layer2.0.bias', 'fc.bias'}
+Round 20, Aggregated Test Acc: 0.6637
+================================================================================

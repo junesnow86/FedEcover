@@ -71,14 +71,18 @@ original_cnn = CNN()
 
 p = 0.9
 num_models = 10
-global_cnn = prune_cnn(original_cnn, p, scaling=True)
-all_client_models = [
-    prune_cnn(original_cnn, p, scaling=True) for _ in range(num_models)
-]
+global_cnn = prune_cnn(original_cnn, p)
+all_client_models = [prune_cnn(original_cnn, p) for _ in range(num_models)]
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 criterion = nn.CrossEntropyLoss()
+
 for round in range(ROUNDS):
+    # Load global model's parameters
+    for i in range(num_models):
+        all_client_models[i].load_state_dict(global_cnn.state_dict())
+
+    # Local training
     for i, dataloader in enumerate(dataloaders):
         local_model = all_client_models[i]
         optimizer = optim.Adam(local_model.parameters(), lr=LR)
@@ -86,6 +90,7 @@ for round in range(ROUNDS):
         _, local_test_acc, _ = test(local_model, device, test_loader, criterion)
         print(f"Round {round + 1}, Subset {i + 1}, Test Acc: {local_test_acc:.4f}")
 
+    # Aggregation
     aggregated_weight = vanilla_federated_averaging(
         global_model=global_cnn, models=all_client_models, sample_numbers=subset_sizes
     )

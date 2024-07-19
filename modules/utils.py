@@ -245,17 +245,14 @@ def aggregate_conv_layers(
                     / sample_accumulator_bias[out_idx_global]
                 )
 
-    # print(f"Sample accumulator weight: {sample_accumulator_weight}")
-    # print(f"Sample accumulator bias: {sample_accumulator_bias}")
 
-
-def prune_cnn(original_cnn: CNN, dropout_rate=0.5, **indices_to_prune):
+def prune_cnn(original_cnn: CNN, dropout_rate=0.5, scaling=True, **indices_to_prune):
     indices_to_prune_conv1 = indices_to_prune.get("indices_to_prune_conv1", None)
     indices_to_prune_conv2 = indices_to_prune.get("indices_to_prune_conv2", None)
     indices_to_prune_conv3 = indices_to_prune.get("indices_to_prune_conv3", None)
     indices_to_prune_fc = indices_to_prune.get("indices_to_prune_fc", None)
 
-    conv1 = copy.deepcopy(original_cnn.layer1[0])
+    conv1 = original_cnn.layer1[0]
     if indices_to_prune_conv1 is None:
         num_output_channels_to_prune_conv1 = int(conv1.out_channels * dropout_rate)
         output_indices_to_prune_conv1 = np.random.choice(
@@ -264,7 +261,7 @@ def prune_cnn(original_cnn: CNN, dropout_rate=0.5, **indices_to_prune):
         indices_to_prune_conv1 = {"output": output_indices_to_prune_conv1}
     pruned_layer1 = prune_conv_layer(conv1, indices_to_prune_conv1)
 
-    conv2 = copy.deepcopy(original_cnn.layer2[0])
+    conv2 = original_cnn.layer2[0]
     if indices_to_prune_conv2 is None:
         num_output_channels_to_prune_conv2 = int(conv2.out_channels * dropout_rate)
         output_indices_to_prune_conv2 = np.random.choice(
@@ -276,7 +273,7 @@ def prune_cnn(original_cnn: CNN, dropout_rate=0.5, **indices_to_prune):
         }
     pruned_layer2 = prune_conv_layer(conv2, indices_to_prune_conv2)
 
-    conv3 = copy.deepcopy(original_cnn.layer3[0])
+    conv3 = original_cnn.layer3[0]
     if indices_to_prune_conv3 is None:
         num_output_channels_to_prune_conv3 = int(conv3.out_channels * dropout_rate)
         output_indices_to_prune_conv3 = np.random.choice(
@@ -288,7 +285,7 @@ def prune_cnn(original_cnn: CNN, dropout_rate=0.5, **indices_to_prune):
         }
     pruned_layer3 = prune_conv_layer(conv3, indices_to_prune_conv3)
 
-    fc = copy.deepcopy(original_cnn.fc)
+    fc = original_cnn.fc
     if indices_to_prune_fc is None:
         input_indices_to_prune_fc = []
         for channel_index in output_indices_to_prune_conv3:
@@ -299,36 +296,16 @@ def prune_cnn(original_cnn: CNN, dropout_rate=0.5, **indices_to_prune):
         indices_to_prune_fc = {"input": input_indices_to_prune_fc}
     pruned_fc = prune_linear_layer(fc, indices_to_prune_fc)
 
-    # scale_factor = 1 / (1 - dropout_rate)
-    # pruned_layer1.weight.data *= scale_factor
-    # pruned_layer2.weight.data *= scale_factor
-    # pruned_layer3.weight.data *= scale_factor
-    # pruned_fc.weight.data *= scale_factor
-
     pruned_cnn = CNN()
-    # layer_names = ["layer1", "layer2", "layer3"]
-    # pruned_conv_layers = [pruned_layer1, pruned_layer2, pruned_layer3]
-    # for layer_name, pruned_conv_layer in zip(layer_names, pruned_conv_layers):
-    #     original_sequential = getattr(original_cnn, layer_name)
-    #     out_channels = pruned_conv_layer.out_channels
-    #     new_sequential = nn.Sequential(
-    #         pruned_conv_layer,
-    #         DropoutScaling(dropout_rate),
-    #         nn.BatchNorm2d(out_channels),
-    #         original_sequential[2],
-    #         original_sequential[3],
-    #     )
-    #     setattr(pruned_cnn, layer_name, new_sequential)
     pruned_cnn.layer1[0] = pruned_layer1
-    pruned_cnn.layer1[1] = nn.BatchNorm2d(pruned_layer1.out_channels)
-    pruned_cnn.layer1.add_module("scaling", DropoutScaling(dropout_rate))
     pruned_cnn.layer2[0] = pruned_layer2
-    pruned_cnn.layer2[1] = nn.BatchNorm2d(pruned_layer2.out_channels)
-    pruned_cnn.layer2.add_module("scaling", DropoutScaling(dropout_rate))
     pruned_cnn.layer3[0] = pruned_layer3
-    pruned_cnn.layer3[1] = nn.BatchNorm2d(pruned_layer3.out_channels)
-    pruned_cnn.layer3.add_module("scaling", DropoutScaling(dropout_rate))
     pruned_cnn.fc = pruned_fc
+
+    if scaling:
+        pruned_cnn.layer1.add_module("scaling", DropoutScaling(dropout_rate))
+        pruned_cnn.layer2.add_module("scaling", DropoutScaling(dropout_rate))
+        pruned_cnn.layer3.add_module("scaling", DropoutScaling(dropout_rate))
 
     return (
         pruned_cnn,
@@ -398,19 +375,6 @@ def prune_cnn_into_groups(
         pruned_fc = prune_linear_layer(fc, indices_to_prune_fc)
 
         pruned_cnn = CNN()
-        # layer_names = ["layer1", "layer2", "layer3"]
-        # pruned_conv_layers = [pruned_layer1, pruned_layer2, pruned_layer3]
-        # for layer_name, pruned_conv_layer in zip(layer_names, pruned_conv_layers):
-        #     original_sequential = getattr(original_cnn, layer_name)
-        #     out_channels = pruned_conv_layer.out_channels
-        #     new_sequential = nn.Sequential(
-        #         pruned_conv_layer,
-        #         DropoutScaling(dropout_rate),
-        #         nn.BatchNorm2d(out_channels),
-        #         original_sequential[2],
-        #         original_sequential[3],
-        #     )
-        #     setattr(pruned_cnn, layer_name, new_sequential)
         pruned_cnn.layer1[0] = pruned_layer1
         pruned_cnn.layer1[1] = nn.BatchNorm2d(pruned_layer1.out_channels)
         pruned_cnn.layer1.add_module("scaling", DropoutScaling(dropout_rate))
@@ -438,21 +402,14 @@ def prune_cnn_into_groups(
 def aggregate_cnn(
     original_cnn: CNN,
     pruned_cnn_list: List[CNN],
-    dropout_rate_list: List[float],
+    # dropout_rate_list: List[float],
     num_samples_list: List[int],
-    indices_to_prune_dict: Dict[str, list],
+    **indices_to_prune,
 ):
-    indices_to_prune_conv1 = indices_to_prune_dict["indices_to_prune_conv1"]
-    indices_to_prune_conv2 = indices_to_prune_dict["indices_to_prune_conv2"]
-    indices_to_prune_conv3 = indices_to_prune_dict["indices_to_prune_conv3"]
-    indices_to_prune_fc = indices_to_prune_dict["indices_to_prune_fc"]
-
-    # for i in range(len(pruned_cnn_list)):
-    #     scale_factor = 1 - dropout_rate_list[i]
-    #     pruned_cnn_list[i].layer1[0].weight.data *= scale_factor
-    #     pruned_cnn_list[i].layer2[0].weight.data *= scale_factor
-    #     pruned_cnn_list[i].layer3[0].weight.data *= scale_factor
-    # pruned_cnn_list[i].fc.weight.data *= scale_factor
+    indices_to_prune_conv1 = indices_to_prune.get("indices_to_prune_conv1", [])
+    indices_to_prune_conv2 = indices_to_prune.get("indices_to_prune_conv2", [])
+    indices_to_prune_conv3 = indices_to_prune.get("indices_to_prune_conv3", [])
+    indices_to_prune_fc = indices_to_prune.get("indices_to_prune_fc", [])
 
     aggregate_conv_layers(
         original_cnn.layer1[0],
@@ -497,30 +454,6 @@ def vanilla_federated_averaging(global_model, models, sample_numbers):
     print(f"Keys aggregated: {set(keys)}")
 
     return avg_weights
-
-    # model_weights = [model.state_dict() for model in models]
-    # assert len(model_weights) == len(sample_numbers), "Length mismatch"
-    # avg_weights = {}
-    # keys = model_weights[0].keys()
-
-    # not_aggregated_keys = set()
-
-    # for key in keys:
-    #     if ".0" in key or "fc" in key:
-    #         layer_weights = [
-    #             model_weight[key].clone().detach() * num
-    #             for model_weight, num in zip(model_weights, sample_numbers)
-    #         ]
-    #         layer_weights_avg = sum(layer_weights) / sum(sample_numbers)
-    #         avg_weights[key] = layer_weights_avg
-    #     else:
-    #         avg_weights[key] = global_model.state_dict()[key]
-    #         not_aggregated_keys.add(key)
-
-    # print(f"Keys not aggregated: {not_aggregated_keys}")
-    # print(f"Keys aggregated: {set(keys) - not_aggregated_keys}")
-
-    # return avg_weights
 
 
 def calculate_model_size(model):
