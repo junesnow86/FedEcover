@@ -298,11 +298,8 @@ def expand_cnn(pruned_cnn, original_cnn):
     expanded_fc_layer = expand_pruned_linear_layer(pruned_cnn.fc, original_cnn.fc)
 
     expanded_cnn.layer1[0] = expanded_conv_layer1
-    # expanded_cnn.layer1[1] = nn.BatchNorm2d(expanded_conv_layer1.out_channels)
     expanded_cnn.layer2[0] = expanded_conv_layer2
-    # expanded_cnn.layer2[1] = nn.BatchNorm2d(expanded_conv_layer2.out_channels)
     expanded_cnn.layer3[0] = expanded_conv_layer3
-    # expanded_cnn.layer3[1] = nn.BatchNorm2d(expanded_conv_layer3.out_channels)
     expanded_cnn.fc = expanded_fc_layer
 
     return expanded_cnn
