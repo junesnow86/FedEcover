@@ -1,3 +1,4 @@
+import csv
 import random
 
 import numpy as np
@@ -15,7 +16,7 @@ from modules.utils import (
     train,
 )
 
-ROUNDS = 20
+ROUNDS = 100
 EPOCHS = 1
 LR = 0.001
 BATCH_SIZE = 128
@@ -72,13 +73,17 @@ dataloaders = [
 global_cnn = CNN()
 
 num_models = 10
-num_unpruned = int(num_models * 0.2)
+num_unpruned = int(num_models * 0.1)
 num_pruned = num_models - num_unpruned
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 criterion = nn.CrossEntropyLoss()
 
+results = []
+
 for round in range(ROUNDS):
+    round_results = {"Round": round + 1}
+
     # Load global model's parameters
     unpruned_models = [CNN() for _ in range(num_unpruned)]
     for i in range(num_unpruned):
@@ -123,6 +128,7 @@ for round in range(ROUNDS):
         train(local_model, device, dataloader, optimizer, criterion, EPOCHS)
         _, local_test_acc, _ = test(local_model, device, test_loader, criterion)
         print(f"Round {round + 1}, Subset {i + 1}, Test Acc: {local_test_acc:.4f}")
+        round_results[f"Subset {i + 1}"] = local_test_acc
 
     # Aggregation
     aggregate_cnn(
@@ -137,4 +143,12 @@ for round in range(ROUNDS):
 
     _, test_acc, _ = test(global_cnn, device, test_loader, criterion)
     print(f"Round {round + 1}, Aggregated Test Acc: {test_acc:.4f}")
+    round_results["Aggregated"] = test_acc
     print("=" * 80)
+
+    results.append(round_results)
+
+with open("results/hetero_random_dropout.csv", "w") as csvfile:
+    writer = csv.DictWriter(csvfile, fieldnames=results[0].keys())
+    writer.writeheader()
+    writer.writerows(results)

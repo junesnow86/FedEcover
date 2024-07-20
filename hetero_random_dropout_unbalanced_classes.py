@@ -1,3 +1,4 @@
+import csv
 import random
 
 import numpy as np
@@ -15,10 +16,11 @@ from modules.utils import (
     train,
 )
 
-ROUNDS = 20
+ROUNDS = 100
 EPOCHS = 1
 LR = 0.001
 BATCH_SIZE = 128
+NUM_PARTICIPANTS = 10
 
 seed = 18
 random.seed(seed)
@@ -49,84 +51,47 @@ class_indices = {i: [] for i in range(10)}  # CIFAR10有10个类别
 for idx, (_, label) in enumerate(train_dataset):
     class_indices[label].append(idx)
 
-# 按类别划分成两个大的子集，一个包含80%的类别，另一个包含20%的类别
-num_classes = len(class_indices)
-split_ratio = 0.8
-split_index = int(num_classes * split_ratio)
+split_ratio = 0.9
 
-# 类别索引顺序集
-classes_80_percent = list(range(split_index))  # 80%的类别
-classes_20_percent = list(range(split_index, num_classes))  # 剩下20%的类别
+# 首先，初始化每个参与方的数据索引集合
+participant_data_indices = [[] for i in range(NUM_PARTICIPANTS)]
 
-# 获取对应类别的索引
-indices_80_percent = [
-    index for cls in classes_80_percent for index in class_indices[cls]
-]
-indices_20_percent = [
-    index for cls in classes_20_percent for index in class_indices[cls]
-]
+for cls, indices in class_indices.items():
+    np.random.shuffle(indices)  # 打乱索引以随机分配
+    split_index = int(len(indices) * split_ratio)
 
-# 将80%类别的子集均匀划分成8个子集
-np.random.shuffle(indices_80_percent)
-num_subsets_80 = 8
-subset_size_80 = len(indices_80_percent) // num_subsets_80
-subsets_indices_80 = [
-    indices_80_percent[i : i + subset_size_80]
-    for i in range(0, len(indices_80_percent), subset_size_80)
-]
-subset_sizes_80 = [len(subset) for subset in subsets_indices_80]
+    # 为当前类别的主要参与方分配80%的数据
+    main_indices = indices[:split_index]
+    participant_data_indices[cls].extend(main_indices)
 
-# 将20%类别的子集均匀划分成2个子集
-np.random.shuffle(indices_20_percent)
-num_subsets_20 = 2
-subset_size_20 = len(indices_20_percent) // num_subsets_20
-subsets_indices_20 = [
-    indices_20_percent[i : i + subset_size_20]
-    for i in range(0, len(indices_20_percent), subset_size_20)
-]
-subset_sizes_20 = [len(subset) for subset in subsets_indices_20]
+    # 剩余20%的数据均匀分配给其他参与方
+    remaining_indices = indices[split_index:]
+    num_remaining_per_participant = len(remaining_indices) // (NUM_PARTICIPANTS - 1)
 
-# 创建数据加载器，每个加载器对应一个数据子集
-dataloaders_80 = [
+    # 分配剩余数据
+    for i, start_index in enumerate(
+        range(0, len(remaining_indices), num_remaining_per_participant)
+    ):
+        if i == NUM_PARTICIPANTS - 1:  # 最后一个参与方获取所有剩余的数据
+            participant_data_indices[(cls + i + 1) % NUM_PARTICIPANTS].extend(
+                remaining_indices[start_index:]
+            )
+            break
+        participant_data_indices[(cls + i + 1) % NUM_PARTICIPANTS].extend(
+            remaining_indices[start_index : start_index + num_remaining_per_participant]
+        )
+
+subset_sizes = [len(indices) for indices in participant_data_indices]
+
+# 创建每个参与方的数据加载器
+dataloaders = [
     DataLoader(
-        Subset(train_dataset, subset_indices),
+        Subset(train_dataset, indices),
         batch_size=BATCH_SIZE,
         shuffle=True,
     )
-    for subset_indices in subsets_indices_80
+    for indices in participant_data_indices
 ]
-
-dataloaders_20 = [
-    DataLoader(
-        Subset(train_dataset, subset_indices),
-        batch_size=BATCH_SIZE,
-        shuffle=True,
-    )
-    for subset_indices in subsets_indices_20
-]
-
-dataloaders = dataloaders_80 + dataloaders_20
-subset_sizes = subset_sizes_80 + subset_sizes_20
-
-# num_train = len(train_dataset)
-# indices = list(range(num_train))
-# np.random.shuffle(indices)
-
-# num_subsets = 10
-# subset_size = num_train // num_subsets
-# subsets_indices = [
-#     indices[i : i + subset_size] for i in range(0, num_train, subset_size)
-# ]
-# subset_sizes = [len(subset) for subset in subsets_indices]
-
-# dataloaders = [
-#     DataLoader(
-#         Subset(train_dataset, subset_indices),
-#         batch_size=BATCH_SIZE,
-#         shuffle=True,
-#     )
-#     for subset_indices in subsets_indices
-# ]
 
 # 示例：如何使用这些数据加载器
 # for i, dataloader in enumerate(dataloaders):
@@ -137,13 +102,19 @@ subset_sizes = subset_sizes_80 + subset_sizes_20
 global_cnn = CNN()
 
 num_models = 10
-num_unpruned = int(num_models * 0.2)
+num_unpruned = int(num_models * 0.1)
 num_pruned = num_models - num_unpruned
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 criterion = nn.CrossEntropyLoss()
 
+results = []
+results_class = []
+
 for round in range(ROUNDS):
+    round_results = {"Round": round + 1}
+    round_results_class = {"Round": round + 1}
+
     # Load global model's parameters
     unpruned_models = [CNN() for _ in range(num_unpruned)]
     for i in range(num_unpruned):
@@ -192,6 +163,8 @@ for round in range(ROUNDS):
         print(
             f"Round {round + 1}, Subset {i + 1}, Test Acc: {local_test_acc:.4f}\tClass Acc: {local_class_acc}"
         )
+        round_results[f"Subset {i + 1}"] = local_test_acc
+        round_results_class[f"Subset {i + 1}"] = local_class_acc
 
     # Aggregation
     aggregate_cnn(
@@ -208,4 +181,17 @@ for round in range(ROUNDS):
     print(
         f"Round {round + 1}, Aggregated Test Acc: {test_acc:.4f}\tClass Acc: {class_acc}"
     )
+    round_results["Aggregated"] = test_acc
+    round_results_class["Aggregated"] = class_acc
     print("=" * 80)
+
+    results.append(round_results)
+    results_class.append(round_results_class)
+
+with open("results/random_dropout_unbalanced_classes.csv", "w") as csvfile:
+    writer = csv.DictWriter(csvfile, fieldnames=results[0].keys())
+    writer.writeheader()
+    writer.writerows(results)
+
+with open("results/random_dropout_unbalanced_classes.txt", "w") as f:
+    f.write(str(results_class))

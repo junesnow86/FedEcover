@@ -1,3 +1,4 @@
+import csv
 import random
 
 import numpy as np
@@ -11,7 +12,7 @@ from modules.heterofl_utils import prune_cnn
 from modules.models import CNN
 from modules.utils import test, train, vanilla_federated_averaging
 
-ROUNDS = 50
+ROUNDS = 100
 EPOCHS = 1
 LR = 0.001
 BATCH_SIZE = 128
@@ -99,13 +100,22 @@ original_cnn = CNN()
 
 p = 0.9
 num_models = 10
-global_cnn = prune_cnn(original_cnn, p)
-all_client_models = [prune_cnn(original_cnn, p) for _ in range(num_models)]
+global_cnn, _ = prune_cnn(original_cnn, p, position=0)
+all_client_models = []
+for i in range(num_models):
+    client_model, _ = prune_cnn(original_cnn, p, position=0)
+    all_client_models.append(client_model)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 criterion = nn.CrossEntropyLoss()
 
+results = []
+results_class = []
+
 for round in range(ROUNDS):
+    round_results = {"Round": round + 1}
+    round_results_class = {"Round": round + 1}
+
     # Load global model's parameters
     for i in range(num_models):
         all_client_models[i].load_state_dict(global_cnn.state_dict())
@@ -121,6 +131,8 @@ for round in range(ROUNDS):
         print(
             f"Round {round + 1}, Subset {i + 1}, Test Acc: {local_test_acc:.4f}\tClass Acc: {local_class_acc}"
         )
+        round_results[f"Subset {i + 1}"] = local_test_acc
+        round_results_class[f"Subset {i + 1}"] = local_class_acc
 
     # Aggregation
     aggregated_weight = vanilla_federated_averaging(
@@ -132,4 +144,17 @@ for round in range(ROUNDS):
     print(
         f"Round {round + 1}, Aggregated Test Acc: {test_acc:.4f}\tClass Acc: {class_acc}"
     )
+    round_results["Aggregated"] = test_acc
+    round_results_class["Aggregated"] = class_acc
     print("=" * 80)
+
+    results.append(round_results)
+    results_class.append(round_results_class)
+
+with open("results/vanilla_fedavg_unbalanced_classes.csv", "w") as csvfile:
+    writer = csv.DictWriter(csvfile, fieldnames=results[0].keys())
+    writer.writeheader()
+    writer.writerows(results)
+
+with open("results/vanilla_fedavg_unbalanced_classes.txt", "w") as f:
+    f.write(str(results_class))

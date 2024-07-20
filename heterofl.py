@@ -1,3 +1,4 @@
+import csv
 import random
 
 import numpy as np
@@ -7,14 +8,14 @@ import torch.optim as optim
 from torch.utils.data import DataLoader, Subset
 from torchvision import datasets, transforms
 
-from modules.heterofl_utils import heterofl_aggregate, prune_cnn
+from modules.heterofl_utils import empty_pruned_indices, heterofl_aggregate, prune_cnn
 from modules.models import CNN
 from modules.utils import (
     test,
     train,
 )
 
-ROUNDS = 20
+ROUNDS = 100
 EPOCHS = 1
 LR = 0.001
 BATCH_SIZE = 128
@@ -71,13 +72,17 @@ dataloaders = [
 global_cnn = CNN()
 
 num_models = 10
-num_unpruned = int(num_models * 0.2)
+num_unpruned = int(num_models * 0.1)
 num_pruned = num_models - num_unpruned
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 criterion = nn.CrossEntropyLoss()
 
+results = []
+
 for round in range(ROUNDS):
+    round_results = {"Round": round + 1}
+
     # Load global model's parameters
     unpruned_models = [CNN() for _ in range(num_unpruned)]
     for i in range(num_unpruned):
@@ -85,11 +90,15 @@ for round in range(ROUNDS):
 
     p = 0.9
 
-    # unpruned_models = [prune_cnn(global_cnn, p) for _ in range(num_unpruned)]
-    pruned_models = [prune_cnn(global_cnn, p) for _ in range(num_pruned)]
-    all_client_models = [*unpruned_models, *pruned_models]
-
-    # global_cnn = prune_cnn(global_cnn, p)
+    # pruned_models = [prune_cnn(global_cnn, p, position=0) for _ in range(num_pruned)]
+    pruned_models = []
+    pruned_indices_list = []
+    for i in range(num_pruned):
+        pruned_model, pruned_indices = prune_cnn(global_cnn, p, position=0)
+        pruned_models.append(pruned_model)
+        pruned_indices_list.append(pruned_indices)
+    all_client_models = [*pruned_models, *unpruned_models]
+    pruned_indices_list.extend([empty_pruned_indices()] * num_unpruned)
 
     # Local training
     for i, dataloader in enumerate(dataloaders):
@@ -98,10 +107,19 @@ for round in range(ROUNDS):
         train(local_model, device, dataloader, optimizer, criterion, EPOCHS)
         _, local_test_acc, _ = test(local_model, device, test_loader, criterion)
         print(f"Round {round + 1}, Subset {i + 1}, Test Acc: {local_test_acc:.4f}")
+        round_results[f"Subset {i + 1}"] = local_test_acc
 
     # Aggregation
-    heterofl_aggregate(global_cnn, all_client_models, subset_sizes)
+    heterofl_aggregate(global_cnn, all_client_models, pruned_indices_list, subset_sizes)
 
     _, test_acc, _ = test(global_cnn, device, test_loader, criterion)
     print(f"Round {round + 1}, Aggregated Test Acc: {test_acc:.4f}")
+    round_results["Aggregated"] = test_acc
     print("=" * 80)
+
+    results.append(round_results)
+
+with open("results/heterofl.csv", "w") as csvfile:
+    writer = csv.DictWriter(csvfile, fieldnames=results[0].keys())
+    writer.writeheader()
+    writer.writerows(results)

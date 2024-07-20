@@ -1,3 +1,4 @@
+import csv
 import random
 
 import numpy as np
@@ -7,14 +8,14 @@ import torch.optim as optim
 from torch.utils.data import DataLoader, Subset
 from torchvision import datasets, transforms
 
-from modules.heterofl_utils import heterofl_aggregate, prune_cnn
+from modules.heterofl_utils import empty_pruned_indices, heterofl_aggregate, prune_cnn
 from modules.models import CNN
 from modules.utils import (
     test,
     train,
 )
 
-ROUNDS = 50
+ROUNDS = 100
 EPOCHS = 1
 LR = 0.001
 BATCH_SIZE = 128
@@ -100,25 +101,34 @@ dataloaders = [
 global_cnn = CNN()
 
 num_models = 10
-num_unpruned = int(num_models * 0.2)
+num_unpruned = int(num_models * 0.1)
 num_pruned = num_models - num_unpruned
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 criterion = nn.CrossEntropyLoss()
 
+results = []
+results_class = []
+
 for round in range(ROUNDS):
+    round_results = {"Round": round + 1}
+    round_results_class = {"Round": round + 1}
+
     # Load global model's parameters
     unpruned_models = [CNN() for _ in range(num_unpruned)]
     for i in range(num_unpruned):
         unpruned_models[i].load_state_dict(global_cnn.state_dict())
 
     p = 0.9
-
-    # unpruned_models = [prune_cnn(global_cnn, p) for _ in range(num_unpruned)]
-    pruned_models = [prune_cnn(global_cnn, p) for _ in range(num_pruned)]
+    # pruned_models = [prune_cnn(global_cnn, p, position=0) for _ in range(num_pruned)]
+    pruned_models = []
+    pruned_indices_list = []
+    for i in range(num_pruned):
+        pruned_model, pruned_indices = prune_cnn(global_cnn, p, position=0)
+        pruned_models.append(pruned_model)
+        pruned_indices_list.append(pruned_indices)
     all_client_models = [*pruned_models, *unpruned_models]
-
-    # global_cnn = prune_cnn(global_cnn, p)
+    pruned_indices_list.extend([empty_pruned_indices()] * num_unpruned)
 
     # Local training
     for i, dataloader in enumerate(dataloaders):
@@ -131,12 +141,27 @@ for round in range(ROUNDS):
         print(
             f"Round {round + 1}, Subset {i + 1}, Test Acc: {local_test_acc:.4f}\tClass Acc: {local_class_acc}"
         )
+        round_results[f"Subset {i + 1}"] = local_test_acc
+        round_results_class[f"Subset {i + 1}"] = local_class_acc
 
     # Aggregation
-    heterofl_aggregate(global_cnn, all_client_models, subset_sizes)
+    heterofl_aggregate(global_cnn, all_client_models, pruned_indices_list, subset_sizes)
 
     _, test_acc, class_acc = test(global_cnn, device, test_loader, criterion)
     print(
         f"Round {round + 1}, Aggregated Test Acc: {test_acc:.4f}\tClass Acc: {class_acc}"
     )
+    round_results["Aggregated"] = test_acc
+    round_results_class["Aggregated"] = class_acc
     print("=" * 80)
+
+    results.append(round_results)
+    results_class.append(round_results_class)
+
+with open("results/heterofl_unbalanced_classes.csv", "w") as csvfile:
+    writer = csv.DictWriter(csvfile, fieldnames=results[0].keys())
+    writer.writeheader()
+    writer.writerows(results)
+
+with open("results/heterofl_unbalanced_classes.txt", "w") as f:
+    f.write(str(results_class))
