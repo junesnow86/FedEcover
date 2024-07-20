@@ -1,4 +1,3 @@
-import copy
 from typing import Dict, List, Tuple
 
 import numpy as np
@@ -331,16 +330,18 @@ def select_random_group(groups):
 
 
 def prune_cnn_into_groups(
-    original_cnn: CNN, dropout_rate=0.5
+    original_cnn: CNN,
+    dropout_rate=0.5,
+    scaling=True,
 ) -> Tuple[List[CNN], List[Dict]]:
     num_groups = max(int(1 / (1 - dropout_rate)), 1)
     pruned_models = []
     indices_to_prune_list = []
 
-    conv1 = copy.deepcopy(original_cnn.layer1[0])
-    conv2 = copy.deepcopy(original_cnn.layer2[0])
-    conv3 = copy.deepcopy(original_cnn.layer3[0])
-    fc = copy.deepcopy(original_cnn.fc)
+    conv1 = original_cnn.layer1[0]
+    conv2 = original_cnn.layer2[0]
+    conv3 = original_cnn.layer3[0]
+    fc = original_cnn.fc
 
     groups_conv1 = create_random_even_groups(conv1.out_channels, num_groups)
     groups_conv2 = create_random_even_groups(conv2.out_channels, num_groups)
@@ -376,15 +377,14 @@ def prune_cnn_into_groups(
 
         pruned_cnn = CNN()
         pruned_cnn.layer1[0] = pruned_layer1
-        pruned_cnn.layer1[1] = nn.BatchNorm2d(pruned_layer1.out_channels)
-        pruned_cnn.layer1.add_module("scaling", DropoutScaling(dropout_rate))
         pruned_cnn.layer2[0] = pruned_layer2
-        pruned_cnn.layer2[1] = nn.BatchNorm2d(pruned_layer2.out_channels)
-        pruned_cnn.layer2.add_module("scaling", DropoutScaling(dropout_rate))
         pruned_cnn.layer3[0] = pruned_layer3
-        pruned_cnn.layer3[1] = nn.BatchNorm2d(pruned_layer3.out_channels)
-        pruned_cnn.layer3.add_module("scaling", DropoutScaling(dropout_rate))
         pruned_cnn.fc = pruned_fc
+
+        if scaling:
+            pruned_cnn.layer1.add_module("scaling", DropoutScaling(dropout_rate))
+            pruned_cnn.layer2.add_module("scaling", DropoutScaling(dropout_rate))
+            pruned_cnn.layer3.add_module("scaling", DropoutScaling(dropout_rate))
 
         pruned_models.append(pruned_cnn)
         indices_to_prune_list.append(
