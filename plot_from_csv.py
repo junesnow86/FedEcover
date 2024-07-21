@@ -55,14 +55,14 @@ import pandas as pd
 # )
 # df2 = pd.read_csv("statistics/0720/heterofl_unbalanced_classes_100rounds_0720.csv")
 
-# df1 = pd.read_csv("results/vanilla_fedavg.csv")
-# df2 = pd.read_csv("results/heterofl.csv")
-# df3 = pd.read_csv("results/hetero_random_dropout.csv")
-# df4 = pd.read_csv("results/position_heterofl.csv")
-df1 = pd.read_csv("results/vanilla_fedavg_unbalanced_classes.csv")
-df2 = pd.read_csv("results/heterofl_unbalanced_classes.csv")
-df3 = pd.read_csv("results/hetero_random_dropout_unbalanced_classes.csv")
-df4 = pd.read_csv("results/position_heterofl_unbalanced_classes.csv")
+df1 = pd.read_csv("results_0721/vanilla_fedavg.csv")
+df2 = pd.read_csv("results_0721/heterofl.csv")
+df3 = pd.read_csv("results_0721/hetero_random_dropout.csv")
+df4 = pd.read_csv("results_0721/position_heterofl.csv")
+# df1 = pd.read_csv("results_0721/vanilla_fedavg_unbalanced_classes.csv")
+# df2 = pd.read_csv("results_0721/heterofl_unbalanced_classes.csv")
+# df3 = pd.read_csv("results_0721/hetero_random_dropout_unbalanced_classes.csv")
+# df4 = pd.read_csv("results_0721/position_heterofl_unbalanced_classes.csv")
 
 # 提取数据
 rounds_df1 = df1["Round"]
@@ -88,8 +88,8 @@ color3 = "orange"
 color4 = "red"
 plt.plot(rounds_df1, aggregated_df1, label="Vanilla FedAvg", color=color1)
 plt.plot(rounds_df2, aggregated_df2, label="HeteroFL", color=color2)
-plt.plot(rounds_df3, aggregated_df3, label="Hetero Random Dropout", color=color3)
-plt.plot(rounds_df4, aggregated_df4, label="More-covered HeteroFL", color=color4)
+plt.plot(rounds_df3, aggregated_df3, label="Hetero Random Dropout (Ours)", color=color3)
+plt.plot(rounds_df4, aggregated_df4, label="More-covered HeteroFL (Ours)", color=color4)
 
 # 绘制平均值线
 plt.axhline(
@@ -118,14 +118,14 @@ plt.axhline(
 )
 
 # 添加图例和标签
-# plt.title("Aggregated Performance Comparison on CIFAR-10")
-plt.title("Aggregated Performance Comparison on CIFAR-10 (Unbalanced Classes)")
+plt.title("Aggregated Performance Comparison on CIFAR-10")
+# plt.title("Aggregated Performance Comparison on CIFAR-10 (Unbalanced Classes)")
 plt.xlabel("Round")
 plt.ylabel("Aggregated Accuracy")
 plt.legend()
 plt.grid(True)
-# plt.savefig("figures/0721/aggregated_performance_comparison.png")
-plt.savefig("figures/0721/aggregated_performance_comparison_unbalanced_classes.png")
+plt.savefig("figures/0721/aggregated_performance_comparison.png")
+# plt.savefig("figures/0721/aggregated_performance_comparison_unbalanced_classes.png")
 
 
 # ---------- Plotting Class-wise Performance Comparison ----------
