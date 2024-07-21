@@ -72,7 +72,7 @@ dataloaders = [
 global_cnn = CNN()
 
 num_models = 10
-num_unpruned = int(num_models * 0.1)
+num_unpruned = int(num_models * 0.2)
 num_pruned = num_models - num_unpruned
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

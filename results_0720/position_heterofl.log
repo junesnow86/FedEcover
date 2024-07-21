@@ -1,0 +1,1200 @@
+Round 1, Subset 1, Group Averaging Test Acc: 0.3142
+Round 1, Subset 2, Group Averaging Test Acc: 0.3200
+Round 1, Subset 3, Group Averaging Test Acc: 0.3134
+Round 1, Subset 4, Group Averaging Test Acc: 0.3105
+Round 1, Subset 5, Group Averaging Test Acc: 0.3220
+Round 1, Subset 6, Group Averaging Test Acc: 0.3125
+Round 1, Subset 7, Group Averaging Test Acc: 0.3023
+Round 1, Subset 8, Group Averaging Test Acc: 0.3082
+Round 1, Subset 9, Group Averaging Test Acc: 0.3144
+Round 1, Subset 10, Test Acc: 0.2997	Class Acc: {0: 0.305, 1: 0.929, 2: 0.251, 3: 0.038, 4: 0.137, 5: 0.131, 6: 0.082, 7: 0.636, 8: 0.346, 9: 0.142}
+Round 1, Aggregated Test Acc: 0.3228
+================================================================================
+Round 2, Subset 1, Group Averaging Test Acc: 0.3827
+Round 2, Subset 2, Group Averaging Test Acc: 0.3858
+Round 2, Subset 3, Group Averaging Test Acc: 0.3830
+Round 2, Subset 4, Group Averaging Test Acc: 0.3828
+Round 2, Subset 5, Group Averaging Test Acc: 0.3960
+Round 2, Subset 6, Group Averaging Test Acc: 0.3883
+Round 2, Subset 7, Group Averaging Test Acc: 0.3912
+Round 2, Subset 8, Group Averaging Test Acc: 0.3944
+Round 2, Subset 9, Group Averaging Test Acc: 0.3908
+Round 2, Subset 10, Test Acc: 0.4029	Class Acc: {0: 0.589, 1: 0.674, 2: 0.566, 3: 0.197, 4: 0.274, 5: 0.091, 6: 0.302, 7: 0.572, 8: 0.573, 9: 0.191}
+Round 2, Aggregated Test Acc: 0.3760
+================================================================================
+Round 3, Subset 1, Group Averaging Test Acc: 0.4245
+Round 3, Subset 2, Group Averaging Test Acc: 0.4252
+Round 3, Subset 3, Group Averaging Test Acc: 0.4319
+Round 3, Subset 4, Group Averaging Test Acc: 0.4286
+Round 3, Subset 5, Group Averaging Test Acc: 0.4304
+Round 3, Subset 6, Group Averaging Test Acc: 0.4247
+Round 3, Subset 7, Group Averaging Test Acc: 0.4341
+Round 3, Subset 8, Group Averaging Test Acc: 0.4294
+Round 3, Subset 9, Group Averaging Test Acc: 0.4364
+Round 3, Subset 10, Test Acc: 0.4683	Class Acc: {0: 0.607, 1: 0.644, 2: 0.44, 3: 0.412, 4: 0.305, 5: 0.445, 6: 0.248, 7: 0.456, 8: 0.6, 9: 0.526}
+Round 3, Aggregated Test Acc: 0.4279
+================================================================================
+Round 4, Subset 1, Group Averaging Test Acc: 0.4436
+Round 4, Subset 2, Group Averaging Test Acc: 0.4488
+Round 4, Subset 3, Group Averaging Test Acc: 0.4501
+Round 4, Subset 4, Group Averaging Test Acc: 0.4515
+Round 4, Subset 5, Group Averaging Test Acc: 0.4545
+Round 4, Subset 6, Group Averaging Test Acc: 0.4481
+Round 4, Subset 7, Group Averaging Test Acc: 0.4463
+Round 4, Subset 8, Group Averaging Test Acc: 0.4458
+Round 4, Subset 9, Group Averaging Test Acc: 0.4583
+Round 4, Subset 10, Test Acc: 0.4780	Class Acc: {0: 0.453, 1: 0.731, 2: 0.594, 3: 0.432, 4: 0.067, 5: 0.202, 6: 0.667, 7: 0.53, 8: 0.565, 9: 0.539}
+Round 4, Aggregated Test Acc: 0.4881
+================================================================================
+Round 5, Subset 1, Group Averaging Test Acc: 0.4675
+Round 5, Subset 2, Group Averaging Test Acc: 0.4680
+Round 5, Subset 3, Group Averaging Test Acc: 0.4657
+Round 5, Subset 4, Group Averaging Test Acc: 0.4677
+Round 5, Subset 5, Group Averaging Test Acc: 0.4706
+Round 5, Subset 6, Group Averaging Test Acc: 0.4691
+Round 5, Subset 7, Group Averaging Test Acc: 0.4722
+Round 5, Subset 8, Group Averaging Test Acc: 0.4598
+Round 5, Subset 9, Group Averaging Test Acc: 0.4614
+Round 5, Subset 10, Test Acc: 0.4995	Class Acc: {0: 0.54, 1: 0.739, 2: 0.263, 3: 0.388, 4: 0.474, 5: 0.175, 6: 0.77, 7: 0.533, 8: 0.612, 9: 0.501}
+Round 5, Aggregated Test Acc: 0.5089
+================================================================================
+Round 6, Subset 1, Group Averaging Test Acc: 0.4831
+Round 6, Subset 2, Group Averaging Test Acc: 0.4868
+Round 6, Subset 3, Group Averaging Test Acc: 0.4817
+Round 6, Subset 4, Group Averaging Test Acc: 0.4856
+Round 6, Subset 5, Group Averaging Test Acc: 0.4836
+Round 6, Subset 6, Group Averaging Test Acc: 0.4804
+Round 6, Subset 7, Group Averaging Test Acc: 0.4772
+Round 6, Subset 8, Group Averaging Test Acc: 0.4799
+Round 6, Subset 9, Group Averaging Test Acc: 0.4810
+Round 6, Subset 10, Test Acc: 0.5127	Class Acc: {0: 0.527, 1: 0.653, 2: 0.541, 3: 0.191, 4: 0.216, 5: 0.663, 6: 0.473, 7: 0.665, 8: 0.697, 9: 0.501}
+Round 6, Aggregated Test Acc: 0.5180
+================================================================================
+Round 7, Subset 1, Group Averaging Test Acc: 0.4958
+Round 7, Subset 2, Group Averaging Test Acc: 0.4852
+Round 7, Subset 3, Group Averaging Test Acc: 0.4921
+Round 7, Subset 4, Group Averaging Test Acc: 0.4884
+Round 7, Subset 5, Group Averaging Test Acc: 0.4945
+Round 7, Subset 6, Group Averaging Test Acc: 0.4932
+Round 7, Subset 7, Group Averaging Test Acc: 0.4920
+Round 7, Subset 8, Group Averaging Test Acc: 0.4876
+Round 7, Subset 9, Group Averaging Test Acc: 0.4876
+Round 7, Subset 10, Test Acc: 0.5400	Class Acc: {0: 0.633, 1: 0.78, 2: 0.247, 3: 0.145, 4: 0.672, 5: 0.521, 6: 0.604, 7: 0.621, 8: 0.666, 9: 0.511}
+Round 7, Aggregated Test Acc: 0.5435
+================================================================================
+Round 8, Subset 1, Group Averaging Test Acc: 0.4998
+Round 8, Subset 2, Group Averaging Test Acc: 0.5035
+Round 8, Subset 3, Group Averaging Test Acc: 0.4980
+Round 8, Subset 4, Group Averaging Test Acc: 0.5009
+Round 8, Subset 5, Group Averaging Test Acc: 0.4983
+Round 8, Subset 6, Group Averaging Test Acc: 0.5086
+Round 8, Subset 7, Group Averaging Test Acc: 0.4993
+Round 8, Subset 8, Group Averaging Test Acc: 0.5066
+Round 8, Subset 9, Group Averaging Test Acc: 0.5010
+Round 8, Subset 10, Test Acc: 0.5457	Class Acc: {0: 0.563, 1: 0.762, 2: 0.389, 3: 0.463, 4: 0.479, 5: 0.331, 6: 0.816, 7: 0.56, 8: 0.627, 9: 0.467}
+Round 8, Aggregated Test Acc: 0.5561
+================================================================================
+Round 9, Subset 1, Group Averaging Test Acc: 0.5095
+Round 9, Subset 2, Group Averaging Test Acc: 0.5065
+Round 9, Subset 3, Group Averaging Test Acc: 0.5115
+Round 9, Subset 4, Group Averaging Test Acc: 0.5071
+Round 9, Subset 5, Group Averaging Test Acc: 0.5085
+Round 9, Subset 6, Group Averaging Test Acc: 0.5094
+Round 9, Subset 7, Group Averaging Test Acc: 0.5101
+Round 9, Subset 8, Group Averaging Test Acc: 0.5086
+Round 9, Subset 9, Group Averaging Test Acc: 0.5142
+Round 9, Subset 10, Test Acc: 0.5810	Class Acc: {0: 0.693, 1: 0.695, 2: 0.47, 3: 0.395, 4: 0.537, 5: 0.524, 6: 0.628, 7: 0.634, 8: 0.525, 9: 0.709}
+Round 9, Aggregated Test Acc: 0.5627
+================================================================================
+Round 10, Subset 1, Group Averaging Test Acc: 0.5127
+Round 10, Subset 2, Group Averaging Test Acc: 0.5138
+Round 10, Subset 3, Group Averaging Test Acc: 0.5197
+Round 10, Subset 4, Group Averaging Test Acc: 0.5162
+Round 10, Subset 5, Group Averaging Test Acc: 0.5209
+Round 10, Subset 6, Group Averaging Test Acc: 0.5164
+Round 10, Subset 7, Group Averaging Test Acc: 0.5178
+Round 10, Subset 8, Group Averaging Test Acc: 0.5128
+Round 10, Subset 9, Group Averaging Test Acc: 0.5130
+Round 10, Subset 10, Test Acc: 0.5605	Class Acc: {0: 0.438, 1: 0.743, 2: 0.329, 3: 0.542, 4: 0.474, 5: 0.491, 6: 0.586, 7: 0.559, 8: 0.703, 9: 0.74}
+Round 10, Aggregated Test Acc: 0.5721
+================================================================================
+Round 11, Subset 1, Group Averaging Test Acc: 0.5229
+Round 11, Subset 2, Group Averaging Test Acc: 0.5184
+Round 11, Subset 3, Group Averaging Test Acc: 0.5224
+Round 11, Subset 4, Group Averaging Test Acc: 0.5247
+Round 11, Subset 5, Group Averaging Test Acc: 0.5231
+Round 11, Subset 6, Group Averaging Test Acc: 0.5244
+Round 11, Subset 7, Group Averaging Test Acc: 0.5178
+Round 11, Subset 8, Group Averaging Test Acc: 0.5165
+Round 11, Subset 9, Group Averaging Test Acc: 0.5235
+Round 11, Subset 10, Test Acc: 0.5883	Class Acc: {0: 0.524, 1: 0.748, 2: 0.534, 3: 0.477, 4: 0.285, 5: 0.469, 6: 0.729, 7: 0.646, 8: 0.788, 9: 0.683}
+Round 11, Aggregated Test Acc: 0.5820
+================================================================================
+Round 12, Subset 1, Group Averaging Test Acc: 0.5279
+Round 12, Subset 2, Group Averaging Test Acc: 0.5287
+Round 12, Subset 3, Group Averaging Test Acc: 0.5303
+Round 12, Subset 4, Group Averaging Test Acc: 0.5258
+Round 12, Subset 5, Group Averaging Test Acc: 0.5358
+Round 12, Subset 6, Group Averaging Test Acc: 0.5278
+Round 12, Subset 7, Group Averaging Test Acc: 0.5310
+Round 12, Subset 8, Group Averaging Test Acc: 0.5309
+Round 12, Subset 9, Group Averaging Test Acc: 0.5275
+Round 12, Subset 10, Test Acc: 0.5867	Class Acc: {0: 0.66, 1: 0.702, 2: 0.597, 3: 0.525, 4: 0.217, 5: 0.394, 6: 0.742, 7: 0.631, 8: 0.779, 9: 0.62}
+Round 12, Aggregated Test Acc: 0.5902
+================================================================================
+Round 13, Subset 1, Group Averaging Test Acc: 0.5302
+Round 13, Subset 2, Group Averaging Test Acc: 0.5350
+Round 13, Subset 3, Group Averaging Test Acc: 0.5340
+Round 13, Subset 4, Group Averaging Test Acc: 0.5289
+Round 13, Subset 5, Group Averaging Test Acc: 0.5382
+Round 13, Subset 6, Group Averaging Test Acc: 0.5305
+Round 13, Subset 7, Group Averaging Test Acc: 0.5309
+Round 13, Subset 8, Group Averaging Test Acc: 0.5334
+Round 13, Subset 9, Group Averaging Test Acc: 0.5307
+Round 13, Subset 10, Test Acc: 0.5775	Class Acc: {0: 0.6, 1: 0.592, 2: 0.401, 3: 0.478, 4: 0.393, 5: 0.312, 6: 0.888, 7: 0.669, 8: 0.628, 9: 0.814}
+Round 13, Aggregated Test Acc: 0.5996
+================================================================================
+Round 14, Subset 1, Group Averaging Test Acc: 0.5348
+Round 14, Subset 2, Group Averaging Test Acc: 0.5425
+Round 14, Subset 3, Group Averaging Test Acc: 0.5359
+Round 14, Subset 4, Group Averaging Test Acc: 0.5358
+Round 14, Subset 5, Group Averaging Test Acc: 0.5398
+Round 14, Subset 6, Group Averaging Test Acc: 0.5392
+Round 14, Subset 7, Group Averaging Test Acc: 0.5382
+Round 14, Subset 8, Group Averaging Test Acc: 0.5399
+Round 14, Subset 9, Group Averaging Test Acc: 0.5423
+Round 14, Subset 10, Test Acc: 0.6060	Class Acc: {0: 0.6, 1: 0.837, 2: 0.542, 3: 0.422, 4: 0.497, 5: 0.485, 6: 0.615, 7: 0.712, 8: 0.823, 9: 0.527}
+Round 14, Aggregated Test Acc: 0.6051
+================================================================================
+Round 15, Subset 1, Group Averaging Test Acc: 0.5354
+Round 15, Subset 2, Group Averaging Test Acc: 0.5465
+Round 15, Subset 3, Group Averaging Test Acc: 0.5412
+Round 15, Subset 4, Group Averaging Test Acc: 0.5404
+Round 15, Subset 5, Group Averaging Test Acc: 0.5448
+Round 15, Subset 6, Group Averaging Test Acc: 0.5405
+Round 15, Subset 7, Group Averaging Test Acc: 0.5385
+Round 15, Subset 8, Group Averaging Test Acc: 0.5448
+Round 15, Subset 9, Group Averaging Test Acc: 0.5387
+Round 15, Subset 10, Test Acc: 0.5893	Class Acc: {0: 0.52, 1: 0.737, 2: 0.294, 3: 0.565, 4: 0.673, 5: 0.551, 6: 0.403, 7: 0.666, 8: 0.77, 9: 0.714}
+Round 15, Aggregated Test Acc: 0.6018
+================================================================================
+Round 16, Subset 1, Group Averaging Test Acc: 0.5466
+Round 16, Subset 2, Group Averaging Test Acc: 0.5431
+Round 16, Subset 3, Group Averaging Test Acc: 0.5473
+Round 16, Subset 4, Group Averaging Test Acc: 0.5437
+Round 16, Subset 5, Group Averaging Test Acc: 0.5449
+Round 16, Subset 6, Group Averaging Test Acc: 0.5489
+Round 16, Subset 7, Group Averaging Test Acc: 0.5416
+Round 16, Subset 8, Group Averaging Test Acc: 0.5420
+Round 16, Subset 9, Group Averaging Test Acc: 0.5436
+Round 16, Subset 10, Test Acc: 0.6051	Class Acc: {0: 0.739, 1: 0.69, 2: 0.404, 3: 0.316, 4: 0.451, 5: 0.722, 6: 0.821, 7: 0.57, 8: 0.594, 9: 0.744}
+Round 16, Aggregated Test Acc: 0.6111
+================================================================================
+Round 17, Subset 1, Group Averaging Test Acc: 0.5532
+Round 17, Subset 2, Group Averaging Test Acc: 0.5497
+Round 17, Subset 3, Group Averaging Test Acc: 0.5490
+Round 17, Subset 4, Group Averaging Test Acc: 0.5379
+Round 17, Subset 5, Group Averaging Test Acc: 0.5535
+Round 17, Subset 6, Group Averaging Test Acc: 0.5532
+Round 17, Subset 7, Group Averaging Test Acc: 0.5505
+Round 17, Subset 8, Group Averaging Test Acc: 0.5447
+Round 17, Subset 9, Group Averaging Test Acc: 0.5486
+Round 17, Subset 10, Test Acc: 0.6222	Class Acc: {0: 0.666, 1: 0.788, 2: 0.377, 3: 0.373, 4: 0.488, 5: 0.6, 6: 0.843, 7: 0.68, 8: 0.72, 9: 0.687}
+Round 17, Aggregated Test Acc: 0.6251
+================================================================================
+Round 18, Subset 1, Group Averaging Test Acc: 0.5508
+Round 18, Subset 2, Group Averaging Test Acc: 0.5556
+Round 18, Subset 3, Group Averaging Test Acc: 0.5552
+Round 18, Subset 4, Group Averaging Test Acc: 0.5513
+Round 18, Subset 5, Group Averaging Test Acc: 0.5552
+Round 18, Subset 6, Group Averaging Test Acc: 0.5568
+Round 18, Subset 7, Group Averaging Test Acc: 0.5544
+Round 18, Subset 8, Group Averaging Test Acc: 0.5511
+Round 18, Subset 9, Group Averaging Test Acc: 0.5517
+Round 18, Subset 10, Test Acc: 0.6011	Class Acc: {0: 0.643, 1: 0.865, 2: 0.45, 3: 0.481, 4: 0.773, 5: 0.402, 6: 0.452, 7: 0.583, 8: 0.78, 9: 0.582}
+Round 18, Aggregated Test Acc: 0.6221
+================================================================================
+Round 19, Subset 1, Group Averaging Test Acc: 0.5555
+Round 19, Subset 2, Group Averaging Test Acc: 0.5591
+Round 19, Subset 3, Group Averaging Test Acc: 0.5555
+Round 19, Subset 4, Group Averaging Test Acc: 0.5448
+Round 19, Subset 5, Group Averaging Test Acc: 0.5558
+Round 19, Subset 6, Group Averaging Test Acc: 0.5560
+Round 19, Subset 7, Group Averaging Test Acc: 0.5577
+Round 19, Subset 8, Group Averaging Test Acc: 0.5595
+Round 19, Subset 9, Group Averaging Test Acc: 0.5540
+Round 19, Subset 10, Test Acc: 0.6112	Class Acc: {0: 0.516, 1: 0.663, 2: 0.682, 3: 0.496, 4: 0.443, 5: 0.342, 6: 0.727, 7: 0.703, 8: 0.874, 9: 0.666}
+Round 19, Aggregated Test Acc: 0.6197
+================================================================================
+Round 20, Subset 1, Group Averaging Test Acc: 0.5608
+Round 20, Subset 2, Group Averaging Test Acc: 0.5607
+Round 20, Subset 3, Group Averaging Test Acc: 0.5569
+Round 20, Subset 4, Group Averaging Test Acc: 0.5583
+Round 20, Subset 5, Group Averaging Test Acc: 0.5595
+Round 20, Subset 6, Group Averaging Test Acc: 0.5576
+Round 20, Subset 7, Group Averaging Test Acc: 0.5589
+Round 20, Subset 8, Group Averaging Test Acc: 0.5611
+Round 20, Subset 9, Group Averaging Test Acc: 0.5561
+Round 20, Subset 10, Test Acc: 0.6066	Class Acc: {0: 0.495, 1: 0.832, 2: 0.305, 3: 0.607, 4: 0.668, 5: 0.493, 6: 0.53, 7: 0.724, 8: 0.76, 9: 0.652}
+Round 20, Aggregated Test Acc: 0.6285
+================================================================================
+Round 21, Subset 1, Group Averaging Test Acc: 0.5560
+Round 21, Subset 2, Group Averaging Test Acc: 0.5585
+Round 21, Subset 3, Group Averaging Test Acc: 0.5594
+Round 21, Subset 4, Group Averaging Test Acc: 0.5613
+Round 21, Subset 5, Group Averaging Test Acc: 0.5610
+Round 21, Subset 6, Group Averaging Test Acc: 0.5623
+Round 21, Subset 7, Group Averaging Test Acc: 0.5626
+Round 21, Subset 8, Group Averaging Test Acc: 0.5585
+Round 21, Subset 9, Group Averaging Test Acc: 0.5623
+Round 21, Subset 10, Test Acc: 0.6252	Class Acc: {0: 0.609, 1: 0.725, 2: 0.602, 3: 0.54, 4: 0.32, 5: 0.501, 6: 0.722, 7: 0.755, 8: 0.817, 9: 0.661}
+Round 21, Aggregated Test Acc: 0.6296
+================================================================================
+Round 22, Subset 1, Group Averaging Test Acc: 0.5646
+Round 22, Subset 2, Group Averaging Test Acc: 0.5692
+Round 22, Subset 3, Group Averaging Test Acc: 0.5577
+Round 22, Subset 4, Group Averaging Test Acc: 0.5580
+Round 22, Subset 5, Group Averaging Test Acc: 0.5630
+Round 22, Subset 6, Group Averaging Test Acc: 0.5611
+Round 22, Subset 7, Group Averaging Test Acc: 0.5620
+Round 22, Subset 8, Group Averaging Test Acc: 0.5647
+Round 22, Subset 9, Group Averaging Test Acc: 0.5625
+Round 22, Subset 10, Test Acc: 0.6060	Class Acc: {0: 0.579, 1: 0.699, 2: 0.389, 3: 0.343, 4: 0.342, 5: 0.774, 6: 0.787, 7: 0.71, 8: 0.655, 9: 0.782}
+Round 22, Aggregated Test Acc: 0.6209
+================================================================================
+Round 23, Subset 1, Group Averaging Test Acc: 0.5685
+Round 23, Subset 2, Group Averaging Test Acc: 0.5650
+Round 23, Subset 3, Group Averaging Test Acc: 0.5658
+Round 23, Subset 4, Group Averaging Test Acc: 0.5720
+Round 23, Subset 5, Group Averaging Test Acc: 0.5712
+Round 23, Subset 6, Group Averaging Test Acc: 0.5610
+Round 23, Subset 7, Group Averaging Test Acc: 0.5632
+Round 23, Subset 8, Group Averaging Test Acc: 0.5670
+Round 23, Subset 9, Group Averaging Test Acc: 0.5632
+Round 23, Subset 10, Test Acc: 0.6195	Class Acc: {0: 0.642, 1: 0.717, 2: 0.638, 3: 0.451, 4: 0.412, 5: 0.52, 6: 0.835, 7: 0.489, 8: 0.736, 9: 0.755}
+Round 23, Aggregated Test Acc: 0.6193
+================================================================================
+Round 24, Subset 1, Group Averaging Test Acc: 0.5661
+Round 24, Subset 2, Group Averaging Test Acc: 0.5730
+Round 24, Subset 3, Group Averaging Test Acc: 0.5639
+Round 24, Subset 4, Group Averaging Test Acc: 0.5673
+Round 24, Subset 5, Group Averaging Test Acc: 0.5684
+Round 24, Subset 6, Group Averaging Test Acc: 0.5669
+Round 24, Subset 7, Group Averaging Test Acc: 0.5654
+Round 24, Subset 8, Group Averaging Test Acc: 0.5627
+Round 24, Subset 9, Group Averaging Test Acc: 0.5708
+Round 24, Subset 10, Test Acc: 0.6234	Class Acc: {0: 0.726, 1: 0.787, 2: 0.373, 3: 0.486, 4: 0.548, 5: 0.387, 6: 0.881, 7: 0.677, 8: 0.691, 9: 0.678}
+Round 24, Aggregated Test Acc: 0.6377
+================================================================================
+Round 25, Subset 1, Group Averaging Test Acc: 0.5685
+Round 25, Subset 2, Group Averaging Test Acc: 0.5740
+Round 25, Subset 3, Group Averaging Test Acc: 0.5718
+Round 25, Subset 4, Group Averaging Test Acc: 0.5669
+Round 25, Subset 5, Group Averaging Test Acc: 0.5676
+Round 25, Subset 6, Group Averaging Test Acc: 0.5720
+Round 25, Subset 7, Group Averaging Test Acc: 0.5731
+Round 25, Subset 8, Group Averaging Test Acc: 0.5711
+Round 25, Subset 9, Group Averaging Test Acc: 0.5703
+Round 25, Subset 10, Test Acc: 0.6330	Class Acc: {0: 0.682, 1: 0.86, 2: 0.553, 3: 0.361, 4: 0.562, 5: 0.515, 6: 0.692, 7: 0.797, 8: 0.738, 9: 0.57}
+Round 25, Aggregated Test Acc: 0.6356
+================================================================================
+Round 26, Subset 1, Group Averaging Test Acc: 0.5718
+Round 26, Subset 2, Group Averaging Test Acc: 0.5735
+Round 26, Subset 3, Group Averaging Test Acc: 0.5704
+Round 26, Subset 4, Group Averaging Test Acc: 0.5689
+Round 26, Subset 5, Group Averaging Test Acc: 0.5699
+Round 26, Subset 6, Group Averaging Test Acc: 0.5662
+Round 26, Subset 7, Group Averaging Test Acc: 0.5696
+Round 26, Subset 8, Group Averaging Test Acc: 0.5695
+Round 26, Subset 9, Group Averaging Test Acc: 0.5708
+Round 26, Subset 10, Test Acc: 0.6293	Class Acc: {0: 0.738, 1: 0.878, 2: 0.484, 3: 0.412, 4: 0.593, 5: 0.562, 6: 0.63, 7: 0.672, 8: 0.715, 9: 0.609}
+Round 26, Aggregated Test Acc: 0.6317
+================================================================================
+Round 27, Subset 1, Group Averaging Test Acc: 0.5757
+Round 27, Subset 2, Group Averaging Test Acc: 0.5730
+Round 27, Subset 3, Group Averaging Test Acc: 0.5670
+Round 27, Subset 4, Group Averaging Test Acc: 0.5687
+Round 27, Subset 5, Group Averaging Test Acc: 0.5718
+Round 27, Subset 6, Group Averaging Test Acc: 0.5708
+Round 27, Subset 7, Group Averaging Test Acc: 0.5712
+Round 27, Subset 8, Group Averaging Test Acc: 0.5703
+Round 27, Subset 9, Group Averaging Test Acc: 0.5707
+Round 27, Subset 10, Test Acc: 0.6223	Class Acc: {0: 0.695, 1: 0.862, 2: 0.375, 3: 0.405, 4: 0.788, 5: 0.435, 6: 0.731, 7: 0.615, 8: 0.807, 9: 0.51}
+Round 27, Aggregated Test Acc: 0.6313
+================================================================================
+Round 28, Subset 1, Group Averaging Test Acc: 0.5764
+Round 28, Subset 2, Group Averaging Test Acc: 0.5738
+Round 28, Subset 3, Group Averaging Test Acc: 0.5723
+Round 28, Subset 4, Group Averaging Test Acc: 0.5732
+Round 28, Subset 5, Group Averaging Test Acc: 0.5766
+Round 28, Subset 6, Group Averaging Test Acc: 0.5766
+Round 28, Subset 7, Group Averaging Test Acc: 0.5723
+Round 28, Subset 8, Group Averaging Test Acc: 0.5723
+Round 28, Subset 9, Group Averaging Test Acc: 0.5731
+Round 28, Subset 10, Test Acc: 0.6165	Class Acc: {0: 0.549, 1: 0.757, 2: 0.536, 3: 0.395, 4: 0.503, 5: 0.452, 6: 0.745, 7: 0.7, 8: 0.926, 9: 0.602}
+Round 28, Aggregated Test Acc: 0.6373
+================================================================================
+Round 29, Subset 1, Group Averaging Test Acc: 0.5814
+Round 29, Subset 2, Group Averaging Test Acc: 0.5757
+Round 29, Subset 3, Group Averaging Test Acc: 0.5745
+Round 29, Subset 4, Group Averaging Test Acc: 0.5769
+Round 29, Subset 5, Group Averaging Test Acc: 0.5770
+Round 29, Subset 6, Group Averaging Test Acc: 0.5751
+Round 29, Subset 7, Group Averaging Test Acc: 0.5744
+Round 29, Subset 8, Group Averaging Test Acc: 0.5793
+Round 29, Subset 9, Group Averaging Test Acc: 0.5784
+Round 29, Subset 10, Test Acc: 0.6427	Class Acc: {0: 0.643, 1: 0.808, 2: 0.359, 3: 0.527, 4: 0.637, 5: 0.562, 6: 0.743, 7: 0.639, 8: 0.787, 9: 0.722}
+Round 29, Aggregated Test Acc: 0.6451
+================================================================================
+Round 30, Subset 1, Group Averaging Test Acc: 0.5748
+Round 30, Subset 2, Group Averaging Test Acc: 0.5760
+Round 30, Subset 3, Group Averaging Test Acc: 0.5777
+Round 30, Subset 4, Group Averaging Test Acc: 0.5814
+Round 30, Subset 5, Group Averaging Test Acc: 0.5785
+Round 30, Subset 6, Group Averaging Test Acc: 0.5776
+Round 30, Subset 7, Group Averaging Test Acc: 0.5760
+Round 30, Subset 8, Group Averaging Test Acc: 0.5809
+Round 30, Subset 9, Group Averaging Test Acc: 0.5749
+Round 30, Subset 10, Test Acc: 0.6395	Class Acc: {0: 0.729, 1: 0.806, 2: 0.603, 3: 0.381, 4: 0.558, 5: 0.56, 6: 0.761, 7: 0.582, 8: 0.754, 9: 0.661}
+Round 30, Aggregated Test Acc: 0.6350
+================================================================================
+Round 31, Subset 1, Group Averaging Test Acc: 0.5824
+Round 31, Subset 2, Group Averaging Test Acc: 0.5793
+Round 31, Subset 3, Group Averaging Test Acc: 0.5773
+Round 31, Subset 4, Group Averaging Test Acc: 0.5756
+Round 31, Subset 5, Group Averaging Test Acc: 0.5815
+Round 31, Subset 6, Group Averaging Test Acc: 0.5805
+Round 31, Subset 7, Group Averaging Test Acc: 0.5770
+Round 31, Subset 8, Group Averaging Test Acc: 0.5805
+Round 31, Subset 9, Group Averaging Test Acc: 0.5765
+Round 31, Subset 10, Test Acc: 0.6252	Class Acc: {0: 0.616, 1: 0.743, 2: 0.671, 3: 0.385, 4: 0.502, 5: 0.533, 6: 0.759, 7: 0.573, 8: 0.845, 9: 0.625}
+Round 31, Aggregated Test Acc: 0.6235
+================================================================================
+Round 32, Subset 1, Group Averaging Test Acc: 0.5762
+Round 32, Subset 2, Group Averaging Test Acc: 0.5777
+Round 32, Subset 3, Group Averaging Test Acc: 0.5818
+Round 32, Subset 4, Group Averaging Test Acc: 0.5766
+Round 32, Subset 5, Group Averaging Test Acc: 0.5850
+Round 32, Subset 6, Group Averaging Test Acc: 0.5797
+Round 32, Subset 7, Group Averaging Test Acc: 0.5778
+Round 32, Subset 8, Group Averaging Test Acc: 0.5818
+Round 32, Subset 9, Group Averaging Test Acc: 0.5803
+Round 32, Subset 10, Test Acc: 0.6329	Class Acc: {0: 0.46, 1: 0.751, 2: 0.511, 3: 0.518, 4: 0.643, 5: 0.474, 6: 0.733, 7: 0.708, 8: 0.742, 9: 0.789}
+Round 32, Aggregated Test Acc: 0.6371
+================================================================================
+Round 33, Subset 1, Group Averaging Test Acc: 0.5774
+Round 33, Subset 2, Group Averaging Test Acc: 0.5838
+Round 33, Subset 3, Group Averaging Test Acc: 0.5854
+Round 33, Subset 4, Group Averaging Test Acc: 0.5816
+Round 33, Subset 5, Group Averaging Test Acc: 0.5844
+Round 33, Subset 6, Group Averaging Test Acc: 0.5799
+Round 33, Subset 7, Group Averaging Test Acc: 0.5783
+Round 33, Subset 8, Group Averaging Test Acc: 0.5778
+Round 33, Subset 9, Group Averaging Test Acc: 0.5804
+Round 33, Subset 10, Test Acc: 0.6160	Class Acc: {0: 0.703, 1: 0.839, 2: 0.575, 3: 0.631, 4: 0.312, 5: 0.381, 6: 0.663, 7: 0.69, 8: 0.819, 9: 0.547}
+Round 33, Aggregated Test Acc: 0.6224
+================================================================================
+Round 34, Subset 1, Group Averaging Test Acc: 0.5827
+Round 34, Subset 2, Group Averaging Test Acc: 0.5857
+Round 34, Subset 3, Group Averaging Test Acc: 0.5792
+Round 34, Subset 4, Group Averaging Test Acc: 0.5812
+Round 34, Subset 5, Group Averaging Test Acc: 0.5840
+Round 34, Subset 6, Group Averaging Test Acc: 0.5838
+Round 34, Subset 7, Group Averaging Test Acc: 0.5840
+Round 34, Subset 8, Group Averaging Test Acc: 0.5796
+Round 34, Subset 9, Group Averaging Test Acc: 0.5848
+Round 34, Subset 10, Test Acc: 0.6185	Class Acc: {0: 0.554, 1: 0.778, 2: 0.608, 3: 0.607, 4: 0.461, 5: 0.38, 6: 0.592, 7: 0.715, 8: 0.752, 9: 0.738}
+Round 34, Aggregated Test Acc: 0.6200
+================================================================================
+Round 35, Subset 1, Group Averaging Test Acc: 0.5815
+Round 35, Subset 2, Group Averaging Test Acc: 0.5841
+Round 35, Subset 3, Group Averaging Test Acc: 0.5805
+Round 35, Subset 4, Group Averaging Test Acc: 0.5859
+Round 35, Subset 5, Group Averaging Test Acc: 0.5830
+Round 35, Subset 6, Group Averaging Test Acc: 0.5809
+Round 35, Subset 7, Group Averaging Test Acc: 0.5824
+Round 35, Subset 8, Group Averaging Test Acc: 0.5845
+Round 35, Subset 9, Group Averaging Test Acc: 0.5814
+Round 35, Subset 10, Test Acc: 0.6367	Class Acc: {0: 0.627, 1: 0.765, 2: 0.575, 3: 0.431, 4: 0.679, 5: 0.339, 6: 0.804, 7: 0.731, 8: 0.746, 9: 0.67}
+Round 35, Aggregated Test Acc: 0.6277
+================================================================================
+Round 36, Subset 1, Group Averaging Test Acc: 0.5872
+Round 36, Subset 2, Group Averaging Test Acc: 0.5835
+Round 36, Subset 3, Group Averaging Test Acc: 0.5877
+Round 36, Subset 4, Group Averaging Test Acc: 0.5877
+Round 36, Subset 5, Group Averaging Test Acc: 0.5883
+Round 36, Subset 6, Group Averaging Test Acc: 0.5816
+Round 36, Subset 7, Group Averaging Test Acc: 0.5839
+Round 36, Subset 8, Group Averaging Test Acc: 0.5833
+Round 36, Subset 9, Group Averaging Test Acc: 0.5889
+Round 36, Subset 10, Test Acc: 0.6251	Class Acc: {0: 0.585, 1: 0.801, 2: 0.489, 3: 0.423, 4: 0.535, 5: 0.431, 6: 0.885, 7: 0.71, 8: 0.736, 9: 0.656}
+Round 36, Aggregated Test Acc: 0.6303
+================================================================================
+Round 37, Subset 1, Group Averaging Test Acc: 0.5845
+Round 37, Subset 2, Group Averaging Test Acc: 0.5900
+Round 37, Subset 3, Group Averaging Test Acc: 0.5801
+Round 37, Subset 4, Group Averaging Test Acc: 0.5832
+Round 37, Subset 5, Group Averaging Test Acc: 0.5924
+Round 37, Subset 6, Group Averaging Test Acc: 0.5825
+Round 37, Subset 7, Group Averaging Test Acc: 0.5840
+Round 37, Subset 8, Group Averaging Test Acc: 0.5830
+Round 37, Subset 9, Group Averaging Test Acc: 0.5826
+Round 37, Subset 10, Test Acc: 0.6472	Class Acc: {0: 0.625, 1: 0.749, 2: 0.486, 3: 0.307, 4: 0.615, 5: 0.717, 6: 0.719, 7: 0.719, 8: 0.78, 9: 0.755}
+Round 37, Aggregated Test Acc: 0.6437
+================================================================================
+Round 38, Subset 1, Group Averaging Test Acc: 0.5884
+Round 38, Subset 2, Group Averaging Test Acc: 0.5890
+Round 38, Subset 3, Group Averaging Test Acc: 0.5819
+Round 38, Subset 4, Group Averaging Test Acc: 0.5863
+Round 38, Subset 5, Group Averaging Test Acc: 0.5867
+Round 38, Subset 6, Group Averaging Test Acc: 0.5896
+Round 38, Subset 7, Group Averaging Test Acc: 0.5861
+Round 38, Subset 8, Group Averaging Test Acc: 0.5860
+Round 38, Subset 9, Group Averaging Test Acc: 0.5880
+Round 38, Subset 10, Test Acc: 0.6416	Class Acc: {0: 0.718, 1: 0.841, 2: 0.465, 3: 0.544, 4: 0.637, 5: 0.512, 6: 0.689, 7: 0.675, 8: 0.718, 9: 0.617}
+Round 38, Aggregated Test Acc: 0.6301
+================================================================================
+Round 39, Subset 1, Group Averaging Test Acc: 0.5924
+Round 39, Subset 2, Group Averaging Test Acc: 0.5862
+Round 39, Subset 3, Group Averaging Test Acc: 0.5839
+Round 39, Subset 4, Group Averaging Test Acc: 0.5888
+Round 39, Subset 5, Group Averaging Test Acc: 0.5883
+Round 39, Subset 6, Group Averaging Test Acc: 0.5912
+Round 39, Subset 7, Group Averaging Test Acc: 0.5927
+Round 39, Subset 8, Group Averaging Test Acc: 0.5856
+Round 39, Subset 9, Group Averaging Test Acc: 0.5838
+Round 39, Subset 10, Test Acc: 0.6407	Class Acc: {0: 0.629, 1: 0.812, 2: 0.491, 3: 0.369, 4: 0.503, 5: 0.605, 6: 0.847, 7: 0.689, 8: 0.736, 9: 0.726}
+Round 39, Aggregated Test Acc: 0.6361
+================================================================================
+Round 40, Subset 1, Group Averaging Test Acc: 0.5862
+Round 40, Subset 2, Group Averaging Test Acc: 0.5852
+Round 40, Subset 3, Group Averaging Test Acc: 0.5870
+Round 40, Subset 4, Group Averaging Test Acc: 0.5914
+Round 40, Subset 5, Group Averaging Test Acc: 0.5905
+Round 40, Subset 6, Group Averaging Test Acc: 0.5862
+Round 40, Subset 7, Group Averaging Test Acc: 0.5904
+Round 40, Subset 8, Group Averaging Test Acc: 0.5919
+Round 40, Subset 9, Group Averaging Test Acc: 0.5901
+Round 40, Subset 10, Test Acc: 0.6512	Class Acc: {0: 0.574, 1: 0.782, 2: 0.52, 3: 0.339, 4: 0.688, 5: 0.666, 6: 0.753, 7: 0.67, 8: 0.792, 9: 0.728}
+Round 40, Aggregated Test Acc: 0.6475
+================================================================================
+Round 41, Subset 1, Group Averaging Test Acc: 0.5887
+Round 41, Subset 2, Group Averaging Test Acc: 0.5900
+Round 41, Subset 3, Group Averaging Test Acc: 0.5888
+Round 41, Subset 4, Group Averaging Test Acc: 0.5866
+Round 41, Subset 5, Group Averaging Test Acc: 0.5915
+Round 41, Subset 6, Group Averaging Test Acc: 0.5891
+Round 41, Subset 7, Group Averaging Test Acc: 0.5866
+Round 41, Subset 8, Group Averaging Test Acc: 0.5824
+Round 41, Subset 9, Group Averaging Test Acc: 0.5889
+Round 41, Subset 10, Test Acc: 0.6371	Class Acc: {0: 0.661, 1: 0.886, 2: 0.549, 3: 0.398, 4: 0.573, 5: 0.47, 6: 0.807, 7: 0.634, 8: 0.812, 9: 0.581}
+Round 41, Aggregated Test Acc: 0.6341
+================================================================================
+Round 42, Subset 1, Group Averaging Test Acc: 0.5902
+Round 42, Subset 2, Group Averaging Test Acc: 0.5904
+Round 42, Subset 3, Group Averaging Test Acc: 0.5954
+Round 42, Subset 4, Group Averaging Test Acc: 0.5832
+Round 42, Subset 5, Group Averaging Test Acc: 0.5884
+Round 42, Subset 6, Group Averaging Test Acc: 0.5899
+Round 42, Subset 7, Group Averaging Test Acc: 0.5908
+Round 42, Subset 8, Group Averaging Test Acc: 0.5909
+Round 42, Subset 9, Group Averaging Test Acc: 0.5841
+Round 42, Subset 10, Test Acc: 0.6355	Class Acc: {0: 0.707, 1: 0.782, 2: 0.543, 3: 0.288, 4: 0.459, 5: 0.639, 6: 0.703, 7: 0.774, 8: 0.753, 9: 0.707}
+Round 42, Aggregated Test Acc: 0.6380
+================================================================================
+Round 43, Subset 1, Group Averaging Test Acc: 0.5934
+Round 43, Subset 2, Group Averaging Test Acc: 0.5925
+Round 43, Subset 3, Group Averaging Test Acc: 0.5901
+Round 43, Subset 4, Group Averaging Test Acc: 0.5917
+Round 43, Subset 5, Group Averaging Test Acc: 0.5922
+Round 43, Subset 6, Group Averaging Test Acc: 0.5901
+Round 43, Subset 7, Group Averaging Test Acc: 0.5902
+Round 43, Subset 8, Group Averaging Test Acc: 0.5874
+Round 43, Subset 9, Group Averaging Test Acc: 0.5921
+Round 43, Subset 10, Test Acc: 0.6295	Class Acc: {0: 0.597, 1: 0.778, 2: 0.396, 3: 0.362, 4: 0.442, 5: 0.759, 6: 0.773, 7: 0.658, 8: 0.79, 9: 0.74}
+Round 43, Aggregated Test Acc: 0.6462
+================================================================================
+Round 44, Subset 1, Group Averaging Test Acc: 0.5897
+Round 44, Subset 2, Group Averaging Test Acc: 0.5886
+Round 44, Subset 3, Group Averaging Test Acc: 0.5862
+Round 44, Subset 4, Group Averaging Test Acc: 0.5919
+Round 44, Subset 5, Group Averaging Test Acc: 0.5912
+Round 44, Subset 6, Group Averaging Test Acc: 0.5917
+Round 44, Subset 7, Group Averaging Test Acc: 0.5891
+Round 44, Subset 8, Group Averaging Test Acc: 0.5883
+Round 44, Subset 9, Group Averaging Test Acc: 0.5925
+Round 44, Subset 10, Test Acc: 0.6348	Class Acc: {0: 0.661, 1: 0.83, 2: 0.423, 3: 0.455, 4: 0.701, 5: 0.381, 6: 0.834, 7: 0.655, 8: 0.776, 9: 0.632}
+Round 44, Aggregated Test Acc: 0.6370
+================================================================================
+Round 45, Subset 1, Group Averaging Test Acc: 0.5931
+Round 45, Subset 2, Group Averaging Test Acc: 0.5937
+Round 45, Subset 3, Group Averaging Test Acc: 0.5944
+Round 45, Subset 4, Group Averaging Test Acc: 0.5900
+Round 45, Subset 5, Group Averaging Test Acc: 0.5937
+Round 45, Subset 6, Group Averaging Test Acc: 0.5935
+Round 45, Subset 7, Group Averaging Test Acc: 0.5911
+Round 45, Subset 8, Group Averaging Test Acc: 0.5912
+Round 45, Subset 9, Group Averaging Test Acc: 0.5953
+Round 45, Subset 10, Test Acc: 0.6423	Class Acc: {0: 0.619, 1: 0.786, 2: 0.543, 3: 0.553, 4: 0.57, 5: 0.45, 6: 0.797, 7: 0.661, 8: 0.754, 9: 0.69}
+Round 45, Aggregated Test Acc: 0.6405
+================================================================================
+Round 46, Subset 1, Group Averaging Test Acc: 0.5911
+Round 46, Subset 2, Group Averaging Test Acc: 0.5959
+Round 46, Subset 3, Group Averaging Test Acc: 0.5932
+Round 46, Subset 4, Group Averaging Test Acc: 0.5952
+Round 46, Subset 5, Group Averaging Test Acc: 0.5898
+Round 46, Subset 6, Group Averaging Test Acc: 0.5884
+Round 46, Subset 7, Group Averaging Test Acc: 0.5912
+Round 46, Subset 8, Group Averaging Test Acc: 0.5912
+Round 46, Subset 9, Group Averaging Test Acc: 0.5917
+Round 46, Subset 10, Test Acc: 0.6432	Class Acc: {0: 0.682, 1: 0.754, 2: 0.588, 3: 0.48, 4: 0.611, 5: 0.449, 6: 0.657, 7: 0.719, 8: 0.859, 9: 0.633}
+Round 46, Aggregated Test Acc: 0.6450
+================================================================================
+Round 47, Subset 1, Group Averaging Test Acc: 0.5957
+Round 47, Subset 2, Group Averaging Test Acc: 0.5938
+Round 47, Subset 3, Group Averaging Test Acc: 0.5982
+Round 47, Subset 4, Group Averaging Test Acc: 0.5936
+Round 47, Subset 5, Group Averaging Test Acc: 0.5969
+Round 47, Subset 6, Group Averaging Test Acc: 0.5924
+Round 47, Subset 7, Group Averaging Test Acc: 0.5886
+Round 47, Subset 8, Group Averaging Test Acc: 0.5898
+Round 47, Subset 9, Group Averaging Test Acc: 0.5925
+Round 47, Subset 10, Test Acc: 0.6300	Class Acc: {0: 0.597, 1: 0.773, 2: 0.569, 3: 0.493, 4: 0.56, 5: 0.581, 6: 0.612, 7: 0.604, 8: 0.884, 9: 0.627}
+Round 47, Aggregated Test Acc: 0.6487
+================================================================================
+Round 48, Subset 1, Group Averaging Test Acc: 0.5945
+Round 48, Subset 2, Group Averaging Test Acc: 0.5976
+Round 48, Subset 3, Group Averaging Test Acc: 0.5939
+Round 48, Subset 4, Group Averaging Test Acc: 0.5981
+Round 48, Subset 5, Group Averaging Test Acc: 0.5911
+Round 48, Subset 6, Group Averaging Test Acc: 0.5899
+Round 48, Subset 7, Group Averaging Test Acc: 0.5963
+Round 48, Subset 8, Group Averaging Test Acc: 0.5946
+Round 48, Subset 9, Group Averaging Test Acc: 0.5864
+Round 48, Subset 10, Test Acc: 0.6421	Class Acc: {0: 0.708, 1: 0.789, 2: 0.566, 3: 0.501, 4: 0.49, 5: 0.562, 6: 0.701, 7: 0.672, 8: 0.725, 9: 0.707}
+Round 48, Aggregated Test Acc: 0.6441
+================================================================================
+Round 49, Subset 1, Group Averaging Test Acc: 0.5965
+Round 49, Subset 2, Group Averaging Test Acc: 0.5964
+Round 49, Subset 3, Group Averaging Test Acc: 0.5903
+Round 49, Subset 4, Group Averaging Test Acc: 0.5964
+Round 49, Subset 5, Group Averaging Test Acc: 0.5957
+Round 49, Subset 6, Group Averaging Test Acc: 0.5970
+Round 49, Subset 7, Group Averaging Test Acc: 0.5900
+Round 49, Subset 8, Group Averaging Test Acc: 0.5960
+Round 49, Subset 9, Group Averaging Test Acc: 0.5973
+Round 49, Subset 10, Test Acc: 0.6307	Class Acc: {0: 0.625, 1: 0.604, 2: 0.533, 3: 0.519, 4: 0.455, 5: 0.561, 6: 0.718, 7: 0.666, 8: 0.776, 9: 0.85}
+Round 49, Aggregated Test Acc: 0.6471
+================================================================================
+Round 50, Subset 1, Group Averaging Test Acc: 0.5957
+Round 50, Subset 2, Group Averaging Test Acc: 0.5961
+Round 50, Subset 3, Group Averaging Test Acc: 0.5934
+Round 50, Subset 4, Group Averaging Test Acc: 0.5930
+Round 50, Subset 5, Group Averaging Test Acc: 0.5981
+Round 50, Subset 6, Group Averaging Test Acc: 0.5947
+Round 50, Subset 7, Group Averaging Test Acc: 0.5945
+Round 50, Subset 8, Group Averaging Test Acc: 0.5983
+Round 50, Subset 9, Group Averaging Test Acc: 0.5981
+Round 50, Subset 10, Test Acc: 0.6451	Class Acc: {0: 0.633, 1: 0.793, 2: 0.595, 3: 0.475, 4: 0.614, 5: 0.49, 6: 0.69, 7: 0.712, 8: 0.782, 9: 0.667}
+Round 50, Aggregated Test Acc: 0.6452
+================================================================================
+Round 51, Subset 1, Group Averaging Test Acc: 0.5952
+Round 51, Subset 2, Group Averaging Test Acc: 0.6033
+Round 51, Subset 3, Group Averaging Test Acc: 0.5945
+Round 51, Subset 4, Group Averaging Test Acc: 0.5938
+Round 51, Subset 5, Group Averaging Test Acc: 0.5943
+Round 51, Subset 6, Group Averaging Test Acc: 0.5942
+Round 51, Subset 7, Group Averaging Test Acc: 0.5930
+Round 51, Subset 8, Group Averaging Test Acc: 0.5951
+Round 51, Subset 9, Group Averaging Test Acc: 0.5950
+Round 51, Subset 10, Test Acc: 0.6370	Class Acc: {0: 0.688, 1: 0.799, 2: 0.425, 3: 0.492, 4: 0.757, 5: 0.48, 6: 0.647, 7: 0.668, 8: 0.784, 9: 0.63}
+Round 51, Aggregated Test Acc: 0.6400
+================================================================================
+Round 52, Subset 1, Group Averaging Test Acc: 0.5978
+Round 52, Subset 2, Group Averaging Test Acc: 0.5920
+Round 52, Subset 3, Group Averaging Test Acc: 0.5929
+Round 52, Subset 4, Group Averaging Test Acc: 0.5941
+Round 52, Subset 5, Group Averaging Test Acc: 0.5963
+Round 52, Subset 6, Group Averaging Test Acc: 0.5957
+Round 52, Subset 7, Group Averaging Test Acc: 0.5952
+Round 52, Subset 8, Group Averaging Test Acc: 0.5946
+Round 52, Subset 9, Group Averaging Test Acc: 0.5924
+Round 52, Subset 10, Test Acc: 0.6392	Class Acc: {0: 0.723, 1: 0.789, 2: 0.525, 3: 0.468, 4: 0.462, 5: 0.453, 6: 0.819, 7: 0.707, 8: 0.747, 9: 0.699}
+Round 52, Aggregated Test Acc: 0.6412
+================================================================================
+Round 53, Subset 1, Group Averaging Test Acc: 0.5967
+Round 53, Subset 2, Group Averaging Test Acc: 0.5951
+Round 53, Subset 3, Group Averaging Test Acc: 0.5993
+Round 53, Subset 4, Group Averaging Test Acc: 0.5935
+Round 53, Subset 5, Group Averaging Test Acc: 0.5980
+Round 53, Subset 6, Group Averaging Test Acc: 0.5928
+Round 53, Subset 7, Group Averaging Test Acc: 0.5937
+Round 53, Subset 8, Group Averaging Test Acc: 0.5976
+Round 53, Subset 9, Group Averaging Test Acc: 0.5994
+Round 53, Subset 10, Test Acc: 0.6380	Class Acc: {0: 0.675, 1: 0.859, 2: 0.5, 3: 0.534, 4: 0.6, 5: 0.517, 6: 0.756, 7: 0.622, 8: 0.672, 9: 0.645}
+Round 53, Aggregated Test Acc: 0.6418
+================================================================================
+Round 54, Subset 1, Group Averaging Test Acc: 0.5942
+Round 54, Subset 2, Group Averaging Test Acc: 0.5915
+Round 54, Subset 3, Group Averaging Test Acc: 0.5950
+Round 54, Subset 4, Group Averaging Test Acc: 0.5934
+Round 54, Subset 5, Group Averaging Test Acc: 0.5967
+Round 54, Subset 6, Group Averaging Test Acc: 0.5937
+Round 54, Subset 7, Group Averaging Test Acc: 0.5966
+Round 54, Subset 8, Group Averaging Test Acc: 0.5930
+Round 54, Subset 9, Group Averaging Test Acc: 0.5942
+Round 54, Subset 10, Test Acc: 0.6526	Class Acc: {0: 0.62, 1: 0.744, 2: 0.532, 3: 0.507, 4: 0.63, 5: 0.498, 6: 0.775, 7: 0.694, 8: 0.788, 9: 0.738}
+Round 54, Aggregated Test Acc: 0.6488
+================================================================================
+Round 55, Subset 1, Group Averaging Test Acc: 0.5932
+Round 55, Subset 2, Group Averaging Test Acc: 0.5923
+Round 55, Subset 3, Group Averaging Test Acc: 0.5998
+Round 55, Subset 4, Group Averaging Test Acc: 0.5959
+Round 55, Subset 5, Group Averaging Test Acc: 0.5972
+Round 55, Subset 6, Group Averaging Test Acc: 0.5972
+Round 55, Subset 7, Group Averaging Test Acc: 0.5983
+Round 55, Subset 8, Group Averaging Test Acc: 0.5939
+Round 55, Subset 9, Group Averaging Test Acc: 0.6004
+Round 55, Subset 10, Test Acc: 0.6251	Class Acc: {0: 0.646, 1: 0.799, 2: 0.373, 3: 0.495, 4: 0.735, 5: 0.515, 6: 0.51, 7: 0.686, 8: 0.847, 9: 0.645}
+Round 55, Aggregated Test Acc: 0.6364
+================================================================================
+Round 56, Subset 1, Group Averaging Test Acc: 0.5952
+Round 56, Subset 2, Group Averaging Test Acc: 0.5979
+Round 56, Subset 3, Group Averaging Test Acc: 0.5934
+Round 56, Subset 4, Group Averaging Test Acc: 0.6011
+Round 56, Subset 5, Group Averaging Test Acc: 0.5984
+Round 56, Subset 6, Group Averaging Test Acc: 0.5960
+Round 56, Subset 7, Group Averaging Test Acc: 0.5960
+Round 56, Subset 8, Group Averaging Test Acc: 0.6024
+Round 56, Subset 9, Group Averaging Test Acc: 0.5985
+Round 56, Subset 10, Test Acc: 0.6418	Class Acc: {0: 0.584, 1: 0.789, 2: 0.545, 3: 0.517, 4: 0.588, 5: 0.476, 6: 0.785, 7: 0.697, 8: 0.791, 9: 0.646}
+Round 56, Aggregated Test Acc: 0.6429
+================================================================================
+Round 57, Subset 1, Group Averaging Test Acc: 0.6021
+Round 57, Subset 2, Group Averaging Test Acc: 0.6006
+Round 57, Subset 3, Group Averaging Test Acc: 0.5929
+Round 57, Subset 4, Group Averaging Test Acc: 0.5983
+Round 57, Subset 5, Group Averaging Test Acc: 0.6014
+Round 57, Subset 6, Group Averaging Test Acc: 0.6036
+Round 57, Subset 7, Group Averaging Test Acc: 0.5950
+Round 57, Subset 8, Group Averaging Test Acc: 0.6007
+Round 57, Subset 9, Group Averaging Test Acc: 0.6038
+Round 57, Subset 10, Test Acc: 0.6397	Class Acc: {0: 0.641, 1: 0.776, 2: 0.48, 3: 0.515, 4: 0.53, 5: 0.573, 6: 0.745, 7: 0.585, 8: 0.803, 9: 0.749}
+Round 57, Aggregated Test Acc: 0.6498
+================================================================================
+Round 58, Subset 1, Group Averaging Test Acc: 0.6027
+Round 58, Subset 2, Group Averaging Test Acc: 0.5978
+Round 58, Subset 3, Group Averaging Test Acc: 0.6010
+Round 58, Subset 4, Group Averaging Test Acc: 0.5983
+Round 58, Subset 5, Group Averaging Test Acc: 0.5991
+Round 58, Subset 6, Group Averaging Test Acc: 0.5989
+Round 58, Subset 7, Group Averaging Test Acc: 0.6000
+Round 58, Subset 8, Group Averaging Test Acc: 0.5990
+Round 58, Subset 9, Group Averaging Test Acc: 0.5965
+Round 58, Subset 10, Test Acc: 0.6498	Class Acc: {0: 0.65, 1: 0.784, 2: 0.584, 3: 0.456, 4: 0.565, 5: 0.59, 6: 0.746, 7: 0.649, 8: 0.803, 9: 0.671}
+Round 58, Aggregated Test Acc: 0.6491
+================================================================================
+Round 59, Subset 1, Group Averaging Test Acc: 0.5997
+Round 59, Subset 2, Group Averaging Test Acc: 0.5993
+Round 59, Subset 3, Group Averaging Test Acc: 0.6019
+Round 59, Subset 4, Group Averaging Test Acc: 0.6035
+Round 59, Subset 5, Group Averaging Test Acc: 0.5988
+Round 59, Subset 6, Group Averaging Test Acc: 0.6011
+Round 59, Subset 7, Group Averaging Test Acc: 0.6005
+Round 59, Subset 8, Group Averaging Test Acc: 0.6003
+Round 59, Subset 9, Group Averaging Test Acc: 0.5980
+Round 59, Subset 10, Test Acc: 0.6295	Class Acc: {0: 0.617, 1: 0.723, 2: 0.635, 3: 0.358, 4: 0.442, 5: 0.589, 6: 0.74, 7: 0.726, 8: 0.858, 9: 0.607}
+Round 59, Aggregated Test Acc: 0.6361
+================================================================================
+Round 60, Subset 1, Group Averaging Test Acc: 0.6002
+Round 60, Subset 2, Group Averaging Test Acc: 0.5989
+Round 60, Subset 3, Group Averaging Test Acc: 0.6024
+Round 60, Subset 4, Group Averaging Test Acc: 0.5946
+Round 60, Subset 5, Group Averaging Test Acc: 0.6002
+Round 60, Subset 6, Group Averaging Test Acc: 0.5984
+Round 60, Subset 7, Group Averaging Test Acc: 0.5953
+Round 60, Subset 8, Group Averaging Test Acc: 0.5964
+Round 60, Subset 9, Group Averaging Test Acc: 0.6054
+Round 60, Subset 10, Test Acc: 0.6345	Class Acc: {0: 0.695, 1: 0.892, 2: 0.443, 3: 0.407, 4: 0.515, 5: 0.613, 6: 0.819, 7: 0.655, 8: 0.831, 9: 0.475}
+Round 60, Aggregated Test Acc: 0.6437
+================================================================================
+Round 61, Subset 1, Group Averaging Test Acc: 0.5963
+Round 61, Subset 2, Group Averaging Test Acc: 0.5985
+Round 61, Subset 3, Group Averaging Test Acc: 0.5997
+Round 61, Subset 4, Group Averaging Test Acc: 0.6001
+Round 61, Subset 5, Group Averaging Test Acc: 0.6010
+Round 61, Subset 6, Group Averaging Test Acc: 0.5986
+Round 61, Subset 7, Group Averaging Test Acc: 0.5968
+Round 61, Subset 8, Group Averaging Test Acc: 0.5990
+Round 61, Subset 9, Group Averaging Test Acc: 0.6030
+Round 61, Subset 10, Test Acc: 0.6382	Class Acc: {0: 0.621, 1: 0.873, 2: 0.555, 3: 0.372, 4: 0.678, 5: 0.591, 6: 0.628, 7: 0.652, 8: 0.737, 9: 0.675}
+Round 61, Aggregated Test Acc: 0.6454
+================================================================================
+Round 62, Subset 1, Group Averaging Test Acc: 0.6028
+Round 62, Subset 2, Group Averaging Test Acc: 0.5982
+Round 62, Subset 3, Group Averaging Test Acc: 0.5974
+Round 62, Subset 4, Group Averaging Test Acc: 0.5976
+Round 62, Subset 5, Group Averaging Test Acc: 0.6060
+Round 62, Subset 6, Group Averaging Test Acc: 0.6001
+Round 62, Subset 7, Group Averaging Test Acc: 0.5987
+Round 62, Subset 8, Group Averaging Test Acc: 0.5984
+Round 62, Subset 9, Group Averaging Test Acc: 0.6035
+Round 62, Subset 10, Test Acc: 0.6427	Class Acc: {0: 0.68, 1: 0.806, 2: 0.531, 3: 0.423, 4: 0.564, 5: 0.599, 6: 0.766, 7: 0.709, 8: 0.762, 9: 0.587}
+Round 62, Aggregated Test Acc: 0.6396
+================================================================================
+Round 63, Subset 1, Group Averaging Test Acc: 0.5999
+Round 63, Subset 2, Group Averaging Test Acc: 0.6043
+Round 63, Subset 3, Group Averaging Test Acc: 0.5985
+Round 63, Subset 4, Group Averaging Test Acc: 0.6023
+Round 63, Subset 5, Group Averaging Test Acc: 0.5999
+Round 63, Subset 6, Group Averaging Test Acc: 0.6003
+Round 63, Subset 7, Group Averaging Test Acc: 0.5959
+Round 63, Subset 8, Group Averaging Test Acc: 0.5999
+Round 63, Subset 9, Group Averaging Test Acc: 0.6021
+Round 63, Subset 10, Test Acc: 0.6385	Class Acc: {0: 0.619, 1: 0.806, 2: 0.614, 3: 0.422, 4: 0.562, 5: 0.516, 6: 0.689, 7: 0.661, 8: 0.858, 9: 0.638}
+Round 63, Aggregated Test Acc: 0.6347
+================================================================================
+Round 64, Subset 1, Group Averaging Test Acc: 0.6002
+Round 64, Subset 2, Group Averaging Test Acc: 0.5992
+Round 64, Subset 3, Group Averaging Test Acc: 0.6008
+Round 64, Subset 4, Group Averaging Test Acc: 0.6019
+Round 64, Subset 5, Group Averaging Test Acc: 0.6027
+Round 64, Subset 6, Group Averaging Test Acc: 0.6001
+Round 64, Subset 7, Group Averaging Test Acc: 0.5974
+Round 64, Subset 8, Group Averaging Test Acc: 0.6022
+Round 64, Subset 9, Group Averaging Test Acc: 0.6031
+Round 64, Subset 10, Test Acc: 0.6154	Class Acc: {0: 0.446, 1: 0.845, 2: 0.439, 3: 0.508, 4: 0.597, 5: 0.424, 6: 0.775, 7: 0.708, 8: 0.88, 9: 0.532}
+Round 64, Aggregated Test Acc: 0.6418
+================================================================================
+Round 65, Subset 1, Group Averaging Test Acc: 0.5997
+Round 65, Subset 2, Group Averaging Test Acc: 0.6010
+Round 65, Subset 3, Group Averaging Test Acc: 0.6044
+Round 65, Subset 4, Group Averaging Test Acc: 0.6014
+Round 65, Subset 5, Group Averaging Test Acc: 0.6054
+Round 65, Subset 6, Group Averaging Test Acc: 0.5975
+Round 65, Subset 7, Group Averaging Test Acc: 0.5982
+Round 65, Subset 8, Group Averaging Test Acc: 0.5976
+Round 65, Subset 9, Group Averaging Test Acc: 0.6047
+Round 65, Subset 10, Test Acc: 0.6382	Class Acc: {0: 0.636, 1: 0.687, 2: 0.42, 3: 0.506, 4: 0.668, 5: 0.518, 6: 0.709, 7: 0.726, 8: 0.731, 9: 0.781}
+Round 65, Aggregated Test Acc: 0.6427
+================================================================================
+Round 66, Subset 1, Group Averaging Test Acc: 0.6019
+Round 66, Subset 2, Group Averaging Test Acc: 0.6043
+Round 66, Subset 3, Group Averaging Test Acc: 0.5982
+Round 66, Subset 4, Group Averaging Test Acc: 0.6045
+Round 66, Subset 5, Group Averaging Test Acc: 0.6060
+Round 66, Subset 6, Group Averaging Test Acc: 0.5989
+Round 66, Subset 7, Group Averaging Test Acc: 0.5903
+Round 66, Subset 8, Group Averaging Test Acc: 0.6042
+Round 66, Subset 9, Group Averaging Test Acc: 0.6044
+Round 66, Subset 10, Test Acc: 0.6346	Class Acc: {0: 0.661, 1: 0.845, 2: 0.54, 3: 0.533, 4: 0.484, 5: 0.488, 6: 0.753, 7: 0.727, 8: 0.715, 9: 0.6}
+Round 66, Aggregated Test Acc: 0.6402
+================================================================================
+Round 67, Subset 1, Group Averaging Test Acc: 0.6046
+Round 67, Subset 2, Group Averaging Test Acc: 0.6055
+Round 67, Subset 3, Group Averaging Test Acc: 0.6016
+Round 67, Subset 4, Group Averaging Test Acc: 0.6027
+Round 67, Subset 5, Group Averaging Test Acc: 0.6012
+Round 67, Subset 6, Group Averaging Test Acc: 0.6021
+Round 67, Subset 7, Group Averaging Test Acc: 0.6015
+Round 67, Subset 8, Group Averaging Test Acc: 0.6007
+Round 67, Subset 9, Group Averaging Test Acc: 0.6012
+Round 67, Subset 10, Test Acc: 0.6295	Class Acc: {0: 0.624, 1: 0.898, 2: 0.594, 3: 0.515, 4: 0.546, 5: 0.425, 6: 0.691, 7: 0.672, 8: 0.77, 9: 0.56}
+Round 67, Aggregated Test Acc: 0.6427
+================================================================================
+Round 68, Subset 1, Group Averaging Test Acc: 0.6067
+Round 68, Subset 2, Group Averaging Test Acc: 0.6033
+Round 68, Subset 3, Group Averaging Test Acc: 0.6048
+Round 68, Subset 4, Group Averaging Test Acc: 0.6010
+Round 68, Subset 5, Group Averaging Test Acc: 0.6044
+Round 68, Subset 6, Group Averaging Test Acc: 0.6025
+Round 68, Subset 7, Group Averaging Test Acc: 0.6082
+Round 68, Subset 8, Group Averaging Test Acc: 0.6031
+Round 68, Subset 9, Group Averaging Test Acc: 0.6070
+Round 68, Subset 10, Test Acc: 0.6383	Class Acc: {0: 0.686, 1: 0.764, 2: 0.525, 3: 0.481, 4: 0.526, 5: 0.56, 6: 0.611, 7: 0.755, 8: 0.783, 9: 0.692}
+Round 68, Aggregated Test Acc: 0.6422
+================================================================================
+Round 69, Subset 1, Group Averaging Test Acc: 0.6043
+Round 69, Subset 2, Group Averaging Test Acc: 0.6035
+Round 69, Subset 3, Group Averaging Test Acc: 0.6035
+Round 69, Subset 4, Group Averaging Test Acc: 0.6015
+Round 69, Subset 5, Group Averaging Test Acc: 0.6064
+Round 69, Subset 6, Group Averaging Test Acc: 0.6024
+Round 69, Subset 7, Group Averaging Test Acc: 0.5989
+Round 69, Subset 8, Group Averaging Test Acc: 0.6018
+Round 69, Subset 9, Group Averaging Test Acc: 0.6025
+Round 69, Subset 10, Test Acc: 0.6451	Class Acc: {0: 0.651, 1: 0.775, 2: 0.565, 3: 0.51, 4: 0.562, 5: 0.513, 6: 0.713, 7: 0.659, 8: 0.732, 9: 0.771}
+Round 69, Aggregated Test Acc: 0.6443
+================================================================================
+Round 70, Subset 1, Group Averaging Test Acc: 0.6012
+Round 70, Subset 2, Group Averaging Test Acc: 0.5990
+Round 70, Subset 3, Group Averaging Test Acc: 0.6003
+Round 70, Subset 4, Group Averaging Test Acc: 0.6060
+Round 70, Subset 5, Group Averaging Test Acc: 0.6049
+Round 70, Subset 6, Group Averaging Test Acc: 0.5991
+Round 70, Subset 7, Group Averaging Test Acc: 0.6010
+Round 70, Subset 8, Group Averaging Test Acc: 0.6040
+Round 70, Subset 9, Group Averaging Test Acc: 0.6048
+Round 70, Subset 10, Test Acc: 0.6357	Class Acc: {0: 0.625, 1: 0.801, 2: 0.492, 3: 0.416, 4: 0.561, 5: 0.587, 6: 0.774, 7: 0.602, 8: 0.724, 9: 0.775}
+Round 70, Aggregated Test Acc: 0.6455
+================================================================================
+Round 71, Subset 1, Group Averaging Test Acc: 0.6038
+Round 71, Subset 2, Group Averaging Test Acc: 0.6041
+Round 71, Subset 3, Group Averaging Test Acc: 0.6025
+Round 71, Subset 4, Group Averaging Test Acc: 0.6006
+Round 71, Subset 5, Group Averaging Test Acc: 0.6047
+Round 71, Subset 6, Group Averaging Test Acc: 0.6009
+Round 71, Subset 7, Group Averaging Test Acc: 0.5986
+Round 71, Subset 8, Group Averaging Test Acc: 0.6057
+Round 71, Subset 9, Group Averaging Test Acc: 0.6015
+Round 71, Subset 10, Test Acc: 0.6419	Class Acc: {0: 0.607, 1: 0.801, 2: 0.509, 3: 0.428, 4: 0.524, 5: 0.591, 6: 0.759, 7: 0.71, 8: 0.79, 9: 0.7}
+Round 71, Aggregated Test Acc: 0.6412
+================================================================================
+Round 72, Subset 1, Group Averaging Test Acc: 0.6034
+Round 72, Subset 2, Group Averaging Test Acc: 0.6048
+Round 72, Subset 3, Group Averaging Test Acc: 0.6056
+Round 72, Subset 4, Group Averaging Test Acc: 0.6063
+Round 72, Subset 5, Group Averaging Test Acc: 0.6046
+Round 72, Subset 6, Group Averaging Test Acc: 0.6043
+Round 72, Subset 7, Group Averaging Test Acc: 0.6036
+Round 72, Subset 8, Group Averaging Test Acc: 0.6047
+Round 72, Subset 9, Group Averaging Test Acc: 0.6083
+Round 72, Subset 10, Test Acc: 0.6220	Class Acc: {0: 0.615, 1: 0.743, 2: 0.692, 3: 0.463, 4: 0.459, 5: 0.476, 6: 0.667, 7: 0.585, 8: 0.766, 9: 0.754}
+Round 72, Aggregated Test Acc: 0.6208
+================================================================================
+Round 73, Subset 1, Group Averaging Test Acc: 0.6047
+Round 73, Subset 2, Group Averaging Test Acc: 0.6055
+Round 73, Subset 3, Group Averaging Test Acc: 0.6058
+Round 73, Subset 4, Group Averaging Test Acc: 0.6076
+Round 73, Subset 5, Group Averaging Test Acc: 0.6044
+Round 73, Subset 6, Group Averaging Test Acc: 0.6013
+Round 73, Subset 7, Group Averaging Test Acc: 0.6021
+Round 73, Subset 8, Group Averaging Test Acc: 0.6042
+Round 73, Subset 9, Group Averaging Test Acc: 0.6049
+Round 73, Subset 10, Test Acc: 0.6377	Class Acc: {0: 0.657, 1: 0.77, 2: 0.467, 3: 0.531, 4: 0.534, 5: 0.456, 6: 0.801, 7: 0.712, 8: 0.713, 9: 0.736}
+Round 73, Aggregated Test Acc: 0.6460
+================================================================================
+Round 74, Subset 1, Group Averaging Test Acc: 0.6042
+Round 74, Subset 2, Group Averaging Test Acc: 0.6066
+Round 74, Subset 3, Group Averaging Test Acc: 0.6014
+Round 74, Subset 4, Group Averaging Test Acc: 0.6041
+Round 74, Subset 5, Group Averaging Test Acc: 0.6042
+Round 74, Subset 6, Group Averaging Test Acc: 0.6035
+Round 74, Subset 7, Group Averaging Test Acc: 0.6021
+Round 74, Subset 8, Group Averaging Test Acc: 0.6089
+Round 74, Subset 9, Group Averaging Test Acc: 0.6009
+Round 74, Subset 10, Test Acc: 0.6243	Class Acc: {0: 0.787, 1: 0.888, 2: 0.45, 3: 0.542, 4: 0.494, 5: 0.513, 6: 0.737, 7: 0.643, 8: 0.644, 9: 0.545}
+Round 74, Aggregated Test Acc: 0.6348
+================================================================================
+Round 75, Subset 1, Group Averaging Test Acc: 0.6042
+Round 75, Subset 2, Group Averaging Test Acc: 0.6065
+Round 75, Subset 3, Group Averaging Test Acc: 0.6081
+Round 75, Subset 4, Group Averaging Test Acc: 0.6025
+Round 75, Subset 5, Group Averaging Test Acc: 0.6068
+Round 75, Subset 6, Group Averaging Test Acc: 0.6065
+Round 75, Subset 7, Group Averaging Test Acc: 0.6062
+Round 75, Subset 8, Group Averaging Test Acc: 0.6073
+Round 75, Subset 9, Group Averaging Test Acc: 0.6036
+Round 75, Subset 10, Test Acc: 0.6356	Class Acc: {0: 0.6, 1: 0.872, 2: 0.546, 3: 0.492, 4: 0.586, 5: 0.478, 6: 0.642, 7: 0.734, 8: 0.759, 9: 0.647}
+Round 75, Aggregated Test Acc: 0.6425
+================================================================================
+Round 76, Subset 1, Group Averaging Test Acc: 0.6025
+Round 76, Subset 2, Group Averaging Test Acc: 0.6038
+Round 76, Subset 3, Group Averaging Test Acc: 0.6062
+Round 76, Subset 4, Group Averaging Test Acc: 0.6034
+Round 76, Subset 5, Group Averaging Test Acc: 0.6078
+Round 76, Subset 6, Group Averaging Test Acc: 0.6019
+Round 76, Subset 7, Group Averaging Test Acc: 0.6036
+Round 76, Subset 8, Group Averaging Test Acc: 0.6080
+Round 76, Subset 9, Group Averaging Test Acc: 0.6074
+Round 76, Subset 10, Test Acc: 0.6404	Class Acc: {0: 0.688, 1: 0.811, 2: 0.515, 3: 0.439, 4: 0.525, 5: 0.499, 6: 0.789, 7: 0.697, 8: 0.75, 9: 0.691}
+Round 76, Aggregated Test Acc: 0.6451
+================================================================================
+Round 77, Subset 1, Group Averaging Test Acc: 0.6049
+Round 77, Subset 2, Group Averaging Test Acc: 0.6073
+Round 77, Subset 3, Group Averaging Test Acc: 0.6049
+Round 77, Subset 4, Group Averaging Test Acc: 0.6087
+Round 77, Subset 5, Group Averaging Test Acc: 0.6070
+Round 77, Subset 6, Group Averaging Test Acc: 0.6101
+Round 77, Subset 7, Group Averaging Test Acc: 0.6071
+Round 77, Subset 8, Group Averaging Test Acc: 0.6057
+Round 77, Subset 9, Group Averaging Test Acc: 0.6046
+Round 77, Subset 10, Test Acc: 0.6397	Class Acc: {0: 0.728, 1: 0.796, 2: 0.549, 3: 0.453, 4: 0.672, 5: 0.446, 6: 0.755, 7: 0.627, 8: 0.675, 9: 0.696}
+Round 77, Aggregated Test Acc: 0.6481
+================================================================================
+Round 78, Subset 1, Group Averaging Test Acc: 0.5993
+Round 78, Subset 2, Group Averaging Test Acc: 0.6069
+Round 78, Subset 3, Group Averaging Test Acc: 0.6050
+Round 78, Subset 4, Group Averaging Test Acc: 0.6091
+Round 78, Subset 5, Group Averaging Test Acc: 0.6074
+Round 78, Subset 6, Group Averaging Test Acc: 0.6023
+Round 78, Subset 7, Group Averaging Test Acc: 0.6042
+Round 78, Subset 8, Group Averaging Test Acc: 0.6054
+Round 78, Subset 9, Group Averaging Test Acc: 0.6042
+Round 78, Subset 10, Test Acc: 0.6352	Class Acc: {0: 0.651, 1: 0.72, 2: 0.54, 3: 0.33, 4: 0.655, 5: 0.573, 6: 0.726, 7: 0.745, 8: 0.717, 9: 0.695}
+Round 78, Aggregated Test Acc: 0.6408
+================================================================================
+Round 79, Subset 1, Group Averaging Test Acc: 0.6034
+Round 79, Subset 2, Group Averaging Test Acc: 0.6058
+Round 79, Subset 3, Group Averaging Test Acc: 0.6103
+Round 79, Subset 4, Group Averaging Test Acc: 0.6091
+Round 79, Subset 5, Group Averaging Test Acc: 0.6073
+Round 79, Subset 6, Group Averaging Test Acc: 0.6034
+Round 79, Subset 7, Group Averaging Test Acc: 0.6068
+Round 79, Subset 8, Group Averaging Test Acc: 0.6036
+Round 79, Subset 9, Group Averaging Test Acc: 0.6079
+Round 79, Subset 10, Test Acc: 0.6398	Class Acc: {0: 0.68, 1: 0.734, 2: 0.491, 3: 0.511, 4: 0.508, 5: 0.582, 6: 0.746, 7: 0.626, 8: 0.805, 9: 0.715}
+Round 79, Aggregated Test Acc: 0.6431
+================================================================================
+Round 80, Subset 1, Group Averaging Test Acc: 0.6053
+Round 80, Subset 2, Group Averaging Test Acc: 0.6079
+Round 80, Subset 3, Group Averaging Test Acc: 0.6081
+Round 80, Subset 4, Group Averaging Test Acc: 0.6053
+Round 80, Subset 5, Group Averaging Test Acc: 0.6064
+Round 80, Subset 6, Group Averaging Test Acc: 0.6058
+Round 80, Subset 7, Group Averaging Test Acc: 0.6079
+Round 80, Subset 8, Group Averaging Test Acc: 0.6056
+Round 80, Subset 9, Group Averaging Test Acc: 0.6006
+Round 80, Subset 10, Test Acc: 0.6319	Class Acc: {0: 0.777, 1: 0.778, 2: 0.534, 3: 0.394, 4: 0.515, 5: 0.53, 6: 0.717, 7: 0.681, 8: 0.736, 9: 0.657}
+Round 80, Aggregated Test Acc: 0.6411
+================================================================================
+Round 81, Subset 1, Group Averaging Test Acc: 0.6037
+Round 81, Subset 2, Group Averaging Test Acc: 0.6084
+Round 81, Subset 3, Group Averaging Test Acc: 0.6082
+Round 81, Subset 4, Group Averaging Test Acc: 0.6089
+Round 81, Subset 5, Group Averaging Test Acc: 0.6076
+Round 81, Subset 6, Group Averaging Test Acc: 0.6057
+Round 81, Subset 7, Group Averaging Test Acc: 0.6057
+Round 81, Subset 8, Group Averaging Test Acc: 0.6080
+Round 81, Subset 9, Group Averaging Test Acc: 0.6071
+Round 81, Subset 10, Test Acc: 0.6321	Class Acc: {0: 0.582, 1: 0.826, 2: 0.578, 3: 0.484, 4: 0.464, 5: 0.54, 6: 0.702, 7: 0.699, 8: 0.841, 9: 0.605}
+Round 81, Aggregated Test Acc: 0.6417
+================================================================================
+Round 82, Subset 1, Group Averaging Test Acc: 0.6033
+Round 82, Subset 2, Group Averaging Test Acc: 0.6098
+Round 82, Subset 3, Group Averaging Test Acc: 0.6068
+Round 82, Subset 4, Group Averaging Test Acc: 0.6070
+Round 82, Subset 5, Group Averaging Test Acc: 0.6124
+Round 82, Subset 6, Group Averaging Test Acc: 0.6075
+Round 82, Subset 7, Group Averaging Test Acc: 0.6068
+Round 82, Subset 8, Group Averaging Test Acc: 0.6101
+Round 82, Subset 9, Group Averaging Test Acc: 0.6081
+Round 82, Subset 10, Test Acc: 0.6115	Class Acc: {0: 0.776, 1: 0.93, 2: 0.598, 3: 0.388, 4: 0.443, 5: 0.547, 6: 0.682, 7: 0.668, 8: 0.648, 9: 0.435}
+Round 82, Aggregated Test Acc: 0.6293
+================================================================================
+Round 83, Subset 1, Group Averaging Test Acc: 0.6018
+Round 83, Subset 2, Group Averaging Test Acc: 0.6092
+Round 83, Subset 3, Group Averaging Test Acc: 0.6042
+Round 83, Subset 4, Group Averaging Test Acc: 0.6033
+Round 83, Subset 5, Group Averaging Test Acc: 0.6106
+Round 83, Subset 6, Group Averaging Test Acc: 0.6031
+Round 83, Subset 7, Group Averaging Test Acc: 0.6051
+Round 83, Subset 8, Group Averaging Test Acc: 0.6085
+Round 83, Subset 9, Group Averaging Test Acc: 0.6094
+Round 83, Subset 10, Test Acc: 0.6199	Class Acc: {0: 0.675, 1: 0.448, 2: 0.576, 3: 0.536, 4: 0.583, 5: 0.436, 6: 0.672, 7: 0.713, 8: 0.725, 9: 0.835}
+Round 83, Aggregated Test Acc: 0.6377
+================================================================================
+Round 84, Subset 1, Group Averaging Test Acc: 0.6074
+Round 84, Subset 2, Group Averaging Test Acc: 0.6083
+Round 84, Subset 3, Group Averaging Test Acc: 0.6079
+Round 84, Subset 4, Group Averaging Test Acc: 0.6025
+Round 84, Subset 5, Group Averaging Test Acc: 0.6061
+Round 84, Subset 6, Group Averaging Test Acc: 0.6082
+Round 84, Subset 7, Group Averaging Test Acc: 0.6068
+Round 84, Subset 8, Group Averaging Test Acc: 0.6044
+Round 84, Subset 9, Group Averaging Test Acc: 0.6117
+Round 84, Subset 10, Test Acc: 0.6378	Class Acc: {0: 0.647, 1: 0.812, 2: 0.637, 3: 0.397, 4: 0.545, 5: 0.49, 6: 0.713, 7: 0.695, 8: 0.792, 9: 0.65}
+Round 84, Aggregated Test Acc: 0.6389
+================================================================================
+Round 85, Subset 1, Group Averaging Test Acc: 0.6085
+Round 85, Subset 2, Group Averaging Test Acc: 0.6082
+Round 85, Subset 3, Group Averaging Test Acc: 0.6059
+Round 85, Subset 4, Group Averaging Test Acc: 0.6092
+Round 85, Subset 5, Group Averaging Test Acc: 0.6092
+Round 85, Subset 6, Group Averaging Test Acc: 0.6044
+Round 85, Subset 7, Group Averaging Test Acc: 0.6055
+Round 85, Subset 8, Group Averaging Test Acc: 0.6086
+Round 85, Subset 9, Group Averaging Test Acc: 0.6090
+Round 85, Subset 10, Test Acc: 0.6326	Class Acc: {0: 0.672, 1: 0.849, 2: 0.555, 3: 0.373, 4: 0.592, 5: 0.453, 6: 0.706, 7: 0.705, 8: 0.778, 9: 0.643}
+Round 85, Aggregated Test Acc: 0.6412
+================================================================================
+Round 86, Subset 1, Group Averaging Test Acc: 0.6062
+Round 86, Subset 2, Group Averaging Test Acc: 0.6091
+Round 86, Subset 3, Group Averaging Test Acc: 0.6089
+Round 86, Subset 4, Group Averaging Test Acc: 0.6074
+Round 86, Subset 5, Group Averaging Test Acc: 0.6085
+Round 86, Subset 6, Group Averaging Test Acc: 0.6035
+Round 86, Subset 7, Group Averaging Test Acc: 0.6069
+Round 86, Subset 8, Group Averaging Test Acc: 0.6059
+Round 86, Subset 9, Group Averaging Test Acc: 0.6123
+Round 86, Subset 10, Test Acc: 0.6348	Class Acc: {0: 0.703, 1: 0.756, 2: 0.421, 3: 0.503, 4: 0.522, 5: 0.487, 6: 0.755, 7: 0.7, 8: 0.715, 9: 0.786}
+Round 86, Aggregated Test Acc: 0.6389
+================================================================================
+Round 87, Subset 1, Group Averaging Test Acc: 0.6070
+Round 87, Subset 2, Group Averaging Test Acc: 0.6083
+Round 87, Subset 3, Group Averaging Test Acc: 0.6098
+Round 87, Subset 4, Group Averaging Test Acc: 0.6043
+Round 87, Subset 5, Group Averaging Test Acc: 0.6094
+Round 87, Subset 6, Group Averaging Test Acc: 0.6113
+Round 87, Subset 7, Group Averaging Test Acc: 0.6077
+Round 87, Subset 8, Group Averaging Test Acc: 0.6097
+Round 87, Subset 9, Group Averaging Test Acc: 0.6071
+Round 87, Subset 10, Test Acc: 0.6220	Class Acc: {0: 0.658, 1: 0.723, 2: 0.366, 3: 0.47, 4: 0.622, 5: 0.651, 6: 0.664, 7: 0.564, 8: 0.68, 9: 0.822}
+Round 87, Aggregated Test Acc: 0.6415
+================================================================================
+Round 88, Subset 1, Group Averaging Test Acc: 0.6062
+Round 88, Subset 2, Group Averaging Test Acc: 0.6077
+Round 88, Subset 3, Group Averaging Test Acc: 0.6101
+Round 88, Subset 4, Group Averaging Test Acc: 0.6076
+Round 88, Subset 5, Group Averaging Test Acc: 0.6106
+Round 88, Subset 6, Group Averaging Test Acc: 0.6088
+Round 88, Subset 7, Group Averaging Test Acc: 0.6036
+Round 88, Subset 8, Group Averaging Test Acc: 0.6054
+Round 88, Subset 9, Group Averaging Test Acc: 0.6058
+Round 88, Subset 10, Test Acc: 0.6387	Class Acc: {0: 0.644, 1: 0.799, 2: 0.478, 3: 0.473, 4: 0.61, 5: 0.51, 6: 0.714, 7: 0.669, 8: 0.774, 9: 0.716}
+Round 88, Aggregated Test Acc: 0.6388
+================================================================================
+Round 89, Subset 1, Group Averaging Test Acc: 0.6053
+Round 89, Subset 2, Group Averaging Test Acc: 0.6115
+Round 89, Subset 3, Group Averaging Test Acc: 0.6112
+Round 89, Subset 4, Group Averaging Test Acc: 0.6075
+Round 89, Subset 5, Group Averaging Test Acc: 0.6067
+Round 89, Subset 6, Group Averaging Test Acc: 0.6117
+Round 89, Subset 7, Group Averaging Test Acc: 0.6099
+Round 89, Subset 8, Group Averaging Test Acc: 0.6064
+Round 89, Subset 9, Group Averaging Test Acc: 0.6085
+Round 89, Subset 10, Test Acc: 0.6093	Class Acc: {0: 0.593, 1: 0.774, 2: 0.655, 3: 0.485, 4: 0.404, 5: 0.433, 6: 0.71, 7: 0.466, 8: 0.809, 9: 0.764}
+Round 89, Aggregated Test Acc: 0.6303
+================================================================================
+Round 90, Subset 1, Group Averaging Test Acc: 0.6081
+Round 90, Subset 2, Group Averaging Test Acc: 0.6105
+Round 90, Subset 3, Group Averaging Test Acc: 0.6045
+Round 90, Subset 4, Group Averaging Test Acc: 0.6109
+Round 90, Subset 5, Group Averaging Test Acc: 0.6096
+Round 90, Subset 6, Group Averaging Test Acc: 0.6117
+Round 90, Subset 7, Group Averaging Test Acc: 0.6098
+Round 90, Subset 8, Group Averaging Test Acc: 0.6103
+Round 90, Subset 9, Group Averaging Test Acc: 0.6073
+Round 90, Subset 10, Test Acc: 0.6416	Class Acc: {0: 0.695, 1: 0.805, 2: 0.427, 3: 0.421, 4: 0.677, 5: 0.514, 6: 0.758, 7: 0.731, 8: 0.682, 9: 0.706}
+Round 90, Aggregated Test Acc: 0.6449
+================================================================================
+Round 91, Subset 1, Group Averaging Test Acc: 0.6127
+Round 91, Subset 2, Group Averaging Test Acc: 0.6101
+Round 91, Subset 3, Group Averaging Test Acc: 0.6082
+Round 91, Subset 4, Group Averaging Test Acc: 0.6089
+Round 91, Subset 5, Group Averaging Test Acc: 0.6113
+Round 91, Subset 6, Group Averaging Test Acc: 0.6042
+Round 91, Subset 7, Group Averaging Test Acc: 0.6067
+Round 91, Subset 8, Group Averaging Test Acc: 0.6080
+Round 91, Subset 9, Group Averaging Test Acc: 0.6091
+Round 91, Subset 10, Test Acc: 0.6371	Class Acc: {0: 0.65, 1: 0.869, 2: 0.541, 3: 0.401, 4: 0.516, 5: 0.553, 6: 0.724, 7: 0.739, 8: 0.706, 9: 0.672}
+Round 91, Aggregated Test Acc: 0.6390
+================================================================================
+Round 92, Subset 1, Group Averaging Test Acc: 0.6076
+Round 92, Subset 2, Group Averaging Test Acc: 0.6128
+Round 92, Subset 3, Group Averaging Test Acc: 0.6036
+Round 92, Subset 4, Group Averaging Test Acc: 0.6052
+Round 92, Subset 5, Group Averaging Test Acc: 0.6135
+Round 92, Subset 6, Group Averaging Test Acc: 0.6057
+Round 92, Subset 7, Group Averaging Test Acc: 0.6079
+Round 92, Subset 8, Group Averaging Test Acc: 0.6091
+Round 92, Subset 9, Group Averaging Test Acc: 0.6111
+Round 92, Subset 10, Test Acc: 0.6265	Class Acc: {0: 0.611, 1: 0.85, 2: 0.389, 3: 0.375, 4: 0.723, 5: 0.688, 6: 0.633, 7: 0.572, 8: 0.822, 9: 0.602}
+Round 92, Aggregated Test Acc: 0.6438
+================================================================================
+Round 93, Subset 1, Group Averaging Test Acc: 0.6081
+Round 93, Subset 2, Group Averaging Test Acc: 0.6114
+Round 93, Subset 3, Group Averaging Test Acc: 0.6122
+Round 93, Subset 4, Group Averaging Test Acc: 0.6099
+Round 93, Subset 5, Group Averaging Test Acc: 0.6109
+Round 93, Subset 6, Group Averaging Test Acc: 0.6062
+Round 93, Subset 7, Group Averaging Test Acc: 0.6067
+Round 93, Subset 8, Group Averaging Test Acc: 0.6154
+Round 93, Subset 9, Group Averaging Test Acc: 0.6081
+Round 93, Subset 10, Test Acc: 0.6423	Class Acc: {0: 0.651, 1: 0.796, 2: 0.574, 3: 0.481, 4: 0.637, 5: 0.384, 6: 0.724, 7: 0.703, 8: 0.73, 9: 0.743}
+Round 93, Aggregated Test Acc: 0.6483
+================================================================================
+Round 94, Subset 1, Group Averaging Test Acc: 0.6066
+Round 94, Subset 2, Group Averaging Test Acc: 0.6041
+Round 94, Subset 3, Group Averaging Test Acc: 0.6113
+Round 94, Subset 4, Group Averaging Test Acc: 0.6095
+Round 94, Subset 5, Group Averaging Test Acc: 0.6148
+Round 94, Subset 6, Group Averaging Test Acc: 0.6120
+Round 94, Subset 7, Group Averaging Test Acc: 0.6063
+Round 94, Subset 8, Group Averaging Test Acc: 0.6091
+Round 94, Subset 9, Group Averaging Test Acc: 0.6118
+Round 94, Subset 10, Test Acc: 0.6430	Class Acc: {0: 0.674, 1: 0.776, 2: 0.508, 3: 0.504, 4: 0.602, 5: 0.489, 6: 0.735, 7: 0.653, 8: 0.757, 9: 0.732}
+Round 94, Aggregated Test Acc: 0.6462
+================================================================================
+Round 95, Subset 1, Group Averaging Test Acc: 0.6118
+Round 95, Subset 2, Group Averaging Test Acc: 0.6099
+Round 95, Subset 3, Group Averaging Test Acc: 0.6108
+Round 95, Subset 4, Group Averaging Test Acc: 0.6096
+Round 95, Subset 5, Group Averaging Test Acc: 0.6086
+Round 95, Subset 6, Group Averaging Test Acc: 0.6096
+Round 95, Subset 7, Group Averaging Test Acc: 0.6073
+Round 95, Subset 8, Group Averaging Test Acc: 0.6057
+Round 95, Subset 9, Group Averaging Test Acc: 0.6124
+Round 95, Subset 10, Test Acc: 0.6321	Class Acc: {0: 0.609, 1: 0.87, 2: 0.643, 3: 0.52, 4: 0.494, 5: 0.458, 6: 0.699, 7: 0.593, 8: 0.758, 9: 0.677}
+Round 95, Aggregated Test Acc: 0.6460
+================================================================================
+Round 96, Subset 1, Group Averaging Test Acc: 0.6119
+Round 96, Subset 2, Group Averaging Test Acc: 0.6091
+Round 96, Subset 3, Group Averaging Test Acc: 0.6092
+Round 96, Subset 4, Group Averaging Test Acc: 0.6085
+Round 96, Subset 5, Group Averaging Test Acc: 0.6082
+Round 96, Subset 6, Group Averaging Test Acc: 0.6094
+Round 96, Subset 7, Group Averaging Test Acc: 0.6076
+Round 96, Subset 8, Group Averaging Test Acc: 0.6049
+Round 96, Subset 9, Group Averaging Test Acc: 0.6112
+Round 96, Subset 10, Test Acc: 0.6330	Class Acc: {0: 0.565, 1: 0.741, 2: 0.548, 3: 0.5, 4: 0.553, 5: 0.583, 6: 0.741, 7: 0.645, 8: 0.678, 9: 0.776}
+Round 96, Aggregated Test Acc: 0.6378
+================================================================================
+Round 97, Subset 1, Group Averaging Test Acc: 0.6081
+Round 97, Subset 2, Group Averaging Test Acc: 0.6100
+Round 97, Subset 3, Group Averaging Test Acc: 0.6113
+Round 97, Subset 4, Group Averaging Test Acc: 0.6106
+Round 97, Subset 5, Group Averaging Test Acc: 0.6100
+Round 97, Subset 6, Group Averaging Test Acc: 0.6084
+Round 97, Subset 7, Group Averaging Test Acc: 0.6073
+Round 97, Subset 8, Group Averaging Test Acc: 0.6087
+Round 97, Subset 9, Group Averaging Test Acc: 0.6100
+Round 97, Subset 10, Test Acc: 0.6317	Class Acc: {0: 0.592, 1: 0.814, 2: 0.637, 3: 0.34, 4: 0.625, 5: 0.554, 6: 0.614, 7: 0.63, 8: 0.859, 9: 0.652}
+Round 97, Aggregated Test Acc: 0.6462
+================================================================================
+Round 98, Subset 1, Group Averaging Test Acc: 0.6112
+Round 98, Subset 2, Group Averaging Test Acc: 0.6136
+Round 98, Subset 3, Group Averaging Test Acc: 0.6109
+Round 98, Subset 4, Group Averaging Test Acc: 0.6092
+Round 98, Subset 5, Group Averaging Test Acc: 0.6127
+Round 98, Subset 6, Group Averaging Test Acc: 0.6088
+Round 98, Subset 7, Group Averaging Test Acc: 0.6070
+Round 98, Subset 8, Group Averaging Test Acc: 0.6115
+Round 98, Subset 9, Group Averaging Test Acc: 0.6088
+Round 98, Subset 10, Test Acc: 0.6279	Class Acc: {0: 0.646, 1: 0.809, 2: 0.612, 3: 0.476, 4: 0.481, 5: 0.438, 6: 0.795, 7: 0.624, 8: 0.754, 9: 0.644}
+Round 98, Aggregated Test Acc: 0.6352
+================================================================================
+Round 99, Subset 1, Group Averaging Test Acc: 0.6102
+Round 99, Subset 2, Group Averaging Test Acc: 0.6111
+Round 99, Subset 3, Group Averaging Test Acc: 0.6108
+Round 99, Subset 4, Group Averaging Test Acc: 0.6100
+Round 99, Subset 5, Group Averaging Test Acc: 0.6109
+Round 99, Subset 6, Group Averaging Test Acc: 0.6112
+Round 99, Subset 7, Group Averaging Test Acc: 0.6061
+Round 99, Subset 8, Group Averaging Test Acc: 0.6131
+Round 99, Subset 9, Group Averaging Test Acc: 0.6110
+Round 99, Subset 10, Test Acc: 0.6293	Class Acc: {0: 0.551, 1: 0.757, 2: 0.628, 3: 0.483, 4: 0.567, 5: 0.509, 6: 0.682, 7: 0.607, 8: 0.885, 9: 0.624}
+Round 99, Aggregated Test Acc: 0.6290
+================================================================================
+Round 100, Subset 1, Group Averaging Test Acc: 0.6129
+Round 100, Subset 2, Group Averaging Test Acc: 0.6109
+Round 100, Subset 3, Group Averaging Test Acc: 0.6090
+Round 100, Subset 4, Group Averaging Test Acc: 0.6081
+Round 100, Subset 5, Group Averaging Test Acc: 0.6083
+Round 100, Subset 6, Group Averaging Test Acc: 0.6086
+Round 100, Subset 7, Group Averaging Test Acc: 0.6103
+Round 100, Subset 8, Group Averaging Test Acc: 0.6083
+Round 100, Subset 9, Group Averaging Test Acc: 0.6112
+Round 100, Subset 10, Test Acc: 0.6291	Class Acc: {0: 0.639, 1: 0.897, 2: 0.568, 3: 0.443, 4: 0.5, 5: 0.44, 6: 0.736, 7: 0.712, 8: 0.769, 9: 0.587}
+Round 100, Aggregated Test Acc: 0.6345
+================================================================================
