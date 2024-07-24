@@ -8,10 +8,10 @@ import torch.optim as optim
 from torch.utils.data import DataLoader, Subset
 from torchvision import datasets, transforms
 
+from modules.aggregation import aggregate_cnn
 from modules.models import CNN
+from modules.pruning import prune_cnn
 from modules.utils import (
-    aggregate_cnn,
-    prune_cnn,
     test,
     train,
 )

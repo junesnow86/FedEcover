@@ -8,9 +8,10 @@ import torch.optim as optim
 from torch.utils.data import DataLoader, Subset
 from torchvision import datasets, transforms
 
+from modules.aggregation import vanilla_federated_averaging
 from modules.heterofl_utils import prune_cnn
 from modules.models import CNN
-from modules.utils import test, train, vanilla_federated_averaging
+from modules.utils import test, train
 
 ROUNDS = 100
 EPOCHS = 1
