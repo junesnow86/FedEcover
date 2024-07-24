@@ -324,6 +324,16 @@ def create_random_even_groups(num_total_elements, num_groups):
 
 
 def select_random_group(groups):
+    """
+    Select a random group from the list of groups and remove it from the list.
+
+    Parameters:
+    - groups: A list of groups, where each group is a numpy array of indices.
+
+    Returns:
+    - selected_group: The selected group.
+    - groups: The list of groups with the selected group removed.
+    """
     group_index = np.random.choice(len(groups))
     selected_group = groups.pop(group_index)
     return selected_group, groups
@@ -334,6 +344,18 @@ def prune_cnn_into_groups(
     dropout_rate=0.5,
     scaling=True,
 ) -> Tuple[List[CNN], List[Dict]]:
+    """
+    Prune a CNN into multiple groups based on the dropout rate.
+
+    Parameters:
+    - original_cnn: The original CNN to prune.
+    - dropout_rate: The dropout rate to use for pruning.
+    - scaling: Whether to add a scaling layer after each pruned layer.
+
+    Returns:
+    - pruned_models: A list of pruned CNNs.
+    - indices_to_prune_list: A list of dictionaries containing the indices to prune for each pruned CNN.
+    """
     num_groups = max(int(1 / (1 - dropout_rate)), 1)
     pruned_models = []
     indices_to_prune_list = []
