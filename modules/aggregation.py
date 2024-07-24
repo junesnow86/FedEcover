@@ -146,7 +146,6 @@ def aggregate_conv_layers(
 def aggregate_cnn(
     original_cnn: CNN,
     pruned_cnn_list: List[CNN],
-    # dropout_rate_list: List[float],
     num_samples_list: List[int],
     **indices_to_prune,
 ):
@@ -181,7 +180,7 @@ def aggregate_cnn(
     )
 
 
-def vanilla_federated_averaging(global_model, models, sample_numbers):
+def vanilla_federated_averaging(models, sample_numbers):
     model_weights = [model.state_dict() for model in models]
     assert len(model_weights) == len(sample_numbers), "Length mismatch"
     avg_weights = {}

@@ -102,7 +102,7 @@ for round in range(ROUNDS):
 
     # Aggregation
     aggregated_weight = vanilla_federated_averaging(
-        global_model=global_cnn, models=all_client_models, sample_numbers=subset_sizes
+        models=all_client_models, sample_numbers=subset_sizes
     )
     global_cnn.load_state_dict(aggregated_weight)
 
