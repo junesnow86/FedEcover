@@ -8,10 +8,13 @@ import torch.optim as optim
 from torch.utils.data import DataLoader, Subset
 from torchvision import datasets, transforms
 
-from modules.aggregation import vanilla_federated_averaging
-from modules.heterofl_utils import prune_cnn
+from modules.aggregation import aggregate_cnn
 from modules.models import CNN
-from modules.utils import test, train
+from modules.pruning import prune_cnn
+from modules.utils import (
+    test,
+    train,
+)
 
 ROUNDS = 100
 EPOCHS = 1
@@ -27,7 +30,6 @@ torch.cuda.manual_seed(seed)
 # torch.cuda.manual_seed_all(seed)  # if you are using multi-GPU.
 torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
-
 
 transform = transforms.Compose(
     [transforms.ToTensor(), transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]
@@ -97,15 +99,14 @@ dataloaders = [
 #         # 在这里处理每个子集的数据
 #         pass
 
-original_cnn = CNN()
+global_cnn = CNN()
 
-p = 0.8
 num_models = 10
-global_cnn, _ = prune_cnn(original_cnn, p, position=0)
-all_client_models = []
-for i in range(num_models):
-    client_model, _ = prune_cnn(original_cnn, p, position=0)
-    all_client_models.append(client_model)
+# num_unpruned = int(num_models * 0.2)
+# num_pruned = num_models - num_unpruned
+
+# p = 0.8, 0.5, 0.2
+dropout_rates = [0.2, 0.2, 0.5, 0.5, 0.5, 0.8, 0.8, 0.8, 0.8, 0.8]
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 criterion = nn.CrossEntropyLoss()
@@ -117,9 +118,65 @@ for round in range(ROUNDS):
     round_results = {"Round": round + 1}
     round_results_class = {"Round": round + 1}
 
-    # Load global model's parameters
+    # # Load global model's parameters
+    # unpruned_models = [CNN() for _ in range(num_unpruned)]
+    # for i in range(num_unpruned):
+    #     unpruned_models[i].load_state_dict(global_cnn.state_dict())
+
+    # p = 0.9
+
+    # # pruned_models = [prune_cnn(global_cnn, p) for _ in range(num_pruned)]
+    # pruned_models = []
+    # indices_to_prune_conv1_list = []
+    # indices_to_prune_conv2_list = []
+    # indices_to_prune_conv3_list = []
+    # indices_to_prune_fc_list = []
+    # for _ in range(num_pruned):
+    #     (
+    #         pruned_model,
+    #         indices_to_prune_conv1,
+    #         indices_to_prune_conv2,
+    #         indices_to_prune_conv3,
+    #         indices_to_prune_fc,
+    #     ) = prune_cnn(
+    #         global_cnn,
+    #         p,
+    #         scaling=True,
+    #     )
+    #     pruned_models.append(pruned_model)
+    #     indices_to_prune_conv1_list.append(indices_to_prune_conv1)
+    #     indices_to_prune_conv2_list.append(indices_to_prune_conv2)
+    #     indices_to_prune_conv3_list.append(indices_to_prune_conv3)
+    #     indices_to_prune_fc_list.append(indices_to_prune_fc)
+    # for _ in range(num_unpruned):
+    #     indices_to_prune_conv1_list.append({})
+    #     indices_to_prune_conv2_list.append({})
+    #     indices_to_prune_conv3_list.append({})
+    #     indices_to_prune_fc_list.append({})
+    # all_client_models = [*pruned_models, *unpruned_models]
+
+    all_client_models = []
+    indices_to_prune_conv1_list = []
+    indices_to_prune_conv2_list = []
+    indices_to_prune_conv3_list = []
+    indices_to_prune_fc_list = []
     for i in range(num_models):
-        all_client_models[i].load_state_dict(global_cnn.state_dict())
+        (
+            client_model,
+            indices_to_prune_conv1,
+            indices_to_prune_conv2,
+            indices_to_prune_conv3,
+            indices_to_prune_fc,
+        ) = prune_cnn(
+            global_cnn,
+            dropout_rates[i],
+            scaling=True,
+        )
+        all_client_models.append(client_model)
+        indices_to_prune_conv1_list.append(indices_to_prune_conv1)
+        indices_to_prune_conv2_list.append(indices_to_prune_conv2)
+        indices_to_prune_conv3_list.append(indices_to_prune_conv3)
+        indices_to_prune_fc_list.append(indices_to_prune_fc)
 
     # Local training
     for i, dataloader in enumerate(dataloaders):
@@ -136,10 +193,15 @@ for round in range(ROUNDS):
         round_results_class[f"Subset {i + 1}"] = local_class_acc
 
     # Aggregation
-    aggregated_weight = vanilla_federated_averaging(
-        models=all_client_models, sample_numbers=subset_sizes
+    aggregate_cnn(
+        global_cnn,
+        all_client_models,
+        subset_sizes,
+        indices_to_prune_conv1=indices_to_prune_conv1_list,
+        indices_to_prune_conv2=indices_to_prune_conv2_list,
+        indices_to_prune_conv3=indices_to_prune_conv3_list,
+        indices_to_prune_fc=indices_to_prune_fc_list,
     )
-    global_cnn.load_state_dict(aggregated_weight)
 
     _, test_acc, class_acc = test(global_cnn, device, test_loader, criterion)
     print(
@@ -152,7 +214,7 @@ for round in range(ROUNDS):
     results.append(round_results)
     results_class.append(round_results_class)
 
-with open("results/vanilla_fedavg_unbalanced_classes.csv", "w") as csvfile:
+with open("results/random_dropout_more_different_p_unbalanced.csv", "w") as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=results[0].keys())
     writer.writeheader()
     writer.writerows(results)

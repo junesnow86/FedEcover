@@ -8,10 +8,12 @@ import torch.optim as optim
 from torch.utils.data import DataLoader, Subset
 from torchvision import datasets, transforms
 
-from modules.aggregation import vanilla_federated_averaging
-from modules.heterofl_utils import prune_cnn
+from modules.heterofl_utils import heterofl_aggregate, prune_cnn
 from modules.models import CNN
-from modules.utils import test, train
+from modules.utils import (
+    test,
+    train,
+)
 
 ROUNDS = 100
 EPOCHS = 1
@@ -45,7 +47,6 @@ num_train = len(train_dataset)
 indices = list(range(num_train))
 np.random.shuffle(indices)
 
-# 将训练数据集均匀划分成10个子集
 num_subsets = 10
 subset_size = num_train // num_subsets
 subsets_indices = [
@@ -53,7 +54,6 @@ subsets_indices = [
 ]
 subset_sizes = [len(subset) for subset in subsets_indices]
 
-# 创建10个数据加载器，每个加载器对应一个数据子集
 dataloaders = [
     DataLoader(
         Subset(train_dataset, subset_indices),
@@ -69,15 +69,14 @@ dataloaders = [
 #         # 在这里处理每个子集的数据
 #         pass
 
-original_cnn = CNN()
+global_cnn = CNN()
 
-p = 0.8
 num_models = 10
-global_cnn, _ = prune_cnn(original_cnn, p, position=0)
-all_client_models = []
-for i in range(num_models):
-    client_model, _ = prune_cnn(original_cnn, p, position=0)
-    all_client_models.append(client_model)
+# num_unpruned = int(num_models * 0.2)
+# num_pruned = num_models - num_unpruned
+
+# p = 0.8, 0.5, 0.2
+dropout_rates = [0.2, 0.2, 0.5, 0.5, 0.5, 0.8, 0.8, 0.8, 0.8, 0.8]
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 criterion = nn.CrossEntropyLoss()
@@ -87,9 +86,30 @@ results = []
 for round in range(ROUNDS):
     round_results = {"Round": round + 1}
 
-    # Load global model's parameters
+    # # Load global model's parameters
+    # unpruned_models = [CNN() for _ in range(num_unpruned)]
+    # for i in range(num_unpruned):
+    #     unpruned_models[i].load_state_dict(global_cnn.state_dict())
+
+    # p = 0.9
+
+    # pruned_models = [prune_cnn(global_cnn, p, position=0) for _ in range(num_pruned)]
+    # pruned_models = []
+    # pruned_indices_list = []
+    # for i in range(num_pruned):
+    #     pruned_model, pruned_indices = prune_cnn(global_cnn, p, position=0)
+    #     pruned_models.append(pruned_model)
+    #     pruned_indices_list.append(pruned_indices)
+    # all_client_models = [*pruned_models, *unpruned_models]
+    # pruned_indices_list.extend([empty_pruned_indices()] * num_unpruned)
+
+    all_client_models = []
+    pruned_indices_list = []
     for i in range(num_models):
-        all_client_models[i].load_state_dict(global_cnn.state_dict())
+        p = dropout_rates[i]
+        client_model, pruned_indices = prune_cnn(global_cnn, p, position=0)
+        all_client_models.append(client_model)
+        pruned_indices_list.append(pruned_indices)
 
     # Local training
     for i, dataloader in enumerate(dataloaders):
@@ -101,19 +121,29 @@ for round in range(ROUNDS):
         round_results[f"Subset {i + 1}"] = local_test_acc
 
     # Aggregation
-    aggregated_weight = vanilla_federated_averaging(
-        models=all_client_models, sample_numbers=subset_sizes
+    heterofl_aggregate(
+        global_cnn, all_client_models, pruned_indices_list, subset_sizes
+    )  # For convenient pruning
+    pruned_global_cnn, _ = prune_cnn(
+        global_cnn, 0.2, position=0
+    )  # Use the largest client model size as the global model size
+    heterofl_aggregate(
+        pruned_global_cnn, all_client_models, pruned_indices_list, subset_sizes
     )
-    global_cnn.load_state_dict(aggregated_weight)
+
+    _, test_acc, _ = test(pruned_global_cnn, device, test_loader, criterion)
+    print(f"Round {round + 1}, Pruned-global Aggregated Test Acc: {test_acc:.4f}")
+    round_results["Pruned-global Aggregated"] = test_acc
 
     _, test_acc, _ = test(global_cnn, device, test_loader, criterion)
-    print(f"Round {round + 1}, Aggregated Test Acc: {test_acc:.4f}")
-    round_results["Aggregated"] = test_acc
+    print(f"Round {round + 1}, Whole Aggregated Test Acc: {test_acc:.4f}")
+    round_results["Whole Aggregated"] = test_acc
+
     print("=" * 80)
 
     results.append(round_results)
 
-with open("results/vanilla_fedavg.csv", "w") as csvfile:
+with open("results/heterofl_more_different_p.csv", "w") as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=results[0].keys())
     writer.writeheader()
     writer.writerows(results)
