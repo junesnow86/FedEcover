@@ -1,8 +1,8 @@
 import torch
 import torch.nn as nn
 
+from modules.aggregation import aggregate_conv_layers, aggregate_linear_layers
 from modules.models import CNN, DropoutScaling
-from modules.utils import aggregate_conv_layers, aggregate_linear_layers
 
 
 def prune_conv_layer(conv_layer, p, position, prune_input=True, prune_output=True):
