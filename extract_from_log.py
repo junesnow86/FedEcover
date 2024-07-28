@@ -128,13 +128,9 @@ def write_aggregated_class_wise_results_to_csv(results, csv_file_path):
                 writer.writerow(row)
 
 
-# 假设`results`已经从之前的步骤中生成
-# csv_file_path = "statistics/0721/position_class_wise_acc_results.csv"
-csv_file_path = "statistics/0721/position_aggregated_class_wise_acc_results.csv"
-
 # Example usage
-log_file_path = "results/position_heterofl_unbalanced_classes.log"
-# log_file_path = "position_heterofl_unbalanced_classes_100rounds_0720.log"
+log_file_path = "results_0726/random_dropout_more_different_p_unbalanced.log"
+csv_file_path = "statistics/0726/random_dropout_aggregated_class_wise_acc_results.csv"
 results = extract_acc_class_acc(log_file_path)
 # write_overall_results_to_csv(results, csv_file_path)
 # write_class_wise_results_to_csv(results, csv_file_path)
