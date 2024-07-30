@@ -61,6 +61,9 @@ def train_and_validate(
     model.to(device)
     model.train()
 
+    train_acc_list = []
+    val_acc_list = []
+
     for epoch in range(epochs):
         total_loss = 0.0
         correct = 0
@@ -75,12 +78,17 @@ def train_and_validate(
             pred = output.argmax(dim=1, keepdim=True)
             correct += pred.eq(target.view_as(pred)).sum().item()
 
+        train_acc = correct / len(train_loader.dataset)
         val_loss, val_acc, _ = test(model, device, val_loader, criterion)
         print(
-            f"Epoch {epoch + 1}/{epochs}, Traing Loss: {total_loss:.6f}, Training Accuracy: {correct}/{len(train_loader.dataset)} ({100. * correct / len(train_loader.dataset):.0f}%)\tValidation Loss: {val_loss:.6f}, Validation Accuracy: {val_acc}"
+            f"Epoch {epoch + 1}/{epochs}, Traing Loss: {total_loss:.6f}, Training Accuracy: {correct}/{len(train_loader.dataset)} ({100. * correct / len(train_loader.dataset):.2f}%)\tValidation Loss: {val_loss:.6f}, Validation Accuracy: {val_acc}"
         )
 
+        train_acc_list.append(train_acc)
+        val_acc_list.append(val_acc)
+
     model.to(original_device)
+    return train_acc_list, val_acc_list
 
 
 # Testing function
