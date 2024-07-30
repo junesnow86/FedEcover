@@ -54,6 +54,35 @@ def train(
     model.to(original_model_device)
 
 
+def train_and_validate(
+    model, train_loader, val_loader, optimizer, criterion, epochs=30, device="cuda"
+):
+    original_device = next(model.parameters()).device
+    model.to(device)
+    model.train()
+
+    for epoch in range(epochs):
+        total_loss = 0.0
+        correct = 0
+        for data, target in train_loader:
+            data, target = data.to(device), target.to(device)
+            optimizer.zero_grad()
+            output = model(data)
+            loss = criterion(output, target)
+            loss.backward()
+            optimizer.step()
+            total_loss += loss.item()
+            pred = output.argmax(dim=1, keepdim=True)
+            correct += pred.eq(target.view_as(pred)).sum().item()
+
+        val_loss, val_acc, _ = test(model, device, val_loader, criterion)
+        print(
+            f"Epoch {epoch + 1}/{epochs}, Traing Loss: {total_loss:.6f}, Training Accuracy: {correct}/{len(train_loader.dataset)} ({100. * correct / len(train_loader.dataset):.0f}%)\tValidation Loss: {val_loss:.6f}, Validation Accuracy: {val_acc}"
+        )
+
+    model.to(original_device)
+
+
 # Testing function
 def test(model, device, test_loader, criterion, num_classes=10):
     original_model_device = next(model.parameters()).device
