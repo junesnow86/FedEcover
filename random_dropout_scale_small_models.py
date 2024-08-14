@@ -137,7 +137,8 @@ for round in range(ROUNDS):
 
     for i in range(num_models):
         dropout_rate = dropout_rates[i]
-        num_models_current_dropout_rate = int(1 / (1 - dropout_rate)) * scale_factor
+        # num_models_current_dropout_rate = int(1 / (1 - dropout_rate)) * scale_factor
+        num_models_current_dropout_rate = (int(1 / (1 - dropout_rate))) ** 2
         print(f"Round {round + 1}, Subset {i + 1}, Dropout rate: {dropout_rate}, Number of models: {num_models_current_dropout_rate}")
         client_model_group = []
         for _ in range(num_models_current_dropout_rate):
@@ -207,7 +208,7 @@ for round in range(ROUNDS):
 end_time = time()
 print(f"Total time: {end_time - start_time:.2f}s")
 
-with open("results/random_dropout_scale_small_models.csv", "w") as csvfile:
+with open("results/random_dropout_scale_small_models_square.csv", "w") as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=results[0].keys())
     writer.writeheader()
     writer.writerows(results)

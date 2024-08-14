@@ -1,0 +1,2201 @@
+Round 1, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 1, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 1, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 1, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 1, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 1, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 1, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 1, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 1, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 1, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 1, Subset 1, Test Acc: 0.3193
+Round 1, Subset 2, Test Acc: 0.3622
+Round 1, Subset 3, Test Acc: 0.3713
+Round 1, Subset 4, Test Acc: 0.3839
+Round 1, Subset 5, Test Acc: 0.3475
+Round 1, Subset 6, Test Acc: 0.3530
+Round 1, Subset 7, Test Acc: 0.3583
+Round 1, Subset 8, Test Acc: 0.3588
+Round 1, Subset 9, Test Acc: 0.3586
+Round 1, Subset 10, Test Acc: 0.3509
+Round 1, Aggregated Test Acc: 0.3655
+================================================================================
+Round 2, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 2, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 2, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 2, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 2, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 2, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 2, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 2, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 2, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 2, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 2, Subset 1, Test Acc: 0.4153
+Round 2, Subset 2, Test Acc: 0.4124
+Round 2, Subset 3, Test Acc: 0.4060
+Round 2, Subset 4, Test Acc: 0.3913
+Round 2, Subset 5, Test Acc: 0.4108
+Round 2, Subset 6, Test Acc: 0.4053
+Round 2, Subset 7, Test Acc: 0.3840
+Round 2, Subset 8, Test Acc: 0.3974
+Round 2, Subset 9, Test Acc: 0.3919
+Round 2, Subset 10, Test Acc: 0.4083
+Round 2, Aggregated Test Acc: 0.4332
+================================================================================
+Round 3, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 3, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 3, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 3, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 3, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 3, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 3, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 3, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 3, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 3, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 3, Subset 1, Test Acc: 0.4316
+Round 3, Subset 2, Test Acc: 0.4481
+Round 3, Subset 3, Test Acc: 0.4298
+Round 3, Subset 4, Test Acc: 0.4416
+Round 3, Subset 5, Test Acc: 0.4403
+Round 3, Subset 6, Test Acc: 0.4204
+Round 3, Subset 7, Test Acc: 0.4128
+Round 3, Subset 8, Test Acc: 0.4177
+Round 3, Subset 9, Test Acc: 0.4117
+Round 3, Subset 10, Test Acc: 0.4250
+Round 3, Aggregated Test Acc: 0.4687
+================================================================================
+Round 4, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 4, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 4, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 4, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 4, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 4, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 4, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 4, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 4, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 4, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 4, Subset 1, Test Acc: 0.4828
+Round 4, Subset 2, Test Acc: 0.4848
+Round 4, Subset 3, Test Acc: 0.4687
+Round 4, Subset 4, Test Acc: 0.4542
+Round 4, Subset 5, Test Acc: 0.4559
+Round 4, Subset 6, Test Acc: 0.4527
+Round 4, Subset 7, Test Acc: 0.4413
+Round 4, Subset 8, Test Acc: 0.4553
+Round 4, Subset 9, Test Acc: 0.4412
+Round 4, Subset 10, Test Acc: 0.4394
+Round 4, Aggregated Test Acc: 0.5036
+================================================================================
+Round 5, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 5, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 5, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 5, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 5, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 5, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 5, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 5, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 5, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 5, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 5, Subset 1, Test Acc: 0.4819
+Round 5, Subset 2, Test Acc: 0.5098
+Round 5, Subset 3, Test Acc: 0.4866
+Round 5, Subset 4, Test Acc: 0.4914
+Round 5, Subset 5, Test Acc: 0.4893
+Round 5, Subset 6, Test Acc: 0.4613
+Round 5, Subset 7, Test Acc: 0.4656
+Round 5, Subset 8, Test Acc: 0.4610
+Round 5, Subset 9, Test Acc: 0.4674
+Round 5, Subset 10, Test Acc: 0.4614
+Round 5, Aggregated Test Acc: 0.5216
+================================================================================
+Round 6, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 6, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 6, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 6, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 6, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 6, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 6, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 6, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 6, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 6, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 6, Subset 1, Test Acc: 0.5043
+Round 6, Subset 2, Test Acc: 0.5286
+Round 6, Subset 3, Test Acc: 0.5161
+Round 6, Subset 4, Test Acc: 0.4949
+Round 6, Subset 5, Test Acc: 0.5041
+Round 6, Subset 6, Test Acc: 0.4756
+Round 6, Subset 7, Test Acc: 0.4824
+Round 6, Subset 8, Test Acc: 0.4792
+Round 6, Subset 9, Test Acc: 0.4762
+Round 6, Subset 10, Test Acc: 0.4716
+Round 6, Aggregated Test Acc: 0.5459
+================================================================================
+Round 7, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 7, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 7, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 7, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 7, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 7, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 7, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 7, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 7, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 7, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 7, Subset 1, Test Acc: 0.5361
+Round 7, Subset 2, Test Acc: 0.5284
+Round 7, Subset 3, Test Acc: 0.5356
+Round 7, Subset 4, Test Acc: 0.5131
+Round 7, Subset 5, Test Acc: 0.5378
+Round 7, Subset 6, Test Acc: 0.4904
+Round 7, Subset 7, Test Acc: 0.4827
+Round 7, Subset 8, Test Acc: 0.4928
+Round 7, Subset 9, Test Acc: 0.4958
+Round 7, Subset 10, Test Acc: 0.4999
+Round 7, Aggregated Test Acc: 0.5622
+================================================================================
+Round 8, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 8, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 8, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 8, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 8, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 8, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 8, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 8, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 8, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 8, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 8, Subset 1, Test Acc: 0.5415
+Round 8, Subset 2, Test Acc: 0.5505
+Round 8, Subset 3, Test Acc: 0.5398
+Round 8, Subset 4, Test Acc: 0.5409
+Round 8, Subset 5, Test Acc: 0.5553
+Round 8, Subset 6, Test Acc: 0.5055
+Round 8, Subset 7, Test Acc: 0.5059
+Round 8, Subset 8, Test Acc: 0.5095
+Round 8, Subset 9, Test Acc: 0.5081
+Round 8, Subset 10, Test Acc: 0.5004
+Round 8, Aggregated Test Acc: 0.5774
+================================================================================
+Round 9, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 9, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 9, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 9, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 9, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 9, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 9, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 9, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 9, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 9, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 9, Subset 1, Test Acc: 0.5604
+Round 9, Subset 2, Test Acc: 0.5501
+Round 9, Subset 3, Test Acc: 0.5593
+Round 9, Subset 4, Test Acc: 0.5506
+Round 9, Subset 5, Test Acc: 0.5438
+Round 9, Subset 6, Test Acc: 0.5060
+Round 9, Subset 7, Test Acc: 0.5102
+Round 9, Subset 8, Test Acc: 0.5130
+Round 9, Subset 9, Test Acc: 0.5158
+Round 9, Subset 10, Test Acc: 0.5056
+Round 9, Aggregated Test Acc: 0.5911
+================================================================================
+Round 10, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 10, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 10, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 10, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 10, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 10, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 10, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 10, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 10, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 10, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 10, Subset 1, Test Acc: 0.5729
+Round 10, Subset 2, Test Acc: 0.5915
+Round 10, Subset 3, Test Acc: 0.5601
+Round 10, Subset 4, Test Acc: 0.5707
+Round 10, Subset 5, Test Acc: 0.5706
+Round 10, Subset 6, Test Acc: 0.5215
+Round 10, Subset 7, Test Acc: 0.5129
+Round 10, Subset 8, Test Acc: 0.5309
+Round 10, Subset 9, Test Acc: 0.5246
+Round 10, Subset 10, Test Acc: 0.5329
+Round 10, Aggregated Test Acc: 0.6046
+================================================================================
+Round 11, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 11, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 11, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 11, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 11, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 11, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 11, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 11, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 11, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 11, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 11, Subset 1, Test Acc: 0.5744
+Round 11, Subset 2, Test Acc: 0.5890
+Round 11, Subset 3, Test Acc: 0.5747
+Round 11, Subset 4, Test Acc: 0.5743
+Round 11, Subset 5, Test Acc: 0.5844
+Round 11, Subset 6, Test Acc: 0.5315
+Round 11, Subset 7, Test Acc: 0.5212
+Round 11, Subset 8, Test Acc: 0.5346
+Round 11, Subset 9, Test Acc: 0.5299
+Round 11, Subset 10, Test Acc: 0.5372
+Round 11, Aggregated Test Acc: 0.6123
+================================================================================
+Round 12, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 12, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 12, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 12, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 12, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 12, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 12, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 12, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 12, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 12, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 12, Subset 1, Test Acc: 0.5886
+Round 12, Subset 2, Test Acc: 0.6077
+Round 12, Subset 3, Test Acc: 0.5899
+Round 12, Subset 4, Test Acc: 0.5776
+Round 12, Subset 5, Test Acc: 0.5771
+Round 12, Subset 6, Test Acc: 0.5341
+Round 12, Subset 7, Test Acc: 0.5311
+Round 12, Subset 8, Test Acc: 0.5298
+Round 12, Subset 9, Test Acc: 0.5364
+Round 12, Subset 10, Test Acc: 0.5487
+Round 12, Aggregated Test Acc: 0.6217
+================================================================================
+Round 13, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 13, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 13, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 13, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 13, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 13, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 13, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 13, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 13, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 13, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 13, Subset 1, Test Acc: 0.6044
+Round 13, Subset 2, Test Acc: 0.6007
+Round 13, Subset 3, Test Acc: 0.5913
+Round 13, Subset 4, Test Acc: 0.5854
+Round 13, Subset 5, Test Acc: 0.6004
+Round 13, Subset 6, Test Acc: 0.5373
+Round 13, Subset 7, Test Acc: 0.5417
+Round 13, Subset 8, Test Acc: 0.5396
+Round 13, Subset 9, Test Acc: 0.5480
+Round 13, Subset 10, Test Acc: 0.5448
+Round 13, Aggregated Test Acc: 0.6315
+================================================================================
+Round 14, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 14, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 14, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 14, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 14, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 14, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 14, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 14, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 14, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 14, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 14, Subset 1, Test Acc: 0.6114
+Round 14, Subset 2, Test Acc: 0.6101
+Round 14, Subset 3, Test Acc: 0.6078
+Round 14, Subset 4, Test Acc: 0.6099
+Round 14, Subset 5, Test Acc: 0.6038
+Round 14, Subset 6, Test Acc: 0.5533
+Round 14, Subset 7, Test Acc: 0.5461
+Round 14, Subset 8, Test Acc: 0.5434
+Round 14, Subset 9, Test Acc: 0.5444
+Round 14, Subset 10, Test Acc: 0.5535
+Round 14, Aggregated Test Acc: 0.6389
+================================================================================
+Round 15, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 15, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 15, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 15, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 15, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 15, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 15, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 15, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 15, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 15, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 15, Subset 1, Test Acc: 0.6266
+Round 15, Subset 2, Test Acc: 0.6249
+Round 15, Subset 3, Test Acc: 0.6096
+Round 15, Subset 4, Test Acc: 0.6107
+Round 15, Subset 5, Test Acc: 0.6121
+Round 15, Subset 6, Test Acc: 0.5460
+Round 15, Subset 7, Test Acc: 0.5488
+Round 15, Subset 8, Test Acc: 0.5418
+Round 15, Subset 9, Test Acc: 0.5511
+Round 15, Subset 10, Test Acc: 0.5535
+Round 15, Aggregated Test Acc: 0.6445
+================================================================================
+Round 16, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 16, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 16, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 16, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 16, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 16, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 16, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 16, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 16, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 16, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 16, Subset 1, Test Acc: 0.6276
+Round 16, Subset 2, Test Acc: 0.6223
+Round 16, Subset 3, Test Acc: 0.6159
+Round 16, Subset 4, Test Acc: 0.6106
+Round 16, Subset 5, Test Acc: 0.6139
+Round 16, Subset 6, Test Acc: 0.5618
+Round 16, Subset 7, Test Acc: 0.5503
+Round 16, Subset 8, Test Acc: 0.5584
+Round 16, Subset 9, Test Acc: 0.5530
+Round 16, Subset 10, Test Acc: 0.5663
+Round 16, Aggregated Test Acc: 0.6533
+================================================================================
+Round 17, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 17, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 17, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 17, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 17, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 17, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 17, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 17, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 17, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 17, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 17, Subset 1, Test Acc: 0.6395
+Round 17, Subset 2, Test Acc: 0.6358
+Round 17, Subset 3, Test Acc: 0.6157
+Round 17, Subset 4, Test Acc: 0.6260
+Round 17, Subset 5, Test Acc: 0.6234
+Round 17, Subset 6, Test Acc: 0.5613
+Round 17, Subset 7, Test Acc: 0.5547
+Round 17, Subset 8, Test Acc: 0.5617
+Round 17, Subset 9, Test Acc: 0.5699
+Round 17, Subset 10, Test Acc: 0.5556
+Round 17, Aggregated Test Acc: 0.6588
+================================================================================
+Round 18, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 18, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 18, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 18, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 18, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 18, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 18, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 18, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 18, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 18, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 18, Subset 1, Test Acc: 0.6429
+Round 18, Subset 2, Test Acc: 0.6526
+Round 18, Subset 3, Test Acc: 0.6295
+Round 18, Subset 4, Test Acc: 0.6229
+Round 18, Subset 5, Test Acc: 0.6323
+Round 18, Subset 6, Test Acc: 0.5556
+Round 18, Subset 7, Test Acc: 0.5680
+Round 18, Subset 8, Test Acc: 0.5638
+Round 18, Subset 9, Test Acc: 0.5695
+Round 18, Subset 10, Test Acc: 0.5735
+Round 18, Aggregated Test Acc: 0.6655
+================================================================================
+Round 19, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 19, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 19, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 19, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 19, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 19, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 19, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 19, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 19, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 19, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 19, Subset 1, Test Acc: 0.6518
+Round 19, Subset 2, Test Acc: 0.6558
+Round 19, Subset 3, Test Acc: 0.6298
+Round 19, Subset 4, Test Acc: 0.6267
+Round 19, Subset 5, Test Acc: 0.6393
+Round 19, Subset 6, Test Acc: 0.5730
+Round 19, Subset 7, Test Acc: 0.5622
+Round 19, Subset 8, Test Acc: 0.5723
+Round 19, Subset 9, Test Acc: 0.5646
+Round 19, Subset 10, Test Acc: 0.5717
+Round 19, Aggregated Test Acc: 0.6707
+================================================================================
+Round 20, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 20, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 20, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 20, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 20, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 20, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 20, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 20, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 20, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 20, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 20, Subset 1, Test Acc: 0.6491
+Round 20, Subset 2, Test Acc: 0.6597
+Round 20, Subset 3, Test Acc: 0.6406
+Round 20, Subset 4, Test Acc: 0.6285
+Round 20, Subset 5, Test Acc: 0.6415
+Round 20, Subset 6, Test Acc: 0.5686
+Round 20, Subset 7, Test Acc: 0.5699
+Round 20, Subset 8, Test Acc: 0.5648
+Round 20, Subset 9, Test Acc: 0.5801
+Round 20, Subset 10, Test Acc: 0.5739
+Round 20, Aggregated Test Acc: 0.6794
+================================================================================
+Round 21, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 21, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 21, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 21, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 21, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 21, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 21, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 21, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 21, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 21, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 21, Subset 1, Test Acc: 0.6463
+Round 21, Subset 2, Test Acc: 0.6512
+Round 21, Subset 3, Test Acc: 0.6434
+Round 21, Subset 4, Test Acc: 0.6338
+Round 21, Subset 5, Test Acc: 0.6493
+Round 21, Subset 6, Test Acc: 0.5717
+Round 21, Subset 7, Test Acc: 0.5765
+Round 21, Subset 8, Test Acc: 0.5737
+Round 21, Subset 9, Test Acc: 0.5747
+Round 21, Subset 10, Test Acc: 0.5701
+Round 21, Aggregated Test Acc: 0.6813
+================================================================================
+Round 22, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 22, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 22, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 22, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 22, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 22, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 22, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 22, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 22, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 22, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 22, Subset 1, Test Acc: 0.6583
+Round 22, Subset 2, Test Acc: 0.6492
+Round 22, Subset 3, Test Acc: 0.6432
+Round 22, Subset 4, Test Acc: 0.6430
+Round 22, Subset 5, Test Acc: 0.6461
+Round 22, Subset 6, Test Acc: 0.5817
+Round 22, Subset 7, Test Acc: 0.5790
+Round 22, Subset 8, Test Acc: 0.5777
+Round 22, Subset 9, Test Acc: 0.5788
+Round 22, Subset 10, Test Acc: 0.5709
+Round 22, Aggregated Test Acc: 0.6834
+================================================================================
+Round 23, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 23, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 23, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 23, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 23, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 23, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 23, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 23, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 23, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 23, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 23, Subset 1, Test Acc: 0.6628
+Round 23, Subset 2, Test Acc: 0.6552
+Round 23, Subset 3, Test Acc: 0.6536
+Round 23, Subset 4, Test Acc: 0.6479
+Round 23, Subset 5, Test Acc: 0.6564
+Round 23, Subset 6, Test Acc: 0.5752
+Round 23, Subset 7, Test Acc: 0.5767
+Round 23, Subset 8, Test Acc: 0.5765
+Round 23, Subset 9, Test Acc: 0.5698
+Round 23, Subset 10, Test Acc: 0.5684
+Round 23, Aggregated Test Acc: 0.6916
+================================================================================
+Round 24, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 24, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 24, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 24, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 24, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 24, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 24, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 24, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 24, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 24, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 24, Subset 1, Test Acc: 0.6679
+Round 24, Subset 2, Test Acc: 0.6695
+Round 24, Subset 3, Test Acc: 0.6533
+Round 24, Subset 4, Test Acc: 0.6566
+Round 24, Subset 5, Test Acc: 0.6548
+Round 24, Subset 6, Test Acc: 0.5764
+Round 24, Subset 7, Test Acc: 0.5823
+Round 24, Subset 8, Test Acc: 0.5737
+Round 24, Subset 9, Test Acc: 0.5820
+Round 24, Subset 10, Test Acc: 0.5823
+Round 24, Aggregated Test Acc: 0.6940
+================================================================================
+Round 25, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 25, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 25, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 25, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 25, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 25, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 25, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 25, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 25, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 25, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 25, Subset 1, Test Acc: 0.6739
+Round 25, Subset 2, Test Acc: 0.6742
+Round 25, Subset 3, Test Acc: 0.6561
+Round 25, Subset 4, Test Acc: 0.6580
+Round 25, Subset 5, Test Acc: 0.6540
+Round 25, Subset 6, Test Acc: 0.5788
+Round 25, Subset 7, Test Acc: 0.5886
+Round 25, Subset 8, Test Acc: 0.5805
+Round 25, Subset 9, Test Acc: 0.5867
+Round 25, Subset 10, Test Acc: 0.5775
+Round 25, Aggregated Test Acc: 0.6948
+================================================================================
+Round 26, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 26, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 26, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 26, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 26, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 26, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 26, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 26, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 26, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 26, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 26, Subset 1, Test Acc: 0.6746
+Round 26, Subset 2, Test Acc: 0.6744
+Round 26, Subset 3, Test Acc: 0.6598
+Round 26, Subset 4, Test Acc: 0.6552
+Round 26, Subset 5, Test Acc: 0.6610
+Round 26, Subset 6, Test Acc: 0.5733
+Round 26, Subset 7, Test Acc: 0.5816
+Round 26, Subset 8, Test Acc: 0.5886
+Round 26, Subset 9, Test Acc: 0.5849
+Round 26, Subset 10, Test Acc: 0.5712
+Round 26, Aggregated Test Acc: 0.6995
+================================================================================
+Round 27, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 27, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 27, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 27, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 27, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 27, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 27, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 27, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 27, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 27, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 27, Subset 1, Test Acc: 0.6869
+Round 27, Subset 2, Test Acc: 0.6895
+Round 27, Subset 3, Test Acc: 0.6657
+Round 27, Subset 4, Test Acc: 0.6680
+Round 27, Subset 5, Test Acc: 0.6578
+Round 27, Subset 6, Test Acc: 0.5910
+Round 27, Subset 7, Test Acc: 0.5830
+Round 27, Subset 8, Test Acc: 0.5862
+Round 27, Subset 9, Test Acc: 0.5906
+Round 27, Subset 10, Test Acc: 0.5831
+Round 27, Aggregated Test Acc: 0.7038
+================================================================================
+Round 28, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 28, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 28, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 28, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 28, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 28, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 28, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 28, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 28, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 28, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 28, Subset 1, Test Acc: 0.6840
+Round 28, Subset 2, Test Acc: 0.6794
+Round 28, Subset 3, Test Acc: 0.6732
+Round 28, Subset 4, Test Acc: 0.6659
+Round 28, Subset 5, Test Acc: 0.6676
+Round 28, Subset 6, Test Acc: 0.5837
+Round 28, Subset 7, Test Acc: 0.5889
+Round 28, Subset 8, Test Acc: 0.5861
+Round 28, Subset 9, Test Acc: 0.5958
+Round 28, Subset 10, Test Acc: 0.5779
+Round 28, Aggregated Test Acc: 0.7051
+================================================================================
+Round 29, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 29, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 29, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 29, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 29, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 29, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 29, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 29, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 29, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 29, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 29, Subset 1, Test Acc: 0.6876
+Round 29, Subset 2, Test Acc: 0.6704
+Round 29, Subset 3, Test Acc: 0.6657
+Round 29, Subset 4, Test Acc: 0.6636
+Round 29, Subset 5, Test Acc: 0.6714
+Round 29, Subset 6, Test Acc: 0.5904
+Round 29, Subset 7, Test Acc: 0.5871
+Round 29, Subset 8, Test Acc: 0.5907
+Round 29, Subset 9, Test Acc: 0.5828
+Round 29, Subset 10, Test Acc: 0.5894
+Round 29, Aggregated Test Acc: 0.7096
+================================================================================
+Round 30, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 30, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 30, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 30, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 30, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 30, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 30, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 30, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 30, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 30, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 30, Subset 1, Test Acc: 0.6905
+Round 30, Subset 2, Test Acc: 0.6792
+Round 30, Subset 3, Test Acc: 0.6764
+Round 30, Subset 4, Test Acc: 0.6720
+Round 30, Subset 5, Test Acc: 0.6669
+Round 30, Subset 6, Test Acc: 0.5647
+Round 30, Subset 7, Test Acc: 0.5788
+Round 30, Subset 8, Test Acc: 0.5874
+Round 30, Subset 9, Test Acc: 0.5833
+Round 30, Subset 10, Test Acc: 0.5975
+Round 30, Aggregated Test Acc: 0.7120
+================================================================================
+Round 31, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 31, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 31, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 31, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 31, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 31, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 31, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 31, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 31, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 31, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 31, Subset 1, Test Acc: 0.6861
+Round 31, Subset 2, Test Acc: 0.6877
+Round 31, Subset 3, Test Acc: 0.6708
+Round 31, Subset 4, Test Acc: 0.6655
+Round 31, Subset 5, Test Acc: 0.6736
+Round 31, Subset 6, Test Acc: 0.5909
+Round 31, Subset 7, Test Acc: 0.5811
+Round 31, Subset 8, Test Acc: 0.5880
+Round 31, Subset 9, Test Acc: 0.5924
+Round 31, Subset 10, Test Acc: 0.5992
+Round 31, Aggregated Test Acc: 0.7135
+================================================================================
+Round 32, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 32, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 32, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 32, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 32, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 32, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 32, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 32, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 32, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 32, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 32, Subset 1, Test Acc: 0.7050
+Round 32, Subset 2, Test Acc: 0.6850
+Round 32, Subset 3, Test Acc: 0.6790
+Round 32, Subset 4, Test Acc: 0.6736
+Round 32, Subset 5, Test Acc: 0.6720
+Round 32, Subset 6, Test Acc: 0.5897
+Round 32, Subset 7, Test Acc: 0.5873
+Round 32, Subset 8, Test Acc: 0.5874
+Round 32, Subset 9, Test Acc: 0.5907
+Round 32, Subset 10, Test Acc: 0.5907
+Round 32, Aggregated Test Acc: 0.7123
+================================================================================
+Round 33, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 33, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 33, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 33, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 33, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 33, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 33, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 33, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 33, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 33, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 33, Subset 1, Test Acc: 0.6956
+Round 33, Subset 2, Test Acc: 0.6963
+Round 33, Subset 3, Test Acc: 0.6790
+Round 33, Subset 4, Test Acc: 0.6759
+Round 33, Subset 5, Test Acc: 0.6829
+Round 33, Subset 6, Test Acc: 0.5908
+Round 33, Subset 7, Test Acc: 0.5989
+Round 33, Subset 8, Test Acc: 0.5868
+Round 33, Subset 9, Test Acc: 0.5904
+Round 33, Subset 10, Test Acc: 0.5997
+Round 33, Aggregated Test Acc: 0.7157
+================================================================================
+Round 34, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 34, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 34, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 34, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 34, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 34, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 34, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 34, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 34, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 34, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 34, Subset 1, Test Acc: 0.7024
+Round 34, Subset 2, Test Acc: 0.7015
+Round 34, Subset 3, Test Acc: 0.6830
+Round 34, Subset 4, Test Acc: 0.6707
+Round 34, Subset 5, Test Acc: 0.6689
+Round 34, Subset 6, Test Acc: 0.5846
+Round 34, Subset 7, Test Acc: 0.5962
+Round 34, Subset 8, Test Acc: 0.5946
+Round 34, Subset 9, Test Acc: 0.5867
+Round 34, Subset 10, Test Acc: 0.5939
+Round 34, Aggregated Test Acc: 0.7186
+================================================================================
+Round 35, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 35, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 35, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 35, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 35, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 35, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 35, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 35, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 35, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 35, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 35, Subset 1, Test Acc: 0.7062
+Round 35, Subset 2, Test Acc: 0.6998
+Round 35, Subset 3, Test Acc: 0.6878
+Round 35, Subset 4, Test Acc: 0.6736
+Round 35, Subset 5, Test Acc: 0.6824
+Round 35, Subset 6, Test Acc: 0.5912
+Round 35, Subset 7, Test Acc: 0.5915
+Round 35, Subset 8, Test Acc: 0.5789
+Round 35, Subset 9, Test Acc: 0.5923
+Round 35, Subset 10, Test Acc: 0.5895
+Round 35, Aggregated Test Acc: 0.7240
+================================================================================
+Round 36, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 36, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 36, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 36, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 36, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 36, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 36, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 36, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 36, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 36, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 36, Subset 1, Test Acc: 0.6945
+Round 36, Subset 2, Test Acc: 0.6985
+Round 36, Subset 3, Test Acc: 0.6836
+Round 36, Subset 4, Test Acc: 0.6869
+Round 36, Subset 5, Test Acc: 0.6819
+Round 36, Subset 6, Test Acc: 0.5834
+Round 36, Subset 7, Test Acc: 0.5884
+Round 36, Subset 8, Test Acc: 0.5937
+Round 36, Subset 9, Test Acc: 0.5836
+Round 36, Subset 10, Test Acc: 0.5928
+Round 36, Aggregated Test Acc: 0.7227
+================================================================================
+Round 37, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 37, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 37, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 37, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 37, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 37, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 37, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 37, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 37, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 37, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 37, Subset 1, Test Acc: 0.7081
+Round 37, Subset 2, Test Acc: 0.7005
+Round 37, Subset 3, Test Acc: 0.6835
+Round 37, Subset 4, Test Acc: 0.6837
+Round 37, Subset 5, Test Acc: 0.6828
+Round 37, Subset 6, Test Acc: 0.5904
+Round 37, Subset 7, Test Acc: 0.5993
+Round 37, Subset 8, Test Acc: 0.5945
+Round 37, Subset 9, Test Acc: 0.5988
+Round 37, Subset 10, Test Acc: 0.5927
+Round 37, Aggregated Test Acc: 0.7283
+================================================================================
+Round 38, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 38, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 38, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 38, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 38, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 38, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 38, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 38, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 38, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 38, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 38, Subset 1, Test Acc: 0.7045
+Round 38, Subset 2, Test Acc: 0.7107
+Round 38, Subset 3, Test Acc: 0.6917
+Round 38, Subset 4, Test Acc: 0.6885
+Round 38, Subset 5, Test Acc: 0.6813
+Round 38, Subset 6, Test Acc: 0.5894
+Round 38, Subset 7, Test Acc: 0.6016
+Round 38, Subset 8, Test Acc: 0.6007
+Round 38, Subset 9, Test Acc: 0.5972
+Round 38, Subset 10, Test Acc: 0.5875
+Round 38, Aggregated Test Acc: 0.7256
+================================================================================
+Round 39, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 39, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 39, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 39, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 39, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 39, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 39, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 39, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 39, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 39, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 39, Subset 1, Test Acc: 0.7017
+Round 39, Subset 2, Test Acc: 0.6976
+Round 39, Subset 3, Test Acc: 0.6924
+Round 39, Subset 4, Test Acc: 0.6951
+Round 39, Subset 5, Test Acc: 0.6861
+Round 39, Subset 6, Test Acc: 0.5946
+Round 39, Subset 7, Test Acc: 0.5979
+Round 39, Subset 8, Test Acc: 0.6001
+Round 39, Subset 9, Test Acc: 0.5928
+Round 39, Subset 10, Test Acc: 0.5902
+Round 39, Aggregated Test Acc: 0.7251
+================================================================================
+Round 40, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 40, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 40, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 40, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 40, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 40, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 40, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 40, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 40, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 40, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 40, Subset 1, Test Acc: 0.7153
+Round 40, Subset 2, Test Acc: 0.7076
+Round 40, Subset 3, Test Acc: 0.6847
+Round 40, Subset 4, Test Acc: 0.6896
+Round 40, Subset 5, Test Acc: 0.6885
+Round 40, Subset 6, Test Acc: 0.5971
+Round 40, Subset 7, Test Acc: 0.5918
+Round 40, Subset 8, Test Acc: 0.6016
+Round 40, Subset 9, Test Acc: 0.6045
+Round 40, Subset 10, Test Acc: 0.6008
+Round 40, Aggregated Test Acc: 0.7298
+================================================================================
+Round 41, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 41, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 41, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 41, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 41, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 41, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 41, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 41, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 41, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 41, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 41, Subset 1, Test Acc: 0.7077
+Round 41, Subset 2, Test Acc: 0.7137
+Round 41, Subset 3, Test Acc: 0.6958
+Round 41, Subset 4, Test Acc: 0.6944
+Round 41, Subset 5, Test Acc: 0.6872
+Round 41, Subset 6, Test Acc: 0.5944
+Round 41, Subset 7, Test Acc: 0.6013
+Round 41, Subset 8, Test Acc: 0.5935
+Round 41, Subset 9, Test Acc: 0.6071
+Round 41, Subset 10, Test Acc: 0.5950
+Round 41, Aggregated Test Acc: 0.7268
+================================================================================
+Round 42, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 42, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 42, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 42, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 42, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 42, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 42, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 42, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 42, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 42, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 42, Subset 1, Test Acc: 0.7133
+Round 42, Subset 2, Test Acc: 0.7036
+Round 42, Subset 3, Test Acc: 0.6968
+Round 42, Subset 4, Test Acc: 0.6913
+Round 42, Subset 5, Test Acc: 0.6943
+Round 42, Subset 6, Test Acc: 0.5917
+Round 42, Subset 7, Test Acc: 0.5951
+Round 42, Subset 8, Test Acc: 0.6023
+Round 42, Subset 9, Test Acc: 0.6041
+Round 42, Subset 10, Test Acc: 0.5998
+Round 42, Aggregated Test Acc: 0.7345
+================================================================================
+Round 43, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 43, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 43, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 43, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 43, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 43, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 43, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 43, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 43, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 43, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 43, Subset 1, Test Acc: 0.7002
+Round 43, Subset 2, Test Acc: 0.7124
+Round 43, Subset 3, Test Acc: 0.6994
+Round 43, Subset 4, Test Acc: 0.6972
+Round 43, Subset 5, Test Acc: 0.6925
+Round 43, Subset 6, Test Acc: 0.5988
+Round 43, Subset 7, Test Acc: 0.5958
+Round 43, Subset 8, Test Acc: 0.5930
+Round 43, Subset 9, Test Acc: 0.6053
+Round 43, Subset 10, Test Acc: 0.5925
+Round 43, Aggregated Test Acc: 0.7361
+================================================================================
+Round 44, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 44, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 44, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 44, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 44, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 44, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 44, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 44, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 44, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 44, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 44, Subset 1, Test Acc: 0.7193
+Round 44, Subset 2, Test Acc: 0.7041
+Round 44, Subset 3, Test Acc: 0.6966
+Round 44, Subset 4, Test Acc: 0.6954
+Round 44, Subset 5, Test Acc: 0.6987
+Round 44, Subset 6, Test Acc: 0.6001
+Round 44, Subset 7, Test Acc: 0.6006
+Round 44, Subset 8, Test Acc: 0.5940
+Round 44, Subset 9, Test Acc: 0.6029
+Round 44, Subset 10, Test Acc: 0.5948
+Round 44, Aggregated Test Acc: 0.7359
+================================================================================
+Round 45, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 45, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 45, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 45, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 45, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 45, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 45, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 45, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 45, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 45, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 45, Subset 1, Test Acc: 0.7089
+Round 45, Subset 2, Test Acc: 0.7094
+Round 45, Subset 3, Test Acc: 0.6945
+Round 45, Subset 4, Test Acc: 0.6917
+Round 45, Subset 5, Test Acc: 0.6902
+Round 45, Subset 6, Test Acc: 0.5959
+Round 45, Subset 7, Test Acc: 0.5851
+Round 45, Subset 8, Test Acc: 0.5977
+Round 45, Subset 9, Test Acc: 0.6023
+Round 45, Subset 10, Test Acc: 0.6010
+Round 45, Aggregated Test Acc: 0.7389
+================================================================================
+Round 46, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 46, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 46, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 46, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 46, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 46, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 46, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 46, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 46, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 46, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 46, Subset 1, Test Acc: 0.7215
+Round 46, Subset 2, Test Acc: 0.7090
+Round 46, Subset 3, Test Acc: 0.6880
+Round 46, Subset 4, Test Acc: 0.7004
+Round 46, Subset 5, Test Acc: 0.7005
+Round 46, Subset 6, Test Acc: 0.6003
+Round 46, Subset 7, Test Acc: 0.6030
+Round 46, Subset 8, Test Acc: 0.5974
+Round 46, Subset 9, Test Acc: 0.5991
+Round 46, Subset 10, Test Acc: 0.6005
+Round 46, Aggregated Test Acc: 0.7371
+================================================================================
+Round 47, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 47, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 47, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 47, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 47, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 47, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 47, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 47, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 47, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 47, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 47, Subset 1, Test Acc: 0.7121
+Round 47, Subset 2, Test Acc: 0.7152
+Round 47, Subset 3, Test Acc: 0.6995
+Round 47, Subset 4, Test Acc: 0.6968
+Round 47, Subset 5, Test Acc: 0.6966
+Round 47, Subset 6, Test Acc: 0.5954
+Round 47, Subset 7, Test Acc: 0.5991
+Round 47, Subset 8, Test Acc: 0.5966
+Round 47, Subset 9, Test Acc: 0.6041
+Round 47, Subset 10, Test Acc: 0.5916
+Round 47, Aggregated Test Acc: 0.7392
+================================================================================
+Round 48, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 48, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 48, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 48, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 48, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 48, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 48, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 48, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 48, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 48, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 48, Subset 1, Test Acc: 0.7125
+Round 48, Subset 2, Test Acc: 0.7146
+Round 48, Subset 3, Test Acc: 0.7010
+Round 48, Subset 4, Test Acc: 0.6952
+Round 48, Subset 5, Test Acc: 0.6969
+Round 48, Subset 6, Test Acc: 0.5894
+Round 48, Subset 7, Test Acc: 0.5953
+Round 48, Subset 8, Test Acc: 0.6019
+Round 48, Subset 9, Test Acc: 0.6073
+Round 48, Subset 10, Test Acc: 0.5989
+Round 48, Aggregated Test Acc: 0.7396
+================================================================================
+Round 49, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 49, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 49, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 49, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 49, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 49, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 49, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 49, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 49, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 49, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 49, Subset 1, Test Acc: 0.7213
+Round 49, Subset 2, Test Acc: 0.7161
+Round 49, Subset 3, Test Acc: 0.7002
+Round 49, Subset 4, Test Acc: 0.7036
+Round 49, Subset 5, Test Acc: 0.7002
+Round 49, Subset 6, Test Acc: 0.5988
+Round 49, Subset 7, Test Acc: 0.6045
+Round 49, Subset 8, Test Acc: 0.5952
+Round 49, Subset 9, Test Acc: 0.5992
+Round 49, Subset 10, Test Acc: 0.5994
+Round 49, Aggregated Test Acc: 0.7391
+================================================================================
+Round 50, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 50, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 50, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 50, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 50, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 50, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 50, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 50, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 50, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 50, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 50, Subset 1, Test Acc: 0.7282
+Round 50, Subset 2, Test Acc: 0.7219
+Round 50, Subset 3, Test Acc: 0.7086
+Round 50, Subset 4, Test Acc: 0.7039
+Round 50, Subset 5, Test Acc: 0.6966
+Round 50, Subset 6, Test Acc: 0.5884
+Round 50, Subset 7, Test Acc: 0.5885
+Round 50, Subset 8, Test Acc: 0.5970
+Round 50, Subset 9, Test Acc: 0.6002
+Round 50, Subset 10, Test Acc: 0.6017
+Round 50, Aggregated Test Acc: 0.7423
+================================================================================
+Round 51, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 51, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 51, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 51, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 51, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 51, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 51, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 51, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 51, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 51, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 51, Subset 1, Test Acc: 0.7228
+Round 51, Subset 2, Test Acc: 0.7192
+Round 51, Subset 3, Test Acc: 0.6958
+Round 51, Subset 4, Test Acc: 0.6993
+Round 51, Subset 5, Test Acc: 0.7044
+Round 51, Subset 6, Test Acc: 0.6035
+Round 51, Subset 7, Test Acc: 0.6023
+Round 51, Subset 8, Test Acc: 0.5968
+Round 51, Subset 9, Test Acc: 0.5947
+Round 51, Subset 10, Test Acc: 0.6015
+Round 51, Aggregated Test Acc: 0.7411
+================================================================================
+Round 52, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 52, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 52, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 52, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 52, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 52, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 52, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 52, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 52, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 52, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 52, Subset 1, Test Acc: 0.7214
+Round 52, Subset 2, Test Acc: 0.7274
+Round 52, Subset 3, Test Acc: 0.7015
+Round 52, Subset 4, Test Acc: 0.7034
+Round 52, Subset 5, Test Acc: 0.6998
+Round 52, Subset 6, Test Acc: 0.6013
+Round 52, Subset 7, Test Acc: 0.6031
+Round 52, Subset 8, Test Acc: 0.6108
+Round 52, Subset 9, Test Acc: 0.5937
+Round 52, Subset 10, Test Acc: 0.5966
+Round 52, Aggregated Test Acc: 0.7446
+================================================================================
+Round 53, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 53, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 53, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 53, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 53, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 53, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 53, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 53, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 53, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 53, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 53, Subset 1, Test Acc: 0.7275
+Round 53, Subset 2, Test Acc: 0.7280
+Round 53, Subset 3, Test Acc: 0.7036
+Round 53, Subset 4, Test Acc: 0.6967
+Round 53, Subset 5, Test Acc: 0.7031
+Round 53, Subset 6, Test Acc: 0.6072
+Round 53, Subset 7, Test Acc: 0.5978
+Round 53, Subset 8, Test Acc: 0.6045
+Round 53, Subset 9, Test Acc: 0.6066
+Round 53, Subset 10, Test Acc: 0.5999
+Round 53, Aggregated Test Acc: 0.7455
+================================================================================
+Round 54, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 54, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 54, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 54, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 54, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 54, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 54, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 54, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 54, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 54, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 54, Subset 1, Test Acc: 0.7257
+Round 54, Subset 2, Test Acc: 0.7263
+Round 54, Subset 3, Test Acc: 0.7068
+Round 54, Subset 4, Test Acc: 0.7016
+Round 54, Subset 5, Test Acc: 0.7080
+Round 54, Subset 6, Test Acc: 0.5975
+Round 54, Subset 7, Test Acc: 0.5972
+Round 54, Subset 8, Test Acc: 0.5969
+Round 54, Subset 9, Test Acc: 0.5992
+Round 54, Subset 10, Test Acc: 0.5954
+Round 54, Aggregated Test Acc: 0.7442
+================================================================================
+Round 55, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 55, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 55, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 55, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 55, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 55, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 55, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 55, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 55, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 55, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 55, Subset 1, Test Acc: 0.7253
+Round 55, Subset 2, Test Acc: 0.7156
+Round 55, Subset 3, Test Acc: 0.7075
+Round 55, Subset 4, Test Acc: 0.7001
+Round 55, Subset 5, Test Acc: 0.7104
+Round 55, Subset 6, Test Acc: 0.5965
+Round 55, Subset 7, Test Acc: 0.5999
+Round 55, Subset 8, Test Acc: 0.6043
+Round 55, Subset 9, Test Acc: 0.6043
+Round 55, Subset 10, Test Acc: 0.6061
+Round 55, Aggregated Test Acc: 0.7465
+================================================================================
+Round 56, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 56, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 56, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 56, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 56, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 56, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 56, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 56, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 56, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 56, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 56, Subset 1, Test Acc: 0.7319
+Round 56, Subset 2, Test Acc: 0.7132
+Round 56, Subset 3, Test Acc: 0.7055
+Round 56, Subset 4, Test Acc: 0.7058
+Round 56, Subset 5, Test Acc: 0.7103
+Round 56, Subset 6, Test Acc: 0.5926
+Round 56, Subset 7, Test Acc: 0.5897
+Round 56, Subset 8, Test Acc: 0.6026
+Round 56, Subset 9, Test Acc: 0.6079
+Round 56, Subset 10, Test Acc: 0.6041
+Round 56, Aggregated Test Acc: 0.7475
+================================================================================
+Round 57, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 57, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 57, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 57, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 57, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 57, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 57, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 57, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 57, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 57, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 57, Subset 1, Test Acc: 0.7320
+Round 57, Subset 2, Test Acc: 0.7320
+Round 57, Subset 3, Test Acc: 0.7039
+Round 57, Subset 4, Test Acc: 0.6989
+Round 57, Subset 5, Test Acc: 0.7075
+Round 57, Subset 6, Test Acc: 0.5957
+Round 57, Subset 7, Test Acc: 0.6069
+Round 57, Subset 8, Test Acc: 0.6001
+Round 57, Subset 9, Test Acc: 0.6006
+Round 57, Subset 10, Test Acc: 0.5882
+Round 57, Aggregated Test Acc: 0.7505
+================================================================================
+Round 58, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 58, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 58, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 58, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 58, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 58, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 58, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 58, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 58, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 58, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 58, Subset 1, Test Acc: 0.7309
+Round 58, Subset 2, Test Acc: 0.7352
+Round 58, Subset 3, Test Acc: 0.7097
+Round 58, Subset 4, Test Acc: 0.6975
+Round 58, Subset 5, Test Acc: 0.7100
+Round 58, Subset 6, Test Acc: 0.5967
+Round 58, Subset 7, Test Acc: 0.6064
+Round 58, Subset 8, Test Acc: 0.5988
+Round 58, Subset 9, Test Acc: 0.5981
+Round 58, Subset 10, Test Acc: 0.5919
+Round 58, Aggregated Test Acc: 0.7467
+================================================================================
+Round 59, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 59, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 59, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 59, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 59, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 59, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 59, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 59, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 59, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 59, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 59, Subset 1, Test Acc: 0.7341
+Round 59, Subset 2, Test Acc: 0.7320
+Round 59, Subset 3, Test Acc: 0.7044
+Round 59, Subset 4, Test Acc: 0.7065
+Round 59, Subset 5, Test Acc: 0.7097
+Round 59, Subset 6, Test Acc: 0.6015
+Round 59, Subset 7, Test Acc: 0.6038
+Round 59, Subset 8, Test Acc: 0.6029
+Round 59, Subset 9, Test Acc: 0.6053
+Round 59, Subset 10, Test Acc: 0.5964
+Round 59, Aggregated Test Acc: 0.7483
+================================================================================
+Round 60, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 60, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 60, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 60, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 60, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 60, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 60, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 60, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 60, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 60, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 60, Subset 1, Test Acc: 0.7301
+Round 60, Subset 2, Test Acc: 0.7302
+Round 60, Subset 3, Test Acc: 0.7098
+Round 60, Subset 4, Test Acc: 0.7076
+Round 60, Subset 5, Test Acc: 0.7048
+Round 60, Subset 6, Test Acc: 0.5952
+Round 60, Subset 7, Test Acc: 0.5936
+Round 60, Subset 8, Test Acc: 0.5998
+Round 60, Subset 9, Test Acc: 0.5952
+Round 60, Subset 10, Test Acc: 0.5880
+Round 60, Aggregated Test Acc: 0.7492
+================================================================================
+Round 61, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 61, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 61, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 61, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 61, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 61, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 61, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 61, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 61, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 61, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 61, Subset 1, Test Acc: 0.7372
+Round 61, Subset 2, Test Acc: 0.7272
+Round 61, Subset 3, Test Acc: 0.7127
+Round 61, Subset 4, Test Acc: 0.7138
+Round 61, Subset 5, Test Acc: 0.7101
+Round 61, Subset 6, Test Acc: 0.5947
+Round 61, Subset 7, Test Acc: 0.5857
+Round 61, Subset 8, Test Acc: 0.5981
+Round 61, Subset 9, Test Acc: 0.5937
+Round 61, Subset 10, Test Acc: 0.6008
+Round 61, Aggregated Test Acc: 0.7452
+================================================================================
+Round 62, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 62, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 62, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 62, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 62, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 62, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 62, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 62, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 62, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 62, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 62, Subset 1, Test Acc: 0.7313
+Round 62, Subset 2, Test Acc: 0.7318
+Round 62, Subset 3, Test Acc: 0.7125
+Round 62, Subset 4, Test Acc: 0.7066
+Round 62, Subset 5, Test Acc: 0.7119
+Round 62, Subset 6, Test Acc: 0.5959
+Round 62, Subset 7, Test Acc: 0.5914
+Round 62, Subset 8, Test Acc: 0.6000
+Round 62, Subset 9, Test Acc: 0.6027
+Round 62, Subset 10, Test Acc: 0.6004
+Round 62, Aggregated Test Acc: 0.7511
+================================================================================
+Round 63, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 63, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 63, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 63, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 63, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 63, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 63, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 63, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 63, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 63, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 63, Subset 1, Test Acc: 0.7320
+Round 63, Subset 2, Test Acc: 0.7200
+Round 63, Subset 3, Test Acc: 0.7143
+Round 63, Subset 4, Test Acc: 0.7085
+Round 63, Subset 5, Test Acc: 0.7067
+Round 63, Subset 6, Test Acc: 0.6066
+Round 63, Subset 7, Test Acc: 0.6070
+Round 63, Subset 8, Test Acc: 0.6068
+Round 63, Subset 9, Test Acc: 0.5931
+Round 63, Subset 10, Test Acc: 0.6044
+Round 63, Aggregated Test Acc: 0.7524
+================================================================================
+Round 64, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 64, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 64, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 64, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 64, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 64, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 64, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 64, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 64, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 64, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 64, Subset 1, Test Acc: 0.7367
+Round 64, Subset 2, Test Acc: 0.7315
+Round 64, Subset 3, Test Acc: 0.7031
+Round 64, Subset 4, Test Acc: 0.7113
+Round 64, Subset 5, Test Acc: 0.7161
+Round 64, Subset 6, Test Acc: 0.5944
+Round 64, Subset 7, Test Acc: 0.5991
+Round 64, Subset 8, Test Acc: 0.6003
+Round 64, Subset 9, Test Acc: 0.6038
+Round 64, Subset 10, Test Acc: 0.6073
+Round 64, Aggregated Test Acc: 0.7515
+================================================================================
+Round 65, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 65, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 65, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 65, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 65, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 65, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 65, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 65, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 65, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 65, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 65, Subset 1, Test Acc: 0.7344
+Round 65, Subset 2, Test Acc: 0.7399
+Round 65, Subset 3, Test Acc: 0.7108
+Round 65, Subset 4, Test Acc: 0.7130
+Round 65, Subset 5, Test Acc: 0.7189
+Round 65, Subset 6, Test Acc: 0.5804
+Round 65, Subset 7, Test Acc: 0.5800
+Round 65, Subset 8, Test Acc: 0.5902
+Round 65, Subset 9, Test Acc: 0.5966
+Round 65, Subset 10, Test Acc: 0.6047
+Round 65, Aggregated Test Acc: 0.7491
+================================================================================
+Round 66, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 66, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 66, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 66, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 66, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 66, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 66, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 66, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 66, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 66, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 66, Subset 1, Test Acc: 0.7342
+Round 66, Subset 2, Test Acc: 0.7414
+Round 66, Subset 3, Test Acc: 0.7108
+Round 66, Subset 4, Test Acc: 0.7097
+Round 66, Subset 5, Test Acc: 0.7100
+Round 66, Subset 6, Test Acc: 0.5911
+Round 66, Subset 7, Test Acc: 0.6026
+Round 66, Subset 8, Test Acc: 0.5943
+Round 66, Subset 9, Test Acc: 0.5787
+Round 66, Subset 10, Test Acc: 0.5962
+Round 66, Aggregated Test Acc: 0.7548
+================================================================================
+Round 67, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 67, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 67, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 67, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 67, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 67, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 67, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 67, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 67, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 67, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 67, Subset 1, Test Acc: 0.7372
+Round 67, Subset 2, Test Acc: 0.7339
+Round 67, Subset 3, Test Acc: 0.7088
+Round 67, Subset 4, Test Acc: 0.7124
+Round 67, Subset 5, Test Acc: 0.7086
+Round 67, Subset 6, Test Acc: 0.5902
+Round 67, Subset 7, Test Acc: 0.5794
+Round 67, Subset 8, Test Acc: 0.6023
+Round 67, Subset 9, Test Acc: 0.5967
+Round 67, Subset 10, Test Acc: 0.5945
+Round 67, Aggregated Test Acc: 0.7533
+================================================================================
+Round 68, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 68, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 68, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 68, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 68, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 68, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 68, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 68, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 68, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 68, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 68, Subset 1, Test Acc: 0.7337
+Round 68, Subset 2, Test Acc: 0.7308
+Round 68, Subset 3, Test Acc: 0.7123
+Round 68, Subset 4, Test Acc: 0.7129
+Round 68, Subset 5, Test Acc: 0.7079
+Round 68, Subset 6, Test Acc: 0.5908
+Round 68, Subset 7, Test Acc: 0.5994
+Round 68, Subset 8, Test Acc: 0.6068
+Round 68, Subset 9, Test Acc: 0.5998
+Round 68, Subset 10, Test Acc: 0.5994
+Round 68, Aggregated Test Acc: 0.7541
+================================================================================
+Round 69, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 69, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 69, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 69, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 69, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 69, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 69, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 69, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 69, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 69, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 69, Subset 1, Test Acc: 0.7375
+Round 69, Subset 2, Test Acc: 0.7308
+Round 69, Subset 3, Test Acc: 0.7137
+Round 69, Subset 4, Test Acc: 0.7128
+Round 69, Subset 5, Test Acc: 0.7162
+Round 69, Subset 6, Test Acc: 0.6032
+Round 69, Subset 7, Test Acc: 0.5975
+Round 69, Subset 8, Test Acc: 0.5986
+Round 69, Subset 9, Test Acc: 0.5986
+Round 69, Subset 10, Test Acc: 0.5923
+Round 69, Aggregated Test Acc: 0.7529
+================================================================================
+Round 70, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 70, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 70, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 70, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 70, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 70, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 70, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 70, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 70, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 70, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 70, Subset 1, Test Acc: 0.7322
+Round 70, Subset 2, Test Acc: 0.7333
+Round 70, Subset 3, Test Acc: 0.7127
+Round 70, Subset 4, Test Acc: 0.7157
+Round 70, Subset 5, Test Acc: 0.7139
+Round 70, Subset 6, Test Acc: 0.6009
+Round 70, Subset 7, Test Acc: 0.5787
+Round 70, Subset 8, Test Acc: 0.5935
+Round 70, Subset 9, Test Acc: 0.5945
+Round 70, Subset 10, Test Acc: 0.5951
+Round 70, Aggregated Test Acc: 0.7534
+================================================================================
+Round 71, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 71, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 71, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 71, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 71, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 71, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 71, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 71, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 71, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 71, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 71, Subset 1, Test Acc: 0.7288
+Round 71, Subset 2, Test Acc: 0.7325
+Round 71, Subset 3, Test Acc: 0.7133
+Round 71, Subset 4, Test Acc: 0.7144
+Round 71, Subset 5, Test Acc: 0.7113
+Round 71, Subset 6, Test Acc: 0.5951
+Round 71, Subset 7, Test Acc: 0.5894
+Round 71, Subset 8, Test Acc: 0.5973
+Round 71, Subset 9, Test Acc: 0.5962
+Round 71, Subset 10, Test Acc: 0.5925
+Round 71, Aggregated Test Acc: 0.7539
+================================================================================
+Round 72, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 72, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 72, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 72, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 72, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 72, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 72, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 72, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 72, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 72, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 72, Subset 1, Test Acc: 0.7292
+Round 72, Subset 2, Test Acc: 0.7372
+Round 72, Subset 3, Test Acc: 0.7141
+Round 72, Subset 4, Test Acc: 0.7219
+Round 72, Subset 5, Test Acc: 0.7132
+Round 72, Subset 6, Test Acc: 0.5986
+Round 72, Subset 7, Test Acc: 0.5992
+Round 72, Subset 8, Test Acc: 0.5759
+Round 72, Subset 9, Test Acc: 0.5932
+Round 72, Subset 10, Test Acc: 0.5852
+Round 72, Aggregated Test Acc: 0.7589
+================================================================================
+Round 73, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 73, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 73, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 73, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 73, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 73, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 73, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 73, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 73, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 73, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 73, Subset 1, Test Acc: 0.7412
+Round 73, Subset 2, Test Acc: 0.7285
+Round 73, Subset 3, Test Acc: 0.7151
+Round 73, Subset 4, Test Acc: 0.7161
+Round 73, Subset 5, Test Acc: 0.7122
+Round 73, Subset 6, Test Acc: 0.5950
+Round 73, Subset 7, Test Acc: 0.5938
+Round 73, Subset 8, Test Acc: 0.5882
+Round 73, Subset 9, Test Acc: 0.5879
+Round 73, Subset 10, Test Acc: 0.5907
+Round 73, Aggregated Test Acc: 0.7562
+================================================================================
+Round 74, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 74, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 74, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 74, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 74, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 74, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 74, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 74, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 74, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 74, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 74, Subset 1, Test Acc: 0.7428
+Round 74, Subset 2, Test Acc: 0.7360
+Round 74, Subset 3, Test Acc: 0.7118
+Round 74, Subset 4, Test Acc: 0.7120
+Round 74, Subset 5, Test Acc: 0.7195
+Round 74, Subset 6, Test Acc: 0.5831
+Round 74, Subset 7, Test Acc: 0.5866
+Round 74, Subset 8, Test Acc: 0.5969
+Round 74, Subset 9, Test Acc: 0.5798
+Round 74, Subset 10, Test Acc: 0.5789
+Round 74, Aggregated Test Acc: 0.7575
+================================================================================
+Round 75, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 75, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 75, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 75, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 75, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 75, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 75, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 75, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 75, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 75, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 75, Subset 1, Test Acc: 0.7349
+Round 75, Subset 2, Test Acc: 0.7423
+Round 75, Subset 3, Test Acc: 0.7167
+Round 75, Subset 4, Test Acc: 0.7119
+Round 75, Subset 5, Test Acc: 0.7132
+Round 75, Subset 6, Test Acc: 0.5832
+Round 75, Subset 7, Test Acc: 0.5968
+Round 75, Subset 8, Test Acc: 0.5904
+Round 75, Subset 9, Test Acc: 0.5935
+Round 75, Subset 10, Test Acc: 0.5983
+Round 75, Aggregated Test Acc: 0.7584
+================================================================================
+Round 76, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 76, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 76, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 76, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 76, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 76, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 76, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 76, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 76, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 76, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 76, Subset 1, Test Acc: 0.7383
+Round 76, Subset 2, Test Acc: 0.7406
+Round 76, Subset 3, Test Acc: 0.7143
+Round 76, Subset 4, Test Acc: 0.7177
+Round 76, Subset 5, Test Acc: 0.7144
+Round 76, Subset 6, Test Acc: 0.5872
+Round 76, Subset 7, Test Acc: 0.5926
+Round 76, Subset 8, Test Acc: 0.5926
+Round 76, Subset 9, Test Acc: 0.5912
+Round 76, Subset 10, Test Acc: 0.5881
+Round 76, Aggregated Test Acc: 0.7628
+================================================================================
+Round 77, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 77, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 77, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 77, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 77, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 77, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 77, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 77, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 77, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 77, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 77, Subset 1, Test Acc: 0.7329
+Round 77, Subset 2, Test Acc: 0.7356
+Round 77, Subset 3, Test Acc: 0.7194
+Round 77, Subset 4, Test Acc: 0.7162
+Round 77, Subset 5, Test Acc: 0.7134
+Round 77, Subset 6, Test Acc: 0.5951
+Round 77, Subset 7, Test Acc: 0.6001
+Round 77, Subset 8, Test Acc: 0.5913
+Round 77, Subset 9, Test Acc: 0.5954
+Round 77, Subset 10, Test Acc: 0.5981
+Round 77, Aggregated Test Acc: 0.7576
+================================================================================
+Round 78, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 78, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 78, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 78, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 78, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 78, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 78, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 78, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 78, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 78, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 78, Subset 1, Test Acc: 0.7412
+Round 78, Subset 2, Test Acc: 0.7364
+Round 78, Subset 3, Test Acc: 0.7177
+Round 78, Subset 4, Test Acc: 0.7140
+Round 78, Subset 5, Test Acc: 0.7173
+Round 78, Subset 6, Test Acc: 0.5880
+Round 78, Subset 7, Test Acc: 0.5937
+Round 78, Subset 8, Test Acc: 0.6009
+Round 78, Subset 9, Test Acc: 0.5881
+Round 78, Subset 10, Test Acc: 0.5983
+Round 78, Aggregated Test Acc: 0.7591
+================================================================================
+Round 79, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 79, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 79, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 79, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 79, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 79, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 79, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 79, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 79, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 79, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 79, Subset 1, Test Acc: 0.7426
+Round 79, Subset 2, Test Acc: 0.7346
+Round 79, Subset 3, Test Acc: 0.7176
+Round 79, Subset 4, Test Acc: 0.7157
+Round 79, Subset 5, Test Acc: 0.7135
+Round 79, Subset 6, Test Acc: 0.5911
+Round 79, Subset 7, Test Acc: 0.5969
+Round 79, Subset 8, Test Acc: 0.5841
+Round 79, Subset 9, Test Acc: 0.5988
+Round 79, Subset 10, Test Acc: 0.5899
+Round 79, Aggregated Test Acc: 0.7595
+================================================================================
+Round 80, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 80, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 80, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 80, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 80, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 80, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 80, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 80, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 80, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 80, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 80, Subset 1, Test Acc: 0.7386
+Round 80, Subset 2, Test Acc: 0.7399
+Round 80, Subset 3, Test Acc: 0.7174
+Round 80, Subset 4, Test Acc: 0.7181
+Round 80, Subset 5, Test Acc: 0.7186
+Round 80, Subset 6, Test Acc: 0.5895
+Round 80, Subset 7, Test Acc: 0.5962
+Round 80, Subset 8, Test Acc: 0.5927
+Round 80, Subset 9, Test Acc: 0.5968
+Round 80, Subset 10, Test Acc: 0.5853
+Round 80, Aggregated Test Acc: 0.7602
+================================================================================
+Round 81, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 81, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 81, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 81, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 81, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 81, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 81, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 81, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 81, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 81, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 81, Subset 1, Test Acc: 0.7337
+Round 81, Subset 2, Test Acc: 0.7409
+Round 81, Subset 3, Test Acc: 0.7121
+Round 81, Subset 4, Test Acc: 0.7143
+Round 81, Subset 5, Test Acc: 0.7174
+Round 81, Subset 6, Test Acc: 0.5925
+Round 81, Subset 7, Test Acc: 0.5786
+Round 81, Subset 8, Test Acc: 0.5849
+Round 81, Subset 9, Test Acc: 0.5817
+Round 81, Subset 10, Test Acc: 0.5919
+Round 81, Aggregated Test Acc: 0.7571
+================================================================================
+Round 82, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 82, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 82, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 82, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 82, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 82, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 82, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 82, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 82, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 82, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 82, Subset 1, Test Acc: 0.7440
+Round 82, Subset 2, Test Acc: 0.7374
+Round 82, Subset 3, Test Acc: 0.7178
+Round 82, Subset 4, Test Acc: 0.7137
+Round 82, Subset 5, Test Acc: 0.7187
+Round 82, Subset 6, Test Acc: 0.5854
+Round 82, Subset 7, Test Acc: 0.5922
+Round 82, Subset 8, Test Acc: 0.5923
+Round 82, Subset 9, Test Acc: 0.6015
+Round 82, Subset 10, Test Acc: 0.5919
+Round 82, Aggregated Test Acc: 0.7595
+================================================================================
+Round 83, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 83, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 83, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 83, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 83, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 83, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 83, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 83, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 83, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 83, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 83, Subset 1, Test Acc: 0.7350
+Round 83, Subset 2, Test Acc: 0.7443
+Round 83, Subset 3, Test Acc: 0.7188
+Round 83, Subset 4, Test Acc: 0.7204
+Round 83, Subset 5, Test Acc: 0.7202
+Round 83, Subset 6, Test Acc: 0.5898
+Round 83, Subset 7, Test Acc: 0.5801
+Round 83, Subset 8, Test Acc: 0.5951
+Round 83, Subset 9, Test Acc: 0.5929
+Round 83, Subset 10, Test Acc: 0.5945
+Round 83, Aggregated Test Acc: 0.7604
+================================================================================
+Round 84, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 84, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 84, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 84, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 84, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 84, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 84, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 84, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 84, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 84, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 84, Subset 1, Test Acc: 0.7386
+Round 84, Subset 2, Test Acc: 0.7440
+Round 84, Subset 3, Test Acc: 0.7107
+Round 84, Subset 4, Test Acc: 0.7187
+Round 84, Subset 5, Test Acc: 0.7184
+Round 84, Subset 6, Test Acc: 0.5883
+Round 84, Subset 7, Test Acc: 0.5881
+Round 84, Subset 8, Test Acc: 0.5931
+Round 84, Subset 9, Test Acc: 0.5815
+Round 84, Subset 10, Test Acc: 0.5912
+Round 84, Aggregated Test Acc: 0.7623
+================================================================================
+Round 85, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 85, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 85, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 85, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 85, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 85, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 85, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 85, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 85, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 85, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 85, Subset 1, Test Acc: 0.7398
+Round 85, Subset 2, Test Acc: 0.7395
+Round 85, Subset 3, Test Acc: 0.7195
+Round 85, Subset 4, Test Acc: 0.7202
+Round 85, Subset 5, Test Acc: 0.7186
+Round 85, Subset 6, Test Acc: 0.5924
+Round 85, Subset 7, Test Acc: 0.5908
+Round 85, Subset 8, Test Acc: 0.5889
+Round 85, Subset 9, Test Acc: 0.5828
+Round 85, Subset 10, Test Acc: 0.5857
+Round 85, Aggregated Test Acc: 0.7629
+================================================================================
+Round 86, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 86, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 86, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 86, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 86, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 86, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 86, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 86, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 86, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 86, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 86, Subset 1, Test Acc: 0.7388
+Round 86, Subset 2, Test Acc: 0.7404
+Round 86, Subset 3, Test Acc: 0.7248
+Round 86, Subset 4, Test Acc: 0.7163
+Round 86, Subset 5, Test Acc: 0.7164
+Round 86, Subset 6, Test Acc: 0.5919
+Round 86, Subset 7, Test Acc: 0.6076
+Round 86, Subset 8, Test Acc: 0.5898
+Round 86, Subset 9, Test Acc: 0.5838
+Round 86, Subset 10, Test Acc: 0.5889
+Round 86, Aggregated Test Acc: 0.7594
+================================================================================
+Round 87, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 87, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 87, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 87, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 87, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 87, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 87, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 87, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 87, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 87, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 87, Subset 1, Test Acc: 0.7378
+Round 87, Subset 2, Test Acc: 0.7459
+Round 87, Subset 3, Test Acc: 0.7207
+Round 87, Subset 4, Test Acc: 0.7147
+Round 87, Subset 5, Test Acc: 0.7164
+Round 87, Subset 6, Test Acc: 0.5761
+Round 87, Subset 7, Test Acc: 0.5831
+Round 87, Subset 8, Test Acc: 0.5891
+Round 87, Subset 9, Test Acc: 0.5836
+Round 87, Subset 10, Test Acc: 0.5859
+Round 87, Aggregated Test Acc: 0.7596
+================================================================================
+Round 88, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 88, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 88, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 88, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 88, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 88, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 88, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 88, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 88, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 88, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 88, Subset 1, Test Acc: 0.7413
+Round 88, Subset 2, Test Acc: 0.7388
+Round 88, Subset 3, Test Acc: 0.7158
+Round 88, Subset 4, Test Acc: 0.7228
+Round 88, Subset 5, Test Acc: 0.7168
+Round 88, Subset 6, Test Acc: 0.5964
+Round 88, Subset 7, Test Acc: 0.5817
+Round 88, Subset 8, Test Acc: 0.5779
+Round 88, Subset 9, Test Acc: 0.5817
+Round 88, Subset 10, Test Acc: 0.5895
+Round 88, Aggregated Test Acc: 0.7596
+================================================================================
+Round 89, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 89, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 89, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 89, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 89, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 89, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 89, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 89, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 89, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 89, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 89, Subset 1, Test Acc: 0.7426
+Round 89, Subset 2, Test Acc: 0.7399
+Round 89, Subset 3, Test Acc: 0.7217
+Round 89, Subset 4, Test Acc: 0.7188
+Round 89, Subset 5, Test Acc: 0.7231
+Round 89, Subset 6, Test Acc: 0.5824
+Round 89, Subset 7, Test Acc: 0.5859
+Round 89, Subset 8, Test Acc: 0.6007
+Round 89, Subset 9, Test Acc: 0.5919
+Round 89, Subset 10, Test Acc: 0.5789
+Round 89, Aggregated Test Acc: 0.7651
+================================================================================
+Round 90, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 90, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 90, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 90, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 90, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 90, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 90, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 90, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 90, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 90, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 90, Subset 1, Test Acc: 0.7462
+Round 90, Subset 2, Test Acc: 0.7417
+Round 90, Subset 3, Test Acc: 0.7211
+Round 90, Subset 4, Test Acc: 0.7154
+Round 90, Subset 5, Test Acc: 0.7190
+Round 90, Subset 6, Test Acc: 0.5774
+Round 90, Subset 7, Test Acc: 0.5833
+Round 90, Subset 8, Test Acc: 0.5861
+Round 90, Subset 9, Test Acc: 0.5895
+Round 90, Subset 10, Test Acc: 0.5930
+Round 90, Aggregated Test Acc: 0.7614
+================================================================================
+Round 91, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 91, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 91, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 91, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 91, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 91, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 91, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 91, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 91, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 91, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 91, Subset 1, Test Acc: 0.7474
+Round 91, Subset 2, Test Acc: 0.7469
+Round 91, Subset 3, Test Acc: 0.7212
+Round 91, Subset 4, Test Acc: 0.7182
+Round 91, Subset 5, Test Acc: 0.7199
+Round 91, Subset 6, Test Acc: 0.5924
+Round 91, Subset 7, Test Acc: 0.5870
+Round 91, Subset 8, Test Acc: 0.5856
+Round 91, Subset 9, Test Acc: 0.5825
+Round 91, Subset 10, Test Acc: 0.5698
+Round 91, Aggregated Test Acc: 0.7617
+================================================================================
+Round 92, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 92, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 92, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 92, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 92, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 92, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 92, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 92, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 92, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 92, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 92, Subset 1, Test Acc: 0.7491
+Round 92, Subset 2, Test Acc: 0.7467
+Round 92, Subset 3, Test Acc: 0.7193
+Round 92, Subset 4, Test Acc: 0.7178
+Round 92, Subset 5, Test Acc: 0.7163
+Round 92, Subset 6, Test Acc: 0.5868
+Round 92, Subset 7, Test Acc: 0.5929
+Round 92, Subset 8, Test Acc: 0.5838
+Round 92, Subset 9, Test Acc: 0.5684
+Round 92, Subset 10, Test Acc: 0.5857
+Round 92, Aggregated Test Acc: 0.7650
+================================================================================
+Round 93, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 93, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 93, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 93, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 93, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 93, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 93, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 93, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 93, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 93, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 93, Subset 1, Test Acc: 0.7386
+Round 93, Subset 2, Test Acc: 0.7427
+Round 93, Subset 3, Test Acc: 0.7214
+Round 93, Subset 4, Test Acc: 0.7189
+Round 93, Subset 5, Test Acc: 0.7171
+Round 93, Subset 6, Test Acc: 0.5750
+Round 93, Subset 7, Test Acc: 0.5843
+Round 93, Subset 8, Test Acc: 0.5854
+Round 93, Subset 9, Test Acc: 0.5955
+Round 93, Subset 10, Test Acc: 0.5953
+Round 93, Aggregated Test Acc: 0.7618
+================================================================================
+Round 94, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 94, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 94, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 94, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 94, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 94, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 94, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 94, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 94, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 94, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 94, Subset 1, Test Acc: 0.7403
+Round 94, Subset 2, Test Acc: 0.7344
+Round 94, Subset 3, Test Acc: 0.7232
+Round 94, Subset 4, Test Acc: 0.7219
+Round 94, Subset 5, Test Acc: 0.7201
+Round 94, Subset 6, Test Acc: 0.5746
+Round 94, Subset 7, Test Acc: 0.5867
+Round 94, Subset 8, Test Acc: 0.5715
+Round 94, Subset 9, Test Acc: 0.5794
+Round 94, Subset 10, Test Acc: 0.5805
+Round 94, Aggregated Test Acc: 0.7651
+================================================================================
+Round 95, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 95, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 95, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 95, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 95, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 95, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 95, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 95, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 95, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 95, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 95, Subset 1, Test Acc: 0.7399
+Round 95, Subset 2, Test Acc: 0.7441
+Round 95, Subset 3, Test Acc: 0.7197
+Round 95, Subset 4, Test Acc: 0.7207
+Round 95, Subset 5, Test Acc: 0.7209
+Round 95, Subset 6, Test Acc: 0.5870
+Round 95, Subset 7, Test Acc: 0.5881
+Round 95, Subset 8, Test Acc: 0.5818
+Round 95, Subset 9, Test Acc: 0.5907
+Round 95, Subset 10, Test Acc: 0.5753
+Round 95, Aggregated Test Acc: 0.7655
+================================================================================
+Round 96, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 96, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 96, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 96, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 96, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 96, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 96, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 96, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 96, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 96, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 96, Subset 1, Test Acc: 0.7452
+Round 96, Subset 2, Test Acc: 0.7439
+Round 96, Subset 3, Test Acc: 0.7198
+Round 96, Subset 4, Test Acc: 0.7197
+Round 96, Subset 5, Test Acc: 0.7204
+Round 96, Subset 6, Test Acc: 0.5831
+Round 96, Subset 7, Test Acc: 0.5923
+Round 96, Subset 8, Test Acc: 0.5794
+Round 96, Subset 9, Test Acc: 0.5845
+Round 96, Subset 10, Test Acc: 0.5743
+Round 96, Aggregated Test Acc: 0.7624
+================================================================================
+Round 97, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 97, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 97, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 97, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 97, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 97, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 97, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 97, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 97, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 97, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 97, Subset 1, Test Acc: 0.7466
+Round 97, Subset 2, Test Acc: 0.7394
+Round 97, Subset 3, Test Acc: 0.7217
+Round 97, Subset 4, Test Acc: 0.7193
+Round 97, Subset 5, Test Acc: 0.7189
+Round 97, Subset 6, Test Acc: 0.5803
+Round 97, Subset 7, Test Acc: 0.5861
+Round 97, Subset 8, Test Acc: 0.5860
+Round 97, Subset 9, Test Acc: 0.5699
+Round 97, Subset 10, Test Acc: 0.5819
+Round 97, Aggregated Test Acc: 0.7636
+================================================================================
+Round 98, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 98, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 98, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 98, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 98, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 98, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 98, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 98, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 98, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 98, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 98, Subset 1, Test Acc: 0.7483
+Round 98, Subset 2, Test Acc: 0.7405
+Round 98, Subset 3, Test Acc: 0.7222
+Round 98, Subset 4, Test Acc: 0.7202
+Round 98, Subset 5, Test Acc: 0.7207
+Round 98, Subset 6, Test Acc: 0.5800
+Round 98, Subset 7, Test Acc: 0.5689
+Round 98, Subset 8, Test Acc: 0.5913
+Round 98, Subset 9, Test Acc: 0.5918
+Round 98, Subset 10, Test Acc: 0.5864
+Round 98, Aggregated Test Acc: 0.7651
+================================================================================
+Round 99, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 99, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 99, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 99, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 99, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 99, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 99, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 99, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 99, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 99, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 99, Subset 1, Test Acc: 0.7391
+Round 99, Subset 2, Test Acc: 0.7474
+Round 99, Subset 3, Test Acc: 0.7184
+Round 99, Subset 4, Test Acc: 0.7226
+Round 99, Subset 5, Test Acc: 0.7221
+Round 99, Subset 6, Test Acc: 0.5895
+Round 99, Subset 7, Test Acc: 0.5773
+Round 99, Subset 8, Test Acc: 0.5910
+Round 99, Subset 9, Test Acc: 0.5773
+Round 99, Subset 10, Test Acc: 0.5819
+Round 99, Aggregated Test Acc: 0.7652
+================================================================================
+Round 100, Subset 1, Dropout rate: 0.2, Number of models: 2
+Round 100, Subset 2, Dropout rate: 0.2, Number of models: 2
+Round 100, Subset 3, Dropout rate: 0.5, Number of models: 4
+Round 100, Subset 4, Dropout rate: 0.5, Number of models: 4
+Round 100, Subset 5, Dropout rate: 0.5, Number of models: 4
+Round 100, Subset 6, Dropout rate: 0.8, Number of models: 10
+Round 100, Subset 7, Dropout rate: 0.8, Number of models: 10
+Round 100, Subset 8, Dropout rate: 0.8, Number of models: 10
+Round 100, Subset 9, Dropout rate: 0.8, Number of models: 10
+Round 100, Subset 10, Dropout rate: 0.8, Number of models: 10
+Round 100, Subset 1, Test Acc: 0.7454
+Round 100, Subset 2, Test Acc: 0.7364
+Round 100, Subset 3, Test Acc: 0.7181
+Round 100, Subset 4, Test Acc: 0.7157
+Round 100, Subset 5, Test Acc: 0.7215
+Round 100, Subset 6, Test Acc: 0.5778
+Round 100, Subset 7, Test Acc: 0.5833
+Round 100, Subset 8, Test Acc: 0.5800
+Round 100, Subset 9, Test Acc: 0.5759
+Round 100, Subset 10, Test Acc: 0.5815
+Round 100, Aggregated Test Acc: 0.7655
+================================================================================
+Total time: 26719.83s
