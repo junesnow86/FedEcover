@@ -17,7 +17,7 @@ from modules.utils import (
     train,
 )
 
-ROUNDS = 100
+ROUNDS = 200
 EPOCHS = 1
 LR = 0.001
 BATCH_SIZE = 128
@@ -250,7 +250,7 @@ for round in range(ROUNDS):
 end_time = time()
 print(f"Total time: {end_time - start_time:.2f}s")
 
-with open("results/random_dropout_more_small_models_unbalanced.csv", "w") as csvfile:
+with open("results/random_dropout_more_small_models_unbalanced_200rounds.csv", "w") as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=results[0].keys())
     writer.writeheader()
     writer.writerows(results)

@@ -17,7 +17,7 @@ from modules.utils import (
     train,
 )
 
-ROUNDS = 100
+ROUNDS = 200
 EPOCHS = 1
 LR = 0.001
 BATCH_SIZE = 128
@@ -108,6 +108,9 @@ num_models = 10
 
 # p = 0.8, 0.5, 0.2
 dropout_rates = [0.2, 0.2, 0.5, 0.5, 0.5, 0.8, 0.8, 0.8, 0.8, 0.8]
+
+scale_mode = "linear"
+# scale_mode = "square"
 scale_factor = 2
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -168,8 +171,11 @@ for round in range(ROUNDS):
 
     for i in range(num_models):
         dropout_rate = dropout_rates[i]
-        # num_models_current_dropout_rate = int(1 / (1 - dropout_rate)) * scale_factor
-        num_models_current_dropout_rate = (int(1 / (1 - dropout_rate))) ** 2
+        num_models_current_dropout_rate = int(1 / (1 - dropout_rate))
+        if scale_mode == "linear":
+            num_models_current_dropout_rate *= scale_factor
+        elif scale_mode == "square":
+            num_models_current_dropout_rate **= 2
         print(f"Round {round + 1}, Subset {i + 1}, Dropout rate: {dropout_rate}, Number of models: {num_models_current_dropout_rate}")
         client_model_group = []
         for _ in range(num_models_current_dropout_rate):
@@ -253,7 +259,7 @@ for round in range(ROUNDS):
 end_time = time()
 print(f"Total time: {end_time - start_time:.2f}s")
 
-with open("results/random_dropout_scale_small_models_unbalanced_square.csv", "w") as csvfile:
+with open(f"results/random_dropout_scale_small_models_unbalanced_{scale_mode}_200rounds.csv", "w") as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=results[0].keys())
     writer.writeheader()
     writer.writerows(results)
