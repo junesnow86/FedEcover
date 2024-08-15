@@ -21,14 +21,22 @@ def calculate_model_size(model):
 
 # Training function
 def train(
-    model, device, train_loader, optimizer, criterion, epochs=30, print_log=False
+    model,
+    optimizer,
+    criterion,
+    train_loader,
+    device="cuda",
+    epochs=10,
+    print_log=False,
 ):
     original_model_device = next(model.parameters()).device
+    if device == "cuda":
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
     model.train()
 
-    for epoch in tqdm(range(epochs), leave=False):
-        total_loss = 0
+    for epoch in tqdm(range(epochs), leave=False, desc="Training Epochs"):
+        training_loss = 0
         for _, (data, target) in enumerate(train_loader):
             data, target = data.to(device), target.to(device)
             optimizer.zero_grad()
@@ -36,7 +44,8 @@ def train(
             loss = criterion(output, target)
             loss.backward()
             optimizer.step()
-            total_loss += loss.item()
+            training_loss += loss.item()
+        training_loss /= len(train_loader)
 
         if print_log:
             correct = 0
@@ -46,12 +55,22 @@ def train(
                     output = model(data)
                     pred = output.argmax(dim=1, keepdim=True)
                     correct += pred.eq(target.view_as(pred)).sum().item()
-            avg_loss = total_loss / len(train_loader)
             print(
-                f"Train Epoch: {epoch}/{epochs}\tAverage Loss: {avg_loss:.6f}\tAccuracy: {correct}/{len(train_loader.dataset)} ({100. * correct / len(train_loader.dataset):.0f}%)"
+                f"Train Epoch: {epoch}/{epochs}\tAverage Training Loss: {training_loss:.6f}\tAccuracy: {correct}/{len(train_loader.dataset)} ({100. * correct / len(train_loader.dataset):.0f}%)"
             )
 
+    # Calculate the final training loss
+    train_loss = 0.0
+    with torch.no_grad():
+        for data, target in train_loader:
+            data, target = data.to(device), target.to(device)
+            output = model(data)
+            loss = criterion(output, target)
+            train_loss += loss.item()
+        train_loss /= len(train_loader)
+
     model.to(original_model_device)
+    return train_loss
 
 
 def train_and_validate(
@@ -92,8 +111,10 @@ def train_and_validate(
 
 
 # Testing function
-def test(model, device, test_loader, criterion, num_classes=10):
+def test(model, criterion, test_loader, device="cuda", num_classes=10):
     original_model_device = next(model.parameters()).device
+    if device == "cuda":
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
     model.eval()
     test_loss = 0

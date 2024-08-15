@@ -1,5 +1,6 @@
 import csv
 import random
+from time import time
 
 import numpy as np
 import torch
@@ -16,12 +17,13 @@ from modules.utils import (
     train,
 )
 
-ROUNDS = 100
+ROUNDS = 200
 EPOCHS = 1
 LR = 0.001
 BATCH_SIZE = 128
 NUM_PARTICIPANTS = 10
 
+# Set random seed for reproducibility
 seed = 18
 random.seed(seed)
 np.random.seed(seed)
@@ -93,17 +95,9 @@ dataloaders = [
     for indices in participant_data_indices
 ]
 
-# 示例：如何使用这些数据加载器
-# for i, dataloader in enumerate(dataloaders):
-#     for images, labels in dataloader:
-#         # 在这里处理每个子集的数据
-#         pass
-
 global_cnn = CNN()
 
 num_models = 10
-# num_unpruned = int(num_models * 0.2)
-# num_pruned = num_models - num_unpruned
 
 # p = 0.8, 0.5, 0.2
 dropout_rates = [0.2, 0.2, 0.5, 0.5, 0.5, 0.8, 0.8, 0.8, 0.8, 0.8]
@@ -111,55 +105,28 @@ dropout_rates = [0.2, 0.2, 0.5, 0.5, 0.5, 0.8, 0.8, 0.8, 0.8, 0.8]
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 criterion = nn.CrossEntropyLoss()
 
-results = []
 results_class = []
+train_loss_results = []
+test_loss_results = []
+test_acc_results = []
 
+# Training by rounds
+start_time = time()
 for round in range(ROUNDS):
-    round_results = {"Round": round + 1}
+    print(f"Round {round + 1}")
+    round_start_time = time()
+
+    round_train_loss_results = {"Round": round + 1}
+    round_test_loss_results = {"Round": round + 1}
+    round_test_acc_results = {"Round": round + 1}
     round_results_class = {"Round": round + 1}
-
-    # # Load global model's parameters
-    # unpruned_models = [CNN() for _ in range(num_unpruned)]
-    # for i in range(num_unpruned):
-    #     unpruned_models[i].load_state_dict(global_cnn.state_dict())
-
-    # p = 0.9
-
-    # # pruned_models = [prune_cnn(global_cnn, p) for _ in range(num_pruned)]
-    # pruned_models = []
-    # indices_to_prune_conv1_list = []
-    # indices_to_prune_conv2_list = []
-    # indices_to_prune_conv3_list = []
-    # indices_to_prune_fc_list = []
-    # for _ in range(num_pruned):
-    #     (
-    #         pruned_model,
-    #         indices_to_prune_conv1,
-    #         indices_to_prune_conv2,
-    #         indices_to_prune_conv3,
-    #         indices_to_prune_fc,
-    #     ) = prune_cnn(
-    #         global_cnn,
-    #         p,
-    #         scaling=True,
-    #     )
-    #     pruned_models.append(pruned_model)
-    #     indices_to_prune_conv1_list.append(indices_to_prune_conv1)
-    #     indices_to_prune_conv2_list.append(indices_to_prune_conv2)
-    #     indices_to_prune_conv3_list.append(indices_to_prune_conv3)
-    #     indices_to_prune_fc_list.append(indices_to_prune_fc)
-    # for _ in range(num_unpruned):
-    #     indices_to_prune_conv1_list.append({})
-    #     indices_to_prune_conv2_list.append({})
-    #     indices_to_prune_conv3_list.append({})
-    #     indices_to_prune_fc_list.append({})
-    # all_client_models = [*pruned_models, *unpruned_models]
 
     all_client_models = []
     indices_to_prune_conv1_list = []
     indices_to_prune_conv2_list = []
     indices_to_prune_conv3_list = []
     indices_to_prune_fc_list = []
+
     for i in range(num_models):
         (
             client_model,
@@ -182,14 +149,18 @@ for round in range(ROUNDS):
     for i, dataloader in enumerate(dataloaders):
         local_model = all_client_models[i]
         optimizer = optim.Adam(local_model.parameters(), lr=LR)
-        train(local_model, device, dataloader, optimizer, criterion, EPOCHS)
-        _, local_test_acc, local_class_acc = test(
-            local_model, device, test_loader, criterion
+        local_train_loss = train(
+            local_model, optimizer, criterion, dataloader, device=device, epochs=EPOCHS
+        )
+        local_test_loss, local_test_acc, local_class_acc = test(
+            local_model, criterion, test_loader, device=device, num_classes=10
         )
         print(
-            f"Round {round + 1}, Subset {i + 1}, Test Acc: {local_test_acc:.4f}\tClass Acc: {local_class_acc}"
+            f"Subset {i + 1}\tTrain Loss: {local_train_loss:.4f}\tTest Loss: {local_test_loss:.4f}\tTest Acc: {local_test_acc:.4f}\tClass Acc: {local_class_acc}"
         )
-        round_results[f"Subset {i + 1}"] = local_test_acc
+        round_train_loss_results[f"Subset {i + 1}"] = local_train_loss
+        round_test_loss_results[f"Subset {i + 1}"] = local_test_loss
+        round_test_acc_results[f"Subset {i + 1}"] = local_test_acc
         round_results_class[f"Subset {i + 1}"] = local_class_acc
 
     # Aggregation
@@ -203,18 +174,60 @@ for round in range(ROUNDS):
         indices_to_prune_fc=indices_to_prune_fc_list,
     )
 
-    _, test_acc, class_acc = test(global_cnn, device, test_loader, criterion)
-    print(
-        f"Round {round + 1}, Aggregated Test Acc: {test_acc:.4f}\tClass Acc: {class_acc}"
+    global_test_loss, global_test_acc, global_class_acc = test(
+        global_cnn, criterion, test_loader, device=device, num_classes=10
     )
-    round_results["Aggregated"] = test_acc
-    round_results_class["Aggregated"] = class_acc
-    print("=" * 80)
+    print(
+        f"Aggregated Test Loss: {global_test_loss}\tAggregated Test Acc: {global_test_acc:.4f}\tAggregated Class Acc: {global_class_acc}"
+    )
+    round_test_loss_results["Aggregated"] = global_test_loss
+    round_test_acc_results["Aggregated"] = global_test_acc
+    round_results_class["Aggregated"] = global_class_acc
 
-    results.append(round_results)
+    train_loss_results.append(round_train_loss_results)
+    test_loss_results.append(round_test_loss_results)
+    test_acc_results.append(round_test_acc_results)
     results_class.append(round_results_class)
 
-with open("results/random_dropout_more_different_p_unbalanced.csv", "w") as csvfile:
-    writer = csv.DictWriter(csvfile, fieldnames=results[0].keys())
+    round_end_time = time()
+    round_use_time = round_end_time - round_start_time
+    print(
+        f"Round {round + 1} use time: {round_use_time/60:.2f} min, ETA: {(ROUNDS - round - 1) * round_use_time / 3600:.2f} hours"
+    )
+    print("=" * 80)
+
+end_time = time()
+print(f"Total use time: {(end_time - start_time) / 3600:.2f} hours")
+
+# Save results to files
+def format_results(results):
+    formatted_results = []
+    for result in results:
+        formatted_result = {
+            key: f"{value:.4f}" if isinstance(value, float) else value
+            for key, value in result.items()
+        }
+        formatted_results.append(formatted_result)
+    return formatted_results
+
+
+train_loss_results = format_results(train_loss_results)
+test_loss_results = format_results(test_loss_results)
+test_acc_results = format_results(test_acc_results)
+
+with open(
+    "results_0815/rd_base_unbalanced_train_loss.csv", "w"
+) as csvfile:
+    writer = csv.DictWriter(csvfile, fieldnames=train_loss_results[0].keys())
     writer.writeheader()
-    writer.writerows(results)
+    writer.writerows(train_loss_results)
+
+with open("results_0815/rd_base_unbalanced_test_loss.csv", "w") as csvfile:
+    writer = csv.DictWriter(csvfile, fieldnames=test_loss_results[0].keys())
+    writer.writeheader()
+    writer.writerows(test_loss_results)
+
+with open("results_0815/rd_base_unbalanced_test_acc.csv", "w") as csvfile:
+    writer = csv.DictWriter(csvfile, fieldnames=test_acc_results[0].keys())
+    writer.writeheader()
+    writer.writerows(test_acc_results)
