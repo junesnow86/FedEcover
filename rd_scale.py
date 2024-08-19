@@ -201,6 +201,8 @@ for round in range(ROUNDS):
     print(
         f"Aggregated Test Loss: {global_test_loss:.4f}\tAggregated Test Acc: {global_test_acc:.4f}"
     )
+    round_test_loss_results["Aggregated"] = global_test_loss
+    round_test_acc_results["Aggregated"] = global_test_acc
 
     train_loss_results.append(round_train_loss_results)
     test_loss_results.append(round_test_loss_results)

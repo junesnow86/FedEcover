@@ -1,50 +1,61 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
-# ---------- Plotting Single Method Subset and Aggregated Performance ----------
-df = pd.read_csv("results_0815_0/random_dropout_scale_small_models_square_200rounds.csv")
+# Read the CSV files
+df_train_loss = pd.read_csv("results_0819/rd_square_unbalanced_train_loss.csv")
+df_val_loss = pd.read_csv("results_0819/rd_square_unbalanced_test_loss.csv")
 
-# Plotting
-plt.figure(figsize=(10, 8))
+# Create a figure and a single subplot
+fig, ax = plt.subplots(figsize=(10, 8))
 
-# Loop through each subset column
+# Define colors for different subsets
+colors = plt.cm.tab10(range(10))
+
+# Plot each subset for train loss
 for i in range(1, 11):
-    plt.plot(df["Round"], df[f"Subset {i}"], label=f"Subset {i}")
+    ax.plot(
+        df_train_loss["Round"],
+        df_train_loss[f"Subset {i}"],
+        label=f"Subset {i}",
+        color=colors[i - 1],
+        linestyle="-"
+    )
 
-# Plot the aggregated column
-# plt.plot(
-#     df["Round"],
-#     df["Pruned-global Aggregated"],
-#     label="Pruned-global Aggregated",
-#     color="black",
-#     linewidth=2,
-#     linestyle="--",
-# )
+# Plot each subset for validation loss
+for i in range(1, 11):
+    ax.plot(
+        df_val_loss["Round"],
+        df_val_loss[f"Subset {i}"],
+        # label=f"Val Subset {i}",
+        color=colors[i - 1],
+        linestyle="--"
+    )
 
-# plt.plot(
-#     df["Round"],
-#     df["Whole Aggregated"],
-#     label="Whole Aggregated",
-#     color="blue",
-#     linewidth=2,
-#     linestyle="--",
-# )
-
-plt.plot(
-    df["Round"],
-    df["Aggregated"],
-    label="Aggregated",
+# Plot the aggregated columns
+ax.plot(
+    df_val_loss["Round"],
+    df_val_loss["Aggregated"],
+    label="Aggregated Val Loss",
     color="black",
-    linewidth=2,
-    linestyle="--",
+    marker="o",
 )
 
+# Customize the plot
+ax.set_xlabel("Round")
+ax.set_ylabel("Loss")
+fig.suptitle("Subset and Aggregated Loss Over Rounds (Square Device Models - Unbalanced)", y=0.95)
 
-plt.title(
-    "Subset and Aggregated Performance Over Rounds (Random Dropout with Scale(square) Small Models)"
-)
-plt.xlabel("Round")
-plt.ylabel("Performance")
-plt.legend()
+# Combine legends from both axes
+lines, labels = ax.get_legend_handles_labels()
+
+# Add custom legend entries for line styles
+custom_lines = [
+    plt.Line2D([0], [0], linestyle='-', color='black'),
+    plt.Line2D([0], [0], linestyle='--', color="black"),
+]
+custom_labels = ['Train Loss', 'Validation Loss']
+
+ax.legend(lines + custom_lines, labels + custom_labels, loc="upper left")
+
 plt.grid(True)
-plt.savefig("figures/0815/random_dropout_scale_small_models_square.png")
+plt.savefig("figures/0819/rd_square_unbalanced_loss.png")

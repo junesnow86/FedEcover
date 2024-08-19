@@ -2,161 +2,86 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # ---------- Plotting Aggregated Performance Comparison ----------
-# df1 = pd.read_csv("results_0726/vanilla_fedavg_unbalanced_classes.csv")
-# df2 = pd.read_csv("results_0726/heterofl_more_different_p_unbalanced_classes.csv")
-# df3 = pd.read_csv("results_0726/random_dropout_more_different_p_unbalanced_classes.csv")
-# df4 = pd.read_csv(
-#     "results_0726/position_heterofl_more_different_p_unbalanced_classes.csv"
-# )
-# df5 = pd.read_csv("results/random_dropout_more_small_models_unbalanced.csv")
+df1 = pd.read_csv("results_0726/vanilla_fedavg.csv")
+df2 = pd.read_csv("results_0726/heterofl_more_different_p.csv")
+df3 = pd.read_csv("results_0819/rd_1x_test_acc.csv")
 
-# df1 = pd.read_csv("results_0802/random_dropout_more_small_models_unbalanced.csv")
-# df2 = pd.read_csv("results_0814/random_dropout_scale_small_models_unbalanced.csv")
-# df3 = pd.read_csv("results_0814/random_dropout_scale_small_models_unbalanced_square.csv")
-# df4 = pd.read_csv("results_0726/random_dropout_more_different_p_unbalanced_classes.csv")
-
-df1 = pd.read_csv("results_0815_0/random_dropout_more_small_models_unbalanced_200rounds.csv")
-df2 = pd.read_csv("results_0815_0/random_dropout_scale_small_models_unbalanced_linear_200rounds.csv")
-df3 = pd.read_csv("results_0815_0/random_dropout_scale_small_models_unbalanced_square_200rounds.csv")
+# 截取前100轮
+df3 = df3.iloc[:100]
 
 # 提取数据
-# rounds_df1 = df1["Round"]
-# aggregated_df1 = df1["Aggregated"]
-# rounds_df2 = df2["Round"]
-# aggregated_df2 = df2["Pruned-global Aggregated"]
-# aggregated_df2 = df2["Aggregated"]
-# rounds_df3 = df3["Round"]
-# aggregated_df3 = df3["Aggregated"]
-# rounds_df4 = df4["Round"]
-# aggregated_df4 = df4["Aggregated"]
-# rounds_df5 = df5["Round"]
-# aggregated_df5 = df5["Aggregated"]
-
 rounds_df1 = df1["Round"]
 aggregated_df1 = df1["Aggregated"]
 rounds_df2 = df2["Round"]
-aggregated_df2 = df2["Aggregated"]
+aggregated_df2 = df2["Pruned-global Aggregated"]
+# aggregated_df2 = df2["Aggregated"]
 rounds_df3 = df3["Round"]
 aggregated_df3 = df3["Aggregated"]
 
-# 计算第50轮之后的平均值
-# avg_aggregated_df1 = aggregated_df1[rounds_df1 > 50].mean()
-# avg_aggregated_df2 = aggregated_df2[rounds_df2 > 50].mean()
-# avg_aggregated_df3 = aggregated_df3[rounds_df3 > 50].mean()
-# avg_aggregated_df4 = aggregated_df4[rounds_df4 > 50].mean()
-# avg_aggregated_df5 = aggregated_df5[rounds_df5 > 50].mean()
+# 计算某一轮之后的平均值
+avg_aggregated_df1 = aggregated_df1[rounds_df1 > 60].mean()
+avg_aggregated_df2 = aggregated_df2[rounds_df2 > 60].mean()
+avg_aggregated_df3 = aggregated_df3[rounds_df3 > 60].mean()
 
-avg_aggregated_df1 = aggregated_df1[rounds_df1 > 100].mean()
-avg_aggregated_df2 = aggregated_df2[rounds_df2 > 100].mean()
-avg_aggregated_df3 = aggregated_df3[rounds_df3 > 100].mean()
+# 计算最大值
+max_aggregated_df1 = aggregated_df1.max()
+max_aggregated_df2 = aggregated_df2.max()
+max_aggregated_df3 = aggregated_df3.max()
 
-# 绘制图表
+# 绘制变化曲线
 plt.figure(figsize=(10, 8))
-# color1 = "blue"
-# color2 = "green"
-# color3 = "orange"
-# color4 = "red"
-# color5 = "purple"
-# plt.plot(rounds_df1, aggregated_df1, label="Vanilla FedAvg", color=color1)
-# plt.plot(rounds_df2, aggregated_df2, label="HeteroFL", color=color2)
-# plt.plot(rounds_df3, aggregated_df3, label="Random Dropout (Ours)", color=color3)
-# plt.plot(rounds_df4, aggregated_df4, label="More-covered HeteroFL (Ours)", color=color4)
-# plt.plot(
-#     rounds_df5,
-#     aggregated_df5,
-#     label="Random Dropout with More Small Models (Ours)",
-#     color=color5,
-# )
 color1 = "blue"
-color2 = "red"
-color3 = "green"
-color4 = "orange"
-plt.plot(rounds_df1, aggregated_df1, label="Random Dropout (More Small Models)", color=color1)
-plt.plot(rounds_df2, aggregated_df2, label="Random Dropout (2x Scaled)", color=color2)
-plt.plot(rounds_df3, aggregated_df3, label="Random Dropout (Square Scaled)", color=color3)
-# plt.plot(rounds_df4, aggregated_df4, label="Random Dropout", color=color4)
+color2 = "green"
+color3 = "red"
+plt.plot(rounds_df1, aggregated_df1, label="Vanilla FedAvg", color=color1)
+plt.plot(rounds_df2, aggregated_df2, label="HeteroFL", color=color2)
+plt.plot(rounds_df3, aggregated_df3, label="Random Dropout (Ours)", color=color3)
 
 # 绘制平均值线
-# plt.axhline(
-#     y=avg_aggregated_df1,
-#     color=color1,
-#     linestyle="--",
-#     label=f"Avg Vanilla FedAvg (after Round 50): {avg_aggregated_df1:.4f}",
-# )
-# plt.axhline(
-#     y=avg_aggregated_df2,
-#     color=color2,
-#     linestyle="--",
-#     label=f"Avg HeteroFL (after Round 50): {avg_aggregated_df2:.4f}",
-# )
-# plt.axhline(
-#     y=avg_aggregated_df3,
-#     color=color3,
-#     linestyle="--",
-#     label=f"Avg Random Dropout (after Round 50): {avg_aggregated_df3:.4f}",
-# )
-# plt.axhline(
-#     y=avg_aggregated_df4,
-#     color=color4,
-#     linestyle="--",
-#     label=f"Avg More-covered HeteroFL (after Round 50): {avg_aggregated_df4:.4f}",
-# )
-# plt.axhline(
-#     y=avg_aggregated_df5,
-#     color=color5,
-#     linestyle="--",
-#     label=f"Avg Random Dropout with More Small Models (after Round 50): {avg_aggregated_df5:.4f}",
-# )
-
-# plt.axhline(
-#     y=avg_aggregated_df1,
-#     color=color1,
-#     linestyle="--",
-#     label=f"Avg Random Dropout (More Small Models) (after Round 50): {avg_aggregated_df1:.4f}",
-# )
-# plt.axhline(
-#     y=avg_aggregated_df2,
-#     color=color2,
-#     linestyle="--",
-#     label=f"Avg Random Dropout (2x Scaled) (after Round 50): {avg_aggregated_df2:.4f}",
-# )
-# plt.axhline(
-#     y=avg_aggregated_df3,
-#     color=color3,
-#     linestyle="--",
-#     label=f"Avg Random Dropout (Square Scaled) (after Round 50): {avg_aggregated_df3:.4f}",
-# )
-# plt.axhline(
-#     y=avg_aggregated_df4,
-#     color=color4,
-#     linestyle="--",
-#     label=f"Avg Random Dropout (after Round 50): {avg_aggregated_df4:.4f}",
-# )
-
 plt.axhline(
     y=avg_aggregated_df1,
     color=color1,
     linestyle="--",
-    label=f"Avg Random Dropout (More Small Models) (after Round 100): {avg_aggregated_df1:.4f}",
+    label=f"Avg Vanilla FedAvg (after Round 60): {avg_aggregated_df1:.4f}",
 )
 plt.axhline(
     y=avg_aggregated_df2,
     color=color2,
     linestyle="--",
-    label=f"Avg Random Dropout (2x Scaled) (after Round 100): {avg_aggregated_df2:.4f}",
+    label=f"Avg HeteroFL (after Round 60): {avg_aggregated_df2:.4f}",
 )
 plt.axhline(
     y=avg_aggregated_df3,
     color=color3,
     linestyle="--",
-    label=f"Avg Random Dropout (Square Scaled) (after Round 100): {avg_aggregated_df3:.4f}",
+    label=f"Avg Random Dropout (after Round 60): {avg_aggregated_df3:.4f}",
+)
+
+# 绘制最大值线
+plt.axhline(
+    y=max_aggregated_df1,
+    color=color1,
+    linestyle="-.",
+    label=f"Max Vanilla FedAvg: {max_aggregated_df1:.4f}",
+)
+plt.axhline(
+    y=max_aggregated_df2,
+    color=color2,
+    linestyle="-.",
+    label=f"Max HeteroFL: {max_aggregated_df2:.4f}",
+)
+plt.axhline(
+    y=max_aggregated_df3,
+    color=color3,
+    linestyle="-.",
+    label=f"Max Random Dropout: {max_aggregated_df3:.4f}",
 )
 
 # 添加图例和标签
-# plt.title("Aggregated Performance Comparison on CIFAR-10")
-plt.title("Aggregated Performance Comparison on CIFAR-10 (Unbalanced Classes)")
+plt.title("Aggregated Performance Comparison on CIFAR-10")
+# plt.title("Aggregated Performance Comparison on CIFAR-10 (Unbalanced Classes)")
 plt.xlabel("Round")
-plt.ylabel("Aggregated Accuracy")
+plt.ylabel("Accuracy")
 plt.legend()
 plt.grid(True)
-plt.savefig("figures/0815/aggregated_performance_comparison_unbalanced.png")
+plt.savefig("figures/0819/aggregated_performance_comparison.png")

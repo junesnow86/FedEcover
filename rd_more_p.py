@@ -76,6 +76,7 @@ dropout_rates = [0.2, 0.2, 0.5, 0.5, 0.5, 0.8, 0.8, 0.8, 0.8, 0.8]
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 criterion = nn.CrossEntropyLoss()
 
+results_class = []
 train_loss_results = []
 test_loss_results = []
 test_acc_results = []
@@ -89,6 +90,7 @@ for round in range(ROUNDS):
     round_train_loss_results = {"Round": round + 1}
     round_test_loss_results = {"Round": round + 1}
     round_test_acc_results = {"Round": round + 1}
+    round_results_class = {"Round": round + 1}
 
     all_client_models = []
     indices_to_prune_conv1_list = []
@@ -121,15 +123,16 @@ for round in range(ROUNDS):
         local_train_loss = train(
             local_model, optimizer, criterion, dataloader, device=device, epochs=EPOCHS
         )
-        local_test_loss, local_test_acc, _ = test(
+        local_test_loss, local_test_acc, local_class_acc = test(
             local_model, criterion, test_loader, device=device, num_classes=10
         )
         print(
-            f"Subset {i + 1}\tTrain Loss: {local_train_loss:.4f}\tTest Loss: {local_test_loss:.4f}\tTest Acc: {local_test_acc:.4f}"
+            f"Subset {i + 1}\tTrain Loss: {local_train_loss:.4f}\tTest Loss: {local_test_loss:.4f}\tTest Acc: {local_test_acc:.4f}\tClass Acc: {local_class_acc}"
         )
         round_train_loss_results[f"Subset {i + 1}"] = local_train_loss
         round_test_loss_results[f"Subset {i + 1}"] = local_test_loss
         round_test_acc_results[f"Subset {i + 1}"] = local_test_acc
+        round_results_class[f"Subset {i + 1}"] = local_class_acc
 
     # Aggregation
     aggregate_cnn(
@@ -142,18 +145,20 @@ for round in range(ROUNDS):
         indices_to_prune_fc=indices_to_prune_fc_list,
     )
 
-    global_test_loss, global_test_acc, _ = test(
+    global_test_loss, global_test_acc, global_class_acc = test(
         global_cnn, criterion, test_loader, device=device, num_classes=10
     )
     print(
-        f"Aggregated Test Loss: {global_test_loss:.4f}\tAggregated Test Acc: {global_test_acc:.4f}"
+        f"Aggregated Test Loss: {global_test_loss:.4f}\tAggregated Test Acc: {global_test_acc:.4f}\tAggregated Class Acc: {global_class_acc}"
     )
     round_test_loss_results["Aggregated"] = global_test_loss
     round_test_acc_results["Aggregated"] = global_test_acc
+    round_results_class["Aggregated"] = global_class_acc
 
     train_loss_results.append(round_train_loss_results)
     test_loss_results.append(round_test_loss_results)
     test_acc_results.append(round_test_acc_results)
+    results_class.append(round_results_class)
 
     round_end_time = time()
     round_use_time = round_end_time - round_start_time
@@ -182,18 +187,18 @@ test_loss_results = format_results(test_loss_results)
 test_acc_results = format_results(test_acc_results)
 
 with open(
-    "results_0815/rd_base_train_loss.csv", "w"
+    "results_0820/rd_base_train_loss.csv", "w"
 ) as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=train_loss_results[0].keys())
     writer.writeheader()
     writer.writerows(train_loss_results)
 
-with open("results_0815/rd_base_test_loss.csv", "w") as csvfile:
+with open("results_0820/rd_base_test_loss.csv", "w") as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=test_loss_results[0].keys())
     writer.writeheader()
     writer.writerows(test_loss_results)
 
-with open("results_0815/rd_base_test_acc.csv", "w") as csvfile:
+with open("results_0820/rd_base_test_acc.csv", "w") as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=test_acc_results[0].keys())
     writer.writeheader()
     writer.writerows(test_acc_results)

@@ -1,22 +1,29 @@
-import matplotlib.pyplot as plt
 import pandas as pd
+import matplotlib.pyplot as plt
 
-# ---------- Plotting Class-wise Performance Comparison ----------
-data = pd.read_csv(
-    "statistics/0726/random_dropout_aggregated_class_wise_acc_results.csv"
-)
+# 读取CSV文件
+df = pd.read_csv("results_0819/aggregated_class_acc_heterofl.csv")
 
-# 绘制图表
+# 假设CSV文件有以下列：Round, Class1, Class2, ..., ClassN
+# 提取轮数
+rounds = df["Round"]
+
+# 提取类别列（假设从第二列开始）
+classes = df.columns[1:]
+
+# 绘制各个类别随轮数变化的曲线
 plt.figure(figsize=(10, 8))
-for column in data.columns[1:]:  # 跳过第一列（Round）
-    plt.plot(data["Round"], data[column], label=column)
+for class_name in classes:
+    simplified_class_name = class_name.replace("_", " ").replace("Acc", "").strip()
+    plt.plot(rounds, df[class_name], label=simplified_class_name)
 
-# plt.title("Aggregated Class-wise Accuracy over Rounds (Vanilla FedAvg)")
-# plt.title("Aggregated Class-wise Accuracy over Rounds (HeteroFL)")
-# plt.title("Aggregated Class-wise Accuracy over Rounds (More-covered HeteroFL)")
-plt.title("Aggregated Class-wise Accuracy over Rounds (Random Dropout)")
+# 添加图例
+plt.legend()
+
+# 添加标题和标签
+plt.title("Class Accuracy Over Rounds (HeteroFL)")
 plt.xlabel("Round")
 plt.ylabel("Accuracy")
-plt.legend()
-plt.grid(True)
-plt.savefig("figures/0726/random_dropout_aggregated_class_wise_acc.png")
+
+# 显示图形
+plt.savefig("figures/0819/aggregated_class_acc_heterofl.png")
