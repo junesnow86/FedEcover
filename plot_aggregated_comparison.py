@@ -15,8 +15,9 @@ import pandas as pd
 # df3 = pd.read_csv("results_0814/random_dropout_scale_small_models_unbalanced_square.csv")
 # df4 = pd.read_csv("results_0726/random_dropout_more_different_p_unbalanced_classes.csv")
 
-df1 = pd.read_csv("results/random_dropout_more_small_models_unbalanced_200rounds.csv")
-df2 = pd.read_csv("results/random_dropout_scale_small_models_unbalanced_linear_200rounds.csv")
+df1 = pd.read_csv("results_0815_0/random_dropout_more_small_models_unbalanced_200rounds.csv")
+df2 = pd.read_csv("results_0815_0/random_dropout_scale_small_models_unbalanced_linear_200rounds.csv")
+df3 = pd.read_csv("results_0815_0/random_dropout_scale_small_models_unbalanced_square_200rounds.csv")
 
 # 提取数据
 # rounds_df1 = df1["Round"]
@@ -35,6 +36,8 @@ rounds_df1 = df1["Round"]
 aggregated_df1 = df1["Aggregated"]
 rounds_df2 = df2["Round"]
 aggregated_df2 = df2["Aggregated"]
+rounds_df3 = df3["Round"]
+aggregated_df3 = df3["Aggregated"]
 
 # 计算第50轮之后的平均值
 # avg_aggregated_df1 = aggregated_df1[rounds_df1 > 50].mean()
@@ -45,6 +48,7 @@ aggregated_df2 = df2["Aggregated"]
 
 avg_aggregated_df1 = aggregated_df1[rounds_df1 > 100].mean()
 avg_aggregated_df2 = aggregated_df2[rounds_df2 > 100].mean()
+avg_aggregated_df3 = aggregated_df3[rounds_df3 > 100].mean()
 
 # 绘制图表
 plt.figure(figsize=(10, 8))
@@ -69,7 +73,7 @@ color3 = "green"
 color4 = "orange"
 plt.plot(rounds_df1, aggregated_df1, label="Random Dropout (More Small Models)", color=color1)
 plt.plot(rounds_df2, aggregated_df2, label="Random Dropout (2x Scaled)", color=color2)
-# plt.plot(rounds_df3, aggregated_df3, label="Random Dropout (Square Scaled)", color=color3)
+plt.plot(rounds_df3, aggregated_df3, label="Random Dropout (Square Scaled)", color=color3)
 # plt.plot(rounds_df4, aggregated_df4, label="Random Dropout", color=color4)
 
 # 绘制平均值线
@@ -140,6 +144,12 @@ plt.axhline(
     color=color2,
     linestyle="--",
     label=f"Avg Random Dropout (2x Scaled) (after Round 100): {avg_aggregated_df2:.4f}",
+)
+plt.axhline(
+    y=avg_aggregated_df3,
+    color=color3,
+    linestyle="--",
+    label=f"Avg Random Dropout (Square Scaled) (after Round 100): {avg_aggregated_df3:.4f}",
 )
 
 # 添加图例和标签

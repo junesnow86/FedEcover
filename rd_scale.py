@@ -232,17 +232,17 @@ train_loss_results = format_results(train_loss_results)
 test_loss_results = format_results(test_loss_results)
 test_acc_results = format_results(test_acc_results)
 
-with open(f"results_0815/rd_{scale_mode}_train_loss.csv", "w") as csvfile:
+with open(f"results/rd_{scale_mode}_train_loss.csv", "w") as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=train_loss_results[0].keys())
     writer.writeheader()
     writer.writerows(train_loss_results)
 
-with open(f"results_0815/rd_{scale_mode}_test_loss.csv", "w") as csvfile:
+with open(f"results/rd_{scale_mode}_test_loss.csv", "w") as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=test_loss_results[0].keys())
     writer.writeheader()
     writer.writerows(test_loss_results)
 
-with open(f"results_0815/rd_{scale_mode}_test_acc.csv", "w") as csvfile:
+with open(f"results/rd_{scale_mode}_test_acc.csv", "w") as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=test_acc_results[0].keys())
     writer.writeheader()
     writer.writerows(test_acc_results)

@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # ---------- Plotting Single Method Subset and Aggregated Performance ----------
-df = pd.read_csv("results/random_dropout_scale_small_models_unbalanced_linear_200rounds.csv")
+df = pd.read_csv("results_0815_0/random_dropout_scale_small_models_square_200rounds.csv")
 
 # Plotting
 plt.figure(figsize=(10, 8))
@@ -41,10 +41,10 @@ plt.plot(
 
 
 plt.title(
-    "Subset and Aggregated Performance Over Rounds (Random Dropout with Scale(2x) Small Models - Unbalanced)"
+    "Subset and Aggregated Performance Over Rounds (Random Dropout with Scale(square) Small Models)"
 )
 plt.xlabel("Round")
 plt.ylabel("Performance")
 plt.legend()
 plt.grid(True)
-plt.savefig("figures/0815/random_dropout_scale_small_models_unbalanced.png")
+plt.savefig("figures/0815/random_dropout_scale_small_models_square.png")
