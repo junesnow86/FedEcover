@@ -21,7 +21,6 @@ ROUNDS = 200
 EPOCHS = 1
 LR = 0.001
 BATCH_SIZE = 128
-NUM_PARTICIPANTS = 10
 
 # Set random seed for reproducibility
 seed = 18
@@ -47,52 +46,24 @@ test_dataset = datasets.CIFAR10(
 
 test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False)
 
+num_train = len(train_dataset)
+indices = list(range(num_train))
+np.random.shuffle(indices)
 
-# 首先，获取每个类别的索引
-class_indices = {i: [] for i in range(10)}  # CIFAR10有10个类别
-for idx, (_, label) in enumerate(train_dataset):
-    class_indices[label].append(idx)
+num_subsets = 10
+subset_size = num_train // num_subsets
+subsets_indices = [
+    indices[i : i + subset_size] for i in range(0, num_train, subset_size)
+]
+subset_sizes = [len(subset) for subset in subsets_indices]
 
-split_ratio = 0.8
-
-# 首先，初始化每个参与方的数据索引集合
-participant_data_indices = [[] for i in range(NUM_PARTICIPANTS)]
-
-for cls, indices in class_indices.items():
-    np.random.shuffle(indices)  # 打乱索引以随机分配
-    split_index = int(len(indices) * split_ratio)
-
-    # 为当前类别的主要参与方分配80%的数据
-    main_indices = indices[:split_index]
-    participant_data_indices[cls].extend(main_indices)
-
-    # 剩余20%的数据均匀分配给其他参与方
-    remaining_indices = indices[split_index:]
-    num_remaining_per_participant = len(remaining_indices) // (NUM_PARTICIPANTS - 1)
-
-    # 分配剩余数据
-    for i, start_index in enumerate(
-        range(0, len(remaining_indices), num_remaining_per_participant)
-    ):
-        if i == NUM_PARTICIPANTS - 1:  # 最后一个参与方获取所有剩余的数据
-            participant_data_indices[(cls + i + 1) % NUM_PARTICIPANTS].extend(
-                remaining_indices[start_index:]
-            )
-            break
-        participant_data_indices[(cls + i + 1) % NUM_PARTICIPANTS].extend(
-            remaining_indices[start_index : start_index + num_remaining_per_participant]
-        )
-
-subset_sizes = [len(indices) for indices in participant_data_indices]
-
-# 创建每个参与方的数据加载器
 dataloaders = [
     DataLoader(
-        Subset(train_dataset, indices),
+        Subset(train_dataset, subset_indices),
         batch_size=BATCH_SIZE,
         shuffle=True,
     )
-    for indices in participant_data_indices
+    for subset_indices in subsets_indices
 ]
 
 global_cnn = CNN()
@@ -109,6 +80,8 @@ results_class = []
 train_loss_results = []
 test_loss_results = []
 test_acc_results = []
+
+decay_round = 20
 
 # Training by rounds
 start_time = time()
@@ -148,7 +121,11 @@ for round in range(ROUNDS):
     # Local training
     for i, dataloader in enumerate(dataloaders):
         local_model = all_client_models[i]
-        optimizer = optim.Adam(local_model.parameters(), lr=LR)
+        if dropout_rates[i] == 0.8 and round == decay_round:
+            lr = LR * 0.1
+        else:
+            lr = LR
+        optimizer = optim.Adam(local_model.parameters(), lr=lr)
         local_train_loss = train(
             local_model, optimizer, criterion, dataloader, device=device, epochs=EPOCHS
         )
@@ -178,7 +155,7 @@ for round in range(ROUNDS):
         global_cnn, criterion, test_loader, device=device, num_classes=10
     )
     print(
-        f"Aggregated Test Loss: {global_test_loss}\tAggregated Test Acc: {global_test_acc:.4f}\tAggregated Class Acc: {global_class_acc}"
+        f"Aggregated Test Loss: {global_test_loss:.4f}\tAggregated Test Acc: {global_test_acc:.4f}\tAggregated Class Acc: {global_class_acc}"
     )
     round_test_loss_results["Aggregated"] = global_test_loss
     round_test_acc_results["Aggregated"] = global_test_acc
@@ -216,18 +193,18 @@ test_loss_results = format_results(test_loss_results)
 test_acc_results = format_results(test_acc_results)
 
 with open(
-    "results_0815/rd_base_unbalanced_train_loss.csv", "w"
+    "results_0820/rd_base_train_loss.csv", "w"
 ) as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=train_loss_results[0].keys())
     writer.writeheader()
     writer.writerows(train_loss_results)
 
-with open("results_0815/rd_base_unbalanced_test_loss.csv", "w") as csvfile:
+with open("results_0820/rd_base_test_loss.csv", "w") as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=test_loss_results[0].keys())
     writer.writeheader()
     writer.writerows(test_loss_results)
 
-with open("results_0815/rd_base_unbalanced_test_acc.csv", "w") as csvfile:
+with open("results_0820/rd_base_test_acc.csv", "w") as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=test_acc_results[0].keys())
     writer.writeheader()
     writer.writerows(test_acc_results)
