@@ -192,19 +192,19 @@ train_loss_results = format_results(train_loss_results)
 test_loss_results = format_results(test_loss_results)
 test_acc_results = format_results(test_acc_results)
 
-with open(
-    "results_0820/rd_base_train_loss.csv", "w"
-) as csvfile:
-    writer = csv.DictWriter(csvfile, fieldnames=train_loss_results[0].keys())
-    writer.writeheader()
-    writer.writerows(train_loss_results)
+# with open(
+#     "results_0821/rd_base_train_loss.csv", "w"
+# ) as csvfile:
+#     writer = csv.DictWriter(csvfile, fieldnames=train_loss_results[0].keys())
+#     writer.writeheader()
+#     writer.writerows(train_loss_results)
 
-with open("results_0820/rd_base_test_loss.csv", "w") as csvfile:
-    writer = csv.DictWriter(csvfile, fieldnames=test_loss_results[0].keys())
-    writer.writeheader()
-    writer.writerows(test_loss_results)
+# with open("results_0821/rd_base_test_loss.csv", "w") as csvfile:
+#     writer = csv.DictWriter(csvfile, fieldnames=test_loss_results[0].keys())
+#     writer.writeheader()
+#     writer.writerows(test_loss_results)
 
-with open("results_0820/rd_base_test_acc.csv", "w") as csvfile:
-    writer = csv.DictWriter(csvfile, fieldnames=test_acc_results[0].keys())
-    writer.writeheader()
-    writer.writerows(test_acc_results)
+# with open("results_0821/rd_base_test_acc.csv", "w") as csvfile:
+#     writer = csv.DictWriter(csvfile, fieldnames=test_acc_results[0].keys())
+#     writer.writeheader()
+#     writer.writerows(test_acc_results)

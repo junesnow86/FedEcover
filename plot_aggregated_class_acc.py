@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # 读取CSV文件
-df = pd.read_csv("results_0819/aggregated_class_acc_heterofl.csv")
+df = pd.read_csv("results_0819/aggregated_class_acc_base.csv")
 
 # 假设CSV文件有以下列：Round, Class1, Class2, ..., ClassN
 # 提取轮数
@@ -21,9 +21,9 @@ for class_name in classes:
 plt.legend()
 
 # 添加标题和标签
-plt.title("Class Accuracy Over Rounds (HeteroFL)")
+plt.title("Class Accuracy Over Rounds (Base Unbalanced)")
 plt.xlabel("Round")
 plt.ylabel("Accuracy")
 
 # 显示图形
-plt.savefig("figures/0819/aggregated_class_acc_heterofl.png")
+plt.savefig("figures/0820/aggregated_class_acc_base_unbalanced.png")
