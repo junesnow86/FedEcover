@@ -1,4 +1,6 @@
+import argparse
 import csv
+import os
 import random
 from time import time
 
@@ -17,11 +19,23 @@ from modules.utils import (
     train,
 )
 
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "--save-dir",
+    type=str,
+    default=None,
+    help="Directory to save the results",
+)
+args = parser.parse_args()
+save_dir = args.save_dir
+print(f"Save directory: {save_dir}")
+
 ROUNDS = 200
 EPOCHS = 1
 LR = 0.001
 BATCH_SIZE = 128
 NUM_PARTICIPANTS = 10
+LR_DECAY = True
 
 # Set random seed for reproducibility
 seed = 18
@@ -101,6 +115,8 @@ num_models = 10
 
 # p = 0.8, 0.5, 0.2
 dropout_rates = [0.2, 0.2, 0.5, 0.5, 0.5, 0.8, 0.8, 0.8, 0.8, 0.8]
+learning_rates = [LR] * num_models
+decay_rounds = [20, 50, 100]
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 criterion = nn.CrossEntropyLoss()
@@ -150,10 +166,10 @@ for round in range(ROUNDS):
     # Local training
     for i, dataloader in enumerate(dataloaders):
         local_model = all_client_models[i]
-        if dropout_rates[i] == 0.8 and round == decay_round:
-            lr = LR * 0.1
-        else:
-            lr = LR
+        if LR_DECAY and dropout_rates[i] == 0.8 and round in decay_rounds:
+            learning_rates[i] /= 10
+            print(f"Subset {i + 1} learning rate decayed to {learning_rates[i]}")
+        lr = learning_rates[i]
         optimizer = optim.Adam(local_model.parameters(), lr=lr)
         local_train_loss = train(
             local_model, optimizer, criterion, dataloader, device=device, epochs=EPOCHS
@@ -205,6 +221,7 @@ for round in range(ROUNDS):
 end_time = time()
 print(f"Total use time: {(end_time - start_time) / 3600:.2f} hours")
 
+
 # Save results to files
 def format_results(results):
     formatted_results = []
@@ -221,19 +238,24 @@ train_loss_results = format_results(train_loss_results)
 test_loss_results = format_results(test_loss_results)
 test_acc_results = format_results(test_acc_results)
 
-# with open(
-#     "rd_base_unbalanced_train_loss.csv", "w"
-# ) as csvfile:
-#     writer = csv.DictWriter(csvfile, fieldnames=train_loss_results[0].keys())
-#     writer.writeheader()
-#     writer.writerows(train_loss_results)
+if save_dir is not None:
+    with open(
+        os.path.join(save_dir, "rd_base_unbalanced_train_loss.csv"), "w"
+    ) as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=train_loss_results[0].keys())
+        writer.writeheader()
+        writer.writerows(train_loss_results)
 
-# with open("rd_base_unbalanced_test_loss.csv", "w") as csvfile:
-#     writer = csv.DictWriter(csvfile, fieldnames=test_loss_results[0].keys())
-#     writer.writeheader()
-#     writer.writerows(test_loss_results)
+    with open(
+        os.path.join(save_dir, "rd_base_unbalanced_test_loss.csv"), "w"
+    ) as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=test_loss_results[0].keys())
+        writer.writeheader()
+        writer.writerows(test_loss_results)
 
-# with open("rd_base_unbalanced_test_acc.csv", "w") as csvfile:
-#     writer = csv.DictWriter(csvfile, fieldnames=test_acc_results[0].keys())
-#     writer.writeheader()
-#     writer.writerows(test_acc_results)
+    with open(
+        os.path.join(save_dir, "rd_base_unbalanced_test_acc.csv"), "w"
+    ) as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=test_acc_results[0].keys())
+        writer.writeheader()
+        writer.writerows(test_acc_results)
