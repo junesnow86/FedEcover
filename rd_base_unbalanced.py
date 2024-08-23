@@ -259,3 +259,7 @@ if save_dir is not None:
         writer = csv.DictWriter(csvfile, fieldnames=test_acc_results[0].keys())
         writer.writeheader()
         writer.writerows(test_acc_results)
+
+    print("Results saved.")
+else:
+    print("Results not saved.")
