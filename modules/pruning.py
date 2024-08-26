@@ -1,12 +1,15 @@
+import copy
 from typing import Dict, List, Tuple
 
 import numpy as np
 import torch
+import torch.nn as nn
+from torchvision.models import ResNet
 
 from modules.models import CNN, DropoutScaling
 
 
-def prune_linear_layer(linear_layer, pruned_indices=None):
+def prune_linear_layer(linear_layer, pruned_indices: Dict[str, np.ndarray] = None):
     """
     Prune a linear layer by using provided pruned_indices to directly select neurons to drop.
 
@@ -52,7 +55,7 @@ def prune_linear_layer(linear_layer, pruned_indices=None):
     return new_layer
 
 
-def prune_conv_layer(conv_layer, pruned_indices=None):
+def prune_conv_layer(conv_layer, pruned_indices: Dict[str, np.ndarray] = None):
     """
     Prune a convolution layer by using provided pruned_indices to directly select channels to drop.
 
@@ -281,3 +284,482 @@ def prune_cnn_into_groups(
         )
 
     return pruned_models, indices_to_prune_list
+
+
+def has_batchnorm_layer(model):
+    for layer in model.modules():
+        if isinstance(layer, nn.BatchNorm2d) or isinstance(layer, nn.BatchNorm1d):
+            return True
+    return False
+
+
+def prune_resnet18(model, dropout_rate=0.5):
+    """
+    Prune a ResNet18 model by using the provided dropout rate.
+
+    Parameters:
+    - model: The ResNet18 model to prune.
+    - dropout_rate: The dropout rate to use for pruning.
+    - scaling: Whether to add a scaling layer after each pruned layer.
+
+    Returns:
+    - pruned_model: The pruned ResNet18 model.
+    - indices_to_prune: A dictionary containing the indices to prune for each pruned layer.
+    """
+    # Note: using static layer normlization
+
+    if not isinstance(model, ResNet):
+        raise ValueError("Only ResNet18 is supported for now.")
+
+    new_model = copy.deepcopy(model)
+
+    # if has_batchnorm_layer(new_model):
+    #     replace_bn_with_ln(new_model)
+    #     print("BatchNorm layers replaced with LayerNorm layers.")
+
+    pruned_indices_dict = {}
+
+    layer_key = "conv1"
+    layer = new_model.conv1
+    num_out_channels = layer.out_channels
+    num_out_channels_to_prune = int(num_out_channels * dropout_rate)
+    out_channel_indices_to_prune = np.random.choice(
+        num_out_channels, num_out_channels_to_prune, replace=False
+    )
+    pruned_indices_dict[layer_key] = {"output": out_channel_indices_to_prune}
+    new_layer = prune_conv_layer(layer, pruned_indices_dict[layer_key])
+    new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
+    setattr(new_model, layer_key, new_layer)
+
+    # Update layer norm's input shape
+    num_out_channels_left = num_out_channels - num_out_channels_to_prune
+    new_layer_norm = nn.LayerNorm(
+        [num_out_channels_left, 16, 16], elementwise_affine=False
+    )
+    setattr(new_model, "bn1", new_layer_norm)
+
+    # ----- layer1 -----
+    former_layer_key = layer_key
+    layer_key = "layer1.0.conv1"
+    layer = new_model.layer1[0].conv1
+    num_out_channels = layer.out_channels
+    num_out_channels_to_prune = int(num_out_channels * dropout_rate)
+    out_channel_indices_to_prune = np.random.choice(
+        num_out_channels, num_out_channels_to_prune, replace=False
+    )
+    pruned_indices_dict[layer_key] = {
+        "input": pruned_indices_dict[former_layer_key]["output"],
+        "output": out_channel_indices_to_prune,
+    }
+    new_layer = prune_conv_layer(layer, pruned_indices_dict[layer_key])
+    new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
+    setattr(new_model.layer1[0], "conv1", new_layer)
+
+    num_out_channels_left = num_out_channels - num_out_channels_to_prune
+    new_layer_norm = nn.LayerNorm(
+        [num_out_channels_left, 8, 8], elementwise_affine=False
+    )
+    setattr(new_model.layer1[0], "bn1", new_layer_norm)
+
+    former_layer_key = layer_key
+    layer_key = "layer1.0.conv2"
+    layer = new_model.layer1[0].conv2
+    num_out_channels = layer.out_channels
+    num_out_channels_to_prune = int(num_out_channels * dropout_rate)
+    out_channel_indices_to_prune = np.random.choice(
+        num_out_channels, num_out_channels_to_prune, replace=False
+    )
+    pruned_indices_dict[layer_key] = {
+        "input": pruned_indices_dict[former_layer_key]["output"],
+        "output": out_channel_indices_to_prune,
+    }
+    new_layer = prune_conv_layer(layer, pruned_indices_dict[layer_key])
+    new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
+    setattr(new_model.layer1[0], "conv2", new_layer)
+
+    num_out_channels_left = num_out_channels - num_out_channels_to_prune
+    new_layer_norm = nn.LayerNorm(
+        [num_out_channels_left, 8, 8], elementwise_affine=False
+    )
+    setattr(new_model.layer1[0], "bn2", new_layer_norm)
+
+    former_layer_key = layer_key
+    layer_key = "layer1.1.conv1"
+    layer = new_model.layer1[1].conv1
+    num_out_channels = layer.out_channels
+    num_out_channels_to_prune = int(num_out_channels * dropout_rate)
+    out_channel_indices_to_prune = np.random.choice(
+        num_out_channels, num_out_channels_to_prune, replace=False
+    )
+    pruned_indices_dict[layer_key] = {
+        "input": pruned_indices_dict[former_layer_key]["output"],
+        "output": out_channel_indices_to_prune,
+    }
+    new_layer = prune_conv_layer(layer, pruned_indices_dict[layer_key])
+    new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
+    setattr(new_model.layer1[1], "conv1", new_layer)
+
+    num_out_channels_left = num_out_channels - num_out_channels_to_prune
+    new_layer_norm = nn.LayerNorm(
+        [num_out_channels_left, 8, 8], elementwise_affine=False
+    )
+    setattr(new_model.layer1[1], "bn1", new_layer_norm)
+
+    former_layer_key = layer_key
+    layer_key = "layer1.1.conv2"
+    layer = new_model.layer1[1].conv2
+    num_out_channels = layer.out_channels
+    num_out_channels_to_prune = int(num_out_channels * dropout_rate)
+    out_channel_indices_to_prune = np.random.choice(
+        num_out_channels, num_out_channels_to_prune, replace=False
+    )
+    pruned_indices_dict[layer_key] = {
+        "input": pruned_indices_dict[former_layer_key]["output"],
+        "output": out_channel_indices_to_prune,
+    }
+    new_layer = prune_conv_layer(layer, pruned_indices_dict[layer_key])
+    new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
+    setattr(new_model.layer1[1], "conv2", new_layer)
+
+    num_out_channels_left = num_out_channels - num_out_channels_to_prune
+    new_layer_norm = nn.LayerNorm(
+        [num_out_channels_left, 8, 8], elementwise_affine=False
+    )
+    setattr(new_model.layer1[1], "bn2", new_layer_norm)
+
+    # ----- layer2 -----
+    former_layer_key = layer_key
+    layer_key = "layer2.0.conv1"
+    layer = new_model.layer2[0].conv1
+    num_out_channels = layer.out_channels
+    num_out_channels_to_prune = int(num_out_channels * dropout_rate)
+    out_channel_indices_to_prune = np.random.choice(
+        num_out_channels, num_out_channels_to_prune, replace=False
+    )
+    pruned_indices_dict[layer_key] = {
+        "input": pruned_indices_dict[former_layer_key]["output"],
+        "output": out_channel_indices_to_prune,
+    }
+    new_layer = prune_conv_layer(layer, pruned_indices_dict[layer_key])
+    new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
+    setattr(new_model.layer2[0], "conv1", new_layer)
+
+    num_out_channels_left = num_out_channels - num_out_channels_to_prune
+    new_layer_norm = nn.LayerNorm(
+        [num_out_channels_left, 4, 4], elementwise_affine=False
+    )
+    setattr(new_model.layer2[0], "bn1", new_layer_norm)
+
+    former_layer_key = layer_key
+    layer_key = "layer2.0.conv2"
+    layer = new_model.layer2[0].conv2
+    num_out_channels = layer.out_channels
+    num_out_channels_to_prune = int(num_out_channels * dropout_rate)
+    out_channel_indices_to_prune = np.random.choice(
+        num_out_channels, num_out_channels_to_prune, replace=False
+    )
+    pruned_indices_dict[layer_key] = {
+        "input": pruned_indices_dict[former_layer_key]["output"],
+        "output": out_channel_indices_to_prune,
+    }
+    new_layer = prune_conv_layer(layer, pruned_indices_dict[layer_key])
+    new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
+    setattr(new_model.layer2[0], "conv2", new_layer)
+
+    num_out_channels_left = num_out_channels - num_out_channels_to_prune
+    new_layer_norm = nn.LayerNorm(
+        [num_out_channels_left, 4, 4], elementwise_affine=False
+    )
+    setattr(new_model.layer2[0], "bn2", new_layer_norm)
+
+    # a downsample layer's
+    # input_indices_to_prune should be the same as the input_indices_to_prune of the first conv layer of the same block
+    # output_indices_to_prune should be the same as the output_indices_to_prune of the last conv layer of the same block
+    layer_key = "layer2.0.downsample.0"
+    layer = new_model.layer2[0].downsample[0]
+    pruned_indices_dict[layer_key] = {
+        "input": pruned_indices_dict["layer2.0.conv1"]["input"],
+        "output": pruned_indices_dict["layer2.0.conv2"]["output"],
+    }
+    new_layer = prune_conv_layer(layer, pruned_indices_dict[layer_key])
+    new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
+    setattr(new_model.layer2[0].downsample, "0", new_layer)
+
+    num_out_channels_left = new_layer[0].out_channels
+    new_layer_norm = nn.LayerNorm(
+        [num_out_channels_left, 4, 4], elementwise_affine=False
+    )
+    setattr(new_model.layer2[0].downsample, "1", new_layer_norm)
+
+    former_layer_key = layer_key
+    layer_key = "layer2.1.conv1"
+    layer = new_model.layer2[1].conv1
+    num_out_channels = layer.out_channels
+    num_out_channels_to_prune = int(num_out_channels * dropout_rate)
+    out_channel_indices_to_prune = np.random.choice(
+        num_out_channels, num_out_channels_to_prune, replace=False
+    )
+    pruned_indices_dict[layer_key] = {
+        "input": pruned_indices_dict[former_layer_key]["output"],
+        "output": out_channel_indices_to_prune,
+    }
+    new_layer = prune_conv_layer(layer, pruned_indices_dict[layer_key])
+    new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
+    setattr(new_model.layer2[1], "conv1", new_layer)
+
+    num_out_channels_left = num_out_channels - num_out_channels_to_prune
+    new_layer_norm = nn.LayerNorm(
+        [num_out_channels_left, 4, 4], elementwise_affine=False
+    )
+    setattr(new_model.layer2[1], "bn1", new_layer_norm)
+
+    former_layer_key = layer_key
+    layer_key = "layer2.1.conv2"
+    layer = new_model.layer2[1].conv2
+    num_out_channels = layer.out_channels
+    num_out_channels_to_prune = int(num_out_channels * dropout_rate)
+    out_channel_indices_to_prune = np.random.choice(
+        num_out_channels, num_out_channels_to_prune, replace=False
+    )
+    pruned_indices_dict[layer_key] = {
+        "input": pruned_indices_dict[former_layer_key]["output"],
+        "output": out_channel_indices_to_prune,
+    }
+    new_layer = prune_conv_layer(layer, pruned_indices_dict[layer_key])
+    new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
+    setattr(new_model.layer2[1], "conv2", new_layer)
+
+    num_out_channels_left = num_out_channels - num_out_channels_to_prune
+    new_layer_norm = nn.LayerNorm(
+        [num_out_channels_left, 4, 4], elementwise_affine=False
+    )
+    setattr(new_model.layer2[1], "bn2", new_layer_norm)
+
+    # ----- layer3 -----
+    former_layer_key = layer_key
+    layer_key = "layer3.0.conv1"
+    layer = new_model.layer3[0].conv1
+    num_out_channels = layer.out_channels
+    num_out_channels_to_prune = int(num_out_channels * dropout_rate)
+    out_channel_indices_to_prune = np.random.choice(
+        num_out_channels, num_out_channels_to_prune, replace=False
+    )
+    pruned_indices_dict[layer_key] = {
+        "input": pruned_indices_dict[former_layer_key]["output"],
+        "output": out_channel_indices_to_prune,
+    }
+    new_layer = prune_conv_layer(layer, pruned_indices_dict[layer_key])
+    new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
+    setattr(new_model.layer3[0], "conv1", new_layer)
+
+    num_out_channels_left = num_out_channels - num_out_channels_to_prune
+    new_layer_norm = nn.LayerNorm(
+        [num_out_channels_left, 2, 2], elementwise_affine=False
+    )
+    setattr(new_model.layer3[0], "bn1", new_layer_norm)
+
+    former_layer_key = layer_key
+    layer_key = "layer3.0.conv2"
+    layer = new_model.layer3[0].conv2
+    num_out_channels = layer.out_channels
+    num_out_channels_to_prune = int(num_out_channels * dropout_rate)
+    out_channel_indices_to_prune = np.random.choice(
+        num_out_channels, num_out_channels_to_prune, replace=False
+    )
+    pruned_indices_dict[layer_key] = {
+        "input": pruned_indices_dict[former_layer_key]["output"],
+        "output": out_channel_indices_to_prune,
+    }
+    new_layer = prune_conv_layer(layer, pruned_indices_dict[layer_key])
+    new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
+    setattr(new_model.layer3[0], "conv2", new_layer)
+
+    num_out_channels_left = num_out_channels - num_out_channels_to_prune
+    new_layer_norm = nn.LayerNorm(
+        [num_out_channels_left, 2, 2], elementwise_affine=False
+    )
+    setattr(new_model.layer3[0], "bn2", new_layer_norm)
+
+    # a downsample layer's
+    # input_indices_to_prune should be the same as the input_indices_to_prune of the first conv layer of the same block
+    # output_indices_to_prune should be the same as the output_indices_to_prune of the last conv layer of the same block
+    layer_key = "layer3.0.downsample.0"
+    layer = new_model.layer3[0].downsample[0]
+    pruned_indices_dict[layer_key] = {
+        "input": pruned_indices_dict["layer3.0.conv1"]["input"],
+        "output": pruned_indices_dict["layer3.0.conv2"]["output"],
+    }
+    new_layer = prune_conv_layer(layer, pruned_indices_dict[layer_key])
+    new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
+    setattr(new_model.layer3[0].downsample, "0", new_layer)
+
+    num_out_channels_left = new_layer[0].out_channels
+    new_layer_norm = nn.LayerNorm(
+        [num_out_channels_left, 2, 2], elementwise_affine=False
+    )
+    setattr(new_model.layer3[0].downsample, "1", new_layer_norm)
+
+    former_layer_key = layer_key
+    layer_key = "layer3.1.conv1"
+    layer = new_model.layer3[1].conv1
+    num_out_channels = layer.out_channels
+    num_out_channels_to_prune = int(num_out_channels * dropout_rate)
+    out_channel_indices_to_prune = np.random.choice(
+        num_out_channels, num_out_channels_to_prune, replace=False
+    )
+    pruned_indices_dict[layer_key] = {
+        "input": pruned_indices_dict[former_layer_key]["output"],
+        "output": out_channel_indices_to_prune,
+    }
+    new_layer = prune_conv_layer(layer, pruned_indices_dict[layer_key])
+    new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
+    setattr(new_model.layer3[1], "conv1", new_layer)
+
+    num_out_channels_left = num_out_channels - num_out_channels_to_prune
+    new_layer_norm = nn.LayerNorm(
+        [num_out_channels_left, 2, 2], elementwise_affine=False
+    )
+    setattr(new_model.layer3[1], "bn1", new_layer_norm)
+
+    former_layer_key = layer_key
+    layer_key = "layer3.1.conv2"
+    layer = new_model.layer3[1].conv2
+    num_out_channels = layer.out_channels
+    num_out_channels_to_prune = int(num_out_channels * dropout_rate)
+    out_channel_indices_to_prune = np.random.choice(
+        num_out_channels, num_out_channels_to_prune, replace=False
+    )
+    pruned_indices_dict[layer_key] = {
+        "input": pruned_indices_dict[former_layer_key]["output"],
+        "output": out_channel_indices_to_prune,
+    }
+    new_layer = prune_conv_layer(layer, pruned_indices_dict[layer_key])
+    new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
+    setattr(new_model.layer3[1], "conv2", new_layer)
+
+    num_out_channels_left = num_out_channels - num_out_channels_to_prune
+    new_layer_norm = nn.LayerNorm(
+        [num_out_channels_left, 2, 2], elementwise_affine=False
+    )
+    setattr(new_model.layer3[1], "bn2", new_layer_norm)
+
+    # ----- layer4 -----
+    former_layer_key = layer_key
+    layer_key = "layer4.0.conv1"
+    layer = new_model.layer4[0].conv1
+    num_out_channels = layer.out_channels
+    num_out_channels_to_prune = int(num_out_channels * dropout_rate)
+    out_channel_indices_to_prune = np.random.choice(
+        num_out_channels, num_out_channels_to_prune, replace=False
+    )
+    pruned_indices_dict[layer_key] = {
+        "input": pruned_indices_dict[former_layer_key]["output"],
+        "output": out_channel_indices_to_prune,
+    }
+    new_layer = prune_conv_layer(layer, pruned_indices_dict[layer_key])
+    new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
+    setattr(new_model.layer4[0], "conv1", new_layer)
+
+    num_out_channels_left = num_out_channels - num_out_channels_to_prune
+    new_layer_norm = nn.LayerNorm(
+        [num_out_channels_left, 1, 1], elementwise_affine=False
+    )
+    setattr(new_model.layer4[0], "bn1", new_layer_norm)
+
+    former_layer_key = layer_key
+    layer_key = "layer4.0.conv2"
+    layer = new_model.layer4[0].conv2
+    num_out_channels = layer.out_channels
+    num_out_channels_to_prune = int(num_out_channels * dropout_rate)
+    out_channel_indices_to_prune = np.random.choice(
+        num_out_channels, num_out_channels_to_prune, replace=False
+    )
+    pruned_indices_dict[layer_key] = {
+        "input": pruned_indices_dict[former_layer_key]["output"],
+        "output": out_channel_indices_to_prune,
+    }
+    new_layer = prune_conv_layer(layer, pruned_indices_dict[layer_key])
+    new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
+    setattr(new_model.layer4[0], "conv2", new_layer)
+
+    num_out_channels_left = num_out_channels - num_out_channels_to_prune
+    new_layer_norm = nn.LayerNorm(
+        [num_out_channels_left, 1, 1], elementwise_affine=False
+    )
+    setattr(new_model.layer4[0], "bn2", new_layer_norm)
+
+    # a downsample layer's
+    # input_indices_to_prune should be the same as the input_indices_to_prune of the first conv layer of the same block
+    # output_indices_to_prune should be the same as the output_indices_to_prune of the last conv layer of the same block
+    layer_key = "layer4.0.downsample.0"
+    layer = new_model.layer4[0].downsample[0]
+    pruned_indices_dict[layer_key] = {
+        "input": pruned_indices_dict["layer4.0.conv1"]["input"],
+        "output": pruned_indices_dict["layer4.0.conv2"]["output"],
+    }
+    new_layer = prune_conv_layer(layer, pruned_indices_dict[layer_key])
+    new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
+    setattr(new_model.layer4[0].downsample, "0", new_layer)
+
+    num_out_channels_left = new_layer[0].out_channels
+    new_layer_norm = nn.LayerNorm(
+        [num_out_channels_left, 1, 1], elementwise_affine=False
+    )
+    setattr(new_model.layer4[0].downsample, "1", new_layer_norm)
+
+    former_layer_key = layer_key
+    layer_key = "layer4.1.conv1"
+    layer = new_model.layer4[1].conv1
+    num_out_channels = layer.out_channels
+    num_out_channels_to_prune = int(num_out_channels * dropout_rate)
+    out_channel_indices_to_prune = np.random.choice(
+        num_out_channels, num_out_channels_to_prune, replace=False
+    )
+    pruned_indices_dict[layer_key] = {
+        "input": pruned_indices_dict[former_layer_key]["output"],
+        "output": out_channel_indices_to_prune,
+    }
+    new_layer = prune_conv_layer(layer, pruned_indices_dict[layer_key])
+    new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
+    setattr(new_model.layer4[1], "conv1", new_layer)
+
+    num_out_channels_left = num_out_channels - num_out_channels_to_prune
+    new_layer_norm = nn.LayerNorm(
+        [num_out_channels_left, 1, 1], elementwise_affine=False
+    )
+    setattr(new_model.layer4[1], "bn1", new_layer_norm)
+
+    former_layer_key = layer_key
+    layer_key = "layer4.1.conv2"
+    layer = new_model.layer4[1].conv2
+    num_out_channels = layer.out_channels
+    num_out_channels_to_prune = int(num_out_channels * dropout_rate)
+    out_channel_indices_to_prune = np.random.choice(
+        num_out_channels, num_out_channels_to_prune, replace=False
+    )
+    pruned_indices_dict[layer_key] = {
+        "input": pruned_indices_dict[former_layer_key]["output"],
+        "output": out_channel_indices_to_prune,
+    }
+    new_layer = prune_conv_layer(layer, pruned_indices_dict[layer_key])
+    new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
+    setattr(new_model.layer4[1], "conv2", new_layer)
+
+    num_out_channels_left = num_out_channels - num_out_channels_to_prune
+    new_layer_norm = nn.LayerNorm(
+        [num_out_channels_left, 1, 1], elementwise_affine=False
+    )
+    setattr(new_model.layer4[1], "bn2", new_layer_norm)
+
+    # ----- fc -----
+    layer_key = "fc"
+    layer = new_model.fc
+    in_features_to_prune = np.sort(
+        out_channel_indices_to_prune
+    )  # the last conv layer's output indices
+    # Since the last conv output H, W is 1, 1, we can just use the channel indices
+    pruned_indices_dict[layer_key] = {"input": in_features_to_prune}
+    new_layer = prune_linear_layer(layer, pruned_indices_dict[layer_key])
+    setattr(new_model, layer_key, new_layer)
+
+    return new_model, pruned_indices_dict

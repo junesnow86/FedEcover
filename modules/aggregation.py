@@ -3,8 +3,29 @@ from typing import Dict, List
 import numpy as np
 import torch
 import torch.nn as nn
+from torchvision.models import ResNet
 
 from modules.models import CNN
+from modules.utils import measure_time
+
+
+def vanilla_federated_averaging(models, sample_numbers):
+    model_weights = [model.state_dict() for model in models]
+    assert len(model_weights) == len(sample_numbers), "Length mismatch"
+    avg_weights = {}
+    keys = model_weights[0].keys()
+
+    for key in keys:
+        layer_weights = [
+            model_weight[key].clone().detach() * num
+            for model_weight, num in zip(model_weights, sample_numbers)
+        ]
+        layer_weights_avg = sum(layer_weights) / sum(sample_numbers)
+        avg_weights[key] = layer_weights_avg
+
+    print(f"Keys aggregated: {set(keys)}")
+
+    return avg_weights
 
 
 def aggregate_linear_layers(
@@ -180,20 +201,164 @@ def aggregate_cnn(
     )
 
 
-def vanilla_federated_averaging(models, sample_numbers):
-    model_weights = [model.state_dict() for model in models]
-    assert len(model_weights) == len(sample_numbers), "Length mismatch"
-    avg_weights = {}
-    keys = model_weights[0].keys()
+@measure_time(repeats=1)
+def aggregate_resnet18(
+    global_model: ResNet,
+    local_models: List[ResNet],
+    client_weights: List[int],
+    pruned_indices_dicts: List[Dict[str, Dict[str, np.ndarray]]],
+):
+    """
+    Aggregate the weights of the conv and linear layers of the ResNet18 model.
+    """
+    aggregate_conv_layers(
+        global_model.conv1,
+        [model.conv1[0] for model in local_models],
+        [pruned_indices_dict["conv1"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
 
-    for key in keys:
-        layer_weights = [
-            model_weight[key].clone().detach() * num
-            for model_weight, num in zip(model_weights, sample_numbers)
-        ]
-        layer_weights_avg = sum(layer_weights) / sum(sample_numbers)
-        avg_weights[key] = layer_weights_avg
+    # ----- layer1 -----
+    aggregate_conv_layers(
+        global_model.layer1[0].conv1,
+        [model.layer1[0].conv1[0] for model in local_models],
+        [pruned_indices_dict["layer1.0.conv1"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
 
-    print(f"Keys aggregated: {set(keys)}")
+    aggregate_conv_layers(
+        global_model.layer1[0].conv2,
+        [model.layer1[0].conv2[0] for model in local_models],
+        [pruned_indices_dict["layer1.0.conv2"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
 
-    return avg_weights
+    aggregate_conv_layers(
+        global_model.layer1[1].conv1,
+        [model.layer1[1].conv1[0] for model in local_models],
+        [pruned_indices_dict["layer1.1.conv1"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
+
+    aggregate_conv_layers(
+        global_model.layer1[1].conv2,
+        [model.layer1[1].conv2[0] for model in local_models],
+        [pruned_indices_dict["layer1.1.conv2"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
+
+    # ----- layer2 -----
+    aggregate_conv_layers(
+        global_model.layer2[0].conv1,
+        [model.layer2[0].conv1[0] for model in local_models],
+        [pruned_indices_dict["layer2.0.conv1"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
+
+    aggregate_conv_layers(
+        global_model.layer2[0].conv2,
+        [model.layer2[0].conv2[0] for model in local_models],
+        [pruned_indices_dict["layer2.0.conv2"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
+
+    aggregate_conv_layers(
+        global_model.layer2[0].downsample[0],
+        [model.layer2[0].downsample[0][0] for model in local_models],
+        [pruned_indices_dict["layer2.0.downsample.0"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
+
+    aggregate_conv_layers(
+        global_model.layer2[1].conv1,
+        [model.layer2[1].conv1[0] for model in local_models],
+        [pruned_indices_dict["layer2.1.conv1"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
+
+    aggregate_conv_layers(
+        global_model.layer2[1].conv2,
+        [model.layer2[1].conv2[0] for model in local_models],
+        [pruned_indices_dict["layer2.1.conv2"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
+
+    # ----- layer3 -----
+    aggregate_conv_layers(
+        global_model.layer3[0].conv1,
+        [model.layer3[0].conv1[0] for model in local_models],
+        [pruned_indices_dict["layer3.0.conv1"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
+
+    aggregate_conv_layers(
+        global_model.layer3[0].conv2,
+        [model.layer3[0].conv2[0] for model in local_models],
+        [pruned_indices_dict["layer3.0.conv2"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
+
+    aggregate_conv_layers(
+        global_model.layer3[0].downsample[0],
+        [model.layer3[0].downsample[0][0] for model in local_models],
+        [pruned_indices_dict["layer3.0.downsample.0"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
+
+    aggregate_conv_layers(
+        global_model.layer3[1].conv1,
+        [model.layer3[1].conv1[0] for model in local_models],
+        [pruned_indices_dict["layer3.1.conv1"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
+
+    aggregate_conv_layers(
+        global_model.layer3[1].conv2,
+        [model.layer3[1].conv2[0] for model in local_models],
+        [pruned_indices_dict["layer3.1.conv2"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
+
+    # ----- layer4 -----
+    aggregate_conv_layers(
+        global_model.layer4[0].conv1,
+        [model.layer4[0].conv1[0] for model in local_models],
+        [pruned_indices_dict["layer4.0.conv1"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
+
+    aggregate_conv_layers(
+        global_model.layer4[0].conv2,
+        [model.layer4[0].conv2[0] for model in local_models],
+        [pruned_indices_dict["layer4.0.conv2"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
+
+    aggregate_conv_layers(
+        global_model.layer4[0].downsample[0],
+        [model.layer4[0].downsample[0][0] for model in local_models],
+        [pruned_indices_dict["layer4.0.downsample.0"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
+
+    aggregate_conv_layers(
+        global_model.layer4[1].conv1,
+        [model.layer4[1].conv1[0] for model in local_models],
+        [pruned_indices_dict["layer4.1.conv1"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
+
+    aggregate_conv_layers(
+        global_model.layer4[1].conv2,
+        [model.layer4[1].conv2[0] for model in local_models],
+        [pruned_indices_dict["layer4.1.conv2"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
+
+    # ----- Linear layer -----
+    aggregate_linear_layers(
+        global_model.fc,
+        [model.fc for model in local_models],
+        [pruned_indices_dict["fc"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
