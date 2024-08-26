@@ -210,13 +210,13 @@ def replace_bn_with_ln(model: nn.Module, affine=False):
     model.layer4[1].bn2 = nn.LayerNorm([512, 1, 1], elementwise_affine=affine)
 
 
-def set_bn_static(model: nn.Module):
+def replace_bn_with_sbn(model: nn.Module):
     """
-    Set all BatchNorm layers in the model to `affine=False` to forbid learnable parameters for bn.
+    Replace all BatchNorm layers in the model with static BatchNorm layers.
     """
     for m in model.modules():
         if isinstance(m, nn.BatchNorm2d):
-            m.affine = False
+            m = nn.BatchNorm2d(m.num_features, affine=False)
 
 
 def measure_time(repeats: int = 1):

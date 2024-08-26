@@ -300,11 +300,10 @@ def prune_resnet18(model, dropout_rate=0.5):
     Parameters:
     - model: The ResNet18 model to prune.
     - dropout_rate: The dropout rate to use for pruning.
-    - scaling: Whether to add a scaling layer after each pruned layer.
 
     Returns:
     - pruned_model: The pruned ResNet18 model.
-    - indices_to_prune: A dictionary containing the indices to prune for each pruned layer.
+    - pruned_indices_dict: A dictionary containing the indices to prune for each pruned layer.
     """
     # Note: using static layer normlization
 

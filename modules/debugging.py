@@ -1,0 +1,25 @@
+def create_empty_pruned_indices_dict():
+    pruned_indices_dict = {
+        "conv1": {},
+        "layer1.0.conv1": {},
+        "layer1.0.conv2": {},
+        "layer1.1.conv1": {},
+        "layer1.1.conv2": {},
+        "layer2.0.conv1": {},
+        "layer2.0.conv2": {},
+        "layer2.0.downsample.0": {},
+        "layer2.1.conv1": {},
+        "layer2.1.conv2": {},
+        "layer3.0.conv1": {},
+        "layer3.0.conv2": {},
+        "layer3.0.downsample.0": {},
+        "layer3.1.conv1": {},
+        "layer3.1.conv2": {},
+        "layer4.0.conv1": {},
+        "layer4.0.conv2": {},
+        "layer4.0.downsample.0": {},
+        "layer4.1.conv1": {},
+        "layer4.1.conv2": {},
+        "fc": {},
+    }
+    return pruned_indices_dict
