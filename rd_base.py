@@ -10,13 +10,15 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, Subset
 from torchvision import datasets, transforms
+from torchvision.models import resnet18, ResNet
 
-from modules.aggregation import aggregate_cnn
+from modules.aggregation import aggregate_cnn, aggregate_resnet18
 from modules.models import CNN
-from modules.pruning import prune_cnn
+from modules.pruning import prune_cnn, prune_resnet18
 from modules.utils import (
     test,
     train,
+    replace_bn_with_ln,
 )
 
 parser = argparse.ArgumentParser()
@@ -26,9 +28,20 @@ parser.add_argument(
     default=None,
     help="Directory to save the results",
 )
+parser.add_argument(
+    "--model",
+    type=str,
+    choices=["cnn", "resnet"],
+    default="cnn",
+    help="Model to use for training",
+)
 args = parser.parse_args()
 save_dir = args.save_dir
+model_type = args.model
+print(f"Model type: {model_type}")
 print(f"Save directory: {save_dir}")
+if save_dir is None:
+    print("Results will not be saved.")
 
 ROUNDS = 200
 EPOCHS = 1
@@ -80,7 +93,14 @@ dataloaders = [
     for subset_indices in subsets_indices
 ]
 
-global_cnn = CNN()
+# global_model = CNN()
+global_model = resnet18(weights=None)
+replace_bn_with_ln(global_model)
+
+if model_type == "cnn":
+    assert isinstance(global_model, CNN), f"Model type should be CNN, but got {type(global_model)}"
+elif model_type == "resnet":
+    assert isinstance(global_model, ResNet), f"Model type should be ResNet, but got {type(global_model)}"
 
 num_models = 10
 
@@ -110,28 +130,37 @@ for round in range(ROUNDS):
     round_results_class = {"Round": round + 1}
 
     all_client_models = []
-    indices_to_prune_conv1_list = []
-    indices_to_prune_conv2_list = []
-    indices_to_prune_conv3_list = []
-    indices_to_prune_fc_list = []
 
-    for i in range(num_models):
-        (
-            client_model,
-            indices_to_prune_conv1,
-            indices_to_prune_conv2,
-            indices_to_prune_conv3,
-            indices_to_prune_fc,
-        ) = prune_cnn(
-            global_cnn,
-            dropout_rates[i],
-            scaling=True,
-        )
-        all_client_models.append(client_model)
-        indices_to_prune_conv1_list.append(indices_to_prune_conv1)
-        indices_to_prune_conv2_list.append(indices_to_prune_conv2)
-        indices_to_prune_conv3_list.append(indices_to_prune_conv3)
-        indices_to_prune_fc_list.append(indices_to_prune_fc)
+    if model_type == "cnn":
+        indices_to_prune_conv1_list = []
+        indices_to_prune_conv2_list = []
+        indices_to_prune_conv3_list = []
+        indices_to_prune_fc_list = []
+
+        for i in range(num_models):
+            (
+                client_model,
+                indices_to_prune_conv1,
+                indices_to_prune_conv2,
+                indices_to_prune_conv3,
+                indices_to_prune_fc,
+            ) = prune_cnn(
+                global_model,
+                dropout_rates[i],
+                scaling=True,
+            )
+            all_client_models.append(client_model)
+            indices_to_prune_conv1_list.append(indices_to_prune_conv1)
+            indices_to_prune_conv2_list.append(indices_to_prune_conv2)
+            indices_to_prune_conv3_list.append(indices_to_prune_conv3)
+            indices_to_prune_fc_list.append(indices_to_prune_fc)
+    elif model_type == "resnet":
+        pruned_indices_dicts = []
+
+        for i in range(num_models):
+            client_model, pruned_indices_dict = prune_resnet18(global_model, dropout_rates[i])
+            all_client_models.append(client_model)
+            pruned_indices_dicts.append(pruned_indices_dict)
 
     # Local training
     for i, dataloader in enumerate(dataloaders):
@@ -156,18 +185,26 @@ for round in range(ROUNDS):
         round_results_class[f"Subset {i + 1}"] = local_class_acc
 
     # Aggregation
-    aggregate_cnn(
-        global_cnn,
-        all_client_models,
-        subset_sizes,
-        indices_to_prune_conv1=indices_to_prune_conv1_list,
-        indices_to_prune_conv2=indices_to_prune_conv2_list,
-        indices_to_prune_conv3=indices_to_prune_conv3_list,
-        indices_to_prune_fc=indices_to_prune_fc_list,
-    )
+    if model_type == "cnn":
+        aggregate_cnn(
+            global_model,
+            all_client_models,
+            subset_sizes,
+            indices_to_prune_conv1=indices_to_prune_conv1_list,
+            indices_to_prune_conv2=indices_to_prune_conv2_list,
+            indices_to_prune_conv3=indices_to_prune_conv3_list,
+            indices_to_prune_fc=indices_to_prune_fc_list,
+        )
+    elif model_type == "resnet":
+        aggregate_resnet18(
+            global_model,
+            all_client_models,
+            subset_sizes,
+            pruned_indices_dicts,
+        )
 
     global_test_loss, global_test_acc, global_class_acc = test(
-        global_cnn, criterion, test_loader, device=device, num_classes=10
+        global_model, criterion, test_loader, device=device, num_classes=10
     )
     print(
         f"Aggregated Test Loss: {global_test_loss:.4f}\tAggregated Test Acc: {global_test_acc:.4f}\tAggregated Class Acc: {global_class_acc}"
