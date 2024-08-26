@@ -1,5 +1,6 @@
 import argparse
 import csv
+import os
 import random
 from time import time
 
@@ -19,13 +20,19 @@ from modules.utils import (
 )
 
 # Parse command line arguments
-parser = argparse.ArgumentParser(description="Random Dropout Scale Small Models")
+parser = argparse.ArgumentParser()
 parser.add_argument(
     "--scale-mode",
     type=str,
     choices=["1x", "2x", "square"],
-    default="square",
+    default="1x",
     help="Scaling mode for the number of models",
+)
+parser.add_argument(
+    "--save-dir",
+    type=str,
+    default=None,
+    help="Directory to save the results",
 )
 args = parser.parse_args()
 scale_mode = args.scale_mode
@@ -34,12 +41,15 @@ if scale_mode == "1x":
     scale_factor = 1
 elif scale_mode == "2x":
     scale_factor = 2
+save_dir = args.save_dir
+print(f"Save directory: {save_dir}")
 
 ROUNDS = 200
 EPOCHS = 1
 LR = 0.001
 BATCH_SIZE = 128
 NUM_PARTICIPANTS = 10
+LR_DECAY = True
 
 # Set random seed for reproducibility
 seed = 18
@@ -119,6 +129,8 @@ num_models = 10
 
 # p = 0.8, 0.5, 0.2
 dropout_rates = [0.2, 0.2, 0.5, 0.5, 0.5, 0.8, 0.8, 0.8, 0.8, 0.8]
+learning_rates = [LR] * num_models
+decay_rounds = [20, 50, 100]
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 criterion = nn.CrossEntropyLoss()
@@ -186,12 +198,18 @@ for round in range(ROUNDS):
 
     # Local training
     for i, dataloader in enumerate(dataloaders):
+        if LR_DECAY and dropout_rates[i] == 0.8 and round in decay_rounds:
+            learning_rates[i] /= 10
+            print(f"Subset {i + 1} learning rate decayed to {learning_rates[i]}")
+        lr = learning_rates[i]
+
         avg_local_train_loss = 0.0
         avg_local_test_loss = 0.0
         avg_local_test_acc = 0.0
         avg_local_class_acc = {}
+
         for j, local_model in enumerate(all_client_model_groups[i]):
-            optimizer = optim.Adam(local_model.parameters(), lr=LR)
+            optimizer = optim.Adam(local_model.parameters(), lr=lr)
             local_train_loss = train(
                 local_model,
                 optimizer,
@@ -214,7 +232,7 @@ for round in range(ROUNDS):
         for cls in avg_local_class_acc:
             avg_local_class_acc[cls] /= len(all_client_model_groups[i])
         print(
-            f"Subset {i + 1}\tTrain Loss: {local_train_loss:.4f}\tTest Loss: {local_test_loss:.4f}\tTest Acc: {local_test_acc:.4f}\tClass Acc: {local_class_acc}"
+            f"Subset {i + 1}\tTrain Loss: {avg_local_train_loss:.4f}\tTest Loss: {avg_local_test_loss:.4f}\tTest Acc: {avg_local_test_acc:.4f}\tClass Acc: {avg_local_class_acc}"
         )
         round_train_loss_results[f"Subset {i + 1}"] = avg_local_train_loss
         round_test_loss_results[f"Subset {i + 1}"] = avg_local_test_loss
@@ -245,7 +263,7 @@ for round in range(ROUNDS):
     train_loss_results.append(round_train_loss_results)
     test_loss_results.append(round_test_loss_results)
     test_acc_results.append(round_test_acc_results)
-    round_results_class["Aggregated"] = global_class_acc
+    results_class.append(round_results_class)
 
     round_end_time = time()
     round_use_time = round_end_time - round_start_time
@@ -256,6 +274,7 @@ for round in range(ROUNDS):
 
 end_time = time()
 print(f"Total use time: {(end_time - start_time) / 3600:.2f} hours")
+
 
 # Save results to files
 def format_results(results):
@@ -273,17 +292,22 @@ train_loss_results = format_results(train_loss_results)
 test_loss_results = format_results(test_loss_results)
 test_acc_results = format_results(test_acc_results)
 
-with open(f"results/rd_{scale_mode}_unbalanced_train_loss.csv", "w") as csvfile:
-    writer = csv.DictWriter(csvfile, fieldnames=train_loss_results[0].keys())
-    writer.writeheader()
-    writer.writerows(train_loss_results)
+if save_dir is not None:
+    with open(os.path.join(save_dir, f"rd_{scale_mode}_unbalanced_train_loss.csv"), "w") as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=train_loss_results[0].keys())
+        writer.writeheader()
+        writer.writerows(train_loss_results)
 
-with open(f"results/rd_{scale_mode}_unbalanced_test_loss.csv", "w") as csvfile:
-    writer = csv.DictWriter(csvfile, fieldnames=test_loss_results[0].keys())
-    writer.writeheader()
-    writer.writerows(test_loss_results)
+    with open(os.path.join(save_dir, f"rd_{scale_mode}_unbalanced_test_loss.csv"), "w") as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=test_loss_results[0].keys())
+        writer.writeheader()
+        writer.writerows(test_loss_results)
 
-with open(f"results/rd_{scale_mode}_unbalanced_test_acc.csv", "w") as csvfile:
-    writer = csv.DictWriter(csvfile, fieldnames=test_acc_results[0].keys())
-    writer.writeheader()
-    writer.writerows(test_acc_results)
+    with open(os.path.join(save_dir, f"rd_{scale_mode}_unbalanced_test_acc.csv"), "w") as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=test_acc_results[0].keys())
+        writer.writeheader()
+        writer.writerows(test_acc_results)
+
+    print("Results saved.")
+else:
+    print("Results not saved.")
