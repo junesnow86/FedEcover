@@ -1,0 +1,240 @@
+Round 1, Subset 1, Test Acc: 0.3735
+Round 1, Subset 2, Test Acc: 0.3445
+Round 1, Subset 3, Test Acc: 0.3351
+Round 1, Subset 4, Test Acc: 0.3486
+Round 1, Subset 5, Test Acc: 0.3590
+Round 1, Subset 6, Test Acc: 0.3321
+Round 1, Subset 7, Test Acc: 0.3346
+Round 1, Subset 8, Test Acc: 0.3367
+Round 1, Subset 9, Test Acc: 0.3225
+Round 1, Subset 10, Test Acc: 0.3336
+Round 1, Aggregated Test Acc: 0.3772
+================================================================================
+Round 2, Subset 1, Test Acc: 0.4396
+Round 2, Subset 2, Test Acc: 0.4425
+Round 2, Subset 3, Test Acc: 0.4025
+Round 2, Subset 4, Test Acc: 0.4009
+Round 2, Subset 5, Test Acc: 0.4142
+Round 2, Subset 6, Test Acc: 0.4125
+Round 2, Subset 7, Test Acc: 0.3999
+Round 2, Subset 8, Test Acc: 0.3843
+Round 2, Subset 9, Test Acc: 0.3998
+Round 2, Subset 10, Test Acc: 0.4046
+Round 2, Aggregated Test Acc: 0.4525
+================================================================================
+Round 3, Subset 1, Test Acc: 0.4632
+Round 3, Subset 2, Test Acc: 0.4654
+Round 3, Subset 3, Test Acc: 0.4292
+Round 3, Subset 4, Test Acc: 0.4257
+Round 3, Subset 5, Test Acc: 0.4241
+Round 3, Subset 6, Test Acc: 0.4269
+Round 3, Subset 7, Test Acc: 0.4296
+Round 3, Subset 8, Test Acc: 0.4163
+Round 3, Subset 9, Test Acc: 0.4337
+Round 3, Subset 10, Test Acc: 0.4393
+Round 3, Aggregated Test Acc: 0.4882
+================================================================================
+Round 4, Subset 1, Test Acc: 0.4811
+Round 4, Subset 2, Test Acc: 0.4935
+Round 4, Subset 3, Test Acc: 0.4513
+Round 4, Subset 4, Test Acc: 0.4330
+Round 4, Subset 5, Test Acc: 0.4337
+Round 4, Subset 6, Test Acc: 0.4581
+Round 4, Subset 7, Test Acc: 0.4469
+Round 4, Subset 8, Test Acc: 0.4577
+Round 4, Subset 9, Test Acc: 0.4716
+Round 4, Subset 10, Test Acc: 0.4445
+Round 4, Aggregated Test Acc: 0.5254
+================================================================================
+Round 5, Subset 1, Test Acc: 0.5244
+Round 5, Subset 2, Test Acc: 0.5164
+Round 5, Subset 3, Test Acc: 0.4757
+Round 5, Subset 4, Test Acc: 0.4719
+Round 5, Subset 5, Test Acc: 0.4636
+Round 5, Subset 6, Test Acc: 0.4518
+Round 5, Subset 7, Test Acc: 0.4328
+Round 5, Subset 8, Test Acc: 0.4585
+Round 5, Subset 9, Test Acc: 0.4783
+Round 5, Subset 10, Test Acc: 0.4615
+Round 5, Aggregated Test Acc: 0.5356
+================================================================================
+Round 6, Subset 1, Test Acc: 0.5410
+Round 6, Subset 2, Test Acc: 0.5441
+Round 6, Subset 3, Test Acc: 0.4807
+Round 6, Subset 4, Test Acc: 0.4834
+Round 6, Subset 5, Test Acc: 0.4864
+Round 6, Subset 6, Test Acc: 0.4874
+Round 6, Subset 7, Test Acc: 0.4911
+Round 6, Subset 8, Test Acc: 0.4880
+Round 6, Subset 9, Test Acc: 0.4784
+Round 6, Subset 10, Test Acc: 0.4767
+Round 6, Aggregated Test Acc: 0.5661
+================================================================================
+Round 7, Subset 1, Test Acc: 0.5633
+Round 7, Subset 2, Test Acc: 0.5264
+Round 7, Subset 3, Test Acc: 0.4973
+Round 7, Subset 4, Test Acc: 0.4796
+Round 7, Subset 5, Test Acc: 0.4900
+Round 7, Subset 6, Test Acc: 0.4987
+Round 7, Subset 7, Test Acc: 0.4934
+Round 7, Subset 8, Test Acc: 0.5047
+Round 7, Subset 9, Test Acc: 0.5065
+Round 7, Subset 10, Test Acc: 0.5003
+Round 7, Aggregated Test Acc: 0.5819
+================================================================================
+Round 8, Subset 1, Test Acc: 0.5831
+Round 8, Subset 2, Test Acc: 0.5625
+Round 8, Subset 3, Test Acc: 0.4913
+Round 8, Subset 4, Test Acc: 0.5180
+Round 8, Subset 5, Test Acc: 0.4958
+Round 8, Subset 6, Test Acc: 0.5048
+Round 8, Subset 7, Test Acc: 0.5023
+Round 8, Subset 8, Test Acc: 0.4933
+Round 8, Subset 9, Test Acc: 0.4884
+Round 8, Subset 10, Test Acc: 0.5157
+Round 8, Aggregated Test Acc: 0.5976
+================================================================================
+Round 9, Subset 1, Test Acc: 0.5832
+Round 9, Subset 2, Test Acc: 0.5865
+Round 9, Subset 3, Test Acc: 0.5200
+Round 9, Subset 4, Test Acc: 0.4949
+Round 9, Subset 5, Test Acc: 0.5074
+Round 9, Subset 6, Test Acc: 0.5124
+Round 9, Subset 7, Test Acc: 0.5097
+Round 9, Subset 8, Test Acc: 0.4986
+Round 9, Subset 9, Test Acc: 0.5086
+Round 9, Subset 10, Test Acc: 0.4905
+Round 9, Aggregated Test Acc: 0.6111
+================================================================================
+Round 10, Subset 1, Test Acc: 0.5732
+Round 10, Subset 2, Test Acc: 0.6083
+Round 10, Subset 3, Test Acc: 0.5084
+Round 10, Subset 4, Test Acc: 0.5186
+Round 10, Subset 5, Test Acc: 0.5005
+Round 10, Subset 6, Test Acc: 0.4900
+Round 10, Subset 7, Test Acc: 0.5049
+Round 10, Subset 8, Test Acc: 0.5044
+Round 10, Subset 9, Test Acc: 0.5072
+Round 10, Subset 10, Test Acc: 0.5211
+Round 10, Aggregated Test Acc: 0.6124
+================================================================================
+Round 11, Subset 1, Test Acc: 0.6122
+Round 11, Subset 2, Test Acc: 0.6096
+Round 11, Subset 3, Test Acc: 0.5082
+Round 11, Subset 4, Test Acc: 0.5108
+Round 11, Subset 5, Test Acc: 0.5113
+Round 11, Subset 6, Test Acc: 0.5225
+Round 11, Subset 7, Test Acc: 0.5215
+Round 11, Subset 8, Test Acc: 0.5266
+Round 11, Subset 9, Test Acc: 0.5195
+Round 11, Subset 10, Test Acc: 0.5138
+Round 11, Aggregated Test Acc: 0.6306
+================================================================================
+Round 12, Subset 1, Test Acc: 0.6076
+Round 12, Subset 2, Test Acc: 0.6194
+Round 12, Subset 3, Test Acc: 0.5194
+Round 12, Subset 4, Test Acc: 0.5131
+Round 12, Subset 5, Test Acc: 0.5239
+Round 12, Subset 6, Test Acc: 0.5327
+Round 12, Subset 7, Test Acc: 0.5171
+Round 12, Subset 8, Test Acc: 0.5287
+Round 12, Subset 9, Test Acc: 0.5255
+Round 12, Subset 10, Test Acc: 0.5285
+Round 12, Aggregated Test Acc: 0.6305
+================================================================================
+Round 13, Subset 1, Test Acc: 0.6205
+Round 13, Subset 2, Test Acc: 0.6252
+Round 13, Subset 3, Test Acc: 0.5239
+Round 13, Subset 4, Test Acc: 0.5283
+Round 13, Subset 5, Test Acc: 0.5320
+Round 13, Subset 6, Test Acc: 0.5318
+Round 13, Subset 7, Test Acc: 0.5104
+Round 13, Subset 8, Test Acc: 0.5267
+Round 13, Subset 9, Test Acc: 0.5083
+Round 13, Subset 10, Test Acc: 0.5280
+Round 13, Aggregated Test Acc: 0.6410
+================================================================================
+Round 14, Subset 1, Test Acc: 0.6235
+Round 14, Subset 2, Test Acc: 0.6252
+Round 14, Subset 3, Test Acc: 0.5389
+Round 14, Subset 4, Test Acc: 0.5350
+Round 14, Subset 5, Test Acc: 0.5393
+Round 14, Subset 6, Test Acc: 0.5264
+Round 14, Subset 7, Test Acc: 0.5383
+Round 14, Subset 8, Test Acc: 0.5287
+Round 14, Subset 9, Test Acc: 0.5257
+Round 14, Subset 10, Test Acc: 0.5322
+Round 14, Aggregated Test Acc: 0.6487
+================================================================================
+Round 15, Subset 1, Test Acc: 0.6372
+Round 15, Subset 2, Test Acc: 0.6246
+Round 15, Subset 3, Test Acc: 0.5347
+Round 15, Subset 4, Test Acc: 0.5307
+Round 15, Subset 5, Test Acc: 0.5351
+Round 15, Subset 6, Test Acc: 0.5391
+Round 15, Subset 7, Test Acc: 0.5174
+Round 15, Subset 8, Test Acc: 0.5387
+Round 15, Subset 9, Test Acc: 0.5428
+Round 15, Subset 10, Test Acc: 0.5327
+Round 15, Aggregated Test Acc: 0.6449
+================================================================================
+Round 16, Subset 1, Test Acc: 0.6277
+Round 16, Subset 2, Test Acc: 0.6249
+Round 16, Subset 3, Test Acc: 0.5354
+Round 16, Subset 4, Test Acc: 0.5268
+Round 16, Subset 5, Test Acc: 0.5427
+Round 16, Subset 6, Test Acc: 0.5323
+Round 16, Subset 7, Test Acc: 0.5376
+Round 16, Subset 8, Test Acc: 0.5262
+Round 16, Subset 9, Test Acc: 0.5330
+Round 16, Subset 10, Test Acc: 0.5268
+Round 16, Aggregated Test Acc: 0.6495
+================================================================================
+Round 17, Subset 1, Test Acc: 0.6287
+Round 17, Subset 2, Test Acc: 0.6346
+Round 17, Subset 3, Test Acc: 0.5370
+Round 17, Subset 4, Test Acc: 0.5434
+Round 17, Subset 5, Test Acc: 0.5437
+Round 17, Subset 6, Test Acc: 0.5462
+Round 17, Subset 7, Test Acc: 0.5361
+Round 17, Subset 8, Test Acc: 0.5308
+Round 17, Subset 9, Test Acc: 0.5420
+Round 17, Subset 10, Test Acc: 0.5490
+Round 17, Aggregated Test Acc: 0.6521
+================================================================================
+Round 18, Subset 1, Test Acc: 0.6438
+Round 18, Subset 2, Test Acc: 0.6239
+Round 18, Subset 3, Test Acc: 0.5392
+Round 18, Subset 4, Test Acc: 0.5389
+Round 18, Subset 5, Test Acc: 0.5618
+Round 18, Subset 6, Test Acc: 0.5335
+Round 18, Subset 7, Test Acc: 0.5378
+Round 18, Subset 8, Test Acc: 0.5324
+Round 18, Subset 9, Test Acc: 0.5374
+Round 18, Subset 10, Test Acc: 0.5340
+Round 18, Aggregated Test Acc: 0.6519
+================================================================================
+Round 19, Subset 1, Test Acc: 0.6459
+Round 19, Subset 2, Test Acc: 0.6402
+Round 19, Subset 3, Test Acc: 0.5454
+Round 19, Subset 4, Test Acc: 0.5490
+Round 19, Subset 5, Test Acc: 0.5468
+Round 19, Subset 6, Test Acc: 0.5467
+Round 19, Subset 7, Test Acc: 0.5438
+Round 19, Subset 8, Test Acc: 0.5481
+Round 19, Subset 9, Test Acc: 0.5426
+Round 19, Subset 10, Test Acc: 0.5533
+Round 19, Aggregated Test Acc: 0.6577
+================================================================================
+Round 20, Subset 1, Test Acc: 0.6404
+Round 20, Subset 2, Test Acc: 0.6408
+Round 20, Subset 3, Test Acc: 0.5526
+Round 20, Subset 4, Test Acc: 0.5308
+Round 20, Subset 5, Test Acc: 0.5457
+Round 20, Subset 6, Test Acc: 0.5417
+Round 20, Subset 7, Test Acc: 0.5547
+Round 20, Subset 8, Test Acc: 0.5474
+Round 20, Subset 9, Test Acc: 0.5208
+Round 20, Subset 10, Test Acc: 0.5424
+Round 20, Aggregated Test Acc: 0.6585
+================================================================================

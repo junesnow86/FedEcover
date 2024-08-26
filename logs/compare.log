@@ -1,0 +1,18 @@
+Test set: Average loss: 0.9553, Accuracy: 6659/10000 (67%)
+
+Testing the original model
+
+Test set: Average loss: 2.3067, Accuracy: 1130/10000 (11%)
+
+Testing the aggregated model
+
+Test set: Average loss: 1.0721, Accuracy: 6197/10000 (62%)
+
+理论上第一次聚合应该有上面那样的效果，但是确实下面这个样子，说明代码可能有问题。
+Original model test loss: 2.305047, accuracy: 0.088900
+--------------------------------------------------------------------------------
+Round 1/1
+Pruned model test accuracy: 0.637400                                                                                                   
+Aggregated model test accuracy: 0.100000
+********************************************************************************
+--------------------------------------------------------------------------------
