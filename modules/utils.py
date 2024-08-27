@@ -7,7 +7,7 @@ from torchvision.models import ResNet
 from tqdm import tqdm
 
 
-def calculate_model_size(model):
+def calculate_model_size(model, print_result=True, unit="MB"):
     total_params = 0
     for param in model.parameters():
         # Multiply the size of each dimension to get the total number of elements
@@ -18,10 +18,18 @@ def calculate_model_size(model):
     memory_kilobytes = memory_bytes / 1024
     memory_megabytes = memory_kilobytes / 1024
 
-    print(f"Total parameters: {total_params}")
-    print(
-        f"Memory Usage: {memory_bytes} bytes ({memory_kilobytes:.2f} KB / {memory_megabytes:.2f} MB)"
-    )
+    if print_result:
+        print(f"Total parameters: {total_params}")
+        print(
+            f"Memory Usage: {memory_bytes} bytes ({memory_kilobytes:.2f} KB / {memory_megabytes:.2f} MB)"
+        )
+
+    if unit == "KB":
+        return memory_kilobytes
+    elif unit == "MB":
+        return memory_megabytes
+    else:
+        return memory_bytes
 
 
 # Training function
