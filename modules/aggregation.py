@@ -646,7 +646,7 @@ def aggregate_resnet18_vanilla(
     )
 
 
-def recover_whole_model(global_model, pruned_model, pruned_indices_dict):
+def recover_whole_resnet18(global_model, pruned_model, pruned_indices_dict):
     """
     Recover a global model from a pruned model and the indices that were pruned.
     """
@@ -679,8 +679,17 @@ def recover_whole_model(global_model, pruned_model, pruned_indices_dict):
             )
         ]
 
+    # LayerNorm
+    new_global_model.bn1 = nn.LayerNorm([64, 16, 16], elementwise_affine=False)
+
     layers = ["layer1", "layer2", "layer3", "layer4"]
-    for layer in layers:
+    layer_norm_shapes = [
+        [64, 8, 8],
+        [128, 4, 4],
+        [256, 2, 2],
+        [512, 1, 1],
+    ]
+    for i, layer in enumerate(layers):
         for block in ["0", "1"]:
             for conv in ["conv1", "conv2"]:
                 key = f"{layer}.{block}.{conv}"
@@ -780,6 +789,18 @@ def recover_whole_model(global_model, pruned_model, pruned_indices_dict):
                     ]
                 )
 
+                # LayerNorm
+                new_global_model._modules[layer][int(block)]._modules["downsample"][
+                    1
+                ] = nn.LayerNorm(layer_norm_shapes[i], elementwise_affine=False)
+
+            # LayerNorm
+            for bn in ["bn1", "bn2"]:
+                normalized_shape = layer_norm_shapes[i]
+                new_global_model._modules[layer][int(block)]._modules[bn] = (
+                    nn.LayerNorm(normalized_shape, elementwise_affine=False)
+                )
+
     # Linear layer
     key = "fc"
     if key in pruned_indices_dict:
@@ -805,3 +826,5 @@ def recover_whole_model(global_model, pruned_model, pruned_indices_dict):
                 range(len(unpruned_output_indices)), range(len(unpruned_input_indices))
             )
         ]
+
+    return new_global_model
