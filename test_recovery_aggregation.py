@@ -10,15 +10,20 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, Subset
 from torchvision import datasets, transforms
-from torchvision.models import resnet18, ResNet
+from torchvision.models import ResNet, resnet18
 
-from modules.aggregation import aggregate_cnn, aggregate_resnet18, recover_whole_resnet18, vanilla_federated_averaging
+from modules.aggregation import (
+    aggregate_cnn,
+    recover_global_from_pruned_resnet18,
+    vanilla_federated_averaging,
+)
 from modules.models import CNN
 from modules.pruning import prune_cnn, prune_resnet18
 from modules.utils import (
+    calculate_model_size,
+    replace_bn_with_ln,
     test,
     train,
-    replace_bn_with_ln,
 )
 
 parser = argparse.ArgumentParser()
@@ -32,7 +37,7 @@ parser.add_argument(
     "--model",
     type=str,
     choices=["cnn", "resnet"],
-    default="cnn",
+    default="resnet",
     help="Model to use for training",
 )
 args = parser.parse_args()
@@ -176,8 +181,9 @@ for round in range(ROUNDS):
         local_test_loss, local_test_acc, local_class_acc = test(
             local_model, criterion, test_loader, device=device, num_classes=10
         )
+        model_size = calculate_model_size(local_model, print_result=False, unit="MB")
         print(
-            f"Subset {i + 1}\tTrain Loss: {local_train_loss:.4f}\tTest Loss: {local_test_loss:.4f}\tTest Acc: {local_test_acc:.4f}\tClass Acc: {local_class_acc}"
+            f"Subset {i + 1}\tTrain Loss: {local_train_loss:.4f}\tTest Loss: {local_test_loss:.4f}\tTest Acc: {local_test_acc:.4f}\tClass Acc: {local_class_acc}\tModel Size: {model_size:.2f} MB"
         )
         round_train_loss_results[f"Subset {i + 1}"] = local_train_loss
         round_test_loss_results[f"Subset {i + 1}"] = local_test_loss
@@ -202,7 +208,7 @@ for round in range(ROUNDS):
         #     subset_sizes,
         #     pruned_indices_dicts,
         # )
-        all_client_models = [recover_whole_resnet18(global_model, all_client_models[i], pruned_indices_dicts[i]) for i in range(len(all_client_models))]
+        all_client_models = [recover_global_from_pruned_resnet18(global_model, all_client_models[i], pruned_indices_dicts[i]) for i in range(len(all_client_models))]
         aggregated_weight = vanilla_federated_averaging(
             models=all_client_models, sample_numbers=subset_sizes
         )
