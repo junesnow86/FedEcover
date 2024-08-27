@@ -1,0 +1,413 @@
+================================================================================
+Round 44
+Subset 1        Dropout rate: 0.2       Number of models: 1
+Subset 2        Dropout rate: 0.2       Number of models: 1
+Subset 3        Dropout rate: 0.5       Number of models: 2
+Subset 4        Dropout rate: 0.5       Number of models: 2
+Subset 5        Dropout rate: 0.5       Number of models: 2
+Subset 6        Dropout rate: 0.8       Number of models: 5
+Subset 7        Dropout rate: 0.8       Number of models: 5
+Subset 8        Dropout rate: 0.8       Number of models: 5
+Subset 9        Dropout rate: 0.8       Number of models: 5
+Subset 10       Dropout rate: 0.8       Number of models: 5
+Subset 1        Train Loss: 0.3932      Test Loss: 0.8405       Test Acc: 0.7174        Class Acc: {0: 0.814, 1: 0.871, 2: 0.505, 3: 0.469, 4: 0.629, 5: 0.645, 6: 0.823, 7: 0.816, 8: 0.84, 9: 0.762}
+Subset 2        Train Loss: 0.3550      Test Loss: 0.8740       Test Acc: 0.7106        Class Acc: {0: 0.745, 1: 0.842, 2: 0.571, 3: 0.624, 4: 0.74, 5: 0.496, 6: 0.743, 7: 0.74, 8: 0.884, 9: 0.721}
+Subset 3        Train Loss: 0.5904      Test Loss: 0.8992       Test Acc: 0.6935        Class Acc: {0: 0.7444999999999999, 1: 0.807, 2: 0.6160000000000001, 3: 0.589, 4: 0.6094999999999999, 5: 0.525, 6: 0.7264999999999999, 7: 0.7265, 8: 0.8405, 9: 0.7505}
+Subset 4        Train Loss: 0.5641      Test Loss: 0.9196       Test Acc: 0.6895        Class Acc: {0: 0.7345, 1: 0.7909999999999999, 2: 0.488, 3: 0.5035000000000001, 4: 0.667, 5: 0.623, 6: 0.7915000000000001, 7: 0.7255, 8: 0.7655000000000001, 9: 0.8055}
+Subset 5        Train Loss: 0.5978      Test Loss: 0.9246       Test Acc: 0.6804        Class Acc: {0: 0.6715, 1: 0.772, 2: 0.518, 3: 0.581, 4: 0.5785, 5: 0.531, 6: 0.6779999999999999, 7: 0.822, 8: 0.856, 9: 0.7965}
+Subset 6        Train Loss: 1.8015      Test Loss: 1.8396       Test Acc: 0.4747        Class Acc: {0: 0.5294, 1: 0.5626, 2: 0.3088, 3: 0.33999999999999997, 4: 0.37820000000000004, 5: 0.39659999999999995, 6: 0.599, 7: 0.553, 8: 0.5555999999999999, 9: 0.5238}
+Subset 7        Train Loss: 1.7926      Test Loss: 1.8001       Test Acc: 0.4921        Class Acc: {0: 0.5700000000000001, 1: 0.5948, 2: 0.37679999999999997, 3: 0.31100000000000005, 4: 0.4202, 5: 0.3968, 6: 0.5936000000000001, 7: 0.5414000000000001, 8: 0.5532, 9: 0.5628}
+Subset 8        Train Loss: 1.7856      Test Loss: 1.8471       Test Acc: 0.4786        Class Acc: {0: 0.513, 1: 0.56, 2: 0.44279999999999997, 3: 0.2596, 4: 0.33459999999999995, 5: 0.4248, 6: 0.5646, 7: 0.5368, 8: 0.5673999999999999, 9: 0.5826}
+Subset 9        Train Loss: 1.8058      Test Loss: 1.8672       Test Acc: 0.4536        Class Acc: {0: 0.4808, 1: 0.5648, 2: 0.30599999999999994, 3: 0.31400000000000006, 4: 0.31500000000000006, 5: 0.414, 6: 0.5388, 7: 0.4972, 8: 0.5681999999999999, 9: 0.5368}
+Subset 10       Train Loss: 1.9513      Test Loss: 2.0006       Test Acc: 0.4823        Class Acc: {0: 0.5056, 1: 0.6104, 2: 0.3702, 3: 0.29019999999999996, 4: 0.3358, 5: 0.43879999999999997, 6: 0.6022000000000001, 7: 0.5282, 8: 0.5974, 9: 0.5438000000000001}
+Aggregated Test Loss: 0.7870    Aggregated Test Acc: 0.7315     Aggregated Class Acc: {0: 0.751, 1: 0.851, 2: 0.518, 3: 0.527, 4: 0.672, 5: 0.611, 6: 0.832, 7: 0.819, 8: 0.902, 9: 0.832}
+Round 44 use time: 0.88 min, ETA: 2.29 hours
+================================================================================
+Round 45
+Subset 1        Dropout rate: 0.2       Number of models: 1
+Subset 2        Dropout rate: 0.2       Number of models: 1
+Subset 3        Dropout rate: 0.5       Number of models: 2
+Subset 4        Dropout rate: 0.5       Number of models: 2
+Subset 5        Dropout rate: 0.5       Number of models: 2
+Subset 6        Dropout rate: 0.8       Number of models: 5
+Subset 7        Dropout rate: 0.8       Number of models: 5
+Subset 8        Dropout rate: 0.8       Number of models: 5
+Subset 9        Dropout rate: 0.8       Number of models: 5
+Subset 10       Dropout rate: 0.8       Number of models: 5
+Subset 1        Train Loss: 0.3507      Test Loss: 0.8371       Test Acc: 0.7243        Class Acc: {0: 0.813, 1: 0.889, 2: 0.623, 3: 0.483, 4: 0.702, 5: 0.643, 6: 0.798, 7: 0.714, 8: 0.807, 9: 0.771}
+Subset 2        Train Loss: 0.3540      Test Loss: 0.8457       Test Acc: 0.7120        Class Acc: {0: 0.746, 1: 0.812, 2: 0.707, 3: 0.478, 4: 0.672, 5: 0.568, 6: 0.761, 7: 0.79, 8: 0.842, 9: 0.744}
+Subset 3        Train Loss: 0.5809      Test Loss: 0.8917       Test Acc: 0.6941        Class Acc: {0: 0.749, 1: 0.8109999999999999, 2: 0.527, 3: 0.5185, 4: 0.5925, 5: 0.6245, 6: 0.784, 7: 0.7344999999999999, 8: 0.8105, 9: 0.789}
+Subset 4        Train Loss: 0.5561      Test Loss: 0.9072       Test Acc: 0.6877        Class Acc: {0: 0.7705, 1: 0.795, 2: 0.5735, 3: 0.5375000000000001, 4: 0.627, 5: 0.59, 6: 0.7225, 7: 0.75, 8: 0.7375, 9: 0.774}
+Subset 5        Train Loss: 0.5682      Test Loss: 0.9024       Test Acc: 0.6906        Class Acc: {0: 0.742, 1: 0.848, 2: 0.528, 3: 0.4085, 4: 0.6715, 5: 0.679, 6: 0.7605, 7: 0.7230000000000001, 8: 0.7865, 9: 0.759}
+Subset 6        Train Loss: 1.7064      Test Loss: 1.7339       Test Acc: 0.4766        Class Acc: {0: 0.5028, 1: 0.5602, 2: 0.3758, 3: 0.3074, 4: 0.346, 5: 0.41879999999999995, 6: 0.5812, 7: 0.5436, 8: 0.5874, 9: 0.543}
+Subset 7        Train Loss: 1.7901      Test Loss: 1.8139       Test Acc: 0.4573        Class Acc: {0: 0.44480000000000003, 1: 0.5866, 2: 0.3842, 3: 0.2602, 4: 0.42119999999999996, 5: 0.369, 6: 0.5690000000000001, 7: 0.484, 8: 0.5628, 9: 0.4908}
+Subset 8        Train Loss: 1.6750      Test Loss: 1.7624       Test Acc: 0.4705        Class Acc: {0: 0.48260000000000003, 1: 0.568, 2: 0.3516, 3: 0.2778, 4: 0.3892, 5: 0.4673999999999999, 6: 0.513, 7: 0.5022, 8: 0.6245999999999998, 9: 0.5286}
+Subset 9        Train Loss: 1.9221      Test Loss: 1.9665       Test Acc: 0.4715        Class Acc: {0: 0.533, 1: 0.541, 2: 0.3456, 3: 0.2448, 4: 0.41740000000000005, 5: 0.4772, 6: 0.5064, 7: 0.5434, 8: 0.5338, 9: 0.5720000000000001}
+Subset 10       Train Loss: 1.7948      Test Loss: 1.8301       Test Acc: 0.4810        Class Acc: {0: 0.49559999999999993, 1: 0.635, 2: 0.33320000000000005, 3: 0.3014, 4: 0.38220000000000004, 5: 0.4062, 6: 0.5640000000000001, 7: 0.5212, 8: 0.6178, 9: 0.553}
+Aggregated Test Loss: 0.7762    Aggregated Test Acc: 0.7346     Aggregated Class Acc: {0: 0.784, 1: 0.888, 2: 0.571, 3: 0.482, 4: 0.631, 5: 0.673, 6: 0.845, 7: 0.792, 8: 0.867, 9: 0.813}
+Round 45 use time: 0.89 min, ETA: 2.29 hours
+================================================================================
+Round 46
+Subset 1        Dropout rate: 0.2       Number of models: 1
+Subset 2        Dropout rate: 0.2       Number of models: 1
+Subset 3        Dropout rate: 0.5       Number of models: 2
+Subset 4        Dropout rate: 0.5       Number of models: 2
+Subset 5        Dropout rate: 0.5       Number of models: 2
+Subset 6        Dropout rate: 0.8       Number of models: 5
+Subset 7        Dropout rate: 0.8       Number of models: 5
+Subset 8        Dropout rate: 0.8       Number of models: 5
+Subset 9        Dropout rate: 0.8       Number of models: 5
+Subset 10       Dropout rate: 0.8       Number of models: 5
+Subset 1        Train Loss: 0.3528      Test Loss: 0.8612       Test Acc: 0.7155        Class Acc: {0: 0.749, 1: 0.781, 2: 0.554, 3: 0.547, 4: 0.689, 5: 0.611, 6: 0.833, 7: 0.689, 8: 0.882, 9: 0.82}
+Subset 2        Train Loss: 0.3611      Test Loss: 0.8387       Test Acc: 0.7200        Class Acc: {0: 0.817, 1: 0.878, 2: 0.616, 3: 0.426, 4: 0.652, 5: 0.619, 6: 0.821, 7: 0.82, 8: 0.771, 9: 0.78}
+Subset 3        Train Loss: 0.5623      Test Loss: 0.9002       Test Acc: 0.6915        Class Acc: {0: 0.7525, 1: 0.8029999999999999, 2: 0.504, 3: 0.502, 4: 0.6635, 5: 0.595, 6: 0.7404999999999999, 7: 0.749, 8: 0.851, 9: 0.755}
+Subset 4        Train Loss: 0.5769      Test Loss: 0.9337       Test Acc: 0.6823        Class Acc: {0: 0.764, 1: 0.8385, 2: 0.526, 3: 0.5175000000000001, 4: 0.494, 5: 0.6585, 6: 0.746, 7: 0.718, 8: 0.746, 9: 0.8145}
+Subset 5        Train Loss: 0.5824      Test Loss: 0.9331       Test Acc: 0.6810        Class Acc: {0: 0.702, 1: 0.856, 2: 0.529, 3: 0.5095000000000001, 4: 0.606, 5: 0.5335000000000001, 6: 0.6855, 7: 0.8234999999999999, 8: 0.7725, 9: 0.7929999999999999}
+Subset 6        Train Loss: 1.8407      Test Loss: 1.9226       Test Acc: 0.4740        Class Acc: {0: 0.5458000000000001, 1: 0.5801999999999999, 2: 0.32499999999999996, 3: 0.296, 4: 0.38780000000000003, 5: 0.41459999999999997, 6: 0.5828, 7: 0.5112, 8: 0.5628, 9: 0.5342}
+Subset 7        Train Loss: 1.6990      Test Loss: 1.7276       Test Acc: 0.4870        Class Acc: {0: 0.5612, 1: 0.5982, 2: 0.38760000000000006, 3: 0.3296, 4: 0.37060000000000004, 5: 0.40040000000000003, 6: 0.5644, 7: 0.5042, 8: 0.5988, 9: 0.555}
+Subset 8        Train Loss: 1.8809      Test Loss: 1.9403       Test Acc: 0.4855        Class Acc: {0: 0.5214000000000001, 1: 0.5906, 2: 0.3552, 3: 0.2928, 4: 0.39980000000000004, 5: 0.4686, 6: 0.5444, 7: 0.548, 8: 0.5744, 9: 0.5599999999999999}
+Subset 9        Train Loss: 1.6599      Test Loss: 1.7277       Test Acc: 0.4780        Class Acc: {0: 0.5448, 1: 0.5862, 2: 0.3362, 3: 0.2916, 4: 0.4062, 5: 0.4354, 6: 0.5744, 7: 0.5344, 8: 0.5528000000000001, 9: 0.5176000000000001}
+Subset 10       Train Loss: 1.9035      Test Loss: 1.9600       Test Acc: 0.4524        Class Acc: {0: 0.5054000000000001, 1: 0.5434, 2: 0.3652, 3: 0.2844, 4: 0.342, 5: 0.3632, 6: 0.5391999999999999, 7: 0.526, 8: 0.5234, 9: 0.5317999999999999}
+Aggregated Test Loss: 0.7760    Aggregated Test Acc: 0.7351     Aggregated Class Acc: {0: 0.787, 1: 0.89, 2: 0.575, 3: 0.482, 4: 0.614, 5: 0.685, 6: 0.839, 7: 0.794, 8: 0.864, 9: 0.821}
+Round 46 use time: 0.99 min, ETA: 2.54 hours
+================================================================================
+Round 47
+Subset 1        Dropout rate: 0.2       Number of models: 1
+Subset 2        Dropout rate: 0.2       Number of models: 1
+Subset 3        Dropout rate: 0.5       Number of models: 2
+Subset 4        Dropout rate: 0.5       Number of models: 2
+Subset 5        Dropout rate: 0.5       Number of models: 2
+Subset 6        Dropout rate: 0.8       Number of models: 5
+Subset 7        Dropout rate: 0.8       Number of models: 5
+Subset 8        Dropout rate: 0.8       Number of models: 5
+Subset 9        Dropout rate: 0.8       Number of models: 5
+Subset 10       Dropout rate: 0.8       Number of models: 5
+Subset 1        Train Loss: 0.4041      Test Loss: 0.8690       Test Acc: 0.7056        Class Acc: {0: 0.758, 1: 0.875, 2: 0.554, 3: 0.573, 4: 0.81, 5: 0.42, 6: 0.699, 7: 0.734, 8: 0.83, 9: 0.803}
+Subset 2        Train Loss: 0.4016      Test Loss: 0.9122       Test Acc: 0.6962        Class Acc: {0: 0.683, 1: 0.781, 2: 0.605, 3: 0.422, 4: 0.848, 5: 0.43, 6: 0.726, 7: 0.784, 8: 0.867, 9: 0.816}
+Subset 3        Train Loss: 0.5698      Test Loss: 0.9318       Test Acc: 0.6837        Class Acc: {0: 0.7685, 1: 0.8434999999999999, 2: 0.49, 3: 0.5015000000000001, 4: 0.608, 5: 0.5985, 6: 0.8175, 7: 0.6765000000000001, 8: 0.7869999999999999, 9: 0.7455}
+Subset 4        Train Loss: 0.5419      Test Loss: 0.8925       Test Acc: 0.6900        Class Acc: {0: 0.752, 1: 0.8200000000000001, 2: 0.5865, 3: 0.492, 4: 0.5995, 5: 0.667, 6: 0.7384999999999999, 7: 0.711, 8: 0.7505, 9: 0.7825}
+Subset 5        Train Loss: 0.5534      Test Loss: 0.8791       Test Acc: 0.6992        Class Acc: {0: 0.7515000000000001, 1: 0.839, 2: 0.51, 3: 0.5605, 4: 0.6655, 5: 0.48050000000000004, 6: 0.8085, 7: 0.7725, 8: 0.8505, 9: 0.7535000000000001}
+Subset 6        Train Loss: 1.7848      Test Loss: 1.8057       Test Acc: 0.4821        Class Acc: {0: 0.5244, 1: 0.5962, 2: 0.3298, 3: 0.29960000000000003, 4: 0.4242, 5: 0.40119999999999995, 6: 0.5404, 7: 0.5324, 8: 0.5978000000000001, 9: 0.5748}
+Subset 7        Train Loss: 1.8540      Test Loss: 1.8493       Test Acc: 0.4790        Class Acc: {0: 0.476, 1: 0.5784, 2: 0.34140000000000004, 3: 0.3068, 4: 0.4391999999999999, 5: 0.43179999999999996, 6: 0.5439999999999999, 7: 0.525, 8: 0.6154, 9: 0.5316}
+Subset 8        Train Loss: 1.8976      Test Loss: 1.9555       Test Acc: 0.4806        Class Acc: {0: 0.5157999999999999, 1: 0.5704, 2: 0.4258, 3: 0.2996, 4: 0.3192, 5: 0.477, 6: 0.5196000000000001, 7: 0.5682, 8: 0.5641999999999999, 9: 0.546}
+Subset 9        Train Loss: 1.7589      Test Loss: 1.8228       Test Acc: 0.4758        Class Acc: {0: 0.5546, 1: 0.5690000000000001, 2: 0.31399999999999995, 3: 0.29700000000000004, 4: 0.3562, 5: 0.47479999999999994, 6: 0.593, 7: 0.528, 8: 0.5608000000000001, 9: 0.5105999999999999}
+Subset 10       Train Loss: 1.7422      Test Loss: 1.8043       Test Acc: 0.4716        Class Acc: {0: 0.4934, 1: 0.5953999999999999, 2: 0.39519999999999994, 3: 0.2794, 4: 0.38739999999999997, 5: 0.35559999999999997, 6: 0.6220000000000001, 7: 0.487, 8: 0.5754, 9: 0.5248}
+Aggregated Test Loss: 0.7795    Aggregated Test Acc: 0.7361     Aggregated Class Acc: {0: 0.76, 1: 0.896, 2: 0.548, 3: 0.435, 4: 0.714, 5: 0.667, 6: 0.856, 7: 0.785, 8: 0.872, 9: 0.828}
+Round 47 use time: 0.95 min, ETA: 2.42 hours
+================================================================================
+Round 48
+Subset 1        Dropout rate: 0.2       Number of models: 1
+Subset 2        Dropout rate: 0.2       Number of models: 1
+Subset 3        Dropout rate: 0.5       Number of models: 2
+Subset 4        Dropout rate: 0.5       Number of models: 2
+Subset 5        Dropout rate: 0.5       Number of models: 2
+Subset 6        Dropout rate: 0.8       Number of models: 5
+Subset 7        Dropout rate: 0.8       Number of models: 5
+Subset 8        Dropout rate: 0.8       Number of models: 5
+Subset 9        Dropout rate: 0.8       Number of models: 5
+Subset 10       Dropout rate: 0.8       Number of models: 5
+Subset 1        Train Loss: 0.3684      Test Loss: 0.8730       Test Acc: 0.7072        Class Acc: {0: 0.688, 1: 0.774, 2: 0.504, 3: 0.658, 4: 0.655, 5: 0.631, 6: 0.754, 7: 0.731, 8: 0.862, 9: 0.815}
+Subset 2        Train Loss: 0.3220      Test Loss: 0.8630       Test Acc: 0.7148        Class Acc: {0: 0.775, 1: 0.804, 2: 0.695, 3: 0.464, 4: 0.676, 5: 0.562, 6: 0.813, 7: 0.699, 8: 0.881, 9: 0.779}
+Subset 3        Train Loss: 0.5513      Test Loss: 0.9013       Test Acc: 0.6920        Class Acc: {0: 0.7869999999999999, 1: 0.8025, 2: 0.606, 3: 0.5465, 4: 0.5509999999999999, 5: 0.6034999999999999, 6: 0.7769999999999999, 7: 0.7335, 8: 0.744, 9: 0.7685}
+Subset 4        Train Loss: 0.5447      Test Loss: 0.9258       Test Acc: 0.6900        Class Acc: {0: 0.7815, 1: 0.808, 2: 0.46699999999999997, 3: 0.563, 4: 0.6465000000000001, 5: 0.5800000000000001, 6: 0.8365, 7: 0.667, 8: 0.7705, 9: 0.78}
+Subset 5        Train Loss: 0.5638      Test Loss: 0.9169       Test Acc: 0.6859        Class Acc: {0: 0.6895, 1: 0.8340000000000001, 2: 0.487, 3: 0.546, 4: 0.7165, 5: 0.5405, 6: 0.747, 7: 0.7404999999999999, 8: 0.8109999999999999, 9: 0.747}
+Subset 6        Train Loss: 1.8081      Test Loss: 1.8661       Test Acc: 0.4714        Class Acc: {0: 0.5182, 1: 0.5566000000000001, 2: 0.3408, 3: 0.3022, 4: 0.33280000000000004, 5: 0.42000000000000004, 6: 0.6144000000000001, 7: 0.5496, 8: 0.5231999999999999, 9: 0.5566}
+Subset 7        Train Loss: 1.8117      Test Loss: 1.8536       Test Acc: 0.4717        Class Acc: {0: 0.5509999999999999, 1: 0.5626, 2: 0.36100000000000004, 3: 0.2878, 4: 0.3698, 5: 0.417, 6: 0.5578000000000001, 7: 0.4796, 8: 0.6026, 9: 0.5277999999999999}
+Subset 8        Train Loss: 1.7530      Test Loss: 1.8540       Test Acc: 0.4883        Class Acc: {0: 0.5486000000000001, 1: 0.5974, 2: 0.3698, 3: 0.2792, 4: 0.355, 5: 0.434, 6: 0.607, 7: 0.5612, 8: 0.5888, 9: 0.5422}
+Subset 9        Train Loss: 1.8042      Test Loss: 1.8661       Test Acc: 0.4706        Class Acc: {0: 0.5238, 1: 0.561, 2: 0.3116, 3: 0.28040000000000004, 4: 0.39560000000000006, 5: 0.43019999999999997, 6: 0.5776, 7: 0.5436, 8: 0.5623999999999999, 9: 0.5196000000000001}
+Subset 10       Train Loss: 1.8289      Test Loss: 1.8994       Test Acc: 0.4657        Class Acc: {0: 0.4768, 1: 0.6082, 2: 0.38939999999999997, 3: 0.3476, 4: 0.306, 5: 0.3724, 6: 0.5399999999999999, 7: 0.5115999999999999, 8: 0.6176, 9: 0.48699999999999993}
+Aggregated Test Loss: 0.7569    Aggregated Test Acc: 0.7424     Aggregated Class Acc: {0: 0.778, 1: 0.853, 2: 0.566, 3: 0.553, 4: 0.71, 5: 0.658, 6: 0.839, 7: 0.767, 8: 0.885, 9: 0.815}
+Round 48 use time: 0.98 min, ETA: 2.48 hours
+================================================================================
+Round 49
+Subset 1        Dropout rate: 0.2       Number of models: 1
+Subset 2        Dropout rate: 0.2       Number of models: 1
+Subset 3        Dropout rate: 0.5       Number of models: 2
+Subset 4        Dropout rate: 0.5       Number of models: 2
+Subset 5        Dropout rate: 0.5       Number of models: 2
+Subset 6        Dropout rate: 0.8       Number of models: 5
+Subset 7        Dropout rate: 0.8       Number of models: 5
+Subset 8        Dropout rate: 0.8       Number of models: 5
+Subset 9        Dropout rate: 0.8       Number of models: 5
+Subset 10       Dropout rate: 0.8       Number of models: 5
+Subset 1        Train Loss: 0.3691      Test Loss: 0.8727       Test Acc: 0.7116        Class Acc: {0: 0.716, 1: 0.821, 2: 0.499, 3: 0.647, 4: 0.626, 5: 0.606, 6: 0.768, 7: 0.713, 8: 0.865, 9: 0.855}
+Subset 2        Train Loss: 0.3213      Test Loss: 0.8601       Test Acc: 0.7160        Class Acc: {0: 0.75, 1: 0.839, 2: 0.604, 3: 0.536, 4: 0.757, 5: 0.571, 6: 0.768, 7: 0.761, 8: 0.732, 9: 0.842}
+Subset 3        Train Loss: 0.5738      Test Loss: 0.9316       Test Acc: 0.6859        Class Acc: {0: 0.76, 1: 0.818, 2: 0.4895, 3: 0.5589999999999999, 4: 0.669, 5: 0.5894999999999999, 6: 0.7255, 7: 0.7635000000000001, 8: 0.745, 9: 0.74}
+Subset 4        Train Loss: 0.5460      Test Loss: 0.9158       Test Acc: 0.6916        Class Acc: {0: 0.7785, 1: 0.7905, 2: 0.548, 3: 0.36350000000000005, 4: 0.5994999999999999, 5: 0.7135, 6: 0.841, 7: 0.756, 8: 0.7395, 9: 0.786}
+Subset 5        Train Loss: 0.5754      Test Loss: 0.9269       Test Acc: 0.6834        Class Acc: {0: 0.7165, 1: 0.8355, 2: 0.534, 3: 0.5660000000000001, 4: 0.593, 5: 0.621, 6: 0.764, 7: 0.6990000000000001, 8: 0.75, 9: 0.755}
+Subset 6        Train Loss: 1.9013      Test Loss: 1.9548       Test Acc: 0.4972        Class Acc: {0: 0.5678000000000001, 1: 0.5934000000000001, 2: 0.37720000000000004, 3: 0.29879999999999995, 4: 0.42619999999999997, 5: 0.4286, 6: 0.5429999999999999, 7: 0.5612, 8: 0.6086, 9: 0.5668}
+Subset 7        Train Loss: 1.8402      Test Loss: 1.8293       Test Acc: 0.4801        Class Acc: {0: 0.5018, 1: 0.5716000000000001, 2: 0.347, 3: 0.3114, 4: 0.45360000000000006, 5: 0.39259999999999995, 6: 0.5642, 7: 0.5152, 8: 0.5892, 9: 0.554}
+Subset 8        Train Loss: 1.9414      Test Loss: 2.0238       Test Acc: 0.4434        Class Acc: {0: 0.44000000000000006, 1: 0.5599999999999999, 2: 0.35000000000000003, 3: 0.23899999999999996, 4: 0.3746, 5: 0.4088, 6: 0.4864, 7: 0.5304, 8: 0.5384, 9: 0.5062}
+Subset 9        Train Loss: 1.7322      Test Loss: 1.7914       Test Acc: 0.4750        Class Acc: {0: 0.5304, 1: 0.5848000000000001, 2: 0.33039999999999997, 3: 0.2646, 4: 0.3964, 5: 0.4138, 6: 0.626, 7: 0.5589999999999999, 8: 0.5624, 9: 0.48199999999999993}
+Subset 10       Train Loss: 1.8921      Test Loss: 1.9313       Test Acc: 0.4864        Class Acc: {0: 0.5456000000000001, 1: 0.6086, 2: 0.363, 3: 0.3278, 4: 0.3548, 5: 0.4006, 6: 0.6180000000000001, 7: 0.538, 8: 0.5988, 9: 0.5086}
+Aggregated Test Loss: 0.7941    Aggregated Test Acc: 0.7294     Aggregated Class Acc: {0: 0.747, 1: 0.865, 2: 0.458, 3: 0.532, 4: 0.711, 5: 0.659, 6: 0.825, 7: 0.836, 8: 0.807, 9: 0.854}
+Round 49 use time: 1.02 min, ETA: 2.58 hours
+================================================================================
+Round 50
+Subset 1        Dropout rate: 0.2       Number of models: 1
+Subset 2        Dropout rate: 0.2       Number of models: 1
+Subset 3        Dropout rate: 0.5       Number of models: 2
+Subset 4        Dropout rate: 0.5       Number of models: 2
+Subset 5        Dropout rate: 0.5       Number of models: 2
+Subset 6        Dropout rate: 0.8       Number of models: 5
+Subset 7        Dropout rate: 0.8       Number of models: 5
+Subset 8        Dropout rate: 0.8       Number of models: 5
+Subset 9        Dropout rate: 0.8       Number of models: 5
+Subset 10       Dropout rate: 0.8       Number of models: 5
+Subset 1        Train Loss: 0.3533      Test Loss: 0.9175       Test Acc: 0.7110        Class Acc: {0: 0.765, 1: 0.792, 2: 0.57, 3: 0.333, 4: 0.697, 5: 0.63, 6: 0.889, 7: 0.816, 8: 0.867, 9: 0.751}
+Subset 2        Train Loss: 0.3860      Test Loss: 0.9589       Test Acc: 0.6968        Class Acc: {0: 0.699, 1: 0.713, 2: 0.69, 3: 0.395, 4: 0.712, 5: 0.557, 6: 0.823, 7: 0.653, 8: 0.915, 9: 0.811}
+Subset 3        Train Loss: 0.5735      Test Loss: 0.9117       Test Acc: 0.6900        Class Acc: {0: 0.756, 1: 0.8215, 2: 0.548, 3: 0.40700000000000003, 4: 0.603, 5: 0.663, 6: 0.8674999999999999, 7: 0.675, 8: 0.7789999999999999, 9: 0.78}
+Subset 4        Train Loss: 0.5215      Test Loss: 0.9075       Test Acc: 0.6935        Class Acc: {0: 0.798, 1: 0.79, 2: 0.5545, 3: 0.5945, 4: 0.56, 5: 0.5785, 6: 0.7595000000000001, 7: 0.7575000000000001, 8: 0.763, 9: 0.7795}
+Subset 5        Train Loss: 0.6019      Test Loss: 0.9444       Test Acc: 0.6738        Class Acc: {0: 0.72, 1: 0.815, 2: 0.5795, 3: 0.5245, 4: 0.5660000000000001, 5: 0.542, 6: 0.7364999999999999, 7: 0.7765, 8: 0.786, 9: 0.6915}
+Subset 6        Train Loss: 2.0354      Test Loss: 2.0935       Test Acc: 0.4787        Class Acc: {0: 0.5492, 1: 0.5913999999999999, 2: 0.3548, 3: 0.33399999999999996, 4: 0.3474, 5: 0.3898, 6: 0.5708, 7: 0.5476000000000001, 8: 0.5840000000000001, 9: 0.5184000000000001}
+Subset 7        Train Loss: 1.7069      Test Loss: 1.7218       Test Acc: 0.4942        Class Acc: {0: 0.5614, 1: 0.5967999999999999, 2: 0.3712000000000001, 3: 0.27460000000000007, 4: 0.4042, 5: 0.4196, 6: 0.6050000000000001, 7: 0.5267999999999999, 8: 0.6073999999999999, 9: 0.5750000000000001}
+Subset 8        Train Loss: 1.9009      Test Loss: 1.9462       Test Acc: 0.4605        Class Acc: {0: 0.5292, 1: 0.5516, 2: 0.37160000000000004, 3: 0.2726, 4: 0.3316, 5: 0.37839999999999996, 6: 0.5992, 7: 0.49379999999999996, 8: 0.5970000000000001, 9: 0.48}
+Subset 9        Train Loss: 1.8734      Test Loss: 1.9133       Test Acc: 0.4811        Class Acc: {0: 0.5614, 1: 0.5856, 2: 0.35760000000000003, 3: 0.2932, 4: 0.4318000000000001, 5: 0.4048, 6: 0.5566, 7: 0.5272, 8: 0.554, 9: 0.5389999999999999}
+Subset 10       Train Loss: 1.8676      Test Loss: 1.9164       Test Acc: 0.4854        Class Acc: {0: 0.5192, 1: 0.6210000000000001, 2: 0.38259999999999994, 3: 0.2942, 4: 0.4006, 5: 0.39920000000000005, 6: 0.5616, 7: 0.5504, 8: 0.6154, 9: 0.5098}
+Aggregated Test Loss: 0.7637    Aggregated Test Acc: 0.7387     Aggregated Class Acc: {0: 0.781, 1: 0.862, 2: 0.568, 3: 0.49, 4: 0.671, 5: 0.679, 6: 0.89, 7: 0.769, 8: 0.863, 9: 0.814}
+Round 50 use time: 1.02 min, ETA: 2.54 hours
+================================================================================
+Round 51
+Subset 1        Dropout rate: 0.2       Number of models: 1
+Subset 2        Dropout rate: 0.2       Number of models: 1
+Subset 3        Dropout rate: 0.5       Number of models: 2
+Subset 4        Dropout rate: 0.5       Number of models: 2
+Subset 5        Dropout rate: 0.5       Number of models: 2
+Subset 6        Dropout rate: 0.8       Number of models: 5
+Subset 7        Dropout rate: 0.8       Number of models: 5
+Subset 8        Dropout rate: 0.8       Number of models: 5
+Subset 9        Dropout rate: 0.8       Number of models: 5
+Subset 10       Dropout rate: 0.8       Number of models: 5
+Subset 1        Train Loss: 0.3669      Test Loss: 0.9477       Test Acc: 0.6991        Class Acc: {0: 0.803, 1: 0.826, 2: 0.709, 3: 0.422, 4: 0.773, 5: 0.551, 6: 0.754, 7: 0.623, 8: 0.759, 9: 0.771}
+Subset 2        Train Loss: 0.2781      Test Loss: 0.8589       Test Acc: 0.7164        Class Acc: {0: 0.701, 1: 0.853, 2: 0.582, 3: 0.589, 4: 0.674, 5: 0.623, 6: 0.752, 7: 0.76, 8: 0.837, 9: 0.793}
+Subset 3        Train Loss: 0.5522      Test Loss: 0.9064       Test Acc: 0.6896        Class Acc: {0: 0.727, 1: 0.8140000000000001, 2: 0.613, 3: 0.55, 4: 0.5945, 5: 0.5725, 6: 0.769, 7: 0.7144999999999999, 8: 0.812, 9: 0.73}
+Subset 4        Train Loss: 0.5403      Test Loss: 0.9232       Test Acc: 0.6909        Class Acc: {0: 0.7505, 1: 0.8445, 2: 0.5995, 3: 0.4465, 4: 0.6455, 5: 0.5525, 6: 0.788, 7: 0.8200000000000001, 8: 0.7030000000000001, 9: 0.7595000000000001}
+Subset 5        Train Loss: 0.5548      Test Loss: 0.8969       Test Acc: 0.6933        Class Acc: {0: 0.7235, 1: 0.8345, 2: 0.526, 3: 0.5405, 4: 0.6295, 5: 0.6214999999999999, 6: 0.7655000000000001, 7: 0.7284999999999999, 8: 0.8109999999999999, 9: 0.752}
+Subset 6 learning rate decayed to 1e-05
+Subset 6        Train Loss: 4.4553      Test Loss: 4.4914       Test Acc: 0.3523        Class Acc: {0: 0.3296, 1: 0.4058, 2: 0.3444, 3: 0.21159999999999995, 4: 0.446, 5: 0.2756, 6: 0.24939999999999998, 7: 0.4128, 8: 0.5296000000000001, 9: 0.3184}
+Subset 7 learning rate decayed to 1e-05
+Subset 7        Train Loss: 3.3143      Test Loss: 3.2533       Test Acc: 0.3826        Class Acc: {0: 0.40519999999999995, 1: 0.49720000000000003, 2: 0.27399999999999997, 3: 0.2712, 4: 0.3278, 5: 0.292, 6: 0.5624, 7: 0.3388, 8: 0.5152, 9: 0.34199999999999997}
+Subset 8 learning rate decayed to 1e-05
+Subset 8        Train Loss: 7.5479      Test Loss: 7.5770       Test Acc: 0.3347        Class Acc: {0: 0.4788, 1: 0.33520000000000005, 2: 0.2084, 3: 0.229, 4: 0.329, 5: 0.3246, 6: 0.5052000000000001, 7: 0.29779999999999995, 8: 0.3014, 9: 0.33799999999999997}
+Subset 9 learning rate decayed to 1e-05
+Subset 9        Train Loss: 4.9266      Test Loss: 4.9062       Test Acc: 0.3265        Class Acc: {0: 0.265, 1: 0.2734, 2: 0.2848, 3: 0.3702, 4: 0.41479999999999995, 5: 0.39880000000000004, 6: 0.449, 7: 0.275, 8: 0.301, 9: 0.2334}
+Subset 10 learning rate decayed to 1e-05
+Subset 10       Train Loss: 3.7978      Test Loss: 3.8296       Test Acc: 0.3463        Class Acc: {0: 0.5076, 1: 0.31020000000000003, 2: 0.4816, 3: 0.18860000000000002, 4: 0.1782, 5: 0.40940000000000004, 6: 0.32860000000000006, 7: 0.2314, 8: 0.5738, 9: 0.2538}
+Aggregated Test Loss: 0.7514    Aggregated Test Acc: 0.7423     Aggregated Class Acc: {0: 0.793, 1: 0.86, 2: 0.621, 3: 0.539, 4: 0.704, 5: 0.638, 6: 0.816, 7: 0.781, 8: 0.876, 9: 0.795}
+Round 51 use time: 0.94 min, ETA: 2.33 hours
+================================================================================
+Round 52
+Subset 1        Dropout rate: 0.2       Number of models: 1
+Subset 2        Dropout rate: 0.2       Number of models: 1
+Subset 3        Dropout rate: 0.5       Number of models: 2
+Subset 4        Dropout rate: 0.5       Number of models: 2
+Subset 5        Dropout rate: 0.5       Number of models: 2
+Subset 6        Dropout rate: 0.8       Number of models: 5
+Subset 7        Dropout rate: 0.8       Number of models: 5
+Subset 8        Dropout rate: 0.8       Number of models: 5
+Subset 9        Dropout rate: 0.8       Number of models: 5
+Subset 10       Dropout rate: 0.8       Number of models: 5
+Subset 1        Train Loss: 0.3207      Test Loss: 0.8625       Test Acc: 0.7087        Class Acc: {0: 0.682, 1: 0.824, 2: 0.588, 3: 0.562, 4: 0.719, 5: 0.549, 6: 0.86, 7: 0.648, 8: 0.819, 9: 0.836}
+Subset 2        Train Loss: 0.3249      Test Loss: 0.9186       Test Acc: 0.7102        Class Acc: {0: 0.782, 1: 0.827, 2: 0.701, 3: 0.449, 4: 0.738, 5: 0.464, 6: 0.843, 7: 0.747, 8: 0.824, 9: 0.727}
+Subset 3        Train Loss: 0.5813      Test Loss: 0.9183       Test Acc: 0.6896        Class Acc: {0: 0.7484999999999999, 1: 0.758, 2: 0.567, 3: 0.5549999999999999, 4: 0.657, 5: 0.556, 6: 0.77, 7: 0.741, 8: 0.774, 9: 0.7695000000000001}
+Subset 4        Train Loss: 0.5106      Test Loss: 0.8829       Test Acc: 0.6996        Class Acc: {0: 0.7444999999999999, 1: 0.8325, 2: 0.6425000000000001, 3: 0.475, 4: 0.5715, 5: 0.5635, 6: 0.7905, 7: 0.782, 8: 0.793, 9: 0.8005}
+Subset 5        Train Loss: 0.5197      Test Loss: 0.9129       Test Acc: 0.6914        Class Acc: {0: 0.7749999999999999, 1: 0.76, 2: 0.534, 3: 0.5125, 4: 0.606, 5: 0.5934999999999999, 6: 0.792, 7: 0.746, 8: 0.7649999999999999, 9: 0.8300000000000001}
+Subset 6        Train Loss: 3.5536      Test Loss: 3.5467       Test Acc: 0.3631        Class Acc: {0: 0.588, 1: 0.3454, 2: 0.516, 3: 0.24359999999999998, 4: 0.2657999999999999, 5: 0.30619999999999997, 6: 0.2572, 7: 0.23420000000000002, 8: 0.49260000000000004, 9: 0.38239999999999996}
+Subset 7        Train Loss: 8.2555      Test Loss: 8.2385       Test Acc: 0.2453        Class Acc: {0: 0.1332, 1: 0.22880000000000003, 2: 0.4396, 3: 0.2856, 4: 0.3342, 5: 0.1276, 6: 0.30660000000000004, 7: 0.20739999999999997, 8: 0.32920000000000005, 9: 0.0606}
+Subset 8        Train Loss: 3.9434      Test Loss: 3.9770       Test Acc: 0.3486        Class Acc: {0: 0.43900000000000006, 1: 0.5016, 2: 0.46080000000000004, 3: 0.20060000000000003, 4: 0.3528, 5: 0.26819999999999994, 6: 0.31980000000000003, 7: 0.3582, 8: 0.35939999999999994, 9: 0.22540000000000004}
+Subset 9        Train Loss: 6.2171      Test Loss: 6.2062       Test Acc: 0.3160        Class Acc: {0: 0.42219999999999996, 1: 0.38380000000000003, 2: 0.36079999999999995, 3: 0.284, 4: 0.1662, 5: 0.20259999999999997, 6: 0.1928, 7: 0.22139999999999999, 8: 0.6090000000000001, 9: 0.3176}
+Subset 10       Train Loss: 6.3581      Test Loss: 6.2984       Test Acc: 0.2924        Class Acc: {0: 0.26899999999999996, 1: 0.23279999999999998, 2: 0.3368, 3: 0.364, 4: 0.2152, 5: 0.29779999999999995, 6: 0.131, 7: 0.584, 8: 0.31379999999999997, 9: 0.18}
+Aggregated Test Loss: 0.7547    Aggregated Test Acc: 0.7423     Aggregated Class Acc: {0: 0.79, 1: 0.855, 2: 0.634, 3: 0.56, 4: 0.686, 5: 0.65, 6: 0.822, 7: 0.77, 8: 0.844, 9: 0.812}
+Round 52 use time: 0.88 min, ETA: 2.17 hours
+================================================================================
+Round 53
+Subset 1        Dropout rate: 0.2       Number of models: 1
+Subset 2        Dropout rate: 0.2       Number of models: 1
+Subset 3        Dropout rate: 0.5       Number of models: 2
+Subset 4        Dropout rate: 0.5       Number of models: 2
+Subset 5        Dropout rate: 0.5       Number of models: 2
+Subset 6        Dropout rate: 0.8       Number of models: 5
+Subset 7        Dropout rate: 0.8       Number of models: 5
+Subset 8        Dropout rate: 0.8       Number of models: 5
+Subset 9        Dropout rate: 0.8       Number of models: 5
+Subset 10       Dropout rate: 0.8       Number of models: 5
+Subset 1        Train Loss: 0.3100      Test Loss: 0.8753       Test Acc: 0.7166        Class Acc: {0: 0.735, 1: 0.759, 2: 0.609, 3: 0.43, 4: 0.71, 5: 0.592, 6: 0.892, 7: 0.735, 8: 0.897, 9: 0.807}
+Subset 2        Train Loss: 0.2712      Test Loss: 0.8562       Test Acc: 0.7199        Class Acc: {0: 0.637, 1: 0.904, 2: 0.63, 3: 0.568, 4: 0.733, 5: 0.609, 6: 0.757, 7: 0.743, 8: 0.831, 9: 0.787}
+Subset 3        Train Loss: 0.5646      Test Loss: 0.9250       Test Acc: 0.6884        Class Acc: {0: 0.718, 1: 0.7725, 2: 0.47850000000000004, 3: 0.516, 4: 0.6625, 5: 0.606, 6: 0.8245, 7: 0.674, 8: 0.8234999999999999, 9: 0.8085}
+Subset 4        Train Loss: 0.5394      Test Loss: 0.9409       Test Acc: 0.6825        Class Acc: {0: 0.764, 1: 0.8065, 2: 0.5735, 3: 0.363, 4: 0.5575, 5: 0.678, 6: 0.8185, 7: 0.7090000000000001, 8: 0.768, 9: 0.7875}
+Subset 5        Train Loss: 0.5237      Test Loss: 0.8907       Test Acc: 0.6983        Class Acc: {0: 0.7295, 1: 0.851, 2: 0.558, 3: 0.41700000000000004, 4: 0.731, 5: 0.59, 6: 0.7875000000000001, 7: 0.776, 8: 0.7635000000000001, 9: 0.7795000000000001}
+Subset 6        Train Loss: 5.1638      Test Loss: 5.2684       Test Acc: 0.3133        Class Acc: {0: 0.3176, 1: 0.2658, 2: 0.49140000000000006, 3: 0.24160000000000004, 4: 0.2834, 5: 0.2894, 6: 0.47539999999999993, 7: 0.256, 8: 0.2872, 9: 0.225}
+Subset 7        Train Loss: 3.7004      Test Loss: 3.7257       Test Acc: 0.3565        Class Acc: {0: 0.5332, 1: 0.43879999999999997, 2: 0.418, 3: 0.3128, 4: 0.24900000000000003, 5: 0.326, 6: 0.3766, 7: 0.3726, 8: 0.3056, 9: 0.2324}
+Subset 8        Train Loss: 3.4656      Test Loss: 3.4961       Test Acc: 0.3728        Class Acc: {0: 0.6646, 1: 0.5146, 2: 0.42119999999999996, 3: 0.20800000000000002, 4: 0.2532, 5: 0.1998, 6: 0.3372, 7: 0.37960000000000005, 8: 0.4316, 9: 0.31820000000000004}
+Subset 9        Train Loss: 3.3337      Test Loss: 3.3191       Test Acc: 0.3705        Class Acc: {0: 0.4474, 1: 0.351, 2: 0.35940000000000005, 3: 0.367, 4: 0.331, 5: 0.3256, 6: 0.3106, 7: 0.36619999999999997, 8: 0.4484, 9: 0.3984}
+Subset 10       Train Loss: 4.2670      Test Loss: 4.2332       Test Acc: 0.3290        Class Acc: {0: 0.282, 1: 0.16720000000000002, 2: 0.36540000000000006, 3: 0.3162, 4: 0.3962, 5: 0.32599999999999996, 6: 0.5014000000000001, 7: 0.29719999999999996, 8: 0.39699999999999996, 9: 0.24159999999999998}
+Aggregated Test Loss: 0.7646    Aggregated Test Acc: 0.7425     Aggregated Class Acc: {0: 0.757, 1: 0.842, 2: 0.56, 3: 0.54, 4: 0.749, 5: 0.658, 6: 0.814, 7: 0.814, 8: 0.846, 9: 0.845}
+Round 53 use time: 0.88 min, ETA: 2.16 hours
+================================================================================
+Round 54
+Subset 1        Dropout rate: 0.2       Number of models: 1
+Subset 2        Dropout rate: 0.2       Number of models: 1
+Subset 3        Dropout rate: 0.5       Number of models: 2
+Subset 4        Dropout rate: 0.5       Number of models: 2
+Subset 5        Dropout rate: 0.5       Number of models: 2
+Subset 6        Dropout rate: 0.8       Number of models: 5
+Subset 7        Dropout rate: 0.8       Number of models: 5
+Subset 8        Dropout rate: 0.8       Number of models: 5
+Subset 9        Dropout rate: 0.8       Number of models: 5
+Subset 10       Dropout rate: 0.8       Number of models: 5
+Subset 1        Train Loss: 0.2599      Test Loss: 0.8487       Test Acc: 0.7230        Class Acc: {0: 0.718, 1: 0.863, 2: 0.617, 3: 0.514, 4: 0.674, 5: 0.703, 6: 0.759, 7: 0.712, 8: 0.828, 9: 0.842}
+Subset 2        Train Loss: 0.2763      Test Loss: 0.8990       Test Acc: 0.7067        Class Acc: {0: 0.619, 1: 0.784, 2: 0.675, 3: 0.61, 4: 0.578, 5: 0.614, 6: 0.71, 7: 0.761, 8: 0.869, 9: 0.847}
+Subset 3        Train Loss: 0.5333      Test Loss: 0.9155       Test Acc: 0.6951        Class Acc: {0: 0.7689999999999999, 1: 0.8205, 2: 0.5825, 3: 0.518, 4: 0.5980000000000001, 5: 0.5920000000000001, 6: 0.7585, 7: 0.6945, 8: 0.8255, 9: 0.7929999999999999}
+Subset 4        Train Loss: 0.5243      Test Loss: 0.9276       Test Acc: 0.6854        Class Acc: {0: 0.7675000000000001, 1: 0.8375, 2: 0.5065, 3: 0.526, 4: 0.577, 5: 0.5754999999999999, 6: 0.815, 7: 0.7325, 8: 0.7695000000000001, 9: 0.747}
+Subset 5        Train Loss: 0.5419      Test Loss: 0.9143       Test Acc: 0.6906        Class Acc: {0: 0.7885, 1: 0.832, 2: 0.45299999999999996, 3: 0.416, 4: 0.6115, 5: 0.6865, 6: 0.741, 7: 0.8154999999999999, 8: 0.8035, 9: 0.7585}
+Subset 6        Train Loss: 4.1344      Test Loss: 4.1991       Test Acc: 0.3614        Class Acc: {0: 0.3496, 1: 0.4606, 2: 0.3432, 3: 0.20600000000000002, 4: 0.41400000000000003, 5: 0.1984, 6: 0.42679999999999996, 7: 0.4596, 8: 0.3484, 9: 0.40780000000000005}
+Subset 7        Train Loss: 7.1046      Test Loss: 7.2654       Test Acc: 0.2717        Class Acc: {0: 0.26420000000000005, 1: 0.18780000000000002, 2: 0.3094, 3: 0.29419999999999996, 4: 0.5167999999999999, 5: 0.1316, 6: 0.2994, 7: 0.18360000000000004, 8: 0.2606, 9: 0.26959999999999995}
+Subset 8        Train Loss: 3.7475      Test Loss: 3.7782       Test Acc: 0.3227        Class Acc: {0: 0.41859999999999997, 1: 0.29700000000000004, 2: 0.3696, 3: 0.32839999999999997, 4: 0.33399999999999996, 5: 0.2782, 6: 0.3304, 7: 0.3664, 8: 0.341, 9: 0.1636}
+Subset 9        Train Loss: 7.6269      Test Loss: 7.6737       Test Acc: 0.2900        Class Acc: {0: 0.30319999999999997, 1: 0.16360000000000002, 2: 0.362, 3: 0.217, 4: 0.384, 5: 0.1456, 6: 0.5066, 7: 0.2778, 8: 0.3388, 9: 0.20179999999999998}
+Subset 10       Train Loss: 4.6592      Test Loss: 4.7204       Test Acc: 0.3353        Class Acc: {0: 0.42919999999999997, 1: 0.4032, 2: 0.33920000000000006, 3: 0.4272, 4: 0.2776, 5: 0.2004, 6: 0.2286, 7: 0.349, 8: 0.2998, 9: 0.3992}
+Aggregated Test Loss: 0.7539    Aggregated Test Acc: 0.7466     Aggregated Class Acc: {0: 0.771, 1: 0.85, 2: 0.596, 3: 0.577, 4: 0.677, 5: 0.675, 6: 0.814, 7: 0.787, 8: 0.882, 9: 0.837}
+Round 54 use time: 0.88 min, ETA: 2.14 hours
+================================================================================
+Round 55
+Subset 1        Dropout rate: 0.2       Number of models: 1
+Subset 2        Dropout rate: 0.2       Number of models: 1
+Subset 3        Dropout rate: 0.5       Number of models: 2
+Subset 4        Dropout rate: 0.5       Number of models: 2
+Subset 5        Dropout rate: 0.5       Number of models: 2
+Subset 6        Dropout rate: 0.8       Number of models: 5
+Subset 7        Dropout rate: 0.8       Number of models: 5
+Subset 8        Dropout rate: 0.8       Number of models: 5
+Subset 9        Dropout rate: 0.8       Number of models: 5
+Subset 10       Dropout rate: 0.8       Number of models: 5
+Subset 1        Train Loss: 0.2569      Test Loss: 0.8831       Test Acc: 0.7148        Class Acc: {0: 0.734, 1: 0.849, 2: 0.575, 3: 0.472, 4: 0.672, 5: 0.738, 6: 0.721, 7: 0.739, 8: 0.86, 9: 0.788}
+Subset 2        Train Loss: 0.2851      Test Loss: 0.8689       Test Acc: 0.7128        Class Acc: {0: 0.801, 1: 0.83, 2: 0.532, 3: 0.579, 4: 0.674, 5: 0.529, 6: 0.817, 7: 0.815, 8: 0.748, 9: 0.803}
+Subset 3        Train Loss: 0.5442      Test Loss: 0.9315       Test Acc: 0.6856        Class Acc: {0: 0.6875, 1: 0.8025, 2: 0.5740000000000001, 3: 0.54, 4: 0.5405, 5: 0.6419999999999999, 6: 0.812, 7: 0.696, 8: 0.8055, 9: 0.7565}
+Subset 4        Train Loss: 0.5238      Test Loss: 0.9284       Test Acc: 0.6896        Class Acc: {0: 0.787, 1: 0.8325, 2: 0.577, 3: 0.372, 4: 0.6385000000000001, 5: 0.63, 6: 0.8085, 7: 0.7410000000000001, 8: 0.7415, 9: 0.7685}
+Subset 5        Train Loss: 0.5097      Test Loss: 0.9156       Test Acc: 0.6910        Class Acc: {0: 0.7909999999999999, 1: 0.777, 2: 0.5055000000000001, 3: 0.42900000000000005, 4: 0.6739999999999999, 5: 0.649, 6: 0.794, 7: 0.7735000000000001, 8: 0.7195, 9: 0.798}
+Subset 6        Train Loss: 6.8312      Test Loss: 6.8746       Test Acc: 0.2949        Class Acc: {0: 0.2056, 1: 0.1296, 2: 0.3207999999999999, 3: 0.339, 4: 0.5076, 5: 0.3226, 6: 0.2518, 7: 0.2646, 8: 0.4, 9: 0.20779999999999998}
+Subset 7        Train Loss: 3.4518      Test Loss: 3.4004       Test Acc: 0.3835        Class Acc: {0: 0.5338, 1: 0.3948, 2: 0.4138, 3: 0.2898, 4: 0.22360000000000002, 5: 0.3278, 6: 0.48319999999999996, 7: 0.3134, 8: 0.5882000000000001, 9: 0.267}
+Subset 8        Train Loss: 4.7738      Test Loss: 4.7757       Test Acc: 0.3428        Class Acc: {0: 0.3114, 1: 0.3104, 2: 0.3654, 3: 0.425, 4: 0.2794, 5: 0.3886, 6: 0.24939999999999998, 7: 0.2998, 8: 0.49420000000000003, 9: 0.30460000000000004}
+Subset 9        Train Loss: 3.9555      Test Loss: 3.9883       Test Acc: 0.3430        Class Acc: {0: 0.3862, 1: 0.3508, 2: 0.3902, 3: 0.23679999999999998, 4: 0.3068, 5: 0.3364, 6: 0.2804, 7: 0.35579999999999995, 8: 0.45620000000000005, 9: 0.3308}
+Subset 10       Train Loss: 3.6864      Test Loss: 3.7069       Test Acc: 0.3467        Class Acc: {0: 0.3608, 1: 0.3978, 2: 0.3816, 3: 0.4096, 4: 0.1996, 5: 0.2426, 6: 0.28859999999999997, 7: 0.18280000000000002, 8: 0.625, 9: 0.3782}
+Aggregated Test Loss: 0.7549    Aggregated Test Acc: 0.7433     Aggregated Class Acc: {0: 0.798, 1: 0.876, 2: 0.562, 3: 0.529, 4: 0.708, 5: 0.685, 6: 0.823, 7: 0.803, 8: 0.835, 9: 0.814}
+Round 55 use time: 0.88 min, ETA: 2.13 hours
+================================================================================
+Round 56
+Subset 1        Dropout rate: 0.2       Number of models: 1
+Subset 2        Dropout rate: 0.2       Number of models: 1
+Subset 3        Dropout rate: 0.5       Number of models: 2
+Subset 4        Dropout rate: 0.5       Number of models: 2
+Subset 5        Dropout rate: 0.5       Number of models: 2
+Subset 6        Dropout rate: 0.8       Number of models: 5
+Subset 7        Dropout rate: 0.8       Number of models: 5
+Subset 8        Dropout rate: 0.8       Number of models: 5
+Subset 9        Dropout rate: 0.8       Number of models: 5
+Subset 10       Dropout rate: 0.8       Number of models: 5
+Subset 1        Train Loss: 0.2842      Test Loss: 0.8893       Test Acc: 0.7093        Class Acc: {0: 0.818, 1: 0.888, 2: 0.624, 3: 0.66, 4: 0.49, 5: 0.51, 6: 0.766, 7: 0.785, 8: 0.827, 9: 0.725}
+Subset 2        Train Loss: 0.2672      Test Loss: 0.9028       Test Acc: 0.7176        Class Acc: {0: 0.739, 1: 0.831, 2: 0.6, 3: 0.501, 4: 0.717, 5: 0.548, 6: 0.868, 7: 0.762, 8: 0.819, 9: 0.791}
+Subset 3        Train Loss: 0.5258      Test Loss: 0.9028       Test Acc: 0.6930        Class Acc: {0: 0.8049999999999999, 1: 0.8055, 2: 0.5635, 3: 0.595, 4: 0.6825, 5: 0.5269999999999999, 6: 0.7384999999999999, 7: 0.73, 8: 0.7515000000000001, 9: 0.732}
+Subset 4        Train Loss: 0.4942      Test Loss: 0.9112       Test Acc: 0.6909        Class Acc: {0: 0.726, 1: 0.7949999999999999, 2: 0.6415, 3: 0.4185, 4: 0.606, 5: 0.5575, 6: 0.8235, 7: 0.733, 8: 0.802, 9: 0.806}
+Subset 5        Train Loss: 0.5264      Test Loss: 0.9134       Test Acc: 0.6956        Class Acc: {0: 0.7855000000000001, 1: 0.8645, 2: 0.506, 3: 0.4125, 4: 0.6000000000000001, 5: 0.6725000000000001, 6: 0.8374999999999999, 7: 0.7805, 8: 0.7855, 9: 0.712}
+Subset 6        Train Loss: 5.0623      Test Loss: 5.1617       Test Acc: 0.3217        Class Acc: {0: 0.3518, 1: 0.27440000000000003, 2: 0.25, 3: 0.196, 4: 0.5188, 5: 0.22139999999999999, 6: 0.5496000000000001, 7: 0.2028, 8: 0.3988, 9: 0.253}
+Subset 7        Train Loss: 4.3344      Test Loss: 4.3616       Test Acc: 0.3730        Class Acc: {0: 0.47539999999999993, 1: 0.4806, 2: 0.3274, 3: 0.2238, 4: 0.252, 5: 0.31779999999999997, 6: 0.47919999999999996, 7: 0.4104, 8: 0.42119999999999996, 9: 0.3426}
+Subset 8        Train Loss: 6.0994      Test Loss: 6.1146       Test Acc: 0.2934        Class Acc: {0: 0.2306, 1: 0.18319999999999997, 2: 0.42140000000000005, 3: 0.3078, 4: 0.41999999999999993, 5: 0.2488, 6: 0.26339999999999997, 7: 0.33619999999999994, 8: 0.28559999999999997, 9: 0.2366}
+Subset 9        Train Loss: 6.0998      Test Loss: 6.0042       Test Acc: 0.3186        Class Acc: {0: 0.3572, 1: 0.267, 2: 0.382, 3: 0.35540000000000005, 4: 0.2004, 5: 0.364, 6: 0.3964, 7: 0.34740000000000004, 8: 0.2938, 9: 0.22279999999999997}
+Subset 10       Train Loss: 7.2950      Test Loss: 7.2108       Test Acc: 0.2946        Class Acc: {0: 0.5168, 1: 0.227, 2: 0.5638000000000001, 3: 0.20980000000000004, 4: 0.205, 5: 0.26639999999999997, 6: 0.1438, 7: 0.3416, 8: 0.252, 9: 0.21939999999999998}
+Aggregated Test Loss: 0.7566    Aggregated Test Acc: 0.7423     Aggregated Class Acc: {0: 0.825, 1: 0.879, 2: 0.591, 3: 0.533, 4: 0.65, 5: 0.665, 6: 0.828, 7: 0.796, 8: 0.834, 9: 0.822}
+Round 56 use time: 0.88 min, ETA: 2.11 hours
+================================================================================
+Round 57
+Subset 1        Dropout rate: 0.2       Number of models: 1
+Subset 2        Dropout rate: 0.2       Number of models: 1
+Subset 3        Dropout rate: 0.5       Number of models: 2
+Subset 4        Dropout rate: 0.5       Number of models: 2
+Subset 5        Dropout rate: 0.5       Number of models: 2
+Subset 6        Dropout rate: 0.8       Number of models: 5
+Subset 7        Dropout rate: 0.8       Number of models: 5
+Subset 8        Dropout rate: 0.8       Number of models: 5
+Subset 9        Dropout rate: 0.8       Number of models: 5
+Subset 10       Dropout rate: 0.8       Number of models: 5
+Subset 1        Train Loss: 0.2674      Test Loss: 0.8474       Test Acc: 0.7222        Class Acc: {0: 0.769, 1: 0.801, 2: 0.671, 3: 0.506, 4: 0.574, 5: 0.639, 6: 0.8, 7: 0.749, 8: 0.856, 9: 0.857}
+Subset 2        Train Loss: 0.2924      Test Loss: 0.9137       Test Acc: 0.7077        Class Acc: {0: 0.682, 1: 0.799, 2: 0.539, 3: 0.626, 4: 0.612, 5: 0.633, 6: 0.744, 7: 0.673, 8: 0.925, 9: 0.844}
+Subset 3        Train Loss: 0.5556      Test Loss: 0.9154       Test Acc: 0.6904        Class Acc: {0: 0.769, 1: 0.773, 2: 0.4515, 3: 0.4965, 4: 0.6805, 5: 0.5965, 6: 0.8005, 7: 0.769, 8: 0.7795000000000001, 9: 0.788}
+Subset 4        Train Loss: 0.5188      Test Loss: 0.9502       Test Acc: 0.6847        Class Acc: {0: 0.785, 1: 0.7585, 2: 0.492, 3: 0.502, 4: 0.614, 5: 0.5834999999999999, 6: 0.744, 7: 0.7895, 8: 0.752, 9: 0.8265}
+Subset 5        Train Loss: 0.5049      Test Loss: 0.9300       Test Acc: 0.6922        Class Acc: {0: 0.746, 1: 0.8009999999999999, 2: 0.5275000000000001, 3: 0.5549999999999999, 4: 0.609, 5: 0.5660000000000001, 6: 0.772, 7: 0.7255, 8: 0.8565, 9: 0.7635}
+Subset 6        Train Loss: 4.7773      Test Loss: 4.8038       Test Acc: 0.3368        Class Acc: {0: 0.3358, 1: 0.5112, 2: 0.263, 3: 0.4082, 4: 0.17099999999999999, 5: 0.3932, 6: 0.1426, 7: 0.41500000000000004, 8: 0.3672, 9: 0.36039999999999994}
+Subset 7        Train Loss: 5.1818      Test Loss: 5.2399       Test Acc: 0.3127        Class Acc: {0: 0.37679999999999997, 1: 0.2346, 2: 0.507, 3: 0.26339999999999997, 4: 0.2954, 5: 0.2892, 6: 0.35699999999999993, 7: 0.0528, 8: 0.5292000000000001, 9: 0.2218}
+Subset 8        Train Loss: 7.1029      Test Loss: 7.2058       Test Acc: 0.2784        Class Acc: {0: 0.35100000000000003, 1: 0.1666, 2: 0.4798, 3: 0.275, 4: 0.2846, 5: 0.201, 6: 0.1832, 7: 0.1908, 8: 0.43100000000000005, 9: 0.221}
+Subset 9        Train Loss: 6.2688      Test Loss: 6.2394       Test Acc: 0.2746        Class Acc: {0: 0.3966, 1: 0.2908, 2: 0.25860000000000005, 3: 0.1298, 4: 0.5604, 5: 0.1052, 6: 0.3324, 7: 0.2294, 8: 0.2012, 9: 0.2412}
+Subset 10       Train Loss: 5.3242      Test Loss: 5.3244       Test Acc: 0.3096        Class Acc: {0: 0.4640000000000001, 1: 0.2048, 2: 0.39780000000000004, 3: 0.24160000000000004, 4: 0.3724, 5: 0.157, 6: 0.2544, 7: 0.38780000000000003, 8: 0.371, 9: 0.24539999999999998}
+Aggregated Test Loss: 0.7742    Aggregated Test Acc: 0.7354     Aggregated Class Acc: {0: 0.829, 1: 0.847, 2: 0.546, 3: 0.573, 4: 0.602, 5: 0.654, 6: 0.787, 7: 0.793, 8: 0.876, 9: 0.847}
+Round 57 use time: 0.88 min, ETA: 2.09 hours
+================================================================================
+Round 58
+Subset 1        Dropout rate: 0.2       Number of models: 1
+Subset 2        Dropout rate: 0.2       Number of models: 1
+Subset 3        Dropout rate: 0.5       Number of models: 2
+Subset 4        Dropout rate: 0.5       Number of models: 2
+Subset 5        Dropout rate: 0.5       Number of models: 2
+Subset 6        Dropout rate: 0.8       Number of models: 5
+Subset 7        Dropout rate: 0.8       Number of models: 5
+Subset 8        Dropout rate: 0.8       Number of models: 5
+Subset 9        Dropout rate: 0.8       Number of models: 5
+Subset 10       Dropout rate: 0.8       Number of models: 5
+Subset 1        Train Loss: 0.2559      Test Loss: 0.8818       Test Acc: 0.7218        Class Acc: {0: 0.755, 1: 0.8, 2: 0.727, 3: 0.556, 4: 0.757, 5: 0.563, 6: 0.773, 7: 0.665, 8: 0.85, 9: 0.772}
+Subset 2        Train Loss: 0.2473      Test Loss: 0.8547       Test Acc: 0.7218        Class Acc: {0: 0.826, 1: 0.83, 2: 0.636, 3: 0.569, 4: 0.621, 5: 0.521, 6: 0.845, 7: 0.749, 8: 0.829, 9: 0.792}
+Subset 3        Train Loss: 0.5341      Test Loss: 0.9197       Test Acc: 0.6887        Class Acc: {0: 0.762, 1: 0.8594999999999999, 2: 0.5895, 3: 0.487, 4: 0.6225, 5: 0.561, 6: 0.797, 7: 0.7295, 8: 0.7845, 9: 0.6945}
+Subset 4        Train Loss: 0.5053      Test Loss: 0.9109       Test Acc: 0.6933        Class Acc: {0: 0.7335, 1: 0.7935, 2: 0.587, 3: 0.46950000000000003, 4: 0.6559999999999999, 5: 0.5509999999999999, 6: 0.8105, 7: 0.7535000000000001, 8: 0.7695000000000001, 9: 0.8089999999999999}
+Subset 5        Train Loss: 0.4911      Test Loss: 0.9028       Test Acc: 0.6951        Class Acc: {0: 0.728, 1: 0.8485, 2: 0.5755, 3: 0.56, 4: 0.7155, 5: 0.571, 6: 0.7170000000000001, 7: 0.673, 8: 0.858, 9: 0.705}
+Subset 6        Train Loss: 4.8145      Test Loss: 4.7707       Test Acc: 0.3334        Class Acc: {0: 0.4338, 1: 0.33599999999999997, 2: 0.4548, 3: 0.2706, 4: 0.3196, 5: 0.2326, 6: 0.16559999999999997, 7: 0.32299999999999995, 8: 0.4248, 9: 0.373}
+Subset 7        Train Loss: 8.9342      Test Loss: 9.0137       Test Acc: 0.2725        Class Acc: {0: 0.39360000000000006, 1: 0.1684, 2: 0.44299999999999995, 3: 0.23420000000000002, 4: 0.17760000000000004, 5: 0.14420000000000002, 6: 0.4194, 7: 0.22400000000000003, 8: 0.32019999999999993, 9: 0.2}
+Subset 8        Train Loss: 5.3360      Test Loss: 5.3697       Test Acc: 0.3549        Class Acc: {0: 0.5146000000000001, 1: 0.3764, 2: 0.3970000000000001, 3: 0.2096, 4: 0.2352, 5: 0.1968, 6: 0.4966000000000001, 7: 0.286, 8: 0.421, 9: 0.41600000000000004}
+Subset 9        Train Loss: 4.1636      Test Loss: 4.2286       Test Acc: 0.3376        Class Acc: {0: 0.46699999999999997, 1: 0.2714, 2: 0.392, 3: 0.38220000000000004, 4: 0.1408, 5: 0.24619999999999997, 6: 0.178, 7: 0.242, 8: 0.6542, 9: 0.4022}
+Subset 10       Train Loss: 6.3550      Test Loss: 6.4425       Test Acc: 0.2934        Class Acc: {0: 0.3782, 1: 0.24380000000000002, 2: 0.40280000000000005, 3: 0.36819999999999997, 4: 0.2016, 5: 0.1722, 6: 0.124, 7: 0.33419999999999994, 8: 0.45520000000000005, 9: 0.254}
+Aggregated Test Loss: 0.7603    Aggregated Test Acc: 0.7427     Aggregated Class Acc: {0: 0.827, 1: 0.865, 2: 0.605, 3: 0.555, 4: 0.676, 5: 0.66, 6: 0.77, 7: 0.799, 8: 0.87, 9: 0.8}
+Round 58 use time: 0.88 min, ETA: 2.09 hours
+================================================================================
+Round 59
+Subset 1        Dropout rate: 0.2       Number of models: 1
+Subset 2        Dropout rate: 0.2       Number of models: 1
+Subset 3        Dropout rate: 0.5       Number of models: 2
+Subset 4        Dropout rate: 0.5       Number of models: 2
+Subset 5        Dropout rate: 0.5       Number of models: 2
+Subset 6        Dropout rate: 0.8       Number of models: 5
+Subset 7        Dropout rate: 0.8       Number of models: 5
+Subset 8        Dropout rate: 0.8       Number of models: 5
+Subset 9        Dropout rate: 0.8       Number of models: 5
+Subset 10       Dropout rate: 0.8       Number of models: 5
+Subset 1        Train Loss: 0.2658      Test Loss: 0.8706       Test Acc: 0.7125        Class Acc: {0: 0.8, 1: 0.846, 2: 0.6, 3: 0.561, 4: 0.577, 5: 0.677, 6: 0.733, 7: 0.682, 8: 0.823, 9: 0.826}
+Subset 2        Train Loss: 0.2285      Test Loss: 0.8885       Test Acc: 0.7154        Class Acc: {0: 0.807, 1: 0.838, 2: 0.614, 3: 0.424, 4: 0.712, 5: 0.667, 6: 0.838, 7: 0.753, 8: 0.779, 9: 0.722}
+Subset 3        Train Loss: 0.5010      Test Loss: 0.8883       Test Acc: 0.7000        Class Acc: {0: 0.7875000000000001, 1: 0.8155, 2: 0.571, 3: 0.4935, 4: 0.633, 5: 0.654, 6: 0.752, 7: 0.742, 8: 0.7745, 9: 0.7765}
+Subset 4        Train Loss: 0.4753      Test Loss: 0.9147       Test Acc: 0.6948        Class Acc: {0: 0.7255, 1: 0.7995, 2: 0.6234999999999999, 3: 0.4375, 4: 0.6659999999999999, 5: 0.637, 6: 0.7745, 7: 0.7244999999999999, 8: 0.736, 9: 0.8245}
+Subset 5        Train Loss: 0.4734      Test Loss: 0.8832       Test Acc: 0.6999        Class Acc: {0: 0.737, 1: 0.815, 2: 0.5680000000000001, 3: 0.509, 4: 0.599, 5: 0.605, 6: 0.781, 7: 0.785, 8: 0.823, 9: 0.7765}
+Subset 6        Train Loss: 4.8875      Test Loss: 5.0260       Test Acc: 0.3292        Class Acc: {0: 0.5764, 1: 0.3674, 2: 0.3626, 3: 0.266, 4: 0.30460000000000004, 5: 0.2432, 6: 0.27080000000000004, 7: 0.2504, 8: 0.46040000000000003, 9: 0.1904}
+Subset 7        Train Loss: 9.4697      Test Loss: 9.5065       Test Acc: 0.2400        Class Acc: {0: 0.28200000000000003, 1: 0.16999999999999998, 2: 0.4708, 3: 0.4438000000000001, 4: 0.054200000000000005, 5: 0.16620000000000001, 6: 0.10940000000000001, 7: 0.11440000000000002, 8: 0.353, 9: 0.2358}
+Subset 8        Train Loss: 6.1473      Test Loss: 6.2076       Test Acc: 0.3105        Class Acc: {0: 0.41899999999999993, 1: 0.1834, 2: 0.303, 3: 0.2974, 4: 0.40520000000000006, 5: 0.1474, 6: 0.25599999999999995, 7: 0.36419999999999997, 8: 0.5216000000000001, 9: 0.20800000000000002}
+Subset 9        Train Loss: 7.8614      Test Loss: 7.9774       Test Acc: 0.2970        Class Acc: {0: 0.3372, 1: 0.2828, 2: 0.4176, 3: 0.2974, 4: 0.30619999999999997, 5: 0.25239999999999996, 6: 0.1338, 7: 0.2286, 8: 0.40980000000000005, 9: 0.304}
+Subset 10       Train Loss: 8.5469      Test Loss: 8.5364       Test Acc: 0.2611        Class Acc: {0: 0.391, 1: 0.1288, 2: 0.34900000000000003, 3: 0.2468, 4: 0.28759999999999997, 5: 0.2484, 6: 0.3114, 7: 0.1532, 8: 0.4582, 9: 0.03660000000000001}
+Aggregated Test Loss: 0.7560    Aggregated Test Acc: 0.7475     Aggregated Class Acc: {0: 0.817, 1: 0.881, 2: 0.59, 3: 0.563, 4: 0.645, 5: 0.706, 6: 0.804, 7: 0.799, 8: 0.848, 9: 0.822}
+Round 59 use time: 0.88 min, ETA: 2.06 hours
+================================================================================
+Round 60
+Subset 1        Dropout rate: 0.2       Number of models: 1
+Subset 2        Dropout rate: 0.2       Number of models: 1
+Subset 3        Dropout rate: 0.5       Number of models: 2
+Subset 4        Dropout rate: 0.5       Number of models: 2
+Subset 5        Dropout rate: 0.5       Number of models: 2
+Subset 6        Dropout rate: 0.8       Number of models: 5
+Subset 7        Dropout rate: 0.8       Number of models: 5
+Subset 8        Dropout rate: 0.8       Number of models: 5
+Subset 9        Dropout rate: 0.8       Number of models: 5
+Subset 10       Dropout rate: 0.8       Number of models: 5
+Subset 1        Train Loss: 0.2085      Test Loss: 0.8546       Test Acc: 0.7301        Class Acc: {0: 0.75, 1: 0.879, 2: 0.687, 3: 0.47, 4: 0.702, 5: 0.673, 6: 0.809, 7: 0.713, 8: 0.836, 9: 0.782}
+Subset 2        Train Loss: 0.2096      Test Loss: 0.8526       Test Acc: 0.7288        Class Acc: {0: 0.832, 1: 0.837, 2: 0.548, 3: 0.416, 4: 0.689, 5: 0.739, 6: 0.819, 7: 0.747, 8: 0.847, 9: 0.814}
+Subset 3        Train Loss: 0.4964      Test Loss: 0.9094       Test Acc: 0.6976        Class Acc: {0: 0.7475, 1: 0.8115, 2: 0.571, 3: 0.479, 4: 0.6305000000000001, 5: 0.638, 6: 0.8160000000000001, 7: 0.6775, 8: 0.8005, 9: 0.804}
+Subset 4        Train Loss: 0.4501      Test Loss: 0.9130       Test Acc: 0.6969        Class Acc: {0: 0.736, 1: 0.837, 2: 0.55, 3: 0.5025, 4: 0.613, 5: 0.615, 6: 0.806, 7: 0.731, 8: 0.79, 9: 0.7885}
+Subset 5        Train Loss: 0.5015      Test Loss: 0.9113       Test Acc: 0.6928        Class Acc: {0: 0.7715000000000001, 1: 0.8145, 2: 0.469, 3: 0.483, 4: 0.6495, 5: 0.6214999999999999, 6: 0.8145, 7: 0.7324999999999999, 8: 0.7955000000000001, 9: 0.7765}
+Subset 6        Train Loss: 4.9244      Test Loss: 5.0206       Test Acc: 0.3226        Class Acc: {0: 0.4806, 1: 0.2662, 2: 0.29219999999999996, 3: 0.1914, 4: 0.3416, 5: 0.3588, 6: 0.281, 7: 0.2678, 8: 0.43420000000000003, 9: 0.3118}
+Subset 7        Train Loss: 3.7053      Test Loss: 3.6810       Test Acc: 0.3807        Class Acc: {0: 0.5406, 1: 0.5111999999999999, 2: 0.4868, 3: 0.325, 4: 0.14079999999999998, 5: 0.2908, 6: 0.36019999999999996, 7: 0.3332, 8: 0.3834, 9: 0.43520000000000003}
+Subset 8        Train Loss: 5.9829      Test Loss: 5.9951       Test Acc: 0.3303        Class Acc: {0: 0.2712, 1: 0.28959999999999997, 2: 0.3426, 3: 0.219, 4: 0.5208, 5: 0.21919999999999998, 6: 0.30779999999999996, 7: 0.5154, 8: 0.38120000000000004, 9: 0.2358}
+Subset 9        Train Loss: 4.2116      Test Loss: 4.2921       Test Acc: 0.3903        Class Acc: {0: 0.5414, 1: 0.36039999999999994, 2: 0.48319999999999996, 3: 0.25720000000000004, 4: 0.3094, 5: 0.2102, 6: 0.4346, 7: 0.3202, 8: 0.48860000000000003, 9: 0.49800000000000005}
+Subset 10       Train Loss: 4.8810      Test Loss: 4.8726       Test Acc: 0.3261        Class Acc: {0: 0.3114, 1: 0.40499999999999997, 2: 0.2774, 3: 0.2564, 4: 0.4358000000000001, 5: 0.26880000000000004, 6: 0.3254, 7: 0.44939999999999997, 8: 0.2872, 9: 0.24420000000000003}
+Aggregated Test Loss: 0.7505    Aggregated Test Acc: 0.7484     Aggregated Class Acc: {0: 0.804, 1: 0.879, 2: 0.625, 3: 0.522, 4: 0.656, 5: 0.71, 6: 0.824, 7: 0.753, 8: 0.871, 9: 0.84}
+Round 60 use time: 0.88 min, ETA: 2.06 hours
