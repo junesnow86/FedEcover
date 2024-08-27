@@ -64,37 +64,61 @@ def aggregate_linear_layers(
             range(global_output_size), pruned_indices.get("output", np.array([]))
         )
 
-        for out_idx_layer, out_idx_global in enumerate(unpruned_output_indices):
-            for in_idx_layer, in_idx_global in enumerate(unpruned_input_indices):
-                weight_accumulator[out_idx_global, in_idx_global] += (
-                    layer_weight[out_idx_layer, in_idx_layer] * num_samples
+        # for out_idx_layer, out_idx_global in enumerate(unpruned_output_indices):
+        #     for in_idx_layer, in_idx_global in enumerate(unpruned_input_indices):
+        #         weight_accumulator[out_idx_global, in_idx_global] += (
+        #             layer_weight[out_idx_layer, in_idx_layer] * num_samples
+        #         )
+        #         sample_accumulator_weight[out_idx_global, in_idx_global] += num_samples
+        weight_accumulator[np.ix_(unpruned_output_indices, unpruned_input_indices)] += (
+            layer_weight[
+                np.ix_(
+                    range(len(unpruned_output_indices)),
+                    range(len(unpruned_input_indices)),
                 )
-                sample_accumulator_weight[out_idx_global, in_idx_global] += num_samples
+            ]
+            * num_samples
+        )
+        sample_accumulator_weight[
+            np.ix_(unpruned_output_indices, unpruned_input_indices)
+        ] += num_samples
 
         if linear_layer.bias is not None:
             layer_bias = linear_layer.bias.data
-            for out_idx_layer, out_idx_global in enumerate(unpruned_output_indices):
-                bias_accumulator[out_idx_global] += (
-                    layer_bias[out_idx_layer] * num_samples
-                )
-                sample_accumulator_bias[out_idx_global] += num_samples
+            # for out_idx_layer, out_idx_global in enumerate(unpruned_output_indices):
+            #     bias_accumulator[out_idx_global] += (
+            #         layer_bias[out_idx_layer] * num_samples
+            #     )
+            #     sample_accumulator_bias[out_idx_global] += num_samples
+            bias_accumulator[unpruned_output_indices] += (
+                layer_bias[range(len(unpruned_output_indices))] * num_samples
+            )
+            sample_accumulator_bias[unpruned_output_indices] += num_samples
 
     # Normalize the accumulated weights and biases by the number of samples after processing all layers
-    for out_idx_global in range(global_output_size):
-        for in_idx_global in range(global_input_size):
-            if sample_accumulator_weight[out_idx_global, in_idx_global] > 0:
-                global_linear_layer.weight.data[out_idx_global, in_idx_global] = (
-                    weight_accumulator[out_idx_global, in_idx_global]
-                    / sample_accumulator_weight[out_idx_global, in_idx_global]
-                )
+    # for out_idx_global in range(global_output_size):
+    #     for in_idx_global in range(global_input_size):
+    #         if sample_accumulator_weight[out_idx_global, in_idx_global] > 0:
+    #             global_linear_layer.weight.data[out_idx_global, in_idx_global] = (
+    #                 weight_accumulator[out_idx_global, in_idx_global]
+    #                 / sample_accumulator_weight[out_idx_global, in_idx_global]
+    #             )
+    nonzero_indices = sample_accumulator_weight > 0
+    global_linear_layer.weight.data[nonzero_indices] = (
+        weight_accumulator[nonzero_indices] / sample_accumulator_weight[nonzero_indices]
+    )
 
     if global_linear_layer.bias is not None:
-        for out_idx_global in range(global_output_size):
-            if sample_accumulator_bias[out_idx_global] > 0:
-                global_linear_layer.bias.data[out_idx_global] = (
-                    bias_accumulator[out_idx_global]
-                    / sample_accumulator_bias[out_idx_global]
-                )
+        # for out_idx_global in range(global_output_size):
+        #     if sample_accumulator_bias[out_idx_global] > 0:
+        #         global_linear_layer.bias.data[out_idx_global] = (
+        #             bias_accumulator[out_idx_global]
+        #             / sample_accumulator_bias[out_idx_global]
+        #         )
+        nonzero_indices = sample_accumulator_bias > 0
+        global_linear_layer.bias.data[nonzero_indices] = (
+            bias_accumulator[nonzero_indices] / sample_accumulator_bias[nonzero_indices]
+        )
 
 
 def aggregate_conv_layers(
@@ -132,20 +156,36 @@ def aggregate_conv_layers(
             range(global_out_channels), pruned_indices.get("output", np.array([]))
         )
 
-        for out_idx_layer, out_idx_global in enumerate(unpruned_out_indices):
-            for in_idx_layer, in_idx_global in enumerate(unpruned_in_indices):
-                weight_accumulator[out_idx_global, in_idx_global, :, :] += (
-                    layer_weight[out_idx_layer, in_idx_layer, :, :] * num_samples
+        # for out_idx_layer, out_idx_global in enumerate(unpruned_out_indices):
+        #     for in_idx_layer, in_idx_global in enumerate(unpruned_in_indices):
+        #         weight_accumulator[out_idx_global, in_idx_global, :, :] += (
+        #             layer_weight[out_idx_layer, in_idx_layer, :, :] * num_samples
+        #         )
+        #         sample_accumulator_weight[out_idx_global, in_idx_global] += num_samples
+        weight_accumulator[np.ix_(unpruned_out_indices, unpruned_in_indices)] += (
+            layer_weight[
+                np.ix_(
+                    range(len(unpruned_out_indices)),
+                    range(len(unpruned_in_indices)),
                 )
-                sample_accumulator_weight[out_idx_global, in_idx_global] += num_samples
+            ]
+            * num_samples
+        )
+        sample_accumulator_weight[
+            np.ix_(unpruned_out_indices, unpruned_in_indices)
+        ] += num_samples
 
         if conv_layer.bias is not None:
             layer_bias = conv_layer.bias.data
-            for out_idx_layer, out_idx_global in enumerate(unpruned_out_indices):
-                bias_accumulator[out_idx_global] += (
-                    layer_bias[out_idx_layer] * num_samples
-                )
-                sample_accumulator_bias[out_idx_global] += num_samples
+            # for out_idx_layer, out_idx_global in enumerate(unpruned_out_indices):
+            #     bias_accumulator[out_idx_global] += (
+            #         layer_bias[out_idx_layer] * num_samples
+            #     )
+            #     sample_accumulator_bias[out_idx_global] += num_samples
+            bias_accumulator[unpruned_out_indices] += (
+                layer_bias[range(len(unpruned_out_indices))] * num_samples
+            )
+            sample_accumulator_bias[unpruned_out_indices] += num_samples
 
     # Normalize the accumulated weights and biases by the number of samples after processing all layers
     for out_idx_global in range(global_out_channels):
@@ -155,14 +195,23 @@ def aggregate_conv_layers(
                     weight_accumulator[out_idx_global, in_idx_global, :, :]
                     / sample_accumulator_weight[out_idx_global, in_idx_global]
                 )
+    nonzero_indices = sample_accumulator_weight > 0
+    global_conv_layer.weight.data[nonzero_indices] = (
+        weight_accumulator[nonzero_indices]
+        / sample_accumulator_weight[nonzero_indices][:, None, None]
+    )
 
     if global_conv_layer.bias is not None:
-        for out_idx_global in range(global_out_channels):
-            if sample_accumulator_bias[out_idx_global] > 0:
-                global_conv_layer.bias.data[out_idx_global] = (
-                    bias_accumulator[out_idx_global]
-                    / sample_accumulator_bias[out_idx_global]
-                )
+        # for out_idx_global in range(global_out_channels):
+        #     if sample_accumulator_bias[out_idx_global] > 0:
+        #         global_conv_layer.bias.data[out_idx_global] = (
+        #             bias_accumulator[out_idx_global]
+        #             / sample_accumulator_bias[out_idx_global]
+        #         )
+        nonzero_indices = sample_accumulator_bias > 0
+        global_conv_layer.bias.data[nonzero_indices] = (
+            bias_accumulator[nonzero_indices] / sample_accumulator_bias[nonzero_indices]
+        )
 
 
 def aggregate_cnn(
@@ -221,199 +270,37 @@ def aggregate_resnet18(
         client_weights,
     )
 
-    # ----- layer1 -----
-    aggregate_conv_layers(
-        global_model.layer1[0].conv1,
-        [model.layer1[0].conv1[0] for model in local_models],
-        [
-            pruned_indices_dict["layer1.0.conv1"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
+    for layer in ["layer1", "layer2", "layer3", "layer4"]:
+        for block in ["0", "1"]:
+            for conv in ["conv1", "conv2"]:
+                key = f"{layer}.{block}.{conv}"
+                aggregate_conv_layers(
+                    global_model._modules[layer][int(block)]._modules[conv],
+                    [
+                        model._modules[layer][int(block)]._modules[conv][0]
+                        for model in local_models
+                    ],
+                    [
+                        pruned_indices_dict[key]
+                        for pruned_indices_dict in pruned_indices_dicts
+                    ],
+                    client_weights,
+                )
 
-    aggregate_conv_layers(
-        global_model.layer1[0].conv2,
-        [model.layer1[0].conv2[0] for model in local_models],
-        [
-            pruned_indices_dict["layer1.0.conv2"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer1[1].conv1,
-        [model.layer1[1].conv1[0] for model in local_models],
-        [
-            pruned_indices_dict["layer1.1.conv1"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer1[1].conv2,
-        [model.layer1[1].conv2[0] for model in local_models],
-        [
-            pruned_indices_dict["layer1.1.conv2"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    # ----- layer2 -----
-    aggregate_conv_layers(
-        global_model.layer2[0].conv1,
-        [model.layer2[0].conv1[0] for model in local_models],
-        [
-            pruned_indices_dict["layer2.0.conv1"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer2[0].conv2,
-        [model.layer2[0].conv2[0] for model in local_models],
-        [
-            pruned_indices_dict["layer2.0.conv2"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer2[0].downsample[0],
-        [model.layer2[0].downsample[0][0] for model in local_models],
-        [
-            pruned_indices_dict["layer2.0.downsample.0"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer2[1].conv1,
-        [model.layer2[1].conv1[0] for model in local_models],
-        [
-            pruned_indices_dict["layer2.1.conv1"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer2[1].conv2,
-        [model.layer2[1].conv2[0] for model in local_models],
-        [
-            pruned_indices_dict["layer2.1.conv2"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    # ----- layer3 -----
-    aggregate_conv_layers(
-        global_model.layer3[0].conv1,
-        [model.layer3[0].conv1[0] for model in local_models],
-        [
-            pruned_indices_dict["layer3.0.conv1"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer3[0].conv2,
-        [model.layer3[0].conv2[0] for model in local_models],
-        [
-            pruned_indices_dict["layer3.0.conv2"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer3[0].downsample[0],
-        [model.layer3[0].downsample[0][0] for model in local_models],
-        [
-            pruned_indices_dict["layer3.0.downsample.0"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer3[1].conv1,
-        [model.layer3[1].conv1[0] for model in local_models],
-        [
-            pruned_indices_dict["layer3.1.conv1"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer3[1].conv2,
-        [model.layer3[1].conv2[0] for model in local_models],
-        [
-            pruned_indices_dict["layer3.1.conv2"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    # ----- layer4 -----
-    aggregate_conv_layers(
-        global_model.layer4[0].conv1,
-        [model.layer4[0].conv1[0] for model in local_models],
-        [
-            pruned_indices_dict["layer4.0.conv1"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer4[0].conv2,
-        [model.layer4[0].conv2[0] for model in local_models],
-        [
-            pruned_indices_dict["layer4.0.conv2"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer4[0].downsample[0],
-        [model.layer4[0].downsample[0][0] for model in local_models],
-        [
-            pruned_indices_dict["layer4.0.downsample.0"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer4[1].conv1,
-        [model.layer4[1].conv1[0] for model in local_models],
-        [
-            pruned_indices_dict["layer4.1.conv1"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer4[1].conv2,
-        [model.layer4[1].conv2[0] for model in local_models],
-        [
-            pruned_indices_dict["layer4.1.conv2"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
+            downsample_key = f"{layer}.{block}.downsample.0"
+            if downsample_key in pruned_indices_dicts[0]:
+                aggregate_conv_layers(
+                    global_model._modules[layer][int(block)].downsample[0],
+                    [
+                        model._modules[layer][int(block)].downsample[0][0]
+                        for model in local_models
+                    ],
+                    [
+                        pruned_indices_dict[downsample_key]
+                        for pruned_indices_dict in pruned_indices_dicts
+                    ],
+                    client_weights,
+                )
 
     # ----- Linear layer -----
     aggregate_linear_layers(
@@ -443,199 +330,37 @@ def aggregate_resnet18_vanilla(
         client_weights,
     )
 
-    # ----- layer1 -----
-    aggregate_conv_layers(
-        global_model.layer1[0].conv1[0],
-        [model.layer1[0].conv1[0] for model in local_models],
-        [
-            pruned_indices_dict["layer1.0.conv1"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
+    for layer in ["layer1", "layer2", "layer3", "layer4"]:
+        for block in ["0", "1"]:
+            for conv in ["conv1", "conv2"]:
+                key = f"{layer}.{block}.{conv}"
+                aggregate_conv_layers(
+                    global_model._modules[layer][int(block)]._modules[conv][0],
+                    [
+                        model._modules[layer][int(block)]._modules[conv][0]
+                        for model in local_models
+                    ],
+                    [
+                        pruned_indices_dict[key]
+                        for pruned_indices_dict in pruned_indices_dicts
+                    ],
+                    client_weights,
+                )
 
-    aggregate_conv_layers(
-        global_model.layer1[0].conv2[0],
-        [model.layer1[0].conv2[0] for model in local_models],
-        [
-            pruned_indices_dict["layer1.0.conv2"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer1[1].conv1[0],
-        [model.layer1[1].conv1[0] for model in local_models],
-        [
-            pruned_indices_dict["layer1.1.conv1"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer1[1].conv2[0],
-        [model.layer1[1].conv2[0] for model in local_models],
-        [
-            pruned_indices_dict["layer1.1.conv2"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    # ----- layer2 -----
-    aggregate_conv_layers(
-        global_model.layer2[0].conv1[0],
-        [model.layer2[0].conv1[0] for model in local_models],
-        [
-            pruned_indices_dict["layer2.0.conv1"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer2[0].conv2[0],
-        [model.layer2[0].conv2[0] for model in local_models],
-        [
-            pruned_indices_dict["layer2.0.conv2"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer2[0].downsample[0][0],
-        [model.layer2[0].downsample[0][0] for model in local_models],
-        [
-            pruned_indices_dict["layer2.0.downsample.0"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer2[1].conv1[0],
-        [model.layer2[1].conv1[0] for model in local_models],
-        [
-            pruned_indices_dict["layer2.1.conv1"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer2[1].conv2[0],
-        [model.layer2[1].conv2[0] for model in local_models],
-        [
-            pruned_indices_dict["layer2.1.conv2"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    # ----- layer3 -----
-    aggregate_conv_layers(
-        global_model.layer3[0].conv1[0],
-        [model.layer3[0].conv1[0] for model in local_models],
-        [
-            pruned_indices_dict["layer3.0.conv1"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer3[0].conv2[0],
-        [model.layer3[0].conv2[0] for model in local_models],
-        [
-            pruned_indices_dict["layer3.0.conv2"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer3[0].downsample[0][0],
-        [model.layer3[0].downsample[0][0] for model in local_models],
-        [
-            pruned_indices_dict["layer3.0.downsample.0"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer3[1].conv1[0],
-        [model.layer3[1].conv1[0] for model in local_models],
-        [
-            pruned_indices_dict["layer3.1.conv1"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer3[1].conv2[0],
-        [model.layer3[1].conv2[0] for model in local_models],
-        [
-            pruned_indices_dict["layer3.1.conv2"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    # ----- layer4 -----
-    aggregate_conv_layers(
-        global_model.layer4[0].conv1[0],
-        [model.layer4[0].conv1[0] for model in local_models],
-        [
-            pruned_indices_dict["layer4.0.conv1"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer4[0].conv2[0],
-        [model.layer4[0].conv2[0] for model in local_models],
-        [
-            pruned_indices_dict["layer4.0.conv2"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer4[0].downsample[0][0],
-        [model.layer4[0].downsample[0][0] for model in local_models],
-        [
-            pruned_indices_dict["layer4.0.downsample.0"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer4[1].conv1[0],
-        [model.layer4[1].conv1[0] for model in local_models],
-        [
-            pruned_indices_dict["layer4.1.conv1"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
-
-    aggregate_conv_layers(
-        global_model.layer4[1].conv2[0],
-        [model.layer4[1].conv2[0] for model in local_models],
-        [
-            pruned_indices_dict["layer4.1.conv2"]
-            for pruned_indices_dict in pruned_indices_dicts
-        ],
-        client_weights,
-    )
+            downsample_key = f"{layer}.{block}.downsample.0"
+            if downsample_key in pruned_indices_dicts[0]:
+                aggregate_conv_layers(
+                    global_model._modules[layer][int(block)].downsample[0][0],
+                    [
+                        model._modules[layer][int(block)].downsample[0][0]
+                        for model in local_models
+                    ],
+                    [
+                        pruned_indices_dict[downsample_key]
+                        for pruned_indices_dict in pruned_indices_dicts
+                    ],
+                    client_weights,
+                )
 
     # ----- Linear layer -----
     aggregate_linear_layers(
@@ -646,7 +371,7 @@ def aggregate_resnet18_vanilla(
     )
 
 
-def recover_whole_resnet18(global_model, pruned_model, pruned_indices_dict):
+def recover_global_from_pruned_resnet18(global_model, pruned_model, pruned_indices_dict):
     """
     Recover a global model from a pruned model and the indices that were pruned.
     """
@@ -673,7 +398,7 @@ def recover_whole_resnet18(global_model, pruned_model, pruned_indices_dict):
         #         ] = pruned_model.conv1.weight.data[out_idx_layer, in_idx_layer, :, :]
         new_global_model.conv1.weight.data[
             np.ix_(unpruned_output_indices, unpruned_input_indices)
-        ] = pruned_model.conv1.weight.data[
+        ] = pruned_model.conv1[0].weight.data[
             np.ix_(
                 range(len(unpruned_output_indices)), range(len(unpruned_input_indices))
             )
@@ -697,12 +422,12 @@ def recover_whole_resnet18(global_model, pruned_model, pruned_indices_dict):
                     pruned_indices = pruned_indices_dict[key]
                     global_in_channels = (
                         global_model._modules[layer][int(block)]
-                        ._modules[conv][0]
+                        ._modules[conv]
                         .in_channels
                     )
                     global_out_channels = (
                         global_model._modules[layer][int(block)]
-                        ._modules[conv][0]
+                        ._modules[conv]
                         .out_channels
                     )
                     unpruned_input_indices = np.setdiff1d(
@@ -727,8 +452,8 @@ def recover_whole_resnet18(global_model, pruned_model, pruned_indices_dict):
                     #             ._modules[conv][0]
                     #             .weight.data[out_idx_layer, in_idx_layer, :, :]
                     #         )
-                    new_global_model._modules[layer][int(block)]._modules[conv][
-                        0
+                    new_global_model._modules[layer][int(block)]._modules[
+                        conv
                     ].weight.data[
                         np.ix_(unpruned_output_indices, unpruned_input_indices)
                     ] = (
@@ -780,7 +505,7 @@ def recover_whole_resnet18(global_model, pruned_model, pruned_indices_dict):
                     np.ix_(unpruned_output_indices, unpruned_input_indices)
                 ] = (
                     pruned_model._modules[layer][int(block)]
-                    ._modules["downsample"][0]
+                    ._modules["downsample"][0][0]
                     .weight.data[
                         np.ix_(
                             range(len(unpruned_output_indices)),
