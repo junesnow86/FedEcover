@@ -1,0 +1,1284 @@
+Model type: resnet
+Learning rate decay: False
+Save directory: None
+Results will not be saved.
+Round 1
+Subset 1	Train Loss: 2.0860	Test Loss: 2.0957	Test Acc: 0.1836	Class Acc: {0: 0.0, 1: 0.091, 2: 0.0, 3: 0.0, 4: 0.259, 5: 0.0, 6: 0.031, 7: 0.61, 8: 0.845, 9: 0.0}
+Subset 2	Train Loss: 2.2333	Test Loss: 2.2429	Test Acc: 0.1503	Class Acc: {0: 0.0, 1: 0.0, 2: 0.0, 3: 0.0, 4: 0.777, 5: 0.0, 6: 0.0, 7: 0.0, 8: 0.0, 9: 0.726}
+Subset 3	Train Loss: 2.1334	Test Loss: 2.1399	Test Acc: 0.1720	Class Acc: {0: 0.637, 1: 0.0, 2: 0.0, 3: 0.0, 4: 0.897, 5: 0.076, 6: 0.0, 7: 0.0, 8: 0.0, 9: 0.11}
+Subset 4	Train Loss: 2.0919	Test Loss: 2.0928	Test Acc: 0.1927	Class Acc: {0: 0.0, 1: 0.073, 2: 0.0, 3: 0.0, 4: 0.0, 5: 0.0, 6: 0.934, 7: 0.084, 8: 0.648, 9: 0.188}
+Subset 5	Train Loss: 2.1378	Test Loss: 2.1411	Test Acc: 0.1716	Class Acc: {0: 0.0, 1: 0.033, 2: 0.001, 3: 0.563, 4: 0.0, 5: 0.0, 6: 0.0, 7: 0.082, 8: 0.89, 9: 0.147}
+Subset 6	Train Loss: 2.2293	Test Loss: 2.2333	Test Acc: 0.1794	Class Acc: {0: 0.0, 1: 0.068, 2: 0.079, 3: 0.0, 4: 0.0, 5: 0.029, 6: 0.901, 7: 0.0, 8: 0.717, 9: 0.0}
+Subset 7	Train Loss: 2.2726	Test Loss: 2.2770	Test Acc: 0.1618	Class Acc: {0: 0.303, 1: 0.068, 2: 0.061, 3: 0.0, 4: 0.0, 5: 0.0, 6: 0.969, 7: 0.0, 8: 0.217, 9: 0.0}
+Subset 8	Train Loss: 2.2861	Test Loss: 2.2974	Test Acc: 0.1502	Class Acc: {0: 0.951, 1: 0.0, 2: 0.007, 3: 0.0, 4: 0.0, 5: 0.005, 6: 0.51, 7: 0.0, 8: 0.029, 9: 0.0}
+Subset 9	Train Loss: 2.3336	Test Loss: 2.3312	Test Acc: 0.1000	Class Acc: {0: 0.0, 1: 0.0, 2: 0.0, 3: 0.0, 4: 0.0, 5: 0.0, 6: 0.0, 7: 1.0, 8: 0.0, 9: 0.0}
+Subset 10	Train Loss: 2.3035	Test Loss: 2.3050	Test Acc: 0.1808	Class Acc: {0: 0.785, 1: 0.019, 2: 0.0, 3: 0.0, 4: 0.0, 5: 0.0, 6: 0.852, 7: 0.0, 8: 0.152, 9: 0.0}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 26.659055 seconds
+Aggregated Test Loss: 2.5532	Aggregated Test Acc: 0.1000	Aggregated Class Acc: {0: 0.0, 1: 0.0, 2: 0.0, 3: 0.0, 4: 1.0, 5: 0.0, 6: 0.0, 7: 0.0, 8: 0.0, 9: 0.0}
+Round 1 use time: 1.00 min, ETA: 3.33 hours
+================================================================================
+Round 2
+Subset 1	Train Loss: 2.0069	Test Loss: 2.0198	Test Acc: 0.1996	Class Acc: {0: 0.0, 1: 0.018, 2: 0.0, 3: 0.873, 4: 0.0, 5: 0.0, 6: 0.006, 7: 0.0, 8: 0.679, 9: 0.42}
+Subset 2	Train Loss: 1.9947	Test Loss: 1.9981	Test Acc: 0.2312	Class Acc: {0: 0.0, 1: 0.15, 2: 0.0, 3: 0.0, 4: 0.0, 5: 0.159, 6: 0.766, 7: 0.342, 8: 0.286, 9: 0.609}
+Subset 3	Train Loss: 2.0429	Test Loss: 2.0301	Test Acc: 0.2263	Class Acc: {0: 0.319, 1: 0.027, 2: 0.004, 3: 0.374, 4: 0.0, 5: 0.0, 6: 0.715, 7: 0.116, 8: 0.51, 9: 0.198}
+Subset 4	Train Loss: 2.0228	Test Loss: 2.0252	Test Acc: 0.2111	Class Acc: {0: 0.397, 1: 0.071, 2: 0.01, 3: 0.0, 4: 0.0, 5: 0.748, 6: 0.0, 7: 0.433, 8: 0.445, 9: 0.007}
+Subset 5	Train Loss: 1.9470	Test Loss: 1.9642	Test Acc: 0.2539	Class Acc: {0: 0.034, 1: 0.676, 2: 0.004, 3: 0.0, 4: 0.177, 5: 0.613, 6: 0.136, 7: 0.321, 8: 0.318, 9: 0.26}
+Subset 6	Train Loss: 2.2386	Test Loss: 2.2414	Test Acc: 0.1471	Class Acc: {0: 0.504, 1: 0.0, 2: 0.0, 3: 0.967, 4: 0.0, 5: 0.0, 6: 0.0, 7: 0.0, 8: 0.0, 9: 0.0}
+Subset 7	Train Loss: 2.1606	Test Loss: 2.1547	Test Acc: 0.1743	Class Acc: {0: 0.374, 1: 0.025, 2: 0.643, 3: 0.0, 4: 0.0, 5: 0.0, 6: 0.0, 7: 0.002, 8: 0.699, 9: 0.0}
+Subset 8	Train Loss: 2.1261	Test Loss: 2.1221	Test Acc: 0.1862	Class Acc: {0: 0.803, 1: 0.146, 2: 0.0, 3: 0.012, 4: 0.725, 5: 0.0, 6: 0.0, 7: 0.036, 8: 0.001, 9: 0.139}
+Subset 9	Train Loss: 2.1248	Test Loss: 2.1299	Test Acc: 0.2079	Class Acc: {0: 0.01, 1: 0.108, 2: 0.0, 3: 0.0, 4: 0.0, 5: 0.0, 6: 0.886, 7: 0.243, 8: 0.832, 9: 0.0}
+Subset 10	Train Loss: 2.1901	Test Loss: 2.2023	Test Acc: 0.1771	Class Acc: {0: 0.0, 1: 0.713, 2: 0.0, 3: 0.005, 4: 0.0, 5: 0.021, 6: 0.0, 7: 0.677, 8: 0.34, 9: 0.015}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 33.260180 seconds
+Aggregated Test Loss: 2.4124	Aggregated Test Acc: 0.1000	Aggregated Class Acc: {0: 0.0, 1: 0.0, 2: 0.0, 3: 0.0, 4: 1.0, 5: 0.0, 6: 0.0, 7: 0.0, 8: 0.0, 9: 0.0}
+Round 2 use time: 1.12 min, ETA: 3.69 hours
+================================================================================
+Round 3
+Subset 1	Train Loss: 2.0242	Test Loss: 2.0247	Test Acc: 0.2252	Class Acc: {0: 0.46, 1: 0.058, 2: 0.001, 3: 0.0, 4: 0.0, 5: 0.005, 6: 0.714, 7: 0.636, 8: 0.092, 9: 0.286}
+Subset 2	Train Loss: 1.9312	Test Loss: 1.9499	Test Acc: 0.2359	Class Acc: {0: 0.496, 1: 0.182, 2: 0.0, 3: 0.782, 4: 0.155, 5: 0.0, 6: 0.185, 7: 0.01, 8: 0.008, 9: 0.541}
+Subset 3	Train Loss: 2.0218	Test Loss: 2.0083	Test Acc: 0.2447	Class Acc: {0: 0.193, 1: 0.268, 2: 0.007, 3: 0.092, 4: 0.0, 5: 0.0, 6: 0.851, 7: 0.374, 8: 0.483, 9: 0.179}
+Subset 4	Train Loss: 1.9654	Test Loss: 1.9880	Test Acc: 0.2366	Class Acc: {0: 0.0, 1: 0.617, 2: 0.0, 3: 0.395, 4: 0.0, 5: 0.0, 6: 0.198, 7: 0.44, 8: 0.206, 9: 0.51}
+Subset 5	Train Loss: 1.9906	Test Loss: 1.9944	Test Acc: 0.2263	Class Acc: {0: 0.341, 1: 0.324, 2: 0.0, 3: 0.003, 4: 0.831, 5: 0.0, 6: 0.0, 7: 0.225, 8: 0.212, 9: 0.327}
+Subset 6	Train Loss: 2.0328	Test Loss: 2.0443	Test Acc: 0.2244	Class Acc: {0: 0.317, 1: 0.167, 2: 0.0, 3: 0.001, 4: 0.0, 5: 0.006, 6: 0.499, 7: 0.717, 8: 0.537, 9: 0.0}
+Subset 7	Train Loss: 2.0872	Test Loss: 2.0815	Test Acc: 0.1869	Class Acc: {0: 0.0, 1: 0.755, 2: 0.0, 3: 0.002, 4: 0.098, 5: 0.675, 6: 0.073, 7: 0.07, 8: 0.116, 9: 0.08}
+Subset 8	Train Loss: 2.1191	Test Loss: 2.1160	Test Acc: 0.1725	Class Acc: {0: 0.836, 1: 0.0, 2: 0.0, 3: 0.0, 4: 0.0, 5: 0.819, 6: 0.0, 7: 0.069, 8: 0.0, 9: 0.001}
+Subset 9	Train Loss: 2.0539	Test Loss: 2.0494	Test Acc: 0.1998	Class Acc: {0: 0.0, 1: 0.02, 2: 0.039, 3: 0.05, 4: 0.571, 5: 0.001, 6: 0.387, 7: 0.027, 8: 0.444, 9: 0.459}
+Subset 10	Train Loss: 2.0475	Test Loss: 2.0488	Test Acc: 0.2147	Class Acc: {0: 0.0, 1: 0.049, 2: 0.015, 3: 0.0, 4: 0.507, 5: 0.0, 6: 0.0, 7: 0.594, 8: 0.845, 9: 0.137}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 34.621319 seconds
+Aggregated Test Loss: 2.3667	Aggregated Test Acc: 0.1437	Aggregated Class Acc: {0: 0.0, 1: 0.0, 2: 0.049, 3: 0.0, 4: 0.862, 5: 0.0, 6: 0.0, 7: 0.0, 8: 0.0, 9: 0.526}
+Round 3 use time: 1.14 min, ETA: 3.76 hours
+================================================================================
+Round 4
+Subset 1	Train Loss: 1.9665	Test Loss: 1.9824	Test Acc: 0.2576	Class Acc: {0: 0.556, 1: 0.205, 2: 0.037, 3: 0.006, 4: 0.597, 5: 0.145, 6: 0.02, 7: 0.637, 8: 0.294, 9: 0.079}
+Subset 2	Train Loss: 1.9744	Test Loss: 1.9644	Test Acc: 0.2491	Class Acc: {0: 0.119, 1: 0.55, 2: 0.0, 3: 0.0, 4: 0.241, 5: 0.0, 6: 0.0, 7: 0.713, 8: 0.691, 9: 0.177}
+Subset 3	Train Loss: 1.9723	Test Loss: 1.9961	Test Acc: 0.2253	Class Acc: {0: 0.0, 1: 0.399, 2: 0.0, 3: 0.36, 4: 0.0, 5: 0.0, 6: 0.67, 7: 0.0, 8: 0.814, 9: 0.01}
+Subset 4	Train Loss: 1.9027	Test Loss: 1.9236	Test Acc: 0.2622	Class Acc: {0: 0.335, 1: 0.327, 2: 0.0, 3: 0.0, 4: 0.0, 5: 0.835, 6: 0.0, 7: 0.349, 8: 0.31, 9: 0.466}
+Subset 5	Train Loss: 1.9455	Test Loss: 1.9493	Test Acc: 0.2358	Class Acc: {0: 0.134, 1: 0.31, 2: 0.003, 3: 0.0, 4: 0.85, 5: 0.0, 6: 0.0, 7: 0.236, 8: 0.604, 9: 0.221}
+Subset 6	Train Loss: 2.0114	Test Loss: 2.0204	Test Acc: 0.2137	Class Acc: {0: 0.6, 1: 0.187, 2: 0.0, 3: 0.004, 4: 0.0, 5: 0.074, 6: 0.769, 7: 0.503, 8: 0.0, 9: 0.0}
+Subset 7	Train Loss: 2.0588	Test Loss: 2.0408	Test Acc: 0.1952	Class Acc: {0: 0.626, 1: 0.035, 2: 0.008, 3: 0.0, 4: 0.863, 5: 0.0, 6: 0.0, 7: 0.177, 8: 0.153, 9: 0.09}
+Subset 8	Train Loss: 2.2060	Test Loss: 2.2045	Test Acc: 0.1550	Class Acc: {0: 0.409, 1: 0.008, 2: 0.0, 3: 0.0, 4: 0.0, 5: 0.0, 6: 0.977, 7: 0.026, 8: 0.009, 9: 0.121}
+Subset 9	Train Loss: 2.0486	Test Loss: 2.0561	Test Acc: 0.1880	Class Acc: {0: 0.0, 1: 0.004, 2: 0.0, 3: 0.49, 4: 0.048, 5: 0.0, 6: 0.0, 7: 0.22, 8: 0.951, 9: 0.167}
+Subset 10	Train Loss: 2.0270	Test Loss: 2.0218	Test Acc: 0.2247	Class Acc: {0: 0.0, 1: 0.366, 2: 0.0, 3: 0.095, 4: 0.0, 5: 0.0, 6: 0.9, 7: 0.14, 8: 0.531, 9: 0.215}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 28.782279 seconds
+Aggregated Test Loss: 2.3293	Aggregated Test Acc: 0.1000	Aggregated Class Acc: {0: 0.0, 1: 0.0, 2: 0.0, 3: 0.0, 4: 1.0, 5: 0.0, 6: 0.0, 7: 0.0, 8: 0.0, 9: 0.0}
+Round 4 use time: 1.00 min, ETA: 3.27 hours
+================================================================================
+Round 5
+Subset 1	Train Loss: 1.9122	Test Loss: 1.9430	Test Acc: 0.2804	Class Acc: {0: 0.304, 1: 0.533, 2: 0.297, 3: 0.0, 4: 0.0, 5: 0.304, 6: 0.126, 7: 0.343, 8: 0.614, 9: 0.283}
+Subset 2	Train Loss: 1.9180	Test Loss: 1.9148	Test Acc: 0.2679	Class Acc: {0: 0.421, 1: 0.553, 2: 0.001, 3: 0.0, 4: 0.0, 5: 0.688, 6: 0.0, 7: 0.464, 8: 0.48, 9: 0.072}
+Subset 3	Train Loss: 1.9267	Test Loss: 1.9255	Test Acc: 0.2660	Class Acc: {0: 0.489, 1: 0.241, 2: 0.0, 3: 0.617, 4: 0.0, 5: 0.0, 6: 0.34, 7: 0.465, 8: 0.297, 9: 0.211}
+Subset 4	Train Loss: 1.9078	Test Loss: 1.9446	Test Acc: 0.2549	Class Acc: {0: 0.02, 1: 0.699, 2: 0.165, 3: 0.027, 4: 0.078, 5: 0.009, 6: 0.01, 7: 0.621, 8: 0.646, 9: 0.274}
+Subset 5	Train Loss: 1.9471	Test Loss: 1.9376	Test Acc: 0.2503	Class Acc: {0: 0.011, 1: 0.59, 2: 0.026, 3: 0.003, 4: 0.62, 5: 0.06, 6: 0.0, 7: 0.333, 8: 0.701, 9: 0.159}
+Subset 6	Train Loss: 1.9476	Test Loss: 1.9593	Test Acc: 0.2251	Class Acc: {0: 0.0, 1: 0.04, 2: 0.202, 3: 0.0, 4: 0.0, 5: 0.0, 6: 0.42, 7: 0.587, 8: 0.836, 9: 0.166}
+Subset 7	Train Loss: 1.9882	Test Loss: 1.9699	Test Acc: 0.2145	Class Acc: {0: 0.089, 1: 0.132, 2: 0.123, 3: 0.0, 4: 0.0, 5: 0.0, 6: 0.876, 7: 0.084, 8: 0.799, 9: 0.042}
+Subset 8	Train Loss: 2.0452	Test Loss: 2.0404	Test Acc: 0.2006	Class Acc: {0: 0.0, 1: 0.377, 2: 0.023, 3: 0.0, 4: 0.0, 5: 0.12, 6: 0.805, 7: 0.001, 8: 0.099, 9: 0.581}
+Subset 9	Train Loss: 1.9511	Test Loss: 1.9489	Test Acc: 0.2747	Class Acc: {0: 0.407, 1: 0.516, 2: 0.001, 3: 0.018, 4: 0.0, 5: 0.046, 6: 0.767, 7: 0.422, 8: 0.251, 9: 0.319}
+Subset 10	Train Loss: 1.9509	Test Loss: 1.9507	Test Acc: 0.2374	Class Acc: {0: 0.0, 1: 0.272, 2: 0.009, 3: 0.326, 4: 0.0, 5: 0.052, 6: 0.607, 7: 0.131, 8: 0.861, 9: 0.116}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 27.055965 seconds
+Aggregated Test Loss: 2.3023	Aggregated Test Acc: 0.1157	Aggregated Class Acc: {0: 0.0, 1: 0.021, 2: 0.0, 3: 0.0, 4: 0.974, 5: 0.0, 6: 0.0, 7: 0.0, 8: 0.0, 9: 0.162}
+Round 5 use time: 1.09 min, ETA: 3.54 hours
+================================================================================
+Round 6
+Subset 1	Train Loss: 1.9280	Test Loss: 1.9486	Test Acc: 0.2871	Class Acc: {0: 0.313, 1: 0.61, 2: 0.229, 3: 0.0, 4: 0.108, 5: 0.33, 6: 0.04, 7: 0.371, 8: 0.562, 9: 0.308}
+Subset 2	Train Loss: 1.8115	Test Loss: 1.8462	Test Acc: 0.3031	Class Acc: {0: 0.455, 1: 0.578, 2: 0.005, 3: 0.0, 4: 0.344, 5: 0.774, 6: 0.0, 7: 0.255, 8: 0.427, 9: 0.193}
+Subset 3	Train Loss: 1.8956	Test Loss: 1.9008	Test Acc: 0.2566	Class Acc: {0: 0.07, 1: 0.687, 2: 0.107, 3: 0.015, 4: 0.028, 5: 0.341, 6: 0.553, 7: 0.476, 8: 0.013, 9: 0.276}
+Subset 4	Train Loss: 1.9489	Test Loss: 1.9713	Test Acc: 0.2332	Class Acc: {0: 0.655, 1: 0.0, 2: 0.0, 3: 0.004, 4: 0.0, 5: 0.0, 6: 0.797, 7: 0.445, 8: 0.022, 9: 0.409}
+Subset 5	Train Loss: 1.9015	Test Loss: 1.8948	Test Acc: 0.2749	Class Acc: {0: 0.099, 1: 0.391, 2: 0.012, 3: 0.019, 4: 0.0, 5: 0.458, 6: 0.638, 7: 0.378, 8: 0.738, 9: 0.016}
+Subset 6	Train Loss: 1.8893	Test Loss: 1.9178	Test Acc: 0.2407	Class Acc: {0: 0.542, 1: 0.072, 2: 0.017, 3: 0.041, 4: 0.0, 5: 0.001, 6: 0.755, 7: 0.521, 8: 0.129, 9: 0.329}
+Subset 7	Train Loss: 1.9520	Test Loss: 1.9469	Test Acc: 0.2482	Class Acc: {0: 0.177, 1: 0.082, 2: 0.066, 3: 0.02, 4: 0.0, 5: 0.274, 6: 0.515, 7: 0.154, 8: 0.673, 9: 0.521}
+Subset 8	Train Loss: 2.0015	Test Loss: 2.0177	Test Acc: 0.2064	Class Acc: {0: 0.572, 1: 0.0, 2: 0.048, 3: 0.0, 4: 0.0, 5: 0.879, 6: 0.028, 7: 0.064, 8: 0.339, 9: 0.134}
+Subset 9	Train Loss: 1.9343	Test Loss: 1.9519	Test Acc: 0.2065	Class Acc: {0: 0.267, 1: 0.0, 2: 0.001, 3: 0.029, 4: 0.0, 5: 0.892, 6: 0.0, 7: 0.055, 8: 0.506, 9: 0.315}
+Subset 10	Train Loss: 1.9785	Test Loss: 1.9863	Test Acc: 0.2248	Class Acc: {0: 0.114, 1: 0.192, 2: 0.004, 3: 0.079, 4: 0.0, 5: 0.485, 6: 0.0, 7: 0.572, 8: 0.802, 9: 0.0}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 31.643443 seconds
+Aggregated Test Loss: 2.2350	Aggregated Test Acc: 0.1929	Aggregated Class Acc: {0: 0.475, 1: 0.215, 2: 0.0, 3: 0.0, 4: 0.828, 5: 0.0, 6: 0.0, 7: 0.0, 8: 0.0, 9: 0.411}
+Round 6 use time: 1.08 min, ETA: 3.49 hours
+================================================================================
+Round 7
+Subset 1	Train Loss: 1.8304	Test Loss: 1.8648	Test Acc: 0.2757	Class Acc: {0: 0.249, 1: 0.339, 2: 0.661, 3: 0.0, 4: 0.0, 5: 0.121, 6: 0.0, 7: 0.433, 8: 0.336, 9: 0.618}
+Subset 2	Train Loss: 1.8714	Test Loss: 1.9006	Test Acc: 0.2724	Class Acc: {0: 0.002, 1: 0.714, 2: 0.039, 3: 0.019, 4: 0.0, 5: 0.783, 6: 0.065, 7: 0.258, 8: 0.461, 9: 0.383}
+Subset 3	Train Loss: 1.8862	Test Loss: 1.9028	Test Acc: 0.2541	Class Acc: {0: 0.061, 1: 0.583, 2: 0.029, 3: 0.117, 4: 0.0, 5: 0.797, 6: 0.02, 7: 0.22, 8: 0.658, 9: 0.056}
+Subset 4	Train Loss: 1.9139	Test Loss: 1.9384	Test Acc: 0.2397	Class Acc: {0: 0.016, 1: 0.806, 2: 0.033, 3: 0.0, 4: 0.023, 5: 0.161, 6: 0.762, 7: 0.027, 8: 0.364, 9: 0.205}
+Subset 5	Train Loss: 1.9680	Test Loss: 1.9544	Test Acc: 0.2780	Class Acc: {0: 0.338, 1: 0.692, 2: 0.041, 3: 0.26, 4: 0.0, 5: 0.301, 6: 0.0, 7: 0.412, 8: 0.444, 9: 0.292}
+Subset 6	Train Loss: 1.9292	Test Loss: 1.9452	Test Acc: 0.1978	Class Acc: {0: 0.693, 1: 0.001, 2: 0.733, 3: 0.006, 4: 0.0, 5: 0.139, 6: 0.028, 7: 0.067, 8: 0.0, 9: 0.311}
+Subset 7	Train Loss: 1.9974	Test Loss: 1.9944	Test Acc: 0.2092	Class Acc: {0: 0.021, 1: 0.08, 2: 0.185, 3: 0.0, 4: 0.002, 5: 0.0, 6: 0.325, 7: 0.387, 8: 0.853, 9: 0.239}
+Subset 8	Train Loss: 1.8666	Test Loss: 1.8765	Test Acc: 0.2970	Class Acc: {0: 0.403, 1: 0.399, 2: 0.016, 3: 0.009, 4: 0.061, 5: 0.233, 6: 0.732, 7: 0.184, 8: 0.445, 9: 0.488}
+Subset 9	Train Loss: 1.9155	Test Loss: 1.9246	Test Acc: 0.2623	Class Acc: {0: 0.178, 1: 0.426, 2: 0.0, 3: 0.29, 4: 0.0, 5: 0.002, 6: 0.613, 7: 0.416, 8: 0.604, 9: 0.094}
+Subset 10	Train Loss: 2.0456	Test Loss: 2.0393	Test Acc: 0.1862	Class Acc: {0: 0.0, 1: 0.611, 2: 0.016, 3: 0.024, 4: 0.711, 5: 0.0, 6: 0.0, 7: 0.489, 8: 0.002, 9: 0.009}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 36.157409 seconds
+Aggregated Test Loss: 2.1768	Aggregated Test Acc: 0.1720	Aggregated Class Acc: {0: 0.002, 1: 0.772, 2: 0.087, 3: 0.0, 4: 0.726, 5: 0.0, 6: 0.0, 7: 0.0, 8: 0.045, 9: 0.088}
+Round 7 use time: 1.17 min, ETA: 3.77 hours
+================================================================================
+Round 8
+Subset 1	Train Loss: 1.8621	Test Loss: 1.8777	Test Acc: 0.2709	Class Acc: {0: 0.021, 1: 0.396, 2: 0.206, 3: 0.0, 4: 0.002, 5: 0.018, 6: 0.675, 7: 0.507, 8: 0.701, 9: 0.183}
+Subset 2	Train Loss: 2.0037	Test Loss: 2.0164	Test Acc: 0.2499	Class Acc: {0: 0.117, 1: 0.571, 2: 0.336, 3: 0.092, 4: 0.0, 5: 0.128, 6: 0.073, 7: 0.312, 8: 0.744, 9: 0.126}
+Subset 3	Train Loss: 1.9414	Test Loss: 1.9433	Test Acc: 0.2503	Class Acc: {0: 0.222, 1: 0.193, 2: 0.053, 3: 0.014, 4: 0.0, 5: 0.031, 6: 0.846, 7: 0.345, 8: 0.549, 9: 0.25}
+Subset 4	Train Loss: 1.8699	Test Loss: 1.9137	Test Acc: 0.2675	Class Acc: {0: 0.068, 1: 0.368, 2: 0.069, 3: 0.036, 4: 0.109, 5: 0.008, 6: 0.422, 7: 0.449, 8: 0.73, 9: 0.416}
+Subset 5	Train Loss: 1.8549	Test Loss: 1.8511	Test Acc: 0.3001	Class Acc: {0: 0.499, 1: 0.551, 2: 0.005, 3: 0.078, 4: 0.332, 5: 0.45, 6: 0.003, 7: 0.489, 8: 0.25, 9: 0.344}
+Subset 6	Train Loss: 1.8954	Test Loss: 1.9229	Test Acc: 0.2382	Class Acc: {0: 0.668, 1: 0.018, 2: 0.001, 3: 0.172, 4: 0.0, 5: 0.022, 6: 0.558, 7: 0.469, 8: 0.205, 9: 0.269}
+Subset 7	Train Loss: 2.0402	Test Loss: 2.0351	Test Acc: 0.1956	Class Acc: {0: 0.0, 1: 0.049, 2: 0.124, 3: 0.021, 4: 0.008, 5: 0.0, 6: 0.623, 7: 0.151, 8: 0.933, 9: 0.047}
+Subset 8	Train Loss: 1.9556	Test Loss: 1.9659	Test Acc: 0.2139	Class Acc: {0: 0.0, 1: 0.039, 2: 0.653, 3: 0.0, 4: 0.123, 5: 0.023, 6: 0.0, 7: 0.239, 8: 0.726, 9: 0.336}
+Subset 9	Train Loss: 1.9207	Test Loss: 1.9385	Test Acc: 0.2493	Class Acc: {0: 0.652, 1: 0.395, 2: 0.0, 3: 0.234, 4: 0.0, 5: 0.0, 6: 0.599, 7: 0.388, 8: 0.0, 9: 0.225}
+Subset 10	Train Loss: 1.9255	Test Loss: 1.9266	Test Acc: 0.2783	Class Acc: {0: 0.1, 1: 0.343, 2: 0.087, 3: 0.405, 4: 0.0, 5: 0.0, 6: 0.395, 7: 0.569, 8: 0.506, 9: 0.378}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 28.337168 seconds
+Aggregated Test Loss: 2.1632	Aggregated Test Acc: 0.1817	Aggregated Class Acc: {0: 0.005, 1: 0.012, 2: 0.354, 3: 0.006, 4: 0.453, 5: 0.0, 6: 0.0, 7: 0.0, 8: 0.945, 9: 0.042}
+Round 8 use time: 1.05 min, ETA: 3.36 hours
+================================================================================
+Round 9
+Subset 1	Train Loss: 1.9118	Test Loss: 1.9418	Test Acc: 0.2782	Class Acc: {0: 0.537, 1: 0.371, 2: 0.435, 3: 0.016, 4: 0.002, 5: 0.231, 6: 0.457, 7: 0.427, 8: 0.289, 9: 0.017}
+Subset 2	Train Loss: 1.8720	Test Loss: 1.8843	Test Acc: 0.2732	Class Acc: {0: 0.687, 1: 0.467, 2: 0.001, 3: 0.158, 4: 0.523, 5: 0.132, 6: 0.003, 7: 0.658, 8: 0.077, 9: 0.026}
+Subset 3	Train Loss: 1.8755	Test Loss: 1.8819	Test Acc: 0.2489	Class Acc: {0: 0.1, 1: 0.105, 2: 0.049, 3: 0.0, 4: 0.0, 5: 0.71, 6: 0.0, 7: 0.369, 8: 0.425, 9: 0.731}
+Subset 4	Train Loss: 1.8430	Test Loss: 1.8613	Test Acc: 0.2834	Class Acc: {0: 0.121, 1: 0.665, 2: 0.0, 3: 0.46, 4: 0.0, 5: 0.001, 6: 0.453, 7: 0.442, 8: 0.506, 9: 0.186}
+Subset 5	Train Loss: 1.9375	Test Loss: 1.9314	Test Acc: 0.2502	Class Acc: {0: 0.001, 1: 0.431, 2: 0.0, 3: 0.003, 4: 0.0, 5: 0.03, 6: 0.931, 7: 0.13, 8: 0.555, 9: 0.421}
+Subset 6	Train Loss: 1.8647	Test Loss: 1.8897	Test Acc: 0.2757	Class Acc: {0: 0.261, 1: 0.447, 2: 0.01, 3: 0.255, 4: 0.0, 5: 0.018, 6: 0.477, 7: 0.48, 8: 0.595, 9: 0.214}
+Subset 7	Train Loss: 1.9161	Test Loss: 1.9198	Test Acc: 0.2430	Class Acc: {0: 0.025, 1: 0.023, 2: 0.188, 3: 0.0, 4: 0.489, 5: 0.0, 6: 0.0, 7: 0.37, 8: 0.633, 9: 0.702}
+Subset 8	Train Loss: 1.8945	Test Loss: 1.9111	Test Acc: 0.2570	Class Acc: {0: 0.01, 1: 0.499, 2: 0.0, 3: 0.003, 4: 0.055, 5: 0.637, 6: 0.0, 7: 0.477, 8: 0.749, 9: 0.14}
+Subset 9	Train Loss: 1.9357	Test Loss: 1.9505	Test Acc: 0.2352	Class Acc: {0: 0.0, 1: 0.392, 2: 0.0, 3: 0.0, 4: 0.0, 5: 0.048, 6: 0.763, 7: 0.446, 8: 0.144, 9: 0.559}
+Subset 10	Train Loss: 1.9515	Test Loss: 1.9565	Test Acc: 0.2530	Class Acc: {0: 0.0, 1: 0.516, 2: 0.0, 3: 0.212, 4: 0.0, 5: 0.0, 6: 0.698, 7: 0.485, 8: 0.488, 9: 0.131}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 39.195938 seconds
+Aggregated Test Loss: 2.0117	Aggregated Test Acc: 0.1798	Aggregated Class Acc: {0: 0.039, 1: 0.057, 2: 0.06, 3: 0.014, 4: 0.489, 5: 0.234, 6: 0.0, 7: 0.0, 8: 0.876, 9: 0.029}
+Round 9 use time: 1.30 min, ETA: 4.14 hours
+================================================================================
+Round 10
+Subset 1	Train Loss: 1.7980	Test Loss: 1.8219	Test Acc: 0.2921	Class Acc: {0: 0.469, 1: 0.676, 2: 0.63, 3: 0.0, 4: 0.0, 5: 0.001, 6: 0.132, 7: 0.447, 8: 0.382, 9: 0.184}
+Subset 2	Train Loss: 1.8746	Test Loss: 1.8836	Test Acc: 0.2838	Class Acc: {0: 0.337, 1: 0.722, 2: 0.077, 3: 0.0, 4: 0.0, 5: 0.444, 6: 0.056, 7: 0.542, 8: 0.51, 9: 0.15}
+Subset 3	Train Loss: 1.8720	Test Loss: 1.8713	Test Acc: 0.2732	Class Acc: {0: 0.01, 1: 0.69, 2: 0.007, 3: 0.013, 4: 0.485, 5: 0.228, 6: 0.017, 7: 0.4, 8: 0.581, 9: 0.301}
+Subset 4	Train Loss: 1.8509	Test Loss: 1.8751	Test Acc: 0.2766	Class Acc: {0: 0.0, 1: 0.774, 2: 0.002, 3: 0.086, 4: 0.328, 5: 0.43, 6: 0.014, 7: 0.491, 8: 0.503, 9: 0.138}
+Subset 5	Train Loss: 1.9376	Test Loss: 1.9553	Test Acc: 0.2628	Class Acc: {0: 0.373, 1: 0.556, 2: 0.003, 3: 0.617, 4: 0.001, 5: 0.256, 6: 0.0, 7: 0.424, 8: 0.299, 9: 0.099}
+Subset 6	Train Loss: 1.9869	Test Loss: 2.0083	Test Acc: 0.1924	Class Acc: {0: 0.208, 1: 0.0, 2: 0.012, 3: 0.016, 4: 0.558, 5: 0.063, 6: 0.0, 7: 0.192, 8: 0.769, 9: 0.106}
+Subset 7	Train Loss: 1.9711	Test Loss: 1.9467	Test Acc: 0.2197	Class Acc: {0: 0.004, 1: 0.121, 2: 0.0, 3: 0.069, 4: 0.0, 5: 0.643, 6: 0.0, 7: 0.355, 8: 0.917, 9: 0.088}
+Subset 8	Train Loss: 1.9296	Test Loss: 1.9335	Test Acc: 0.2629	Class Acc: {0: 0.001, 1: 0.675, 2: 0.164, 3: 0.095, 4: 0.386, 5: 0.028, 6: 0.077, 7: 0.22, 8: 0.681, 9: 0.302}
+Subset 9	Train Loss: 1.9057	Test Loss: 1.9111	Test Acc: 0.2581	Class Acc: {0: 0.479, 1: 0.327, 2: 0.0, 3: 0.001, 4: 0.002, 5: 0.0, 6: 0.41, 7: 0.819, 8: 0.133, 9: 0.41}
+Subset 10	Train Loss: 1.9153	Test Loss: 1.9235	Test Acc: 0.2402	Class Acc: {0: 0.0, 1: 0.463, 2: 0.004, 3: 0.0, 4: 0.0, 5: 0.0, 6: 0.654, 7: 0.477, 8: 0.795, 9: 0.009}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 48.237116 seconds
+Aggregated Test Loss: 2.1968	Aggregated Test Acc: 0.1775	Aggregated Class Acc: {0: 0.0, 1: 0.014, 2: 0.145, 3: 0.003, 4: 0.599, 5: 0.006, 6: 0.019, 7: 0.0, 8: 0.95, 9: 0.039}
+Round 10 use time: 1.67 min, ETA: 5.28 hours
+================================================================================
+Round 11
+Subset 1	Train Loss: 1.8572	Test Loss: 1.8609	Test Acc: 0.2896	Class Acc: {0: 0.589, 1: 0.431, 2: 0.271, 3: 0.014, 4: 0.131, 5: 0.291, 6: 0.0, 7: 0.667, 8: 0.173, 9: 0.329}
+Subset 2	Train Loss: 1.9385	Test Loss: 1.9475	Test Acc: 0.2807	Class Acc: {0: 0.178, 1: 0.8, 2: 0.048, 3: 0.166, 4: 0.012, 5: 0.0, 6: 0.527, 7: 0.407, 8: 0.521, 9: 0.148}
+Subset 3	Train Loss: 1.8717	Test Loss: 1.8601	Test Acc: 0.2661	Class Acc: {0: 0.007, 1: 0.444, 2: 0.368, 3: 0.313, 4: 0.0, 5: 0.0, 6: 0.0, 7: 0.591, 8: 0.428, 9: 0.51}
+Subset 4	Train Loss: 1.8284	Test Loss: 1.8677	Test Acc: 0.2684	Class Acc: {0: 0.02, 1: 0.766, 2: 0.007, 3: 0.232, 4: 0.0, 5: 0.638, 6: 0.207, 7: 0.177, 8: 0.314, 9: 0.323}
+Subset 5	Train Loss: 1.9068	Test Loss: 1.9226	Test Acc: 0.2715	Class Acc: {0: 0.184, 1: 0.268, 2: 0.174, 3: 0.0, 4: 0.139, 5: 0.775, 6: 0.024, 7: 0.279, 8: 0.507, 9: 0.365}
+Subset 6	Train Loss: 1.9451	Test Loss: 1.9681	Test Acc: 0.2323	Class Acc: {0: 0.024, 1: 0.263, 2: 0.008, 3: 0.112, 4: 0.0, 5: 0.0, 6: 0.883, 7: 0.178, 8: 0.585, 9: 0.27}
+Subset 7	Train Loss: 1.9755	Test Loss: 1.9702	Test Acc: 0.2257	Class Acc: {0: 0.0, 1: 0.142, 2: 0.02, 3: 0.0, 4: 0.031, 5: 0.0, 6: 0.88, 7: 0.285, 8: 0.542, 9: 0.357}
+Subset 8	Train Loss: 1.9688	Test Loss: 1.9858	Test Acc: 0.2058	Class Acc: {0: 0.187, 1: 0.002, 2: 0.538, 3: 0.0, 4: 0.017, 5: 0.002, 6: 0.268, 7: 0.121, 8: 0.817, 9: 0.106}
+Subset 9	Train Loss: 1.8780	Test Loss: 1.8954	Test Acc: 0.2600	Class Acc: {0: 0.336, 1: 0.278, 2: 0.175, 3: 0.603, 4: 0.0, 5: 0.0, 6: 0.0, 7: 0.444, 8: 0.587, 9: 0.177}
+Subset 10	Train Loss: 1.8994	Test Loss: 1.9046	Test Acc: 0.2739	Class Acc: {0: 0.264, 1: 0.384, 2: 0.393, 3: 0.0, 4: 0.067, 5: 0.378, 6: 0.055, 7: 0.356, 8: 0.552, 9: 0.29}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 48.372649 seconds
+Aggregated Test Loss: 2.0194	Aggregated Test Acc: 0.2030	Aggregated Class Acc: {0: 0.0, 1: 0.091, 2: 0.018, 3: 0.734, 4: 0.008, 5: 0.139, 6: 0.0, 7: 0.0, 8: 0.829, 9: 0.211}
+Round 11 use time: 1.57 min, ETA: 4.94 hours
+================================================================================
+Round 12
+Subset 1	Train Loss: 1.8271	Test Loss: 1.8468	Test Acc: 0.2667	Class Acc: {0: 0.005, 1: 0.524, 2: 0.0, 3: 0.0, 4: 0.579, 5: 0.007, 6: 0.0, 7: 0.539, 8: 0.454, 9: 0.559}
+Subset 2	Train Loss: 1.7960	Test Loss: 1.8358	Test Acc: 0.3107	Class Acc: {0: 0.342, 1: 0.697, 2: 0.0, 3: 0.0, 4: 0.006, 5: 0.579, 6: 0.268, 7: 0.512, 8: 0.549, 9: 0.154}
+Subset 3	Train Loss: 2.0571	Test Loss: 2.0559	Test Acc: 0.2367	Class Acc: {0: 0.344, 1: 0.227, 2: 0.015, 3: 0.042, 4: 0.702, 5: 0.0, 6: 0.146, 7: 0.408, 8: 0.23, 9: 0.253}
+Subset 4	Train Loss: 1.8008	Test Loss: 1.8285	Test Acc: 0.2999	Class Acc: {0: 0.03, 1: 0.633, 2: 0.0, 3: 0.0, 4: 0.354, 5: 0.419, 6: 0.185, 7: 0.439, 8: 0.576, 9: 0.363}
+Subset 5	Train Loss: 1.8783	Test Loss: 1.8806	Test Acc: 0.2649	Class Acc: {0: 0.653, 1: 0.441, 2: 0.0, 3: 0.002, 4: 0.002, 5: 0.153, 6: 0.497, 7: 0.729, 8: 0.01, 9: 0.162}
+Subset 6	Train Loss: 1.8469	Test Loss: 1.8684	Test Acc: 0.2829	Class Acc: {0: 0.064, 1: 0.437, 2: 0.212, 3: 0.007, 4: 0.0, 5: 0.157, 6: 0.327, 7: 0.523, 8: 0.52, 9: 0.582}
+Subset 7	Train Loss: 1.9223	Test Loss: 1.9148	Test Acc: 0.2403	Class Acc: {0: 0.0, 1: 0.07, 2: 0.101, 3: 0.0, 4: 0.0, 5: 0.0, 6: 0.768, 7: 0.213, 8: 0.584, 9: 0.667}
+Subset 8	Train Loss: 1.9081	Test Loss: 1.9103	Test Acc: 0.2531	Class Acc: {0: 0.0, 1: 0.344, 2: 0.024, 3: 0.0, 4: 0.0, 5: 0.239, 6: 0.157, 7: 0.778, 8: 0.599, 9: 0.39}
+Subset 9	Train Loss: 1.9205	Test Loss: 1.9290	Test Acc: 0.2524	Class Acc: {0: 0.012, 1: 0.415, 2: 0.0, 3: 0.009, 4: 0.023, 5: 0.281, 6: 0.702, 7: 0.185, 8: 0.718, 9: 0.179}
+Subset 10	Train Loss: 1.9248	Test Loss: 1.9240	Test Acc: 0.2641	Class Acc: {0: 0.133, 1: 0.287, 2: 0.12, 3: 0.155, 4: 0.268, 5: 0.19, 6: 0.0, 7: 0.627, 8: 0.504, 9: 0.357}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 47.450140 seconds
+Aggregated Test Loss: 2.0665	Aggregated Test Acc: 0.1843	Aggregated Class Acc: {0: 0.003, 1: 0.128, 2: 0.0, 3: 0.0, 4: 0.383, 5: 0.159, 6: 0.0, 7: 0.203, 8: 0.87, 9: 0.097}
+Round 12 use time: 1.71 min, ETA: 5.37 hours
+================================================================================
+Round 13
+Subset 1	Train Loss: 1.8401	Test Loss: 1.8645	Test Acc: 0.3084	Class Acc: {0: 0.457, 1: 0.618, 2: 0.128, 3: 0.017, 4: 0.226, 5: 0.442, 6: 0.077, 7: 0.746, 8: 0.197, 9: 0.176}
+Subset 2	Train Loss: 1.8306	Test Loss: 1.8506	Test Acc: 0.2983	Class Acc: {0: 0.121, 1: 0.672, 2: 0.006, 3: 0.061, 4: 0.535, 5: 0.346, 6: 0.005, 7: 0.49, 8: 0.521, 9: 0.226}
+Subset 3	Train Loss: 1.8788	Test Loss: 1.8880	Test Acc: 0.2581	Class Acc: {0: 0.69, 1: 0.078, 2: 0.07, 3: 0.489, 4: 0.023, 5: 0.0, 6: 0.314, 7: 0.563, 8: 0.008, 9: 0.346}
+Subset 4	Train Loss: 1.8311	Test Loss: 1.8531	Test Acc: 0.2983	Class Acc: {0: 0.226, 1: 0.385, 2: 0.0, 3: 0.499, 4: 0.0, 5: 0.004, 6: 0.226, 7: 0.68, 8: 0.449, 9: 0.514}
+Subset 5	Train Loss: 1.8517	Test Loss: 1.8470	Test Acc: 0.2789	Class Acc: {0: 0.177, 1: 0.801, 2: 0.061, 3: 0.0, 4: 0.162, 5: 0.001, 6: 0.704, 7: 0.299, 8: 0.512, 9: 0.072}
+Subset 6	Train Loss: 1.9095	Test Loss: 1.9362	Test Acc: 0.2505	Class Acc: {0: 0.339, 1: 0.011, 2: 0.005, 3: 0.04, 4: 0.0, 5: 0.217, 6: 0.557, 7: 0.648, 8: 0.669, 9: 0.019}
+Subset 7	Train Loss: 1.9098	Test Loss: 1.8907	Test Acc: 0.2492	Class Acc: {0: 0.001, 1: 0.598, 2: 0.032, 3: 0.025, 4: 0.0, 5: 0.0, 6: 0.761, 7: 0.392, 8: 0.68, 9: 0.003}
+Subset 8	Train Loss: 1.8897	Test Loss: 1.8995	Test Acc: 0.2737	Class Acc: {0: 0.324, 1: 0.556, 2: 0.001, 3: 0.0, 4: 0.672, 5: 0.173, 6: 0.0, 7: 0.458, 8: 0.196, 9: 0.357}
+Subset 9	Train Loss: 1.8637	Test Loss: 1.8863	Test Acc: 0.2674	Class Acc: {0: 0.287, 1: 0.198, 2: 0.0, 3: 0.227, 4: 0.0, 5: 0.0, 6: 0.648, 7: 0.572, 8: 0.577, 9: 0.165}
+Subset 10	Train Loss: 1.8553	Test Loss: 1.8742	Test Acc: 0.2704	Class Acc: {0: 0.102, 1: 0.691, 2: 0.004, 3: 0.264, 4: 0.0, 5: 0.0, 6: 0.571, 7: 0.408, 8: 0.621, 9: 0.043}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 39.600408 seconds
+Aggregated Test Loss: 2.1025	Aggregated Test Acc: 0.2131	Aggregated Class Acc: {0: 0.006, 1: 0.649, 2: 0.005, 3: 0.0, 4: 0.075, 5: 0.811, 6: 0.002, 7: 0.008, 8: 0.515, 9: 0.06}
+Round 13 use time: 1.58 min, ETA: 4.92 hours
+================================================================================
+Round 14
+Subset 1	Train Loss: 1.7714	Test Loss: 1.7977	Test Acc: 0.3280	Class Acc: {0: 0.574, 1: 0.262, 2: 0.032, 3: 0.064, 4: 0.428, 5: 0.282, 6: 0.349, 7: 0.431, 8: 0.429, 9: 0.429}
+Subset 2	Train Loss: 1.7604	Test Loss: 1.8063	Test Acc: 0.3078	Class Acc: {0: 0.142, 1: 0.238, 2: 0.063, 3: 0.074, 4: 0.16, 5: 0.492, 6: 0.14, 7: 0.513, 8: 0.705, 9: 0.551}
+Subset 3	Train Loss: 1.8348	Test Loss: 1.8365	Test Acc: 0.2714	Class Acc: {0: 0.671, 1: 0.484, 2: 0.003, 3: 0.299, 4: 0.0, 5: 0.372, 6: 0.0, 7: 0.609, 8: 0.009, 9: 0.267}
+Subset 4	Train Loss: 1.8402	Test Loss: 1.8753	Test Acc: 0.2629	Class Acc: {0: 0.0, 1: 0.259, 2: 0.0, 3: 0.0, 4: 0.0, 5: 0.661, 6: 0.0, 7: 0.57, 8: 0.784, 9: 0.355}
+Subset 5	Train Loss: 1.8295	Test Loss: 1.8405	Test Acc: 0.2865	Class Acc: {0: 0.4, 1: 0.362, 2: 0.016, 3: 0.002, 4: 0.018, 5: 0.102, 6: 0.823, 7: 0.45, 8: 0.531, 9: 0.161}
+Subset 6	Train Loss: 1.8680	Test Loss: 1.8760	Test Acc: 0.2687	Class Acc: {0: 0.0, 1: 0.747, 2: 0.0, 3: 0.011, 4: 0.0, 5: 0.06, 6: 0.701, 7: 0.418, 8: 0.62, 9: 0.13}
+Subset 7	Train Loss: 1.9687	Test Loss: 1.9567	Test Acc: 0.2326	Class Acc: {0: 0.015, 1: 0.844, 2: 0.019, 3: 0.001, 4: 0.316, 5: 0.0, 6: 0.0, 7: 0.551, 8: 0.446, 9: 0.134}
+Subset 8	Train Loss: 1.8737	Test Loss: 1.8887	Test Acc: 0.2476	Class Acc: {0: 0.027, 1: 0.07, 2: 0.115, 3: 0.0, 4: 0.0, 5: 0.737, 6: 0.0, 7: 0.299, 8: 0.671, 9: 0.557}
+Subset 9	Train Loss: 1.9462	Test Loss: 1.9660	Test Acc: 0.2185	Class Acc: {0: 0.036, 1: 0.211, 2: 0.031, 3: 0.0, 4: 0.0, 5: 0.592, 6: 0.017, 7: 0.354, 8: 0.87, 9: 0.074}
+Subset 10	Train Loss: 1.8611	Test Loss: 1.8756	Test Acc: 0.2584	Class Acc: {0: 0.0, 1: 0.445, 2: 0.0, 3: 0.133, 4: 0.453, 5: 0.011, 6: 0.069, 7: 0.622, 8: 0.605, 9: 0.246}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 46.983531 seconds
+Aggregated Test Loss: 2.2350	Aggregated Test Acc: 0.2012	Aggregated Class Acc: {0: 0.001, 1: 0.242, 2: 0.003, 3: 0.0, 4: 0.068, 5: 0.723, 6: 0.0, 7: 0.005, 8: 0.882, 9: 0.088}
+Round 14 use time: 1.65 min, ETA: 5.11 hours
+================================================================================
+Round 15
+Subset 1	Train Loss: 1.8129	Test Loss: 1.8283	Test Acc: 0.2953	Class Acc: {0: 0.367, 1: 0.246, 2: 0.197, 3: 0.038, 4: 0.265, 5: 0.0, 6: 0.352, 7: 0.535, 8: 0.292, 9: 0.661}
+Subset 2	Train Loss: 1.7635	Test Loss: 1.7832	Test Acc: 0.3238	Class Acc: {0: 0.39, 1: 0.587, 2: 0.093, 3: 0.087, 4: 0.0, 5: 0.618, 6: 0.126, 7: 0.513, 8: 0.419, 9: 0.405}
+Subset 3	Train Loss: 1.9009	Test Loss: 1.9070	Test Acc: 0.2602	Class Acc: {0: 0.304, 1: 0.841, 2: 0.014, 3: 0.378, 4: 0.031, 5: 0.075, 6: 0.481, 7: 0.137, 8: 0.176, 9: 0.165}
+Subset 4	Train Loss: 1.8279	Test Loss: 1.8472	Test Acc: 0.2815	Class Acc: {0: 0.642, 1: 0.0, 2: 0.062, 3: 0.252, 4: 0.0, 5: 0.095, 6: 0.503, 7: 0.536, 8: 0.087, 9: 0.638}
+Subset 5	Train Loss: 1.8532	Test Loss: 1.8471	Test Acc: 0.3138	Class Acc: {0: 0.446, 1: 0.558, 2: 0.013, 3: 0.185, 4: 0.491, 5: 0.008, 6: 0.353, 7: 0.441, 8: 0.432, 9: 0.211}
+Subset 6	Train Loss: 1.8955	Test Loss: 1.9026	Test Acc: 0.2576	Class Acc: {0: 0.272, 1: 0.354, 2: 0.003, 3: 0.167, 4: 0.0, 5: 0.0, 6: 0.799, 7: 0.188, 8: 0.464, 9: 0.329}
+Subset 7	Train Loss: 1.9257	Test Loss: 1.9144	Test Acc: 0.2544	Class Acc: {0: 0.0, 1: 0.108, 2: 0.008, 3: 0.041, 4: 0.0, 5: 0.0, 6: 0.635, 7: 0.586, 8: 0.669, 9: 0.497}
+Subset 8	Train Loss: 1.8582	Test Loss: 1.8732	Test Acc: 0.2851	Class Acc: {0: 0.204, 1: 0.654, 2: 0.0, 3: 0.044, 4: 0.0, 5: 0.243, 6: 0.489, 7: 0.533, 8: 0.61, 9: 0.074}
+Subset 9	Train Loss: 1.9262	Test Loss: 1.9403	Test Acc: 0.2252	Class Acc: {0: 0.747, 1: 0.024, 2: 0.057, 3: 0.0, 4: 0.0, 5: 0.483, 6: 0.06, 7: 0.505, 8: 0.0, 9: 0.376}
+Subset 10	Train Loss: 1.8770	Test Loss: 1.8893	Test Acc: 0.2587	Class Acc: {0: 0.023, 1: 0.798, 2: 0.008, 3: 0.242, 4: 0.0, 5: 0.557, 6: 0.006, 7: 0.384, 8: 0.416, 9: 0.153}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 39.674561 seconds
+Aggregated Test Loss: 1.9328	Aggregated Test Acc: 0.2658	Aggregated Class Acc: {0: 0.014, 1: 0.434, 2: 0.026, 3: 0.011, 4: 0.0, 5: 0.807, 6: 0.0, 7: 0.39, 8: 0.633, 9: 0.343}
+Round 15 use time: 1.49 min, ETA: 4.59 hours
+================================================================================
+Round 16
+Subset 1	Train Loss: 1.7207	Test Loss: 1.7569	Test Acc: 0.3414	Class Acc: {0: 0.255, 1: 0.471, 2: 0.019, 3: 0.073, 4: 0.389, 5: 0.512, 6: 0.201, 7: 0.422, 8: 0.553, 9: 0.519}
+Subset 2	Train Loss: 1.8160	Test Loss: 1.8405	Test Acc: 0.3164	Class Acc: {0: 0.52, 1: 0.477, 2: 0.129, 3: 0.119, 4: 0.24, 5: 0.493, 6: 0.0, 7: 0.504, 8: 0.559, 9: 0.123}
+Subset 3	Train Loss: 1.7752	Test Loss: 1.7921	Test Acc: 0.3400	Class Acc: {0: 0.397, 1: 0.385, 2: 0.041, 3: 0.2, 4: 0.406, 5: 0.308, 6: 0.281, 7: 0.546, 8: 0.516, 9: 0.32}
+Subset 4	Train Loss: 1.7424	Test Loss: 1.7877	Test Acc: 0.3233	Class Acc: {0: 0.512, 1: 0.693, 2: 0.084, 3: 0.16, 4: 0.04, 5: 0.377, 6: 0.244, 7: 0.581, 8: 0.321, 9: 0.221}
+Subset 5	Train Loss: 1.7769	Test Loss: 1.7823	Test Acc: 0.3192	Class Acc: {0: 0.349, 1: 0.504, 2: 0.026, 3: 0.0, 4: 0.073, 5: 0.577, 6: 0.194, 7: 0.711, 8: 0.472, 9: 0.286}
+Subset 6	Train Loss: 1.8784	Test Loss: 1.8941	Test Acc: 0.2633	Class Acc: {0: 0.104, 1: 0.036, 2: 0.004, 3: 0.007, 4: 0.003, 5: 0.185, 6: 0.639, 7: 0.594, 8: 0.471, 9: 0.59}
+Subset 7	Train Loss: 1.9225	Test Loss: 1.9139	Test Acc: 0.2374	Class Acc: {0: 0.0, 1: 0.149, 2: 0.289, 3: 0.024, 4: 0.0, 5: 0.167, 6: 0.598, 7: 0.161, 8: 0.621, 9: 0.365}
+Subset 8	Train Loss: 1.8371	Test Loss: 1.8659	Test Acc: 0.2846	Class Acc: {0: 0.355, 1: 0.372, 2: 0.151, 3: 0.004, 4: 0.0, 5: 0.305, 6: 0.469, 7: 0.307, 8: 0.694, 9: 0.189}
+Subset 9	Train Loss: 1.9424	Test Loss: 1.9395	Test Acc: 0.2326	Class Acc: {0: 0.004, 1: 0.841, 2: 0.031, 3: 0.125, 4: 0.0, 5: 0.011, 6: 0.775, 7: 0.298, 8: 0.167, 9: 0.074}
+Subset 10	Train Loss: 1.9523	Test Loss: 1.9539	Test Acc: 0.2341	Class Acc: {0: 0.047, 1: 0.386, 2: 0.014, 3: 0.062, 4: 0.0, 5: 0.454, 6: 0.0, 7: 0.465, 8: 0.773, 9: 0.14}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 39.316775 seconds
+Aggregated Test Loss: 1.9569	Aggregated Test Acc: 0.2733	Aggregated Class Acc: {0: 0.06, 1: 0.453, 2: 0.125, 3: 0.007, 4: 0.054, 5: 0.804, 6: 0.0, 7: 0.35, 8: 0.795, 9: 0.085}
+Round 16 use time: 1.47 min, ETA: 4.50 hours
+================================================================================
+Round 17
+Subset 1	Train Loss: 1.7151	Test Loss: 1.7492	Test Acc: 0.3417	Class Acc: {0: 0.529, 1: 0.576, 2: 0.084, 3: 0.239, 4: 0.519, 5: 0.426, 6: 0.214, 7: 0.256, 8: 0.367, 9: 0.207}
+Subset 2	Train Loss: 1.7743	Test Loss: 1.7985	Test Acc: 0.3097	Class Acc: {0: 0.285, 1: 0.639, 2: 0.183, 3: 0.671, 4: 0.088, 5: 0.0, 6: 0.046, 7: 0.515, 8: 0.189, 9: 0.481}
+Subset 3	Train Loss: 1.8280	Test Loss: 1.8466	Test Acc: 0.2847	Class Acc: {0: 0.125, 1: 0.823, 2: 0.035, 3: 0.416, 4: 0.061, 5: 0.139, 6: 0.495, 7: 0.406, 8: 0.217, 9: 0.13}
+Subset 4	Train Loss: 1.7640	Test Loss: 1.7918	Test Acc: 0.3100	Class Acc: {0: 0.426, 1: 0.772, 2: 0.005, 3: 0.052, 4: 0.146, 5: 0.255, 6: 0.59, 7: 0.472, 8: 0.275, 9: 0.107}
+Subset 5	Train Loss: 1.7745	Test Loss: 1.7812	Test Acc: 0.3276	Class Acc: {0: 0.346, 1: 0.624, 2: 0.04, 3: 0.142, 4: 0.307, 5: 0.286, 6: 0.207, 7: 0.577, 8: 0.634, 9: 0.113}
+Subset 6	Train Loss: 1.8901	Test Loss: 1.9057	Test Acc: 0.2606	Class Acc: {0: 0.067, 1: 0.486, 2: 0.004, 3: 0.0, 4: 0.0, 5: 0.0, 6: 0.706, 7: 0.575, 8: 0.58, 9: 0.188}
+Subset 7	Train Loss: 1.9323	Test Loss: 1.9129	Test Acc: 0.2654	Class Acc: {0: 0.0, 1: 0.541, 2: 0.037, 3: 0.017, 4: 0.0, 5: 0.527, 6: 0.337, 7: 0.633, 8: 0.422, 9: 0.14}
+Subset 8	Train Loss: 1.8227	Test Loss: 1.8580	Test Acc: 0.2787	Class Acc: {0: 0.254, 1: 0.157, 2: 0.0, 3: 0.0, 4: 0.121, 5: 0.002, 6: 0.757, 7: 0.551, 8: 0.374, 9: 0.571}
+Subset 9	Train Loss: 1.8401	Test Loss: 1.8559	Test Acc: 0.2937	Class Acc: {0: 0.717, 1: 0.485, 2: 0.021, 3: 0.411, 4: 0.113, 5: 0.0, 6: 0.229, 7: 0.63, 8: 0.103, 9: 0.228}
+Subset 10	Train Loss: 1.8346	Test Loss: 1.8597	Test Acc: 0.2868	Class Acc: {0: 0.318, 1: 0.759, 2: 0.016, 3: 0.056, 4: 0.285, 5: 0.0, 6: 0.443, 7: 0.404, 8: 0.474, 9: 0.113}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 52.423527 seconds
+Aggregated Test Loss: 1.9103	Aggregated Test Acc: 0.2756	Aggregated Class Acc: {0: 0.041, 1: 0.84, 2: 0.092, 3: 0.078, 4: 0.072, 5: 0.776, 6: 0.147, 7: 0.303, 8: 0.381, 9: 0.026}
+Round 17 use time: 1.65 min, ETA: 5.02 hours
+================================================================================
+Round 18
+Subset 1	Train Loss: 1.7610	Test Loss: 1.8110	Test Acc: 0.2969	Class Acc: {0: 0.605, 1: 0.0, 2: 0.06, 3: 0.004, 4: 0.158, 5: 0.611, 6: 0.012, 7: 0.511, 8: 0.187, 9: 0.821}
+Subset 2	Train Loss: 1.8578	Test Loss: 1.8893	Test Acc: 0.2837	Class Acc: {0: 0.28, 1: 0.11, 2: 0.036, 3: 0.734, 4: 0.139, 5: 0.0, 6: 0.188, 7: 0.621, 8: 0.299, 9: 0.43}
+Subset 3	Train Loss: 1.7642	Test Loss: 1.7690	Test Acc: 0.3167	Class Acc: {0: 0.532, 1: 0.609, 2: 0.066, 3: 0.725, 4: 0.25, 5: 0.0, 6: 0.122, 7: 0.495, 8: 0.272, 9: 0.096}
+Subset 4	Train Loss: 1.7587	Test Loss: 1.7859	Test Acc: 0.3366	Class Acc: {0: 0.125, 1: 0.634, 2: 0.058, 3: 0.094, 4: 0.124, 5: 0.378, 6: 0.555, 7: 0.524, 8: 0.508, 9: 0.366}
+Subset 5	Train Loss: 1.7999	Test Loss: 1.8075	Test Acc: 0.3120	Class Acc: {0: 0.268, 1: 0.303, 2: 0.039, 3: 0.161, 4: 0.501, 5: 0.155, 6: 0.218, 7: 0.346, 8: 0.372, 9: 0.757}
+Subset 6	Train Loss: 1.8924	Test Loss: 1.9033	Test Acc: 0.2427	Class Acc: {0: 0.009, 1: 0.292, 2: 0.0, 3: 0.442, 4: 0.0, 5: 0.0, 6: 0.15, 7: 0.577, 8: 0.735, 9: 0.222}
+Subset 7	Train Loss: 1.9016	Test Loss: 1.8991	Test Acc: 0.2482	Class Acc: {0: 0.0, 1: 0.436, 2: 0.057, 3: 0.081, 4: 0.589, 5: 0.027, 6: 0.008, 7: 0.544, 8: 0.558, 9: 0.182}
+Subset 8	Train Loss: 1.8126	Test Loss: 1.8310	Test Acc: 0.2944	Class Acc: {0: 0.339, 1: 0.665, 2: 0.012, 3: 0.01, 4: 0.303, 5: 0.011, 6: 0.584, 7: 0.535, 8: 0.462, 9: 0.023}
+Subset 9	Train Loss: 1.8463	Test Loss: 1.8655	Test Acc: 0.2787	Class Acc: {0: 0.124, 1: 0.406, 2: 0.0, 3: 0.134, 4: 0.001, 5: 0.55, 6: 0.366, 7: 0.363, 8: 0.53, 9: 0.313}
+Subset 10	Train Loss: 1.8893	Test Loss: 1.8863	Test Acc: 0.2752	Class Acc: {0: 0.265, 1: 0.809, 2: 0.0, 3: 0.17, 4: 0.0, 5: 0.454, 6: 0.486, 7: 0.237, 8: 0.331, 9: 0.0}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 42.906595 seconds
+Aggregated Test Loss: 1.8725	Aggregated Test Acc: 0.2997	Aggregated Class Acc: {0: 0.052, 1: 0.608, 2: 0.026, 3: 0.048, 4: 0.411, 5: 0.678, 6: 0.0, 7: 0.449, 8: 0.628, 9: 0.097}
+Round 18 use time: 1.70 min, ETA: 5.15 hours
+================================================================================
+Round 19
+Subset 1	Train Loss: 1.7333	Test Loss: 1.7719	Test Acc: 0.3179	Class Acc: {0: 0.173, 1: 0.002, 2: 0.028, 3: 0.266, 4: 0.265, 5: 0.488, 6: 0.167, 7: 0.468, 8: 0.746, 9: 0.576}
+Subset 2	Train Loss: 1.7177	Test Loss: 1.7527	Test Acc: 0.3261	Class Acc: {0: 0.36, 1: 0.178, 2: 0.06, 3: 0.225, 4: 0.132, 5: 0.236, 6: 0.492, 7: 0.545, 8: 0.28, 9: 0.753}
+Subset 3	Train Loss: 1.7552	Test Loss: 1.7720	Test Acc: 0.3224	Class Acc: {0: 0.309, 1: 0.596, 2: 0.015, 3: 0.308, 4: 0.16, 5: 0.0, 6: 0.667, 7: 0.45, 8: 0.399, 9: 0.32}
+Subset 4	Train Loss: 1.7086	Test Loss: 1.7622	Test Acc: 0.3340	Class Acc: {0: 0.41, 1: 0.225, 2: 0.143, 3: 0.157, 4: 0.074, 5: 0.448, 6: 0.207, 7: 0.569, 8: 0.525, 9: 0.582}
+Subset 5	Train Loss: 1.7886	Test Loss: 1.8076	Test Acc: 0.3011	Class Acc: {0: 0.339, 1: 0.734, 2: 0.058, 3: 0.702, 4: 0.184, 5: 0.007, 6: 0.045, 7: 0.388, 8: 0.495, 9: 0.059}
+Subset 6	Train Loss: 1.8662	Test Loss: 1.8891	Test Acc: 0.2658	Class Acc: {0: 0.555, 1: 0.708, 2: 0.023, 3: 0.016, 4: 0.001, 5: 0.587, 6: 0.0, 7: 0.523, 8: 0.174, 9: 0.071}
+Subset 7	Train Loss: 1.8580	Test Loss: 1.8452	Test Acc: 0.2743	Class Acc: {0: 0.061, 1: 0.051, 2: 0.074, 3: 0.166, 4: 0.132, 5: 0.091, 6: 0.369, 7: 0.493, 8: 0.663, 9: 0.643}
+Subset 8	Train Loss: 1.9170	Test Loss: 1.9253	Test Acc: 0.2478	Class Acc: {0: 0.119, 1: 0.0, 2: 0.001, 3: 0.0, 4: 0.0, 5: 0.546, 6: 0.415, 7: 0.422, 8: 0.568, 9: 0.407}
+Subset 9	Train Loss: 1.8534	Test Loss: 1.8663	Test Acc: 0.2696	Class Acc: {0: 0.0, 1: 0.31, 2: 0.003, 3: 0.139, 4: 0.0, 5: 0.16, 6: 0.628, 7: 0.478, 8: 0.768, 9: 0.21}
+Subset 10	Train Loss: 1.8844	Test Loss: 1.8906	Test Acc: 0.2627	Class Acc: {0: 0.0, 1: 0.454, 2: 0.003, 3: 0.602, 4: 0.0, 5: 0.243, 6: 0.21, 7: 0.369, 8: 0.67, 9: 0.076}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 44.346862 seconds
+Aggregated Test Loss: 1.8628	Aggregated Test Acc: 0.2981	Aggregated Class Acc: {0: 0.035, 1: 0.708, 2: 0.02, 3: 0.21, 4: 0.183, 5: 0.645, 6: 0.055, 7: 0.404, 8: 0.5, 9: 0.221}
+Round 19 use time: 1.85 min, ETA: 5.59 hours
+================================================================================
+Round 20
+Subset 1	Train Loss: 1.7064	Test Loss: 1.7423	Test Acc: 0.3463	Class Acc: {0: 0.425, 1: 0.362, 2: 0.075, 3: 0.111, 4: 0.233, 5: 0.592, 6: 0.32, 7: 0.52, 8: 0.405, 9: 0.42}
+Subset 2	Train Loss: 1.7835	Test Loss: 1.8111	Test Acc: 0.2900	Class Acc: {0: 0.175, 1: 0.087, 2: 0.166, 3: 0.303, 4: 0.014, 5: 0.061, 6: 0.04, 7: 0.696, 8: 0.513, 9: 0.845}
+Subset 3	Train Loss: 1.8260	Test Loss: 1.8218	Test Acc: 0.3144	Class Acc: {0: 0.418, 1: 0.793, 2: 0.077, 3: 0.113, 4: 0.232, 5: 0.205, 6: 0.231, 7: 0.624, 8: 0.381, 9: 0.07}
+Subset 4	Train Loss: 1.7400	Test Loss: 1.7826	Test Acc: 0.3169	Class Acc: {0: 0.646, 1: 0.686, 2: 0.001, 3: 0.0, 4: 0.265, 5: 0.395, 6: 0.483, 7: 0.47, 8: 0.195, 9: 0.028}
+Subset 5	Train Loss: 1.7490	Test Loss: 1.7517	Test Acc: 0.3461	Class Acc: {0: 0.505, 1: 0.435, 2: 0.027, 3: 0.187, 4: 0.279, 5: 0.608, 6: 0.324, 7: 0.519, 8: 0.115, 9: 0.462}
+Subset 6	Train Loss: 1.8060	Test Loss: 1.8515	Test Acc: 0.2792	Class Acc: {0: 0.611, 1: 0.224, 2: 0.0, 3: 0.217, 4: 0.105, 5: 0.0, 6: 0.526, 7: 0.561, 8: 0.252, 9: 0.296}
+Subset 7	Train Loss: 1.9358	Test Loss: 1.9014	Test Acc: 0.2767	Class Acc: {0: 0.376, 1: 0.657, 2: 0.057, 3: 0.479, 4: 0.106, 5: 0.0, 6: 0.144, 7: 0.387, 8: 0.501, 9: 0.06}
+Subset 8	Train Loss: 1.8713	Test Loss: 1.8801	Test Acc: 0.2750	Class Acc: {0: 0.112, 1: 0.77, 2: 0.0, 3: 0.008, 4: 0.289, 5: 0.387, 6: 0.072, 7: 0.579, 8: 0.312, 9: 0.221}
+Subset 9	Train Loss: 1.8192	Test Loss: 1.8447	Test Acc: 0.3006	Class Acc: {0: 0.355, 1: 0.194, 2: 0.0, 3: 0.448, 4: 0.147, 5: 0.054, 6: 0.464, 7: 0.423, 8: 0.622, 9: 0.299}
+Subset 10	Train Loss: 1.8100	Test Loss: 1.8262	Test Acc: 0.3096	Class Acc: {0: 0.319, 1: 0.604, 2: 0.089, 3: 0.408, 4: 0.143, 5: 0.019, 6: 0.518, 7: 0.461, 8: 0.526, 9: 0.009}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 39.979762 seconds
+Aggregated Test Loss: 1.8994	Aggregated Test Acc: 0.2867	Aggregated Class Acc: {0: 0.039, 1: 0.693, 2: 0.015, 3: 0.136, 4: 0.045, 5: 0.779, 6: 0.092, 7: 0.398, 8: 0.461, 9: 0.209}
+Round 20 use time: 1.57 min, ETA: 4.70 hours
+================================================================================
+Round 21
+Subset 1	Train Loss: 1.7697	Test Loss: 1.8050	Test Acc: 0.3217	Class Acc: {0: 0.556, 1: 0.011, 2: 0.195, 3: 0.027, 4: 0.406, 5: 0.316, 6: 0.186, 7: 0.654, 8: 0.332, 9: 0.534}
+Subset 2	Train Loss: 1.6939	Test Loss: 1.7349	Test Acc: 0.3460	Class Acc: {0: 0.437, 1: 0.425, 2: 0.006, 3: 0.021, 4: 0.213, 5: 0.71, 6: 0.184, 7: 0.482, 8: 0.555, 9: 0.427}
+Subset 3	Train Loss: 1.7476	Test Loss: 1.7646	Test Acc: 0.3309	Class Acc: {0: 0.487, 1: 0.404, 2: 0.002, 3: 0.481, 4: 0.129, 5: 0.283, 6: 0.163, 7: 0.619, 8: 0.398, 9: 0.343}
+Subset 4	Train Loss: 1.6886	Test Loss: 1.7437	Test Acc: 0.3456	Class Acc: {0: 0.466, 1: 0.386, 2: 0.151, 3: 0.004, 4: 0.018, 5: 0.45, 6: 0.45, 7: 0.612, 8: 0.56, 9: 0.359}
+Subset 5	Train Loss: 1.7220	Test Loss: 1.7442	Test Acc: 0.3309	Class Acc: {0: 0.219, 1: 0.143, 2: 0.02, 3: 0.038, 4: 0.319, 5: 0.576, 6: 0.128, 7: 0.564, 8: 0.643, 9: 0.659}
+Subset 6	Train Loss: 1.8419	Test Loss: 1.8571	Test Acc: 0.2847	Class Acc: {0: 0.071, 1: 0.617, 2: 0.0, 3: 0.182, 4: 0.022, 5: 0.0, 6: 0.626, 7: 0.581, 8: 0.599, 9: 0.149}
+Subset 7	Train Loss: 1.8710	Test Loss: 1.8537	Test Acc: 0.2863	Class Acc: {0: 0.229, 1: 0.347, 2: 0.059, 3: 0.004, 4: 0.06, 5: 0.093, 6: 0.629, 7: 0.641, 8: 0.598, 9: 0.203}
+Subset 8	Train Loss: 1.8970	Test Loss: 1.9028	Test Acc: 0.2504	Class Acc: {0: 0.02, 1: 0.253, 2: 0.0, 3: 0.192, 4: 0.06, 5: 0.06, 6: 0.378, 7: 0.523, 8: 0.725, 9: 0.293}
+Subset 9	Train Loss: 1.8793	Test Loss: 1.8957	Test Acc: 0.2458	Class Acc: {0: 0.725, 1: 0.394, 2: 0.035, 3: 0.046, 4: 0.0, 5: 0.026, 6: 0.414, 7: 0.729, 8: 0.008, 9: 0.081}
+Subset 10	Train Loss: 1.8509	Test Loss: 1.8651	Test Acc: 0.3023	Class Acc: {0: 0.469, 1: 0.386, 2: 0.004, 3: 0.22, 4: 0.254, 5: 0.11, 6: 0.405, 7: 0.639, 8: 0.496, 9: 0.04}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 46.172362 seconds
+Aggregated Test Loss: 1.8543	Aggregated Test Acc: 0.3223	Aggregated Class Acc: {0: 0.117, 1: 0.537, 2: 0.017, 3: 0.058, 4: 0.064, 5: 0.677, 6: 0.332, 7: 0.502, 8: 0.601, 9: 0.318}
+Round 21 use time: 1.57 min, ETA: 4.69 hours
+================================================================================
+Round 22
+Subset 1	Train Loss: 1.7439	Test Loss: 1.7912	Test Acc: 0.3462	Class Acc: {0: 0.356, 1: 0.544, 2: 0.028, 3: 0.354, 4: 0.207, 5: 0.241, 6: 0.213, 7: 0.509, 8: 0.564, 9: 0.446}
+Subset 2	Train Loss: 1.7115	Test Loss: 1.7429	Test Acc: 0.3333	Class Acc: {0: 0.408, 1: 0.522, 2: 0.152, 3: 0.448, 4: 0.002, 5: 0.0, 6: 0.491, 7: 0.517, 8: 0.352, 9: 0.441}
+Subset 3	Train Loss: 1.7790	Test Loss: 1.7603	Test Acc: 0.3331	Class Acc: {0: 0.419, 1: 0.062, 2: 0.006, 3: 0.127, 4: 0.258, 5: 0.166, 6: 0.6, 7: 0.601, 8: 0.528, 9: 0.564}
+Subset 4	Train Loss: 1.6902	Test Loss: 1.7326	Test Acc: 0.3454	Class Acc: {0: 0.451, 1: 0.68, 2: 0.033, 3: 0.189, 4: 0.153, 5: 0.556, 6: 0.442, 7: 0.468, 8: 0.482, 9: 0.0}
+Subset 5	Train Loss: 1.7822	Test Loss: 1.7860	Test Acc: 0.3267	Class Acc: {0: 0.606, 1: 0.275, 2: 0.013, 3: 0.065, 4: 0.25, 5: 0.434, 6: 0.276, 7: 0.634, 8: 0.486, 9: 0.228}
+Subset 6	Train Loss: 1.7727	Test Loss: 1.7849	Test Acc: 0.3204	Class Acc: {0: 0.496, 1: 0.567, 2: 0.001, 3: 0.259, 4: 0.062, 5: 0.04, 6: 0.621, 7: 0.573, 8: 0.362, 9: 0.223}
+Subset 7	Train Loss: 1.9203	Test Loss: 1.9192	Test Acc: 0.2238	Class Acc: {0: 0.041, 1: 0.078, 2: 0.336, 3: 0.059, 4: 0.081, 5: 0.0, 6: 0.452, 7: 0.065, 8: 0.778, 9: 0.348}
+Subset 8	Train Loss: 1.9146	Test Loss: 1.9380	Test Acc: 0.2457	Class Acc: {0: 0.064, 1: 0.372, 2: 0.005, 3: 0.0, 4: 0.0, 5: 0.649, 6: 0.0, 7: 0.563, 8: 0.766, 9: 0.038}
+Subset 9	Train Loss: 1.8062	Test Loss: 1.8227	Test Acc: 0.3077	Class Acc: {0: 0.291, 1: 0.408, 2: 0.0, 3: 0.423, 4: 0.375, 5: 0.1, 6: 0.083, 7: 0.576, 8: 0.66, 9: 0.161}
+Subset 10	Train Loss: 1.9246	Test Loss: 1.9126	Test Acc: 0.2616	Class Acc: {0: 0.0, 1: 0.333, 2: 0.008, 3: 0.064, 4: 0.539, 5: 0.1, 6: 0.132, 7: 0.627, 8: 0.647, 9: 0.166}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 40.282036 seconds
+Aggregated Test Loss: 1.8339	Aggregated Test Acc: 0.3269	Aggregated Class Acc: {0: 0.145, 1: 0.594, 2: 0.022, 3: 0.129, 4: 0.12, 5: 0.655, 6: 0.24, 7: 0.561, 8: 0.568, 9: 0.235}
+Round 22 use time: 1.49 min, ETA: 4.41 hours
+================================================================================
+Round 23
+Subset 1	Train Loss: 1.7067	Test Loss: 1.7461	Test Acc: 0.3520	Class Acc: {0: 0.391, 1: 0.634, 2: 0.11, 3: 0.248, 4: 0.309, 5: 0.407, 6: 0.161, 7: 0.68, 8: 0.297, 9: 0.283}
+Subset 2	Train Loss: 1.6739	Test Loss: 1.7266	Test Acc: 0.3280	Class Acc: {0: 0.568, 1: 0.579, 2: 0.063, 3: 0.624, 4: 0.052, 5: 0.036, 6: 0.176, 7: 0.477, 8: 0.298, 9: 0.407}
+Subset 3	Train Loss: 1.7267	Test Loss: 1.7441	Test Acc: 0.3391	Class Acc: {0: 0.217, 1: 0.767, 2: 0.023, 3: 0.134, 4: 0.22, 5: 0.605, 6: 0.384, 7: 0.471, 8: 0.533, 9: 0.037}
+Subset 4	Train Loss: 1.7669	Test Loss: 1.7926	Test Acc: 0.3326	Class Acc: {0: 0.485, 1: 0.212, 2: 0.155, 3: 0.315, 4: 0.479, 5: 0.117, 6: 0.378, 7: 0.347, 8: 0.254, 9: 0.584}
+Subset 5	Train Loss: 1.7738	Test Loss: 1.7936	Test Acc: 0.3235	Class Acc: {0: 0.166, 1: 0.661, 2: 0.064, 3: 0.409, 4: 0.284, 5: 0.238, 6: 0.126, 7: 0.448, 8: 0.692, 9: 0.147}
+Subset 6	Train Loss: 1.8259	Test Loss: 1.8419	Test Acc: 0.2939	Class Acc: {0: 0.385, 1: 0.189, 2: 0.006, 3: 0.553, 4: 0.368, 5: 0.001, 6: 0.158, 7: 0.61, 8: 0.531, 9: 0.138}
+Subset 7	Train Loss: 1.8183	Test Loss: 1.8002	Test Acc: 0.3187	Class Acc: {0: 0.276, 1: 0.527, 2: 0.019, 3: 0.08, 4: 0.387, 5: 0.14, 6: 0.498, 7: 0.538, 8: 0.476, 9: 0.246}
+Subset 8	Train Loss: 1.8306	Test Loss: 1.8421	Test Acc: 0.2925	Class Acc: {0: 0.103, 1: 0.579, 2: 0.009, 3: 0.181, 4: 0.18, 5: 0.02, 6: 0.512, 7: 0.507, 8: 0.581, 9: 0.253}
+Subset 9	Train Loss: 1.8448	Test Loss: 1.8736	Test Acc: 0.2985	Class Acc: {0: 0.631, 1: 0.144, 2: 0.02, 3: 0.036, 4: 0.091, 5: 0.688, 6: 0.297, 7: 0.403, 8: 0.292, 9: 0.383}
+Subset 10	Train Loss: 1.9352	Test Loss: 1.9310	Test Acc: 0.2710	Class Acc: {0: 0.638, 1: 0.223, 2: 0.007, 3: 0.302, 4: 0.0, 5: 0.51, 6: 0.042, 7: 0.541, 8: 0.407, 9: 0.04}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 35.308655 seconds
+Aggregated Test Loss: 1.8420	Aggregated Test Acc: 0.3336	Aggregated Class Acc: {0: 0.144, 1: 0.743, 2: 0.039, 3: 0.34, 4: 0.153, 5: 0.447, 6: 0.201, 7: 0.532, 8: 0.628, 9: 0.109}
+Round 23 use time: 1.43 min, ETA: 4.21 hours
+================================================================================
+Round 24
+Subset 1	Train Loss: 1.6598	Test Loss: 1.7041	Test Acc: 0.3681	Class Acc: {0: 0.377, 1: 0.428, 2: 0.058, 3: 0.159, 4: 0.52, 5: 0.296, 6: 0.416, 7: 0.374, 8: 0.496, 9: 0.557}
+Subset 2	Train Loss: 1.6668	Test Loss: 1.7084	Test Acc: 0.3579	Class Acc: {0: 0.446, 1: 0.662, 2: 0.064, 3: 0.382, 4: 0.209, 5: 0.357, 6: 0.314, 7: 0.427, 8: 0.379, 9: 0.339}
+Subset 3	Train Loss: 1.7322	Test Loss: 1.7451	Test Acc: 0.3324	Class Acc: {0: 0.305, 1: 0.628, 2: 0.001, 3: 0.541, 4: 0.42, 5: 0.06, 6: 0.181, 7: 0.477, 8: 0.533, 9: 0.178}
+Subset 4	Train Loss: 1.7303	Test Loss: 1.7816	Test Acc: 0.3355	Class Acc: {0: 0.223, 1: 0.652, 2: 0.008, 3: 0.272, 4: 0.043, 5: 0.561, 6: 0.327, 7: 0.389, 8: 0.661, 9: 0.219}
+Subset 5	Train Loss: 1.6854	Test Loss: 1.7140	Test Acc: 0.3506	Class Acc: {0: 0.564, 1: 0.19, 2: 0.009, 3: 0.093, 4: 0.322, 5: 0.639, 6: 0.272, 7: 0.464, 8: 0.481, 9: 0.472}
+Subset 6	Train Loss: 1.9333	Test Loss: 1.9532	Test Acc: 0.2446	Class Acc: {0: 0.032, 1: 0.019, 2: 0.01, 3: 0.178, 4: 0.0, 5: 0.0, 6: 0.57, 7: 0.725, 8: 0.558, 9: 0.354}
+Subset 7	Train Loss: 1.8304	Test Loss: 1.8365	Test Acc: 0.2911	Class Acc: {0: 0.413, 1: 0.59, 2: 0.007, 3: 0.222, 4: 0.041, 5: 0.09, 6: 0.567, 7: 0.502, 8: 0.408, 9: 0.071}
+Subset 8	Train Loss: 1.7929	Test Loss: 1.8233	Test Acc: 0.3041	Class Acc: {0: 0.571, 1: 0.605, 2: 0.307, 3: 0.337, 4: 0.273, 5: 0.049, 6: 0.174, 7: 0.444, 8: 0.171, 9: 0.11}
+Subset 9	Train Loss: 1.8715	Test Loss: 1.8954	Test Acc: 0.2611	Class Acc: {0: 0.16, 1: 0.49, 2: 0.054, 3: 0.0, 4: 0.0, 5: 0.062, 6: 0.704, 7: 0.407, 8: 0.49, 9: 0.244}
+Subset 10	Train Loss: 1.9082	Test Loss: 1.9258	Test Acc: 0.2546	Class Acc: {0: 0.314, 1: 0.796, 2: 0.0, 3: 0.493, 4: 0.05, 5: 0.152, 6: 0.016, 7: 0.41, 8: 0.212, 9: 0.103}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 49.153767 seconds
+Aggregated Test Loss: 1.8754	Aggregated Test Acc: 0.3345	Aggregated Class Acc: {0: 0.159, 1: 0.741, 2: 0.02, 3: 0.204, 4: 0.235, 5: 0.548, 6: 0.206, 7: 0.49, 8: 0.56, 9: 0.182}
+Round 24 use time: 1.70 min, ETA: 4.99 hours
+================================================================================
+Round 25
+Subset 1	Train Loss: 1.6874	Test Loss: 1.7363	Test Acc: 0.3459	Class Acc: {0: 0.538, 1: 0.236, 2: 0.327, 3: 0.458, 4: 0.311, 5: 0.026, 6: 0.035, 7: 0.45, 8: 0.571, 9: 0.507}
+Subset 2	Train Loss: 1.7747	Test Loss: 1.8237	Test Acc: 0.3399	Class Acc: {0: 0.634, 1: 0.358, 2: 0.071, 3: 0.024, 4: 0.271, 5: 0.331, 6: 0.678, 7: 0.491, 8: 0.352, 9: 0.189}
+Subset 3	Train Loss: 1.7092	Test Loss: 1.7044	Test Acc: 0.3690	Class Acc: {0: 0.408, 1: 0.466, 2: 0.009, 3: 0.16, 4: 0.297, 5: 0.454, 6: 0.38, 7: 0.549, 8: 0.406, 9: 0.561}
+Subset 4	Train Loss: 1.6442	Test Loss: 1.6982	Test Acc: 0.3708	Class Acc: {0: 0.538, 1: 0.528, 2: 0.17, 3: 0.191, 4: 0.227, 5: 0.39, 6: 0.379, 7: 0.425, 8: 0.495, 9: 0.365}
+Subset 5	Train Loss: 1.7042	Test Loss: 1.7203	Test Acc: 0.3535	Class Acc: {0: 0.492, 1: 0.254, 2: 0.003, 3: 0.057, 4: 0.451, 5: 0.393, 6: 0.29, 7: 0.664, 8: 0.408, 9: 0.523}
+Subset 6	Train Loss: 1.7741	Test Loss: 1.7925	Test Acc: 0.3126	Class Acc: {0: 0.35, 1: 0.445, 2: 0.005, 3: 0.332, 4: 0.187, 5: 0.1, 6: 0.422, 7: 0.532, 8: 0.337, 9: 0.416}
+Subset 7	Train Loss: 1.9653	Test Loss: 1.9487	Test Acc: 0.2132	Class Acc: {0: 0.0, 1: 0.139, 2: 0.093, 3: 0.0, 4: 0.824, 5: 0.0, 6: 0.011, 7: 0.012, 8: 0.682, 9: 0.371}
+Subset 8	Train Loss: 1.8636	Test Loss: 1.8887	Test Acc: 0.2888	Class Acc: {0: 0.333, 1: 0.231, 2: 0.046, 3: 0.31, 4: 0.164, 5: 0.0, 6: 0.359, 7: 0.541, 8: 0.684, 9: 0.22}
+Subset 9	Train Loss: 1.7997	Test Loss: 1.8047	Test Acc: 0.3099	Class Acc: {0: 0.287, 1: 0.165, 2: 0.012, 3: 0.553, 4: 0.132, 5: 0.074, 6: 0.311, 7: 0.446, 8: 0.455, 9: 0.664}
+Subset 10	Train Loss: 1.8616	Test Loss: 1.8655	Test Acc: 0.2953	Class Acc: {0: 0.712, 1: 0.391, 2: 0.033, 3: 0.047, 4: 0.274, 5: 0.009, 6: 0.406, 7: 0.609, 8: 0.254, 9: 0.218}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 42.959932 seconds
+Aggregated Test Loss: 1.8074	Aggregated Test Acc: 0.3586	Aggregated Class Acc: {0: 0.262, 1: 0.215, 2: 0.035, 3: 0.132, 4: 0.364, 5: 0.558, 6: 0.383, 7: 0.521, 8: 0.572, 9: 0.544}
+Round 25 use time: 1.52 min, ETA: 4.45 hours
+================================================================================
+Round 26
+Subset 1	Train Loss: 1.7886	Test Loss: 1.8228	Test Acc: 0.3247	Class Acc: {0: 0.607, 1: 0.237, 2: 0.068, 3: 0.51, 4: 0.448, 5: 0.045, 6: 0.416, 7: 0.263, 8: 0.578, 9: 0.075}
+Subset 2	Train Loss: 1.6805	Test Loss: 1.7204	Test Acc: 0.3473	Class Acc: {0: 0.462, 1: 0.417, 2: 0.074, 3: 0.057, 4: 0.454, 5: 0.319, 6: 0.623, 7: 0.354, 8: 0.417, 9: 0.296}
+Subset 3	Train Loss: 1.7579	Test Loss: 1.7779	Test Acc: 0.3451	Class Acc: {0: 0.43, 1: 0.355, 2: 0.018, 3: 0.06, 4: 0.362, 5: 0.719, 6: 0.322, 7: 0.479, 8: 0.338, 9: 0.368}
+Subset 4	Train Loss: 1.6623	Test Loss: 1.7165	Test Acc: 0.3610	Class Acc: {0: 0.555, 1: 0.58, 2: 0.025, 3: 0.039, 4: 0.295, 5: 0.3, 6: 0.662, 7: 0.553, 8: 0.498, 9: 0.103}
+Subset 5	Train Loss: 1.6426	Test Loss: 1.6761	Test Acc: 0.3836	Class Acc: {0: 0.39, 1: 0.338, 2: 0.043, 3: 0.385, 4: 0.242, 5: 0.394, 6: 0.442, 7: 0.51, 8: 0.577, 9: 0.515}
+Subset 6	Train Loss: 1.8117	Test Loss: 1.8303	Test Acc: 0.2971	Class Acc: {0: 0.421, 1: 0.432, 2: 0.0, 3: 0.047, 4: 0.267, 5: 0.153, 6: 0.181, 7: 0.707, 8: 0.558, 9: 0.205}
+Subset 7	Train Loss: 1.8600	Test Loss: 1.8472	Test Acc: 0.2826	Class Acc: {0: 0.08, 1: 0.696, 2: 0.027, 3: 0.081, 4: 0.295, 5: 0.0, 6: 0.623, 7: 0.309, 8: 0.383, 9: 0.332}
+Subset 8	Train Loss: 1.9431	Test Loss: 1.9457	Test Acc: 0.2633	Class Acc: {0: 0.262, 1: 0.287, 2: 0.005, 3: 0.303, 4: 0.597, 5: 0.015, 6: 0.145, 7: 0.511, 8: 0.39, 9: 0.118}
+Subset 9	Train Loss: 1.9603	Test Loss: 1.9748	Test Acc: 0.2648	Class Acc: {0: 0.0, 1: 0.224, 2: 0.0, 3: 0.235, 4: 0.392, 5: 0.0, 6: 0.091, 7: 0.588, 8: 0.836, 9: 0.282}
+Subset 10	Train Loss: 1.8259	Test Loss: 1.8677	Test Acc: 0.2804	Class Acc: {0: 0.366, 1: 0.428, 2: 0.013, 3: 0.131, 4: 0.292, 5: 0.003, 6: 0.231, 7: 0.624, 8: 0.618, 9: 0.098}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 40.132047 seconds
+Aggregated Test Loss: 1.7838	Aggregated Test Acc: 0.3732	Aggregated Class Acc: {0: 0.349, 1: 0.509, 2: 0.024, 3: 0.156, 4: 0.317, 5: 0.586, 6: 0.461, 7: 0.471, 8: 0.63, 9: 0.229}
+Round 26 use time: 1.48 min, ETA: 4.29 hours
+================================================================================
+Round 27
+Subset 1	Train Loss: 1.5989	Test Loss: 1.6543	Test Acc: 0.3881	Class Acc: {0: 0.561, 1: 0.443, 2: 0.049, 3: 0.086, 4: 0.244, 5: 0.347, 6: 0.612, 7: 0.691, 8: 0.454, 9: 0.394}
+Subset 2	Train Loss: 1.6590	Test Loss: 1.6935	Test Acc: 0.3655	Class Acc: {0: 0.607, 1: 0.292, 2: 0.123, 3: 0.321, 4: 0.295, 5: 0.064, 6: 0.448, 7: 0.644, 8: 0.551, 9: 0.31}
+Subset 3	Train Loss: 1.6983	Test Loss: 1.7422	Test Acc: 0.3505	Class Acc: {0: 0.424, 1: 0.573, 2: 0.01, 3: 0.406, 4: 0.399, 5: 0.101, 6: 0.507, 7: 0.334, 8: 0.601, 9: 0.15}
+Subset 4	Train Loss: 1.7545	Test Loss: 1.8156	Test Acc: 0.3241	Class Acc: {0: 0.38, 1: 0.42, 2: 0.04, 3: 0.539, 4: 0.112, 5: 0.006, 6: 0.256, 7: 0.393, 8: 0.61, 9: 0.485}
+Subset 5	Train Loss: 1.7176	Test Loss: 1.7431	Test Acc: 0.3462	Class Acc: {0: 0.645, 1: 0.424, 2: 0.117, 3: 0.189, 4: 0.401, 5: 0.12, 6: 0.371, 7: 0.653, 8: 0.174, 9: 0.368}
+Subset 6	Train Loss: 1.9067	Test Loss: 1.9241	Test Acc: 0.2560	Class Acc: {0: 0.089, 1: 0.399, 2: 0.0, 3: 0.134, 4: 0.159, 5: 0.224, 6: 0.0, 7: 0.619, 8: 0.701, 9: 0.235}
+Subset 7	Train Loss: 1.8534	Test Loss: 1.8292	Test Acc: 0.2990	Class Acc: {0: 0.614, 1: 0.59, 2: 0.14, 3: 0.022, 4: 0.14, 5: 0.081, 6: 0.551, 7: 0.504, 8: 0.257, 9: 0.091}
+Subset 8	Train Loss: 1.7849	Test Loss: 1.8135	Test Acc: 0.2939	Class Acc: {0: 0.393, 1: 0.263, 2: 0.038, 3: 0.628, 4: 0.267, 5: 0.0, 6: 0.0, 7: 0.365, 8: 0.528, 9: 0.457}
+Subset 9	Train Loss: 1.8301	Test Loss: 1.8403	Test Acc: 0.3014	Class Acc: {0: 0.588, 1: 0.06, 2: 0.0, 3: 0.0, 4: 0.0, 5: 0.492, 6: 0.511, 7: 0.574, 8: 0.385, 9: 0.404}
+Subset 10	Train Loss: 1.8689	Test Loss: 1.8766	Test Acc: 0.2931	Class Acc: {0: 0.408, 1: 0.133, 2: 0.032, 3: 0.076, 4: 0.09, 5: 0.733, 6: 0.226, 7: 0.395, 8: 0.551, 9: 0.287}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 37.159707 seconds
+Aggregated Test Loss: 1.7688	Aggregated Test Acc: 0.3821	Aggregated Class Acc: {0: 0.481, 1: 0.401, 2: 0.037, 3: 0.154, 4: 0.278, 5: 0.546, 6: 0.405, 7: 0.583, 8: 0.538, 9: 0.398}
+Round 27 use time: 1.50 min, ETA: 4.31 hours
+================================================================================
+Round 28
+Subset 1	Train Loss: 1.6296	Test Loss: 1.6886	Test Acc: 0.3489	Class Acc: {0: 0.429, 1: 0.004, 2: 0.245, 3: 0.086, 4: 0.192, 5: 0.628, 6: 0.194, 7: 0.586, 8: 0.43, 9: 0.695}
+Subset 2	Train Loss: 1.6082	Test Loss: 1.6750	Test Acc: 0.3800	Class Acc: {0: 0.439, 1: 0.664, 2: 0.174, 3: 0.3, 4: 0.24, 5: 0.382, 6: 0.355, 7: 0.41, 8: 0.599, 9: 0.237}
+Subset 3	Train Loss: 1.6589	Test Loss: 1.6830	Test Acc: 0.3679	Class Acc: {0: 0.477, 1: 0.705, 2: 0.002, 3: 0.167, 4: 0.372, 5: 0.446, 6: 0.392, 7: 0.544, 8: 0.346, 9: 0.228}
+Subset 4	Train Loss: 1.7023	Test Loss: 1.7624	Test Acc: 0.3265	Class Acc: {0: 0.605, 1: 0.325, 2: 0.063, 3: 0.128, 4: 0.068, 5: 0.09, 6: 0.731, 7: 0.488, 8: 0.441, 9: 0.326}
+Subset 5	Train Loss: 1.6650	Test Loss: 1.6890	Test Acc: 0.3721	Class Acc: {0: 0.547, 1: 0.367, 2: 0.043, 3: 0.191, 4: 0.14, 5: 0.566, 6: 0.523, 7: 0.613, 8: 0.352, 9: 0.379}
+Subset 6	Train Loss: 1.7779	Test Loss: 1.7923	Test Acc: 0.3180	Class Acc: {0: 0.657, 1: 0.291, 2: 0.003, 3: 0.145, 4: 0.523, 5: 0.353, 6: 0.18, 7: 0.362, 8: 0.279, 9: 0.387}
+Subset 7	Train Loss: 1.8445	Test Loss: 1.8222	Test Acc: 0.3050	Class Acc: {0: 0.377, 1: 0.725, 2: 0.003, 3: 0.065, 4: 0.228, 5: 0.241, 6: 0.339, 7: 0.667, 8: 0.339, 9: 0.066}
+Subset 8	Train Loss: 1.7762	Test Loss: 1.8065	Test Acc: 0.3086	Class Acc: {0: 0.362, 1: 0.186, 2: 0.034, 3: 0.0, 4: 0.119, 5: 0.676, 6: 0.294, 7: 0.526, 8: 0.561, 9: 0.328}
+Subset 9	Train Loss: 1.8100	Test Loss: 1.8364	Test Acc: 0.2963	Class Acc: {0: 0.555, 1: 0.573, 2: 0.016, 3: 0.0, 4: 0.0, 5: 0.17, 6: 0.797, 7: 0.526, 8: 0.229, 9: 0.097}
+Subset 10	Train Loss: 1.7802	Test Loss: 1.7932	Test Acc: 0.3035	Class Acc: {0: 0.222, 1: 0.505, 2: 0.006, 3: 0.305, 4: 0.444, 5: 0.045, 6: 0.311, 7: 0.356, 8: 0.728, 9: 0.113}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 45.852976 seconds
+Aggregated Test Loss: 1.7730	Aggregated Test Acc: 0.3820	Aggregated Class Acc: {0: 0.41, 1: 0.38, 2: 0.077, 3: 0.096, 4: 0.282, 5: 0.595, 6: 0.437, 7: 0.548, 8: 0.574, 9: 0.421}
+Round 28 use time: 1.58 min, ETA: 4.52 hours
+================================================================================
+Round 29
+Subset 1	Train Loss: 1.6501	Test Loss: 1.6791	Test Acc: 0.3683	Class Acc: {0: 0.476, 1: 0.406, 2: 0.412, 3: 0.036, 4: 0.0, 5: 0.566, 6: 0.537, 7: 0.458, 8: 0.61, 9: 0.182}
+Subset 2	Train Loss: 1.6498	Test Loss: 1.6917	Test Acc: 0.3763	Class Acc: {0: 0.489, 1: 0.192, 2: 0.006, 3: 0.102, 4: 0.353, 5: 0.439, 6: 0.55, 7: 0.698, 8: 0.44, 9: 0.494}
+Subset 3	Train Loss: 1.7436	Test Loss: 1.7538	Test Acc: 0.3353	Class Acc: {0: 0.459, 1: 0.707, 2: 0.025, 3: 0.401, 4: 0.271, 5: 0.013, 6: 0.32, 7: 0.434, 8: 0.319, 9: 0.404}
+Subset 4	Train Loss: 1.7275	Test Loss: 1.7507	Test Acc: 0.3322	Class Acc: {0: 0.572, 1: 0.08, 2: 0.0, 3: 0.0, 4: 0.163, 5: 0.72, 6: 0.216, 7: 0.556, 8: 0.363, 9: 0.652}
+Subset 5	Train Loss: 1.7101	Test Loss: 1.7296	Test Acc: 0.3527	Class Acc: {0: 0.562, 1: 0.46, 2: 0.038, 3: 0.255, 4: 0.018, 5: 0.673, 6: 0.387, 7: 0.303, 8: 0.354, 9: 0.477}
+Subset 6	Train Loss: 1.7662	Test Loss: 1.7865	Test Acc: 0.3196	Class Acc: {0: 0.524, 1: 0.03, 2: 0.005, 3: 0.588, 4: 0.255, 5: 0.0, 6: 0.184, 7: 0.632, 8: 0.384, 9: 0.594}
+Subset 7	Train Loss: 1.9136	Test Loss: 1.8968	Test Acc: 0.2600	Class Acc: {0: 0.045, 1: 0.712, 2: 0.001, 3: 0.001, 4: 0.171, 5: 0.574, 6: 0.0, 7: 0.424, 8: 0.491, 9: 0.181}
+Subset 8	Train Loss: 1.7942	Test Loss: 1.8185	Test Acc: 0.3023	Class Acc: {0: 0.424, 1: 0.025, 2: 0.003, 3: 0.043, 4: 0.004, 5: 0.247, 6: 0.645, 7: 0.599, 8: 0.351, 9: 0.682}
+Subset 9	Train Loss: 1.7487	Test Loss: 1.7764	Test Acc: 0.3207	Class Acc: {0: 0.35, 1: 0.64, 2: 0.041, 3: 0.036, 4: 0.131, 5: 0.429, 6: 0.351, 7: 0.605, 8: 0.429, 9: 0.195}
+Subset 10	Train Loss: 1.7992	Test Loss: 1.8322	Test Acc: 0.2975	Class Acc: {0: 0.611, 1: 0.527, 2: 0.0, 3: 0.105, 4: 0.525, 5: 0.156, 6: 0.248, 7: 0.506, 8: 0.204, 9: 0.093}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 41.141205 seconds
+Aggregated Test Loss: 1.7296	Aggregated Test Acc: 0.3909	Aggregated Class Acc: {0: 0.424, 1: 0.394, 2: 0.034, 3: 0.086, 4: 0.285, 5: 0.569, 6: 0.424, 7: 0.597, 8: 0.591, 9: 0.505}
+Round 29 use time: 1.50 min, ETA: 4.29 hours
+================================================================================
+Round 30
+Subset 1	Train Loss: 1.5905	Test Loss: 1.6420	Test Acc: 0.3881	Class Acc: {0: 0.424, 1: 0.381, 2: 0.102, 3: 0.191, 4: 0.227, 5: 0.509, 6: 0.505, 7: 0.45, 8: 0.433, 9: 0.659}
+Subset 2	Train Loss: 1.6243	Test Loss: 1.6650	Test Acc: 0.3539	Class Acc: {0: 0.367, 1: 0.013, 2: 0.169, 3: 0.131, 4: 0.086, 5: 0.683, 6: 0.319, 7: 0.514, 8: 0.412, 9: 0.845}
+Subset 3	Train Loss: 1.7500	Test Loss: 1.7612	Test Acc: 0.3421	Class Acc: {0: 0.276, 1: 0.615, 2: 0.054, 3: 0.38, 4: 0.079, 5: 0.094, 6: 0.822, 7: 0.477, 8: 0.373, 9: 0.251}
+Subset 4	Train Loss: 1.6272	Test Loss: 1.6674	Test Acc: 0.3864	Class Acc: {0: 0.53, 1: 0.333, 2: 0.062, 3: 0.3, 4: 0.347, 5: 0.396, 6: 0.467, 7: 0.503, 8: 0.409, 9: 0.517}
+Subset 5	Train Loss: 1.6696	Test Loss: 1.6939	Test Acc: 0.3776	Class Acc: {0: 0.403, 1: 0.747, 2: 0.021, 3: 0.503, 4: 0.276, 5: 0.375, 6: 0.43, 7: 0.424, 8: 0.317, 9: 0.28}
+Subset 6	Train Loss: 1.7861	Test Loss: 1.7989	Test Acc: 0.3023	Class Acc: {0: 0.482, 1: 0.608, 2: 0.275, 3: 0.076, 4: 0.054, 5: 0.0, 6: 0.667, 7: 0.32, 8: 0.353, 9: 0.188}
+Subset 7	Train Loss: 1.8474	Test Loss: 1.8328	Test Acc: 0.3068	Class Acc: {0: 0.53, 1: 0.627, 2: 0.002, 3: 0.407, 4: 0.262, 5: 0.233, 6: 0.162, 7: 0.441, 8: 0.308, 9: 0.096}
+Subset 8	Train Loss: 1.8794	Test Loss: 1.8858	Test Acc: 0.2913	Class Acc: {0: 0.439, 1: 0.343, 2: 0.105, 3: 0.488, 4: 0.0, 5: 0.325, 6: 0.202, 7: 0.417, 8: 0.221, 9: 0.373}
+Subset 9	Train Loss: 1.7570	Test Loss: 1.7903	Test Acc: 0.3187	Class Acc: {0: 0.558, 1: 0.357, 2: 0.072, 3: 0.171, 4: 0.244, 5: 0.13, 6: 0.645, 7: 0.377, 8: 0.483, 9: 0.15}
+Subset 10	Train Loss: 1.7619	Test Loss: 1.7717	Test Acc: 0.3373	Class Acc: {0: 0.569, 1: 0.67, 2: 0.006, 3: 0.178, 4: 0.178, 5: 0.631, 6: 0.248, 7: 0.53, 8: 0.226, 9: 0.137}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 40.477628 seconds
+Aggregated Test Loss: 1.7445	Aggregated Test Acc: 0.3874	Aggregated Class Acc: {0: 0.382, 1: 0.525, 2: 0.049, 3: 0.201, 4: 0.239, 5: 0.615, 6: 0.405, 7: 0.515, 8: 0.467, 9: 0.476}
+Round 30 use time: 1.49 min, ETA: 4.23 hours
+================================================================================
+Round 31
+Subset 1	Train Loss: 1.5630	Test Loss: 1.6124	Test Acc: 0.3951	Class Acc: {0: 0.487, 1: 0.22, 2: 0.207, 3: 0.349, 4: 0.228, 5: 0.395, 6: 0.578, 7: 0.366, 8: 0.471, 9: 0.65}
+Subset 2	Train Loss: 1.5688	Test Loss: 1.6282	Test Acc: 0.3949	Class Acc: {0: 0.312, 1: 0.562, 2: 0.053, 3: 0.284, 4: 0.366, 5: 0.415, 6: 0.383, 7: 0.593, 8: 0.633, 9: 0.348}
+Subset 3	Train Loss: 1.6575	Test Loss: 1.6801	Test Acc: 0.3798	Class Acc: {0: 0.318, 1: 0.582, 2: 0.011, 3: 0.215, 4: 0.174, 5: 0.52, 6: 0.579, 7: 0.514, 8: 0.41, 9: 0.475}
+Subset 4	Train Loss: 1.5655	Test Loss: 1.6320	Test Acc: 0.3982	Class Acc: {0: 0.533, 1: 0.539, 2: 0.068, 3: 0.113, 4: 0.383, 5: 0.461, 6: 0.49, 7: 0.506, 8: 0.366, 9: 0.523}
+Subset 5	Train Loss: 1.6078	Test Loss: 1.6337	Test Acc: 0.3946	Class Acc: {0: 0.41, 1: 0.505, 2: 0.036, 3: 0.031, 4: 0.359, 5: 0.563, 6: 0.444, 7: 0.654, 8: 0.565, 9: 0.379}
+Subset 6	Train Loss: 1.7986	Test Loss: 1.8196	Test Acc: 0.3058	Class Acc: {0: 0.556, 1: 0.416, 2: 0.002, 3: 0.281, 4: 0.593, 5: 0.0, 6: 0.254, 7: 0.433, 8: 0.171, 9: 0.352}
+Subset 7	Train Loss: 1.7994	Test Loss: 1.7898	Test Acc: 0.3312	Class Acc: {0: 0.483, 1: 0.478, 2: 0.248, 3: 0.156, 4: 0.159, 5: 0.432, 6: 0.218, 7: 0.653, 8: 0.306, 9: 0.179}
+Subset 8	Train Loss: 1.8072	Test Loss: 1.8354	Test Acc: 0.3141	Class Acc: {0: 0.587, 1: 0.377, 2: 0.01, 3: 0.007, 4: 0.233, 5: 0.655, 6: 0.204, 7: 0.536, 8: 0.15, 9: 0.382}
+Subset 9	Train Loss: 1.8083	Test Loss: 1.8123	Test Acc: 0.3004	Class Acc: {0: 0.247, 1: 0.674, 2: 0.007, 3: 0.372, 4: 0.0, 5: 0.357, 6: 0.18, 7: 0.446, 8: 0.526, 9: 0.195}
+Subset 10	Train Loss: 1.7637	Test Loss: 1.7837	Test Acc: 0.3072	Class Acc: {0: 0.393, 1: 0.726, 2: 0.043, 3: 0.645, 4: 0.381, 5: 0.061, 6: 0.0, 7: 0.381, 8: 0.367, 9: 0.075}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 41.672146 seconds
+Aggregated Test Loss: 1.8798	Aggregated Test Acc: 0.3696	Aggregated Class Acc: {0: 0.224, 1: 0.711, 2: 0.036, 3: 0.129, 4: 0.187, 5: 0.55, 6: 0.422, 7: 0.534, 8: 0.604, 9: 0.299}
+Round 31 use time: 1.46 min, ETA: 4.12 hours
+================================================================================
+Round 32
+Subset 1	Train Loss: 1.5495	Test Loss: 1.6083	Test Acc: 0.3939	Class Acc: {0: 0.423, 1: 0.233, 2: 0.043, 3: 0.112, 4: 0.169, 5: 0.512, 6: 0.597, 7: 0.657, 8: 0.468, 9: 0.725}
+Subset 2	Train Loss: 1.5753	Test Loss: 1.6346	Test Acc: 0.3863	Class Acc: {0: 0.243, 1: 0.67, 2: 0.167, 3: 0.335, 4: 0.066, 5: 0.435, 6: 0.572, 7: 0.549, 8: 0.467, 9: 0.359}
+Subset 3	Train Loss: 1.6686	Test Loss: 1.6915	Test Acc: 0.3676	Class Acc: {0: 0.448, 1: 0.739, 2: 0.028, 3: 0.229, 4: 0.21, 5: 0.274, 6: 0.442, 7: 0.617, 8: 0.474, 9: 0.215}
+Subset 4	Train Loss: 1.5645	Test Loss: 1.6300	Test Acc: 0.3929	Class Acc: {0: 0.509, 1: 0.506, 2: 0.085, 3: 0.154, 4: 0.12, 5: 0.461, 6: 0.742, 7: 0.511, 8: 0.559, 9: 0.282}
+Subset 5	Train Loss: 1.7132	Test Loss: 1.7287	Test Acc: 0.3531	Class Acc: {0: 0.415, 1: 0.438, 2: 0.017, 3: 0.046, 4: 0.149, 5: 0.712, 6: 0.096, 7: 0.608, 8: 0.496, 9: 0.554}
+Subset 6	Train Loss: 1.7328	Test Loss: 1.7878	Test Acc: 0.3199	Class Acc: {0: 0.36, 1: 0.535, 2: 0.0, 3: 0.086, 4: 0.315, 5: 0.0, 6: 0.691, 7: 0.42, 8: 0.584, 9: 0.208}
+Subset 7	Train Loss: 1.8001	Test Loss: 1.7892	Test Acc: 0.3068	Class Acc: {0: 0.461, 1: 0.617, 2: 0.296, 3: 0.001, 4: 0.103, 5: 0.046, 6: 0.495, 7: 0.427, 8: 0.512, 9: 0.11}
+Subset 8	Train Loss: 1.7674	Test Loss: 1.7795	Test Acc: 0.3259	Class Acc: {0: 0.609, 1: 0.324, 2: 0.002, 3: 0.345, 4: 0.475, 5: 0.22, 6: 0.258, 7: 0.459, 8: 0.161, 9: 0.406}
+Subset 9	Train Loss: 1.8063	Test Loss: 1.8348	Test Acc: 0.2997	Class Acc: {0: 0.618, 1: 0.532, 2: 0.016, 3: 0.04, 4: 0.0, 5: 0.22, 6: 0.705, 7: 0.445, 8: 0.27, 9: 0.151}
+Subset 10	Train Loss: 1.8125	Test Loss: 1.8372	Test Acc: 0.3083	Class Acc: {0: 0.37, 1: 0.755, 2: 0.034, 3: 0.029, 4: 0.339, 5: 0.0, 6: 0.5, 7: 0.481, 8: 0.562, 9: 0.013}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 36.831605 seconds
+Aggregated Test Loss: 1.7632	Aggregated Test Acc: 0.3861	Aggregated Class Acc: {0: 0.377, 1: 0.409, 2: 0.036, 3: 0.107, 4: 0.158, 5: 0.663, 6: 0.494, 7: 0.576, 8: 0.557, 9: 0.484}
+Round 32 use time: 1.38 min, ETA: 3.86 hours
+================================================================================
+Round 33
+Subset 1	Train Loss: 1.5482	Test Loss: 1.6115	Test Acc: 0.4098	Class Acc: {0: 0.497, 1: 0.518, 2: 0.042, 3: 0.323, 4: 0.25, 5: 0.283, 6: 0.63, 7: 0.493, 8: 0.511, 9: 0.551}
+Subset 2	Train Loss: 1.6648	Test Loss: 1.7255	Test Acc: 0.3604	Class Acc: {0: 0.376, 1: 0.695, 2: 0.007, 3: 0.16, 4: 0.58, 5: 0.062, 6: 0.206, 7: 0.524, 8: 0.623, 9: 0.371}
+Subset 3	Train Loss: 1.6669	Test Loss: 1.7011	Test Acc: 0.3610	Class Acc: {0: 0.364, 1: 0.431, 2: 0.029, 3: 0.163, 4: 0.553, 5: 0.463, 6: 0.248, 7: 0.488, 8: 0.756, 9: 0.115}
+Subset 4	Train Loss: 1.5883	Test Loss: 1.6362	Test Acc: 0.3871	Class Acc: {0: 0.367, 1: 0.328, 2: 0.175, 3: 0.204, 4: 0.027, 5: 0.464, 6: 0.678, 7: 0.491, 8: 0.606, 9: 0.531}
+Subset 5	Train Loss: 1.6294	Test Loss: 1.6445	Test Acc: 0.3935	Class Acc: {0: 0.524, 1: 0.618, 2: 0.131, 3: 0.106, 4: 0.238, 5: 0.422, 6: 0.491, 7: 0.584, 8: 0.41, 9: 0.411}
+Subset 6	Train Loss: 1.8586	Test Loss: 1.8846	Test Acc: 0.2765	Class Acc: {0: 0.526, 1: 0.026, 2: 0.003, 3: 0.543, 4: 0.048, 5: 0.029, 6: 0.231, 7: 0.333, 8: 0.485, 9: 0.541}
+Subset 7	Train Loss: 1.9005	Test Loss: 1.8879	Test Acc: 0.2713	Class Acc: {0: 0.518, 1: 0.112, 2: 0.014, 3: 0.065, 4: 0.221, 5: 0.01, 6: 0.269, 7: 0.819, 8: 0.189, 9: 0.496}
+Subset 8	Train Loss: 1.8348	Test Loss: 1.8543	Test Acc: 0.2984	Class Acc: {0: 0.329, 1: 0.259, 2: 0.105, 3: 0.0, 4: 0.054, 5: 0.389, 6: 0.336, 7: 0.675, 8: 0.207, 9: 0.63}
+Subset 9	Train Loss: 1.7933	Test Loss: 1.8067	Test Acc: 0.3037	Class Acc: {0: 0.48, 1: 0.365, 2: 0.002, 3: 0.171, 4: 0.562, 5: 0.265, 6: 0.134, 7: 0.473, 8: 0.04, 9: 0.545}
+Subset 10	Train Loss: 1.7682	Test Loss: 1.7756	Test Acc: 0.3340	Class Acc: {0: 0.197, 1: 0.613, 2: 0.0, 3: 0.151, 4: 0.405, 5: 0.602, 6: 0.255, 7: 0.536, 8: 0.47, 9: 0.111}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 41.559532 seconds
+Aggregated Test Loss: 1.7168	Aggregated Test Acc: 0.3994	Aggregated Class Acc: {0: 0.308, 1: 0.546, 2: 0.048, 3: 0.232, 4: 0.26, 5: 0.58, 6: 0.444, 7: 0.514, 8: 0.564, 9: 0.498}
+Round 33 use time: 1.54 min, ETA: 4.28 hours
+================================================================================
+Round 34
+Subset 1	Train Loss: 1.6118	Test Loss: 1.6713	Test Acc: 0.3791	Class Acc: {0: 0.533, 1: 0.09, 2: 0.021, 3: 0.453, 4: 0.14, 5: 0.36, 6: 0.557, 7: 0.558, 8: 0.275, 9: 0.804}
+Subset 2	Train Loss: 1.5464	Test Loss: 1.6029	Test Acc: 0.3978	Class Acc: {0: 0.4, 1: 0.537, 2: 0.05, 3: 0.075, 4: 0.366, 5: 0.655, 6: 0.323, 7: 0.538, 8: 0.685, 9: 0.349}
+Subset 3	Train Loss: 1.6394	Test Loss: 1.6767	Test Acc: 0.3617	Class Acc: {0: 0.495, 1: 0.247, 2: 0.039, 3: 0.61, 4: 0.363, 5: 0.238, 6: 0.372, 7: 0.172, 8: 0.566, 9: 0.515}
+Subset 4	Train Loss: 1.6328	Test Loss: 1.6667	Test Acc: 0.3676	Class Acc: {0: 0.367, 1: 0.169, 2: 0.074, 3: 0.008, 4: 0.337, 5: 0.712, 6: 0.346, 7: 0.607, 8: 0.375, 9: 0.681}
+Subset 5	Train Loss: 1.6504	Test Loss: 1.6625	Test Acc: 0.3793	Class Acc: {0: 0.563, 1: 0.689, 2: 0.051, 3: 0.115, 4: 0.576, 5: 0.455, 6: 0.31, 7: 0.457, 8: 0.341, 9: 0.236}
+Subset 6	Train Loss: 1.7401	Test Loss: 1.7766	Test Acc: 0.3326	Class Acc: {0: 0.279, 1: 0.218, 2: 0.0, 3: 0.376, 4: 0.389, 5: 0.338, 6: 0.285, 7: 0.473, 8: 0.673, 9: 0.295}
+Subset 7	Train Loss: 1.8769	Test Loss: 1.8665	Test Acc: 0.2643	Class Acc: {0: 0.0, 1: 0.431, 2: 0.007, 3: 0.011, 4: 0.106, 5: 0.003, 6: 0.597, 7: 0.616, 8: 0.689, 9: 0.183}
+Subset 8	Train Loss: 1.8068	Test Loss: 1.8330	Test Acc: 0.3018	Class Acc: {0: 0.384, 1: 0.126, 2: 0.004, 3: 0.235, 4: 0.383, 5: 0.186, 6: 0.103, 7: 0.47, 8: 0.541, 9: 0.586}
+Subset 9	Train Loss: 1.7454	Test Loss: 1.7670	Test Acc: 0.3267	Class Acc: {0: 0.398, 1: 0.695, 2: 0.0, 3: 0.425, 4: 0.202, 5: 0.12, 6: 0.243, 7: 0.654, 8: 0.332, 9: 0.198}
+Subset 10	Train Loss: 1.7596	Test Loss: 1.7817	Test Acc: 0.3184	Class Acc: {0: 0.527, 1: 0.618, 2: 0.062, 3: 0.381, 4: 0.094, 5: 0.098, 6: 0.231, 7: 0.538, 8: 0.438, 9: 0.197}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 47.664119 seconds
+Aggregated Test Loss: 1.7889	Aggregated Test Acc: 0.3865	Aggregated Class Acc: {0: 0.147, 1: 0.787, 2: 0.026, 3: 0.099, 4: 0.273, 5: 0.548, 6: 0.665, 7: 0.539, 8: 0.514, 9: 0.267}
+Round 34 use time: 1.59 min, ETA: 4.41 hours
+================================================================================
+Round 35
+Subset 1	Train Loss: 1.5558	Test Loss: 1.6244	Test Acc: 0.3871	Class Acc: {0: 0.491, 1: 0.308, 2: 0.238, 3: 0.099, 4: 0.43, 5: 0.317, 6: 0.589, 7: 0.573, 8: 0.27, 9: 0.556}
+Subset 2	Train Loss: 1.5638	Test Loss: 1.6365	Test Acc: 0.3849	Class Acc: {0: 0.644, 1: 0.667, 2: 0.096, 3: 0.244, 4: 0.35, 5: 0.191, 6: 0.778, 7: 0.391, 8: 0.351, 9: 0.137}
+Subset 3	Train Loss: 1.6018	Test Loss: 1.6386	Test Acc: 0.3862	Class Acc: {0: 0.32, 1: 0.696, 2: 0.045, 3: 0.37, 4: 0.269, 5: 0.478, 6: 0.305, 7: 0.561, 8: 0.518, 9: 0.3}
+Subset 4	Train Loss: 1.5950	Test Loss: 1.6516	Test Acc: 0.3753	Class Acc: {0: 0.537, 1: 0.447, 2: 0.019, 3: 0.439, 4: 0.198, 5: 0.275, 6: 0.424, 7: 0.463, 8: 0.37, 9: 0.581}
+Subset 5	Train Loss: 1.6545	Test Loss: 1.6936	Test Acc: 0.3557	Class Acc: {0: 0.646, 1: 0.518, 2: 0.416, 3: 0.313, 4: 0.236, 5: 0.253, 6: 0.032, 7: 0.549, 8: 0.248, 9: 0.346}
+Subset 6	Train Loss: 1.7590	Test Loss: 1.7790	Test Acc: 0.3375	Class Acc: {0: 0.368, 1: 0.198, 2: 0.0, 3: 0.075, 4: 0.389, 5: 0.418, 6: 0.559, 7: 0.517, 8: 0.262, 9: 0.589}
+Subset 7	Train Loss: 1.8152	Test Loss: 1.8034	Test Acc: 0.3010	Class Acc: {0: 0.347, 1: 0.512, 2: 0.001, 3: 0.34, 4: 0.144, 5: 0.009, 6: 0.577, 7: 0.391, 8: 0.41, 9: 0.279}
+Subset 8	Train Loss: 1.8153	Test Loss: 1.8351	Test Acc: 0.2881	Class Acc: {0: 0.115, 1: 0.189, 2: 0.253, 3: 0.121, 4: 0.0, 5: 0.19, 6: 0.38, 7: 0.601, 8: 0.728, 9: 0.304}
+Subset 9	Train Loss: 1.7660	Test Loss: 1.7862	Test Acc: 0.3033	Class Acc: {0: 0.585, 1: 0.468, 2: 0.019, 3: 0.021, 4: 0.0, 5: 0.096, 6: 0.759, 7: 0.567, 8: 0.199, 9: 0.319}
+Subset 10	Train Loss: 1.7300	Test Loss: 1.7595	Test Acc: 0.3410	Class Acc: {0: 0.37, 1: 0.712, 2: 0.005, 3: 0.327, 4: 0.242, 5: 0.519, 6: 0.201, 7: 0.463, 8: 0.479, 9: 0.092}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 40.918710 seconds
+Aggregated Test Loss: 1.6757	Aggregated Test Acc: 0.4092	Aggregated Class Acc: {0: 0.33, 1: 0.539, 2: 0.06, 3: 0.224, 4: 0.212, 5: 0.493, 6: 0.617, 7: 0.54, 8: 0.482, 9: 0.595}
+Round 35 use time: 1.48 min, ETA: 4.07 hours
+================================================================================
+Round 36
+Subset 1	Train Loss: 1.5211	Test Loss: 1.5871	Test Acc: 0.4095	Class Acc: {0: 0.388, 1: 0.444, 2: 0.119, 3: 0.166, 4: 0.44, 5: 0.458, 6: 0.553, 7: 0.518, 8: 0.433, 9: 0.576}
+Subset 2	Train Loss: 1.5286	Test Loss: 1.5950	Test Acc: 0.4055	Class Acc: {0: 0.411, 1: 0.29, 2: 0.199, 3: 0.289, 4: 0.299, 5: 0.367, 6: 0.487, 7: 0.546, 8: 0.438, 9: 0.729}
+Subset 3	Train Loss: 1.6420	Test Loss: 1.6644	Test Acc: 0.3721	Class Acc: {0: 0.568, 1: 0.165, 2: 0.13, 3: 0.314, 4: 0.415, 5: 0.207, 6: 0.622, 7: 0.427, 8: 0.184, 9: 0.689}
+Subset 4	Train Loss: 1.5565	Test Loss: 1.6156	Test Acc: 0.4037	Class Acc: {0: 0.375, 1: 0.749, 2: 0.183, 3: 0.248, 4: 0.153, 5: 0.331, 6: 0.631, 7: 0.489, 8: 0.588, 9: 0.29}
+Subset 5	Train Loss: 1.5979	Test Loss: 1.6219	Test Acc: 0.4014	Class Acc: {0: 0.566, 1: 0.542, 2: 0.17, 3: 0.234, 4: 0.213, 5: 0.368, 6: 0.52, 7: 0.513, 8: 0.416, 9: 0.472}
+Subset 6	Train Loss: 1.8328	Test Loss: 1.8449	Test Acc: 0.3001	Class Acc: {0: 0.528, 1: 0.47, 2: 0.019, 3: 0.151, 4: 0.33, 5: 0.155, 6: 0.096, 7: 0.634, 8: 0.463, 9: 0.155}
+Subset 7	Train Loss: 1.8129	Test Loss: 1.8240	Test Acc: 0.3011	Class Acc: {0: 0.082, 1: 0.63, 2: 0.119, 3: 0.094, 4: 0.154, 5: 0.143, 6: 0.64, 7: 0.448, 8: 0.384, 9: 0.317}
+Subset 8	Train Loss: 1.7894	Test Loss: 1.8016	Test Acc: 0.3451	Class Acc: {0: 0.499, 1: 0.419, 2: 0.008, 3: 0.259, 4: 0.222, 5: 0.451, 6: 0.454, 7: 0.548, 8: 0.434, 9: 0.157}
+Subset 9	Train Loss: 1.7646	Test Loss: 1.7758	Test Acc: 0.3303	Class Acc: {0: 0.445, 1: 0.163, 2: 0.002, 3: 0.088, 4: 0.123, 5: 0.222, 6: 0.694, 7: 0.6, 8: 0.318, 9: 0.648}
+Subset 10	Train Loss: 1.8227	Test Loss: 1.8466	Test Acc: 0.2933	Class Acc: {0: 0.31, 1: 0.648, 2: 0.047, 3: 0.214, 4: 0.264, 5: 0.021, 6: 0.239, 7: 0.585, 8: 0.537, 9: 0.068}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 37.120082 seconds
+Aggregated Test Loss: 1.7961	Aggregated Test Acc: 0.3823	Aggregated Class Acc: {0: 0.201, 1: 0.668, 2: 0.057, 3: 0.167, 4: 0.174, 5: 0.596, 6: 0.462, 7: 0.595, 8: 0.367, 9: 0.536}
+Round 36 use time: 1.44 min, ETA: 3.94 hours
+================================================================================
+Round 37
+Subset 1	Train Loss: 1.5383	Test Loss: 1.6054	Test Acc: 0.3977	Class Acc: {0: 0.355, 1: 0.271, 2: 0.206, 3: 0.274, 4: 0.317, 5: 0.541, 6: 0.325, 7: 0.416, 8: 0.571, 9: 0.701}
+Subset 2	Train Loss: 1.5352	Test Loss: 1.6014	Test Acc: 0.3957	Class Acc: {0: 0.27, 1: 0.265, 2: 0.049, 3: 0.463, 4: 0.31, 5: 0.244, 6: 0.515, 7: 0.704, 8: 0.464, 9: 0.673}
+Subset 3	Train Loss: 1.6672	Test Loss: 1.6951	Test Acc: 0.3824	Class Acc: {0: 0.544, 1: 0.705, 2: 0.044, 3: 0.205, 4: 0.265, 5: 0.253, 6: 0.594, 7: 0.456, 8: 0.538, 9: 0.22}
+Subset 4	Train Loss: 1.5868	Test Loss: 1.6207	Test Acc: 0.3954	Class Acc: {0: 0.559, 1: 0.403, 2: 0.127, 3: 0.517, 4: 0.508, 5: 0.002, 6: 0.579, 7: 0.373, 8: 0.538, 9: 0.348}
+Subset 5	Train Loss: 1.6024	Test Loss: 1.6330	Test Acc: 0.3945	Class Acc: {0: 0.467, 1: 0.672, 2: 0.083, 3: 0.079, 4: 0.423, 5: 0.608, 6: 0.502, 7: 0.582, 8: 0.268, 9: 0.261}
+Subset 6	Train Loss: 1.7730	Test Loss: 1.7930	Test Acc: 0.3238	Class Acc: {0: 0.513, 1: 0.656, 2: 0.014, 3: 0.089, 4: 0.168, 5: 0.105, 6: 0.848, 7: 0.33, 8: 0.352, 9: 0.163}
+Subset 7	Train Loss: 1.8534	Test Loss: 1.8460	Test Acc: 0.2984	Class Acc: {0: 0.319, 1: 0.409, 2: 0.154, 3: 0.001, 4: 0.314, 5: 0.019, 6: 0.412, 7: 0.561, 8: 0.243, 9: 0.552}
+Subset 8	Train Loss: 1.8421	Test Loss: 1.8538	Test Acc: 0.2818	Class Acc: {0: 0.372, 1: 0.301, 2: 0.0, 3: 0.01, 4: 0.0, 5: 0.047, 6: 0.841, 7: 0.317, 8: 0.362, 9: 0.568}
+Subset 9	Train Loss: 1.7334	Test Loss: 1.7565	Test Acc: 0.3373	Class Acc: {0: 0.335, 1: 0.306, 2: 0.01, 3: 0.092, 4: 0.121, 5: 0.689, 6: 0.467, 7: 0.526, 8: 0.301, 9: 0.526}
+Subset 10	Train Loss: 1.7949	Test Loss: 1.8215	Test Acc: 0.3075	Class Acc: {0: 0.597, 1: 0.166, 2: 0.018, 3: 0.279, 4: 0.337, 5: 0.258, 6: 0.363, 7: 0.468, 8: 0.339, 9: 0.25}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 47.382006 seconds
+Aggregated Test Loss: 1.7299	Aggregated Test Acc: 0.4051	Aggregated Class Acc: {0: 0.251, 1: 0.744, 2: 0.059, 3: 0.16, 4: 0.216, 5: 0.468, 6: 0.593, 7: 0.605, 8: 0.621, 9: 0.334}
+Round 37 use time: 1.54 min, ETA: 4.20 hours
+================================================================================
+Round 38
+Subset 1	Train Loss: 1.5149	Test Loss: 1.5892	Test Acc: 0.4040	Class Acc: {0: 0.529, 1: 0.452, 2: 0.046, 3: 0.095, 4: 0.377, 5: 0.521, 6: 0.664, 7: 0.444, 8: 0.594, 9: 0.318}
+Subset 2	Train Loss: 1.5107	Test Loss: 1.5810	Test Acc: 0.3995	Class Acc: {0: 0.404, 1: 0.488, 2: 0.135, 3: 0.598, 4: 0.263, 5: 0.001, 6: 0.524, 7: 0.546, 8: 0.35, 9: 0.686}
+Subset 3	Train Loss: 1.6991	Test Loss: 1.7295	Test Acc: 0.3538	Class Acc: {0: 0.499, 1: 0.303, 2: 0.016, 3: 0.167, 4: 0.153, 5: 0.143, 6: 0.645, 7: 0.475, 8: 0.349, 9: 0.788}
+Subset 4	Train Loss: 1.6771	Test Loss: 1.7338	Test Acc: 0.3767	Class Acc: {0: 0.416, 1: 0.658, 2: 0.095, 3: 0.06, 4: 0.216, 5: 0.398, 6: 0.292, 7: 0.576, 8: 0.496, 9: 0.56}
+Subset 5	Train Loss: 1.6118	Test Loss: 1.6477	Test Acc: 0.3831	Class Acc: {0: 0.145, 1: 0.435, 2: 0.066, 3: 0.317, 4: 0.117, 5: 0.585, 6: 0.467, 7: 0.589, 8: 0.652, 9: 0.458}
+Subset 6	Train Loss: 1.8378	Test Loss: 1.8466	Test Acc: 0.3059	Class Acc: {0: 0.389, 1: 0.212, 2: 0.031, 3: 0.303, 4: 0.0, 5: 0.127, 6: 0.601, 7: 0.537, 8: 0.599, 9: 0.26}
+Subset 7	Train Loss: 1.7888	Test Loss: 1.7880	Test Acc: 0.3125	Class Acc: {0: 0.325, 1: 0.011, 2: 0.115, 3: 0.012, 4: 0.235, 5: 0.166, 6: 0.636, 7: 0.575, 8: 0.276, 9: 0.774}
+Subset 8	Train Loss: 1.7952	Test Loss: 1.8149	Test Acc: 0.2921	Class Acc: {0: 0.439, 1: 0.097, 2: 0.002, 3: 0.662, 4: 0.305, 5: 0.081, 6: 0.035, 7: 0.279, 8: 0.437, 9: 0.584}
+Subset 9	Train Loss: 1.8261	Test Loss: 1.8407	Test Acc: 0.3065	Class Acc: {0: 0.212, 1: 0.014, 2: 0.003, 3: 0.054, 4: 0.028, 5: 0.337, 6: 0.744, 7: 0.318, 8: 0.556, 9: 0.799}
+Subset 10	Train Loss: 1.8105	Test Loss: 1.8281	Test Acc: 0.2978	Class Acc: {0: 0.435, 1: 0.467, 2: 0.088, 3: 0.058, 4: 0.359, 5: 0.09, 6: 0.411, 7: 0.555, 8: 0.515, 9: 0.0}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 43.777023 seconds
+Aggregated Test Loss: 1.7689	Aggregated Test Acc: 0.4024	Aggregated Class Acc: {0: 0.215, 1: 0.619, 2: 0.066, 3: 0.177, 4: 0.158, 5: 0.41, 6: 0.664, 7: 0.556, 8: 0.626, 9: 0.533}
+Round 38 use time: 1.55 min, ETA: 4.18 hours
+================================================================================
+Round 39
+Subset 1	Train Loss: 1.5610	Test Loss: 1.6085	Test Acc: 0.4024	Class Acc: {0: 0.454, 1: 0.163, 2: 0.276, 3: 0.12, 4: 0.342, 5: 0.582, 6: 0.446, 7: 0.541, 8: 0.579, 9: 0.521}
+Subset 2	Train Loss: 1.5326	Test Loss: 1.5989	Test Acc: 0.4026	Class Acc: {0: 0.515, 1: 0.315, 2: 0.089, 3: 0.162, 4: 0.419, 5: 0.278, 6: 0.741, 7: 0.434, 8: 0.392, 9: 0.681}
+Subset 3	Train Loss: 1.5910	Test Loss: 1.6182	Test Acc: 0.3965	Class Acc: {0: 0.52, 1: 0.401, 2: 0.181, 3: 0.493, 4: 0.351, 5: 0.268, 6: 0.331, 7: 0.425, 8: 0.521, 9: 0.474}
+Subset 4	Train Loss: 1.5784	Test Loss: 1.6172	Test Acc: 0.3988	Class Acc: {0: 0.37, 1: 0.662, 2: 0.073, 3: 0.044, 4: 0.373, 5: 0.664, 6: 0.411, 7: 0.597, 8: 0.461, 9: 0.333}
+Subset 5	Train Loss: 1.5753	Test Loss: 1.6030	Test Acc: 0.4073	Class Acc: {0: 0.362, 1: 0.612, 2: 0.091, 3: 0.284, 4: 0.198, 5: 0.527, 6: 0.658, 7: 0.45, 8: 0.525, 9: 0.366}
+Subset 6	Train Loss: 1.7617	Test Loss: 1.7898	Test Acc: 0.3255	Class Acc: {0: 0.465, 1: 0.184, 2: 0.001, 3: 0.438, 4: 0.334, 5: 0.0, 6: 0.423, 7: 0.619, 8: 0.281, 9: 0.51}
+Subset 7	Train Loss: 1.8342	Test Loss: 1.8199	Test Acc: 0.3060	Class Acc: {0: 0.235, 1: 0.523, 2: 0.026, 3: 0.092, 4: 0.263, 5: 0.41, 6: 0.183, 7: 0.585, 8: 0.554, 9: 0.189}
+Subset 8	Train Loss: 1.8173	Test Loss: 1.8564	Test Acc: 0.3108	Class Acc: {0: 0.224, 1: 0.543, 2: 0.089, 3: 0.191, 4: 0.042, 5: 0.09, 6: 0.287, 7: 0.612, 8: 0.427, 9: 0.603}
+Subset 9	Train Loss: 1.8317	Test Loss: 1.8551	Test Acc: 0.2636	Class Acc: {0: 0.027, 1: 0.164, 2: 0.038, 3: 0.001, 4: 0.0, 5: 0.695, 6: 0.169, 7: 0.482, 8: 0.811, 9: 0.249}
+Subset 10	Train Loss: 1.8920	Test Loss: 1.9043	Test Acc: 0.2604	Class Acc: {0: 0.774, 1: 0.235, 2: 0.052, 3: 0.374, 4: 0.081, 5: 0.013, 6: 0.417, 7: 0.247, 8: 0.265, 9: 0.146}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 41.316250 seconds
+Aggregated Test Loss: 1.6421	Aggregated Test Acc: 0.4209	Aggregated Class Acc: {0: 0.306, 1: 0.414, 2: 0.137, 3: 0.153, 4: 0.222, 5: 0.595, 6: 0.709, 7: 0.505, 8: 0.579, 9: 0.589}
+Round 39 use time: 1.56 min, ETA: 4.18 hours
+================================================================================
+Round 40
+Subset 1	Train Loss: 1.4565	Test Loss: 1.5261	Test Acc: 0.4290	Class Acc: {0: 0.404, 1: 0.554, 2: 0.302, 3: 0.244, 4: 0.333, 5: 0.555, 6: 0.475, 7: 0.44, 8: 0.527, 9: 0.456}
+Subset 2	Train Loss: 1.5259	Test Loss: 1.6215	Test Acc: 0.3923	Class Acc: {0: 0.634, 1: 0.42, 2: 0.241, 3: 0.056, 4: 0.172, 5: 0.723, 6: 0.545, 7: 0.605, 8: 0.225, 9: 0.302}
+Subset 3	Train Loss: 1.5367	Test Loss: 1.5730	Test Acc: 0.4096	Class Acc: {0: 0.36, 1: 0.701, 2: 0.091, 3: 0.218, 4: 0.273, 5: 0.422, 6: 0.588, 7: 0.561, 8: 0.633, 9: 0.249}
+Subset 4	Train Loss: 1.5381	Test Loss: 1.5979	Test Acc: 0.4027	Class Acc: {0: 0.641, 1: 0.584, 2: 0.124, 3: 0.089, 4: 0.345, 5: 0.379, 6: 0.649, 7: 0.57, 8: 0.328, 9: 0.318}
+Subset 5	Train Loss: 1.6373	Test Loss: 1.6592	Test Acc: 0.3773	Class Acc: {0: 0.484, 1: 0.296, 2: 0.226, 3: 0.244, 4: 0.119, 5: 0.435, 6: 0.25, 7: 0.651, 8: 0.313, 9: 0.755}
+Subset 6	Train Loss: 1.8638	Test Loss: 1.8917	Test Acc: 0.2974	Class Acc: {0: 0.473, 1: 0.304, 2: 0.066, 3: 0.642, 4: 0.001, 5: 0.002, 6: 0.506, 7: 0.32, 8: 0.302, 9: 0.358}
+Subset 7	Train Loss: 1.7788	Test Loss: 1.7600	Test Acc: 0.3495	Class Acc: {0: 0.392, 1: 0.551, 2: 0.0, 3: 0.151, 4: 0.375, 5: 0.568, 6: 0.195, 7: 0.586, 8: 0.476, 9: 0.201}
+Subset 8	Train Loss: 1.7420	Test Loss: 1.7864	Test Acc: 0.3320	Class Acc: {0: 0.631, 1: 0.543, 2: 0.017, 3: 0.343, 4: 0.346, 5: 0.084, 6: 0.314, 7: 0.485, 8: 0.209, 9: 0.348}
+Subset 9	Train Loss: 1.7643	Test Loss: 1.7859	Test Acc: 0.3294	Class Acc: {0: 0.434, 1: 0.587, 2: 0.019, 3: 0.161, 4: 0.233, 5: 0.28, 6: 0.421, 7: 0.604, 8: 0.42, 9: 0.135}
+Subset 10	Train Loss: 1.6828	Test Loss: 1.7274	Test Acc: 0.3528	Class Acc: {0: 0.301, 1: 0.671, 2: 0.02, 3: 0.291, 4: 0.376, 5: 0.308, 6: 0.284, 7: 0.562, 8: 0.659, 9: 0.056}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 37.725208 seconds
+Aggregated Test Loss: 1.7376	Aggregated Test Acc: 0.4170	Aggregated Class Acc: {0: 0.275, 1: 0.589, 2: 0.108, 3: 0.093, 4: 0.247, 5: 0.59, 6: 0.743, 7: 0.515, 8: 0.622, 9: 0.388}
+Round 40 use time: 1.51 min, ETA: 4.02 hours
+================================================================================
+Round 41
+Subset 1	Train Loss: 1.4505	Test Loss: 1.5276	Test Acc: 0.4321	Class Acc: {0: 0.532, 1: 0.456, 2: 0.16, 3: 0.204, 4: 0.296, 5: 0.56, 6: 0.43, 7: 0.617, 8: 0.442, 9: 0.624}
+Subset 2	Train Loss: 1.4584	Test Loss: 1.5362	Test Acc: 0.4204	Class Acc: {0: 0.508, 1: 0.181, 2: 0.145, 3: 0.268, 4: 0.479, 5: 0.439, 6: 0.509, 7: 0.504, 8: 0.52, 9: 0.651}
+Subset 3	Train Loss: 1.5897	Test Loss: 1.6012	Test Acc: 0.4119	Class Acc: {0: 0.3, 1: 0.56, 2: 0.107, 3: 0.363, 4: 0.399, 5: 0.171, 6: 0.471, 7: 0.607, 8: 0.531, 9: 0.61}
+Subset 4	Train Loss: 1.5700	Test Loss: 1.6278	Test Acc: 0.3802	Class Acc: {0: 0.356, 1: 0.781, 2: 0.109, 3: 0.174, 4: 0.188, 5: 0.423, 6: 0.762, 7: 0.352, 8: 0.501, 9: 0.156}
+Subset 5	Train Loss: 1.5128	Test Loss: 1.5528	Test Acc: 0.4244	Class Acc: {0: 0.441, 1: 0.554, 2: 0.11, 3: 0.217, 4: 0.38, 5: 0.5, 6: 0.453, 7: 0.57, 8: 0.506, 9: 0.513}
+Subset 6	Train Loss: 1.8054	Test Loss: 1.8286	Test Acc: 0.2992	Class Acc: {0: 0.227, 1: 0.713, 2: 0.004, 3: 0.14, 4: 0.0, 5: 0.0, 6: 0.775, 7: 0.591, 8: 0.367, 9: 0.175}
+Subset 7	Train Loss: 1.7303	Test Loss: 1.7225	Test Acc: 0.3535	Class Acc: {0: 0.238, 1: 0.741, 2: 0.1, 3: 0.269, 4: 0.206, 5: 0.498, 6: 0.419, 7: 0.467, 8: 0.352, 9: 0.245}
+Subset 8	Train Loss: 1.6954	Test Loss: 1.7174	Test Acc: 0.3650	Class Acc: {0: 0.47, 1: 0.665, 2: 0.014, 3: 0.179, 4: 0.289, 5: 0.442, 6: 0.456, 7: 0.572, 8: 0.336, 9: 0.227}
+Subset 9	Train Loss: 1.7509	Test Loss: 1.7789	Test Acc: 0.3345	Class Acc: {0: 0.68, 1: 0.283, 2: 0.001, 3: 0.082, 4: 0.28, 5: 0.563, 6: 0.388, 7: 0.613, 8: 0.257, 9: 0.198}
+Subset 10	Train Loss: 1.8107	Test Loss: 1.8269	Test Acc: 0.3120	Class Acc: {0: 0.132, 1: 0.887, 2: 0.0, 3: 0.319, 4: 0.217, 5: 0.504, 6: 0.277, 7: 0.353, 8: 0.372, 9: 0.059}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 45.249806 seconds
+Aggregated Test Loss: 1.7639	Aggregated Test Acc: 0.4168	Aggregated Class Acc: {0: 0.304, 1: 0.678, 2: 0.074, 3: 0.119, 4: 0.336, 5: 0.399, 6: 0.686, 7: 0.531, 8: 0.656, 9: 0.385}
+Round 41 use time: 1.58 min, ETA: 4.18 hours
+================================================================================
+Round 42
+Subset 1	Train Loss: 1.4674	Test Loss: 1.5495	Test Acc: 0.4241	Class Acc: {0: 0.386, 1: 0.428, 2: 0.203, 3: 0.118, 4: 0.396, 5: 0.489, 6: 0.432, 7: 0.547, 8: 0.579, 9: 0.663}
+Subset 2	Train Loss: 1.4352	Test Loss: 1.5271	Test Acc: 0.4260	Class Acc: {0: 0.446, 1: 0.376, 2: 0.217, 3: 0.202, 4: 0.223, 5: 0.454, 6: 0.761, 7: 0.471, 8: 0.55, 9: 0.56}
+Subset 3	Train Loss: 1.5771	Test Loss: 1.6237	Test Acc: 0.3822	Class Acc: {0: 0.302, 1: 0.318, 2: 0.37, 3: 0.597, 4: 0.22, 5: 0.257, 6: 0.194, 7: 0.524, 8: 0.466, 9: 0.574}
+Subset 4	Train Loss: 1.5371	Test Loss: 1.5858	Test Acc: 0.4015	Class Acc: {0: 0.467, 1: 0.717, 2: 0.155, 3: 0.369, 4: 0.177, 5: 0.316, 6: 0.472, 7: 0.612, 8: 0.498, 9: 0.232}
+Subset 5	Train Loss: 1.5610	Test Loss: 1.5838	Test Acc: 0.4171	Class Acc: {0: 0.508, 1: 0.482, 2: 0.34, 3: 0.233, 4: 0.203, 5: 0.481, 6: 0.456, 7: 0.444, 8: 0.557, 9: 0.467}
+Subset 6	Train Loss: 1.7227	Test Loss: 1.7534	Test Acc: 0.3527	Class Acc: {0: 0.457, 1: 0.754, 2: 0.003, 3: 0.259, 4: 0.107, 5: 0.355, 6: 0.53, 7: 0.433, 8: 0.384, 9: 0.245}
+Subset 7	Train Loss: 1.7837	Test Loss: 1.7933	Test Acc: 0.3325	Class Acc: {0: 0.526, 1: 0.493, 2: 0.077, 3: 0.02, 4: 0.481, 5: 0.485, 6: 0.376, 7: 0.362, 8: 0.384, 9: 0.121}
+Subset 8	Train Loss: 1.7827	Test Loss: 1.8141	Test Acc: 0.3140	Class Acc: {0: 0.413, 1: 0.369, 2: 0.217, 3: 0.01, 4: 0.089, 5: 0.0, 6: 0.55, 7: 0.617, 8: 0.57, 9: 0.305}
+Subset 9	Train Loss: 1.7468	Test Loss: 1.7588	Test Acc: 0.3514	Class Acc: {0: 0.541, 1: 0.398, 2: 0.065, 3: 0.146, 4: 0.285, 5: 0.528, 6: 0.467, 7: 0.464, 8: 0.313, 9: 0.307}
+Subset 10	Train Loss: 1.7166	Test Loss: 1.7358	Test Acc: 0.3455	Class Acc: {0: 0.602, 1: 0.55, 2: 0.079, 3: 0.162, 4: 0.307, 5: 0.446, 6: 0.269, 7: 0.566, 8: 0.471, 9: 0.003}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 39.031988 seconds
+Aggregated Test Loss: 1.6434	Aggregated Test Acc: 0.4288	Aggregated Class Acc: {0: 0.362, 1: 0.616, 2: 0.15, 3: 0.146, 4: 0.289, 5: 0.509, 6: 0.597, 7: 0.574, 8: 0.633, 9: 0.412}
+Round 42 use time: 1.43 min, ETA: 3.77 hours
+================================================================================
+Round 43
+Subset 1	Train Loss: 1.5019	Test Loss: 1.5706	Test Acc: 0.4177	Class Acc: {0: 0.225, 1: 0.693, 2: 0.15, 3: 0.194, 4: 0.235, 5: 0.427, 6: 0.526, 7: 0.701, 8: 0.55, 9: 0.476}
+Subset 2	Train Loss: 1.4629	Test Loss: 1.5534	Test Acc: 0.4175	Class Acc: {0: 0.365, 1: 0.301, 2: 0.166, 3: 0.143, 4: 0.225, 5: 0.656, 6: 0.358, 7: 0.66, 8: 0.66, 9: 0.641}
+Subset 3	Train Loss: 1.5166	Test Loss: 1.5441	Test Acc: 0.4240	Class Acc: {0: 0.518, 1: 0.541, 2: 0.262, 3: 0.312, 4: 0.16, 5: 0.488, 6: 0.507, 7: 0.521, 8: 0.489, 9: 0.442}
+Subset 4	Train Loss: 1.4640	Test Loss: 1.5328	Test Acc: 0.4319	Class Acc: {0: 0.488, 1: 0.578, 2: 0.06, 3: 0.064, 4: 0.371, 5: 0.638, 6: 0.641, 7: 0.56, 8: 0.458, 9: 0.461}
+Subset 5	Train Loss: 1.5053	Test Loss: 1.5630	Test Acc: 0.4291	Class Acc: {0: 0.394, 1: 0.481, 2: 0.182, 3: 0.392, 4: 0.323, 5: 0.388, 6: 0.653, 7: 0.448, 8: 0.499, 9: 0.531}
+Subset 6	Train Loss: 1.7936	Test Loss: 1.8234	Test Acc: 0.3064	Class Acc: {0: 0.552, 1: 0.445, 2: 0.11, 3: 0.082, 4: 0.151, 5: 0.0, 6: 0.811, 7: 0.439, 8: 0.214, 9: 0.26}
+Subset 7	Train Loss: 1.8063	Test Loss: 1.8023	Test Acc: 0.2926	Class Acc: {0: 0.505, 1: 0.335, 2: 0.268, 3: 0.492, 4: 0.152, 5: 0.1, 6: 0.149, 7: 0.121, 8: 0.653, 9: 0.151}
+Subset 8	Train Loss: 1.8051	Test Loss: 1.8107	Test Acc: 0.3219	Class Acc: {0: 0.353, 1: 0.789, 2: 0.053, 3: 0.105, 4: 0.21, 5: 0.078, 6: 0.721, 7: 0.38, 8: 0.322, 9: 0.208}
+Subset 9	Train Loss: 1.7564	Test Loss: 1.7702	Test Acc: 0.3170	Class Acc: {0: 0.336, 1: 0.846, 2: 0.125, 3: 0.277, 4: 0.293, 5: 0.157, 6: 0.42, 7: 0.346, 8: 0.164, 9: 0.206}
+Subset 10	Train Loss: 1.6995	Test Loss: 1.7373	Test Acc: 0.3601	Class Acc: {0: 0.434, 1: 0.733, 2: 0.026, 3: 0.124, 4: 0.442, 5: 0.28, 6: 0.614, 7: 0.478, 8: 0.425, 9: 0.045}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 41.410589 seconds
+Aggregated Test Loss: 1.7268	Aggregated Test Acc: 0.4238	Aggregated Class Acc: {0: 0.202, 1: 0.742, 2: 0.129, 3: 0.156, 4: 0.206, 5: 0.584, 6: 0.641, 7: 0.602, 8: 0.562, 9: 0.414}
+Round 43 use time: 1.57 min, ETA: 4.10 hours
+================================================================================
+Round 44
+Subset 1	Train Loss: 1.4582	Test Loss: 1.5550	Test Acc: 0.4128	Class Acc: {0: 0.284, 1: 0.231, 2: 0.157, 3: 0.074, 4: 0.457, 5: 0.577, 6: 0.522, 7: 0.581, 8: 0.706, 9: 0.539}
+Subset 2	Train Loss: 1.4069	Test Loss: 1.4946	Test Acc: 0.4461	Class Acc: {0: 0.529, 1: 0.578, 2: 0.162, 3: 0.175, 4: 0.354, 5: 0.407, 6: 0.711, 7: 0.537, 8: 0.561, 9: 0.447}
+Subset 3	Train Loss: 1.5082	Test Loss: 1.5686	Test Acc: 0.4199	Class Acc: {0: 0.447, 1: 0.667, 2: 0.08, 3: 0.246, 4: 0.305, 5: 0.376, 6: 0.597, 7: 0.672, 8: 0.428, 9: 0.381}
+Subset 4	Train Loss: 1.4969	Test Loss: 1.5748	Test Acc: 0.4132	Class Acc: {0: 0.476, 1: 0.404, 2: 0.03, 3: 0.054, 4: 0.279, 5: 0.515, 6: 0.653, 7: 0.652, 8: 0.648, 9: 0.421}
+Subset 5	Train Loss: 1.6178	Test Loss: 1.6387	Test Acc: 0.3769	Class Acc: {0: 0.59, 1: 0.189, 2: 0.274, 3: 0.093, 4: 0.09, 5: 0.73, 6: 0.443, 7: 0.452, 8: 0.262, 9: 0.646}
+Subset 6	Train Loss: 1.7789	Test Loss: 1.7960	Test Acc: 0.3279	Class Acc: {0: 0.624, 1: 0.385, 2: 0.198, 3: 0.257, 4: 0.118, 5: 0.135, 6: 0.429, 7: 0.533, 8: 0.508, 9: 0.092}
+Subset 7	Train Loss: 1.7810	Test Loss: 1.7531	Test Acc: 0.3429	Class Acc: {0: 0.252, 1: 0.509, 2: 0.241, 3: 0.207, 4: 0.087, 5: 0.353, 6: 0.256, 7: 0.616, 8: 0.515, 9: 0.393}
+Subset 8	Train Loss: 1.6932	Test Loss: 1.7371	Test Acc: 0.3500	Class Acc: {0: 0.496, 1: 0.273, 2: 0.042, 3: 0.041, 4: 0.413, 5: 0.511, 6: 0.394, 7: 0.502, 8: 0.636, 9: 0.192}
+Subset 9	Train Loss: 1.7099	Test Loss: 1.7384	Test Acc: 0.3449	Class Acc: {0: 0.253, 1: 0.188, 2: 0.021, 3: 0.227, 4: 0.151, 5: 0.36, 6: 0.634, 7: 0.457, 8: 0.713, 9: 0.445}
+Subset 10	Train Loss: 1.7363	Test Loss: 1.7392	Test Acc: 0.3340	Class Acc: {0: 0.396, 1: 0.564, 2: 0.206, 3: 0.07, 4: 0.083, 5: 0.058, 6: 0.762, 7: 0.58, 8: 0.403, 9: 0.218}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 39.814048 seconds
+Aggregated Test Loss: 1.6569	Aggregated Test Acc: 0.4293	Aggregated Class Acc: {0: 0.269, 1: 0.623, 2: 0.13, 3: 0.059, 4: 0.262, 5: 0.493, 6: 0.707, 7: 0.656, 8: 0.602, 9: 0.492}
+Round 44 use time: 1.50 min, ETA: 3.90 hours
+================================================================================
+Round 45
+Subset 1	Train Loss: 1.4859	Test Loss: 1.5578	Test Acc: 0.4095	Class Acc: {0: 0.391, 1: 0.373, 2: 0.536, 3: 0.19, 4: 0.249, 5: 0.478, 6: 0.274, 7: 0.52, 8: 0.59, 9: 0.494}
+Subset 2	Train Loss: 1.5003	Test Loss: 1.5786	Test Acc: 0.4081	Class Acc: {0: 0.313, 1: 0.276, 2: 0.412, 3: 0.253, 4: 0.121, 5: 0.512, 6: 0.361, 7: 0.516, 8: 0.797, 9: 0.52}
+Subset 3	Train Loss: 1.5101	Test Loss: 1.5485	Test Acc: 0.4256	Class Acc: {0: 0.56, 1: 0.412, 2: 0.172, 3: 0.249, 4: 0.341, 5: 0.445, 6: 0.56, 7: 0.577, 8: 0.365, 9: 0.575}
+Subset 4	Train Loss: 1.5269	Test Loss: 1.5654	Test Acc: 0.4145	Class Acc: {0: 0.514, 1: 0.342, 2: 0.085, 3: 0.446, 4: 0.327, 5: 0.282, 6: 0.577, 7: 0.554, 8: 0.488, 9: 0.53}
+Subset 5	Train Loss: 1.5015	Test Loss: 1.5464	Test Acc: 0.4242	Class Acc: {0: 0.407, 1: 0.54, 2: 0.213, 3: 0.141, 4: 0.359, 5: 0.372, 6: 0.595, 7: 0.596, 8: 0.642, 9: 0.377}
+Subset 6	Train Loss: 1.8133	Test Loss: 1.8230	Test Acc: 0.3235	Class Acc: {0: 0.416, 1: 0.395, 2: 0.002, 3: 0.265, 4: 0.111, 5: 0.099, 6: 0.575, 7: 0.684, 8: 0.266, 9: 0.422}
+Subset 7	Train Loss: 1.7999	Test Loss: 1.8041	Test Acc: 0.3256	Class Acc: {0: 0.504, 1: 0.303, 2: 0.277, 3: 0.105, 4: 0.319, 5: 0.052, 6: 0.36, 7: 0.603, 8: 0.26, 9: 0.473}
+Subset 8	Train Loss: 1.8153	Test Loss: 1.8271	Test Acc: 0.3027	Class Acc: {0: 0.38, 1: 0.418, 2: 0.178, 3: 0.0, 4: 0.158, 5: 0.272, 6: 0.353, 7: 0.5, 8: 0.629, 9: 0.139}
+Subset 9	Train Loss: 1.7706	Test Loss: 1.7899	Test Acc: 0.3024	Class Acc: {0: 0.351, 1: 0.734, 2: 0.318, 3: 0.595, 4: 0.023, 5: 0.077, 6: 0.0, 7: 0.342, 8: 0.539, 9: 0.045}
+Subset 10	Train Loss: 1.7547	Test Loss: 1.7914	Test Acc: 0.3144	Class Acc: {0: 0.429, 1: 0.714, 2: 0.074, 3: 0.013, 4: 0.072, 5: 0.062, 6: 0.556, 7: 0.558, 8: 0.541, 9: 0.125}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 46.685043 seconds
+Aggregated Test Loss: 1.6232	Aggregated Test Acc: 0.4280	Aggregated Class Acc: {0: 0.28, 1: 0.377, 2: 0.336, 3: 0.179, 4: 0.164, 5: 0.581, 6: 0.491, 7: 0.569, 8: 0.733, 9: 0.57}
+Round 45 use time: 1.59 min, ETA: 4.10 hours
+================================================================================
+Round 46
+Subset 1	Train Loss: 1.4364	Test Loss: 1.5565	Test Acc: 0.4283	Class Acc: {0: 0.432, 1: 0.695, 2: 0.21, 3: 0.13, 4: 0.44, 5: 0.374, 6: 0.547, 7: 0.565, 8: 0.657, 9: 0.233}
+Subset 2	Train Loss: 1.4270	Test Loss: 1.5273	Test Acc: 0.4243	Class Acc: {0: 0.566, 1: 0.377, 2: 0.207, 3: 0.551, 4: 0.394, 5: 0.173, 6: 0.536, 7: 0.556, 8: 0.276, 9: 0.607}
+Subset 3	Train Loss: 1.5472	Test Loss: 1.5927	Test Acc: 0.4057	Class Acc: {0: 0.408, 1: 0.682, 2: 0.095, 3: 0.302, 4: 0.423, 5: 0.329, 6: 0.735, 7: 0.421, 8: 0.384, 9: 0.278}
+Subset 4	Train Loss: 1.5047	Test Loss: 1.5840	Test Acc: 0.4126	Class Acc: {0: 0.432, 1: 0.794, 2: 0.036, 3: 0.161, 4: 0.187, 5: 0.401, 6: 0.725, 7: 0.569, 8: 0.452, 9: 0.369}
+Subset 5	Train Loss: 1.5447	Test Loss: 1.5805	Test Acc: 0.4159	Class Acc: {0: 0.369, 1: 0.287, 2: 0.085, 3: 0.375, 4: 0.283, 5: 0.466, 6: 0.62, 7: 0.574, 8: 0.517, 9: 0.583}
+Subset 6	Train Loss: 1.8154	Test Loss: 1.8490	Test Acc: 0.3213	Class Acc: {0: 0.566, 1: 0.186, 2: 0.013, 3: 0.495, 4: 0.45, 5: 0.001, 6: 0.411, 7: 0.522, 8: 0.161, 9: 0.408}
+Subset 7	Train Loss: 1.7640	Test Loss: 1.7706	Test Acc: 0.3303	Class Acc: {0: 0.454, 1: 0.411, 2: 0.464, 3: 0.0, 4: 0.173, 5: 0.056, 6: 0.542, 7: 0.379, 8: 0.584, 9: 0.24}
+Subset 8	Train Loss: 1.7341	Test Loss: 1.7658	Test Acc: 0.3347	Class Acc: {0: 0.421, 1: 0.201, 2: 0.301, 3: 0.357, 4: 0.095, 5: 0.199, 6: 0.426, 7: 0.446, 8: 0.268, 9: 0.633}
+Subset 9	Train Loss: 1.7871	Test Loss: 1.8058	Test Acc: 0.3132	Class Acc: {0: 0.217, 1: 0.626, 2: 0.0, 3: 0.035, 4: 0.058, 5: 0.653, 6: 0.283, 7: 0.678, 8: 0.368, 9: 0.214}
+Subset 10	Train Loss: 1.6988	Test Loss: 1.7374	Test Acc: 0.3358	Class Acc: {0: 0.245, 1: 0.71, 2: 0.146, 3: 0.152, 4: 0.253, 5: 0.102, 6: 0.566, 7: 0.478, 8: 0.619, 9: 0.087}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 40.806398 seconds
+Aggregated Test Loss: 1.6289	Aggregated Test Acc: 0.4444	Aggregated Class Acc: {0: 0.403, 1: 0.689, 2: 0.166, 3: 0.185, 4: 0.345, 5: 0.508, 6: 0.609, 7: 0.595, 8: 0.593, 9: 0.351}
+Round 46 use time: 1.46 min, ETA: 3.74 hours
+================================================================================
+Round 47
+Subset 1	Train Loss: 1.4389	Test Loss: 1.5363	Test Acc: 0.4325	Class Acc: {0: 0.511, 1: 0.383, 2: 0.445, 3: 0.08, 4: 0.39, 5: 0.375, 6: 0.573, 7: 0.56, 8: 0.405, 9: 0.603}
+Subset 2	Train Loss: 1.3942	Test Loss: 1.4928	Test Acc: 0.4397	Class Acc: {0: 0.458, 1: 0.529, 2: 0.486, 3: 0.199, 4: 0.184, 5: 0.527, 6: 0.618, 7: 0.457, 8: 0.565, 9: 0.374}
+Subset 3	Train Loss: 1.5861	Test Loss: 1.6065	Test Acc: 0.4051	Class Acc: {0: 0.361, 1: 0.548, 2: 0.089, 3: 0.162, 4: 0.431, 5: 0.345, 6: 0.463, 7: 0.652, 8: 0.645, 9: 0.355}
+Subset 4	Train Loss: 1.4500	Test Loss: 1.5212	Test Acc: 0.4340	Class Acc: {0: 0.485, 1: 0.609, 2: 0.269, 3: 0.157, 4: 0.112, 5: 0.596, 6: 0.714, 7: 0.384, 8: 0.572, 9: 0.442}
+Subset 5	Train Loss: 1.5471	Test Loss: 1.5687	Test Acc: 0.4134	Class Acc: {0: 0.464, 1: 0.542, 2: 0.071, 3: 0.082, 4: 0.384, 5: 0.425, 6: 0.5, 7: 0.73, 8: 0.378, 9: 0.558}
+Subset 6	Train Loss: 1.7276	Test Loss: 1.7407	Test Acc: 0.3570	Class Acc: {0: 0.495, 1: 0.394, 2: 0.0, 3: 0.518, 4: 0.02, 5: 0.286, 6: 0.336, 7: 0.535, 8: 0.396, 9: 0.59}
+Subset 7	Train Loss: 1.7496	Test Loss: 1.7390	Test Acc: 0.3441	Class Acc: {0: 0.386, 1: 0.611, 2: 0.065, 3: 0.167, 4: 0.112, 5: 0.728, 6: 0.277, 7: 0.446, 8: 0.346, 9: 0.303}
+Subset 8	Train Loss: 1.7100	Test Loss: 1.7532	Test Acc: 0.3255	Class Acc: {0: 0.378, 1: 0.254, 2: 0.003, 3: 0.002, 4: 0.222, 5: 0.725, 6: 0.097, 7: 0.518, 8: 0.423, 9: 0.633}
+Subset 9	Train Loss: 1.6920	Test Loss: 1.7177	Test Acc: 0.3575	Class Acc: {0: 0.468, 1: 0.498, 2: 0.016, 3: 0.04, 4: 0.115, 5: 0.429, 6: 0.799, 7: 0.456, 8: 0.557, 9: 0.197}
+Subset 10	Train Loss: 1.7900	Test Loss: 1.8051	Test Acc: 0.3136	Class Acc: {0: 0.482, 1: 0.311, 2: 0.073, 3: 0.701, 4: 0.032, 5: 0.076, 6: 0.287, 7: 0.497, 8: 0.398, 9: 0.279}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 37.189740 seconds
+Aggregated Test Loss: 1.6720	Aggregated Test Acc: 0.4337	Aggregated Class Acc: {0: 0.403, 1: 0.659, 2: 0.182, 3: 0.061, 4: 0.381, 5: 0.372, 6: 0.752, 7: 0.532, 8: 0.602, 9: 0.393}
+Round 47 use time: 1.40 min, ETA: 3.56 hours
+================================================================================
+Round 48
+Subset 1	Train Loss: 1.4323	Test Loss: 1.5128	Test Acc: 0.4259	Class Acc: {0: 0.499, 1: 0.199, 2: 0.171, 3: 0.129, 4: 0.555, 5: 0.55, 6: 0.473, 7: 0.469, 8: 0.63, 9: 0.584}
+Subset 2	Train Loss: 1.3933	Test Loss: 1.4997	Test Acc: 0.4329	Class Acc: {0: 0.587, 1: 0.475, 2: 0.399, 3: 0.163, 4: 0.235, 5: 0.548, 6: 0.341, 7: 0.613, 8: 0.471, 9: 0.497}
+Subset 3	Train Loss: 1.5125	Test Loss: 1.5484	Test Acc: 0.4213	Class Acc: {0: 0.524, 1: 0.226, 2: 0.193, 3: 0.331, 4: 0.355, 5: 0.533, 6: 0.502, 7: 0.535, 8: 0.384, 9: 0.63}
+Subset 4	Train Loss: 1.4459	Test Loss: 1.5354	Test Acc: 0.4324	Class Acc: {0: 0.451, 1: 0.711, 2: 0.275, 3: 0.429, 4: 0.135, 5: 0.389, 6: 0.52, 7: 0.556, 8: 0.476, 9: 0.382}
+Subset 5	Train Loss: 1.5235	Test Loss: 1.5628	Test Acc: 0.4206	Class Acc: {0: 0.428, 1: 0.778, 2: 0.097, 3: 0.345, 4: 0.301, 5: 0.342, 6: 0.611, 7: 0.576, 8: 0.59, 9: 0.138}
+Subset 6	Train Loss: 1.7251	Test Loss: 1.7327	Test Acc: 0.3527	Class Acc: {0: 0.439, 1: 0.641, 2: 0.047, 3: 0.282, 4: 0.424, 5: 0.107, 6: 0.447, 7: 0.408, 8: 0.608, 9: 0.124}
+Subset 7	Train Loss: 1.7724	Test Loss: 1.7640	Test Acc: 0.3347	Class Acc: {0: 0.496, 1: 0.613, 2: 0.276, 3: 0.167, 4: 0.115, 5: 0.134, 6: 0.626, 7: 0.319, 8: 0.447, 9: 0.154}
+Subset 8	Train Loss: 1.7711	Test Loss: 1.7860	Test Acc: 0.3224	Class Acc: {0: 0.527, 1: 0.499, 2: 0.242, 3: 0.067, 4: 0.0, 5: 0.465, 6: 0.215, 7: 0.547, 8: 0.553, 9: 0.109}
+Subset 9	Train Loss: 1.6795	Test Loss: 1.7160	Test Acc: 0.3705	Class Acc: {0: 0.379, 1: 0.349, 2: 0.127, 3: 0.274, 4: 0.115, 5: 0.45, 6: 0.636, 7: 0.49, 8: 0.547, 9: 0.338}
+Subset 10	Train Loss: 1.7015	Test Loss: 1.7210	Test Acc: 0.3626	Class Acc: {0: 0.612, 1: 0.581, 2: 0.109, 3: 0.581, 4: 0.335, 5: 0.201, 6: 0.318, 7: 0.354, 8: 0.368, 9: 0.167}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 47.391968 seconds
+Aggregated Test Loss: 1.5778	Aggregated Test Acc: 0.4497	Aggregated Class Acc: {0: 0.488, 1: 0.464, 2: 0.224, 3: 0.156, 4: 0.407, 5: 0.618, 6: 0.578, 7: 0.571, 8: 0.507, 9: 0.484}
+Round 48 use time: 1.62 min, ETA: 4.11 hours
+================================================================================
+Round 49
+Subset 1	Train Loss: 1.3925	Test Loss: 1.4746	Test Acc: 0.4504	Class Acc: {0: 0.565, 1: 0.63, 2: 0.13, 3: 0.191, 4: 0.473, 5: 0.487, 6: 0.589, 7: 0.591, 8: 0.452, 9: 0.396}
+Subset 2	Train Loss: 1.5094	Test Loss: 1.5913	Test Acc: 0.4180	Class Acc: {0: 0.326, 1: 0.846, 2: 0.097, 3: 0.144, 4: 0.216, 5: 0.505, 6: 0.72, 7: 0.496, 8: 0.584, 9: 0.246}
+Subset 3	Train Loss: 1.5200	Test Loss: 1.5517	Test Acc: 0.4279	Class Acc: {0: 0.495, 1: 0.618, 2: 0.062, 3: 0.177, 4: 0.311, 5: 0.646, 6: 0.56, 7: 0.614, 8: 0.382, 9: 0.414}
+Subset 4	Train Loss: 1.5105	Test Loss: 1.5742	Test Acc: 0.4171	Class Acc: {0: 0.515, 1: 0.363, 2: 0.097, 3: 0.354, 4: 0.258, 5: 0.468, 6: 0.623, 7: 0.484, 8: 0.589, 9: 0.42}
+Subset 5	Train Loss: 1.5037	Test Loss: 1.5458	Test Acc: 0.4249	Class Acc: {0: 0.367, 1: 0.594, 2: 0.324, 3: 0.525, 4: 0.06, 5: 0.273, 6: 0.508, 7: 0.502, 8: 0.69, 9: 0.406}
+Subset 6	Train Loss: 1.7411	Test Loss: 1.7689	Test Acc: 0.3336	Class Acc: {0: 0.532, 1: 0.478, 2: 0.044, 3: 0.79, 4: 0.204, 5: 0.019, 6: 0.409, 7: 0.368, 8: 0.298, 9: 0.194}
+Subset 7	Train Loss: 1.6893	Test Loss: 1.6874	Test Acc: 0.3632	Class Acc: {0: 0.208, 1: 0.249, 2: 0.09, 3: 0.104, 4: 0.535, 5: 0.416, 6: 0.383, 7: 0.419, 8: 0.647, 9: 0.581}
+Subset 8	Train Loss: 1.7513	Test Loss: 1.7829	Test Acc: 0.3405	Class Acc: {0: 0.423, 1: 0.461, 2: 0.118, 3: 0.148, 4: 0.073, 5: 0.312, 6: 0.406, 7: 0.579, 8: 0.512, 9: 0.373}
+Subset 9	Train Loss: 1.7312	Test Loss: 1.7754	Test Acc: 0.3408	Class Acc: {0: 0.664, 1: 0.153, 2: 0.005, 3: 0.045, 4: 0.311, 5: 0.656, 6: 0.421, 7: 0.584, 8: 0.311, 9: 0.258}
+Subset 10	Train Loss: 1.7662	Test Loss: 1.7964	Test Acc: 0.3005	Class Acc: {0: 0.237, 1: 0.526, 2: 0.017, 3: 0.265, 4: 0.183, 5: 0.549, 6: 0.008, 7: 0.42, 8: 0.661, 9: 0.139}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 39.072477 seconds
+Aggregated Test Loss: 1.6042	Aggregated Test Acc: 0.4448	Aggregated Class Acc: {0: 0.428, 1: 0.786, 2: 0.108, 3: 0.123, 4: 0.362, 5: 0.472, 6: 0.704, 7: 0.631, 8: 0.589, 9: 0.245}
+Round 49 use time: 1.44 min, ETA: 3.62 hours
+================================================================================
+Round 50
+Subset 1	Train Loss: 1.4741	Test Loss: 1.5511	Test Acc: 0.4266	Class Acc: {0: 0.533, 1: 0.771, 2: 0.216, 3: 0.236, 4: 0.236, 5: 0.574, 6: 0.332, 7: 0.607, 8: 0.319, 9: 0.442}
+Subset 2	Train Loss: 1.3862	Test Loss: 1.5144	Test Acc: 0.4415	Class Acc: {0: 0.573, 1: 0.645, 2: 0.422, 3: 0.477, 4: 0.307, 5: 0.191, 6: 0.557, 7: 0.553, 8: 0.453, 9: 0.237}
+Subset 3	Train Loss: 1.5217	Test Loss: 1.5491	Test Acc: 0.4186	Class Acc: {0: 0.355, 1: 0.776, 2: 0.174, 3: 0.268, 4: 0.308, 5: 0.266, 6: 0.612, 7: 0.641, 8: 0.451, 9: 0.335}
+Subset 4	Train Loss: 1.4671	Test Loss: 1.5331	Test Acc: 0.4275	Class Acc: {0: 0.504, 1: 0.703, 2: 0.175, 3: 0.186, 4: 0.355, 5: 0.362, 6: 0.6, 7: 0.66, 8: 0.434, 9: 0.296}
+Subset 5	Train Loss: 1.5029	Test Loss: 1.5473	Test Acc: 0.4254	Class Acc: {0: 0.277, 1: 0.683, 2: 0.053, 3: 0.156, 4: 0.505, 5: 0.393, 6: 0.662, 7: 0.552, 8: 0.541, 9: 0.432}
+Subset 6	Train Loss: 1.7045	Test Loss: 1.7425	Test Acc: 0.3458	Class Acc: {0: 0.583, 1: 0.402, 2: 0.008, 3: 0.102, 4: 0.327, 5: 0.294, 6: 0.435, 7: 0.549, 8: 0.425, 9: 0.333}
+Subset 7	Train Loss: 1.8265	Test Loss: 1.8091	Test Acc: 0.3082	Class Acc: {0: 0.181, 1: 0.405, 2: 0.295, 3: 0.284, 4: 0.157, 5: 0.222, 6: 0.106, 7: 0.651, 8: 0.328, 9: 0.453}
+Subset 8	Train Loss: 1.6981	Test Loss: 1.6918	Test Acc: 0.3655	Class Acc: {0: 0.366, 1: 0.707, 2: 0.21, 3: 0.047, 4: 0.294, 5: 0.127, 6: 0.664, 7: 0.61, 8: 0.413, 9: 0.217}
+Subset 9	Train Loss: 1.7052	Test Loss: 1.7634	Test Acc: 0.3402	Class Acc: {0: 0.49, 1: 0.416, 2: 0.166, 3: 0.087, 4: 0.326, 5: 0.103, 6: 0.642, 7: 0.503, 8: 0.627, 9: 0.042}
+Subset 10	Train Loss: 1.7104	Test Loss: 1.7443	Test Acc: 0.3424	Class Acc: {0: 0.37, 1: 0.562, 2: 0.054, 3: 0.116, 4: 0.284, 5: 0.612, 6: 0.125, 7: 0.499, 8: 0.664, 9: 0.138}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 34.035321 seconds
+Aggregated Test Loss: 1.6930	Aggregated Test Acc: 0.4335	Aggregated Class Acc: {0: 0.398, 1: 0.888, 2: 0.264, 3: 0.127, 4: 0.361, 5: 0.43, 6: 0.659, 7: 0.572, 8: 0.485, 9: 0.151}
+Round 50 use time: 1.36 min, ETA: 3.41 hours
+================================================================================
+Round 51
+Subset 1	Train Loss: 1.3840	Test Loss: 1.4893	Test Acc: 0.4393	Class Acc: {0: 0.365, 1: 0.316, 2: 0.355, 3: 0.358, 4: 0.257, 5: 0.572, 6: 0.416, 7: 0.467, 8: 0.584, 9: 0.703}
+Subset 2	Train Loss: 1.3520	Test Loss: 1.4754	Test Acc: 0.4494	Class Acc: {0: 0.468, 1: 0.349, 2: 0.076, 3: 0.252, 4: 0.549, 5: 0.438, 6: 0.566, 7: 0.568, 8: 0.636, 9: 0.592}
+Subset 3	Train Loss: 1.5159	Test Loss: 1.5430	Test Acc: 0.4239	Class Acc: {0: 0.386, 1: 0.623, 2: 0.1, 3: 0.165, 4: 0.205, 5: 0.393, 6: 0.777, 7: 0.563, 8: 0.54, 9: 0.487}
+Subset 4	Train Loss: 1.4588	Test Loss: 1.5346	Test Acc: 0.4338	Class Acc: {0: 0.525, 1: 0.702, 2: 0.214, 3: 0.303, 4: 0.211, 5: 0.408, 6: 0.548, 7: 0.565, 8: 0.45, 9: 0.412}
+Subset 5	Train Loss: 1.4826	Test Loss: 1.5188	Test Acc: 0.4406	Class Acc: {0: 0.46, 1: 0.692, 2: 0.156, 3: 0.294, 4: 0.32, 5: 0.45, 6: 0.656, 7: 0.676, 8: 0.448, 9: 0.254}
+Subset 6	Train Loss: 1.6579	Test Loss: 1.6744	Test Acc: 0.3662	Class Acc: {0: 0.486, 1: 0.749, 2: 0.124, 3: 0.197, 4: 0.096, 5: 0.555, 6: 0.546, 7: 0.454, 8: 0.311, 9: 0.144}
+Subset 7	Train Loss: 1.7156	Test Loss: 1.6937	Test Acc: 0.3709	Class Acc: {0: 0.423, 1: 0.604, 2: 0.3, 3: 0.039, 4: 0.27, 5: 0.439, 6: 0.39, 7: 0.462, 8: 0.569, 9: 0.213}
+Subset 8	Train Loss: 1.7589	Test Loss: 1.7701	Test Acc: 0.3416	Class Acc: {0: 0.419, 1: 0.663, 2: 0.133, 3: 0.289, 4: 0.149, 5: 0.479, 6: 0.333, 7: 0.503, 8: 0.37, 9: 0.078}
+Subset 9	Train Loss: 1.7150	Test Loss: 1.7428	Test Acc: 0.3424	Class Acc: {0: 0.543, 1: 0.404, 2: 0.179, 3: 0.085, 4: 0.311, 5: 0.005, 6: 0.526, 7: 0.615, 8: 0.445, 9: 0.311}
+Subset 10	Train Loss: 1.7325	Test Loss: 1.7625	Test Acc: 0.3309	Class Acc: {0: 0.174, 1: 0.618, 2: 0.056, 3: 0.056, 4: 0.319, 5: 0.397, 6: 0.324, 7: 0.592, 8: 0.654, 9: 0.119}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 35.172807 seconds
+Aggregated Test Loss: 1.5570	Aggregated Test Acc: 0.4571	Aggregated Class Acc: {0: 0.316, 1: 0.689, 2: 0.167, 3: 0.195, 4: 0.382, 5: 0.497, 6: 0.7, 7: 0.546, 8: 0.609, 9: 0.47}
+Round 51 use time: 1.21 min, ETA: 2.99 hours
+================================================================================
+Round 52
+Subset 1	Train Loss: 1.3710	Test Loss: 1.4961	Test Acc: 0.4455	Class Acc: {0: 0.432, 1: 0.489, 2: 0.241, 3: 0.152, 4: 0.286, 5: 0.726, 6: 0.493, 7: 0.514, 8: 0.581, 9: 0.541}
+Subset 2	Train Loss: 1.3505	Test Loss: 1.4812	Test Acc: 0.4465	Class Acc: {0: 0.345, 1: 0.741, 2: 0.278, 3: 0.204, 4: 0.461, 5: 0.534, 6: 0.494, 7: 0.461, 8: 0.604, 9: 0.343}
+Subset 3	Train Loss: 1.5420	Test Loss: 1.5560	Test Acc: 0.4217	Class Acc: {0: 0.392, 1: 0.406, 2: 0.2, 3: 0.187, 4: 0.591, 5: 0.368, 6: 0.558, 7: 0.463, 8: 0.542, 9: 0.51}
+Subset 4	Train Loss: 1.4877	Test Loss: 1.5726	Test Acc: 0.4123	Class Acc: {0: 0.476, 1: 0.702, 2: 0.264, 3: 0.322, 4: 0.222, 5: 0.159, 6: 0.684, 7: 0.455, 8: 0.491, 9: 0.348}
+Subset 5	Train Loss: 1.4898	Test Loss: 1.5341	Test Acc: 0.4371	Class Acc: {0: 0.447, 1: 0.317, 2: 0.308, 3: 0.216, 4: 0.382, 5: 0.547, 6: 0.566, 7: 0.547, 8: 0.516, 9: 0.525}
+Subset 6	Train Loss: 1.6689	Test Loss: 1.6689	Test Acc: 0.3874	Class Acc: {0: 0.436, 1: 0.578, 2: 0.138, 3: 0.485, 4: 0.121, 5: 0.437, 6: 0.419, 7: 0.45, 8: 0.403, 9: 0.407}
+Subset 7	Train Loss: 1.7573	Test Loss: 1.7482	Test Acc: 0.3556	Class Acc: {0: 0.523, 1: 0.511, 2: 0.027, 3: 0.128, 4: 0.356, 5: 0.248, 6: 0.606, 7: 0.504, 8: 0.309, 9: 0.344}
+Subset 8	Train Loss: 1.8490	Test Loss: 1.8459	Test Acc: 0.2894	Class Acc: {0: 0.139, 1: 0.001, 2: 0.0, 3: 0.237, 4: 0.227, 5: 0.189, 6: 0.568, 7: 0.389, 8: 0.498, 9: 0.646}
+Subset 9	Train Loss: 1.7184	Test Loss: 1.7510	Test Acc: 0.3513	Class Acc: {0: 0.551, 1: 0.652, 2: 0.006, 3: 0.105, 4: 0.553, 5: 0.175, 6: 0.373, 7: 0.544, 8: 0.404, 9: 0.15}
+Subset 10	Train Loss: 1.6592	Test Loss: 1.6842	Test Acc: 0.3753	Class Acc: {0: 0.395, 1: 0.355, 2: 0.061, 3: 0.323, 4: 0.081, 5: 0.588, 6: 0.416, 7: 0.506, 8: 0.416, 9: 0.612}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 35.523527 seconds
+Aggregated Test Loss: 1.6163	Aggregated Test Acc: 0.4479	Aggregated Class Acc: {0: 0.285, 1: 0.721, 2: 0.173, 3: 0.164, 4: 0.401, 5: 0.533, 6: 0.714, 7: 0.536, 8: 0.528, 9: 0.424}
+Round 52 use time: 1.18 min, ETA: 2.91 hours
+================================================================================
+Round 53
+Subset 1	Train Loss: 1.3227	Test Loss: 1.4376	Test Acc: 0.4697	Class Acc: {0: 0.589, 1: 0.57, 2: 0.402, 3: 0.258, 4: 0.297, 5: 0.36, 6: 0.628, 7: 0.608, 8: 0.435, 9: 0.55}
+Subset 2	Train Loss: 1.3556	Test Loss: 1.4634	Test Acc: 0.4540	Class Acc: {0: 0.434, 1: 0.58, 2: 0.209, 3: 0.282, 4: 0.52, 5: 0.298, 6: 0.574, 7: 0.618, 8: 0.473, 9: 0.552}
+Subset 3	Train Loss: 1.5486	Test Loss: 1.5893	Test Acc: 0.4182	Class Acc: {0: 0.431, 1: 0.492, 2: 0.057, 3: 0.415, 4: 0.218, 5: 0.499, 6: 0.561, 7: 0.636, 8: 0.355, 9: 0.518}
+Subset 4	Train Loss: 1.4678	Test Loss: 1.5447	Test Acc: 0.4139	Class Acc: {0: 0.474, 1: 0.647, 2: 0.379, 3: 0.538, 4: 0.15, 5: 0.015, 6: 0.483, 7: 0.595, 8: 0.651, 9: 0.207}
+Subset 5	Train Loss: 1.5455	Test Loss: 1.5918	Test Acc: 0.4073	Class Acc: {0: 0.414, 1: 0.355, 2: 0.093, 3: 0.094, 4: 0.373, 5: 0.394, 6: 0.473, 7: 0.832, 8: 0.461, 9: 0.584}
+Subset 6	Train Loss: 1.6602	Test Loss: 1.6814	Test Acc: 0.3766	Class Acc: {0: 0.496, 1: 0.598, 2: 0.122, 3: 0.421, 4: 0.329, 5: 0.178, 6: 0.495, 7: 0.446, 8: 0.458, 9: 0.223}
+Subset 7	Train Loss: 1.8212	Test Loss: 1.8108	Test Acc: 0.3292	Class Acc: {0: 0.418, 1: 0.578, 2: 0.04, 3: 0.105, 4: 0.168, 5: 0.039, 6: 0.485, 7: 0.605, 8: 0.416, 9: 0.438}
+Subset 8	Train Loss: 1.6359	Test Loss: 1.6906	Test Acc: 0.3724	Class Acc: {0: 0.437, 1: 0.545, 2: 0.052, 3: 0.145, 4: 0.256, 5: 0.326, 6: 0.776, 7: 0.353, 8: 0.553, 9: 0.281}
+Subset 9	Train Loss: 1.6949	Test Loss: 1.7182	Test Acc: 0.3558	Class Acc: {0: 0.377, 1: 0.564, 2: 0.034, 3: 0.081, 4: 0.141, 5: 0.306, 6: 0.773, 7: 0.42, 8: 0.577, 9: 0.285}
+Subset 10	Train Loss: 1.7522	Test Loss: 1.7696	Test Acc: 0.3299	Class Acc: {0: 0.227, 1: 0.462, 2: 0.027, 3: 0.326, 4: 0.379, 5: 0.155, 6: 0.358, 7: 0.418, 8: 0.809, 9: 0.138}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 33.516778 seconds
+Aggregated Test Loss: 1.5458	Aggregated Test Acc: 0.4694	Aggregated Class Acc: {0: 0.374, 1: 0.632, 2: 0.261, 3: 0.237, 4: 0.389, 5: 0.506, 6: 0.71, 7: 0.561, 8: 0.502, 9: 0.522}
+Round 53 use time: 1.16 min, ETA: 2.85 hours
+================================================================================
+Round 54
+Subset 1	Train Loss: 1.3699	Test Loss: 1.4590	Test Acc: 0.4514	Class Acc: {0: 0.456, 1: 0.313, 2: 0.416, 3: 0.251, 4: 0.177, 5: 0.539, 6: 0.521, 7: 0.571, 8: 0.645, 9: 0.625}
+Subset 2	Train Loss: 1.3764	Test Loss: 1.4921	Test Acc: 0.4417	Class Acc: {0: 0.355, 1: 0.186, 2: 0.292, 3: 0.27, 4: 0.44, 5: 0.505, 6: 0.404, 7: 0.611, 8: 0.743, 9: 0.611}
+Subset 3	Train Loss: 1.5497	Test Loss: 1.5751	Test Acc: 0.4176	Class Acc: {0: 0.392, 1: 0.385, 2: 0.246, 3: 0.282, 4: 0.208, 5: 0.525, 6: 0.439, 7: 0.448, 8: 0.461, 9: 0.79}
+Subset 4	Train Loss: 1.4303	Test Loss: 1.4913	Test Acc: 0.4446	Class Acc: {0: 0.474, 1: 0.655, 2: 0.179, 3: 0.075, 4: 0.39, 5: 0.669, 6: 0.592, 7: 0.476, 8: 0.414, 9: 0.522}
+Subset 5	Train Loss: 1.4419	Test Loss: 1.4937	Test Acc: 0.4436	Class Acc: {0: 0.485, 1: 0.586, 2: 0.183, 3: 0.27, 4: 0.352, 5: 0.498, 6: 0.624, 7: 0.4, 8: 0.603, 9: 0.435}
+Subset 6	Train Loss: 1.6313	Test Loss: 1.6654	Test Acc: 0.3788	Class Acc: {0: 0.447, 1: 0.604, 2: 0.058, 3: 0.484, 4: 0.3, 5: 0.15, 6: 0.548, 7: 0.473, 8: 0.247, 9: 0.477}
+Subset 7	Train Loss: 1.7942	Test Loss: 1.7893	Test Acc: 0.3157	Class Acc: {0: 0.482, 1: 0.331, 2: 0.073, 3: 0.023, 4: 0.232, 5: 0.061, 6: 0.772, 7: 0.413, 8: 0.233, 9: 0.537}
+Subset 8	Train Loss: 1.7310	Test Loss: 1.7622	Test Acc: 0.3444	Class Acc: {0: 0.578, 1: 0.339, 2: 0.118, 3: 0.224, 4: 0.166, 5: 0.666, 6: 0.237, 7: 0.348, 8: 0.561, 9: 0.207}
+Subset 9	Train Loss: 1.6564	Test Loss: 1.6677	Test Acc: 0.3918	Class Acc: {0: 0.488, 1: 0.536, 2: 0.111, 3: 0.161, 4: 0.228, 5: 0.324, 6: 0.663, 7: 0.548, 8: 0.56, 9: 0.299}
+Subset 10	Train Loss: 1.6452	Test Loss: 1.6621	Test Acc: 0.3710	Class Acc: {0: 0.458, 1: 0.68, 2: 0.231, 3: 0.226, 4: 0.04, 5: 0.51, 6: 0.515, 7: 0.444, 8: 0.527, 9: 0.079}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 33.865210 seconds
+Aggregated Test Loss: 1.5235	Aggregated Test Acc: 0.4718	Aggregated Class Acc: {0: 0.356, 1: 0.565, 2: 0.35, 3: 0.243, 4: 0.274, 5: 0.559, 6: 0.577, 7: 0.596, 8: 0.67, 9: 0.528}
+Round 54 use time: 1.18 min, ETA: 2.87 hours
+================================================================================
+Round 55
+Subset 1	Train Loss: 1.3927	Test Loss: 1.4949	Test Acc: 0.4450	Class Acc: {0: 0.548, 1: 0.378, 2: 0.464, 3: 0.358, 4: 0.064, 5: 0.406, 6: 0.36, 7: 0.543, 8: 0.632, 9: 0.697}
+Subset 2	Train Loss: 1.3089	Test Loss: 1.4344	Test Acc: 0.4708	Class Acc: {0: 0.52, 1: 0.582, 2: 0.344, 3: 0.256, 4: 0.28, 5: 0.501, 6: 0.532, 7: 0.566, 8: 0.643, 9: 0.484}
+Subset 3	Train Loss: 1.4469	Test Loss: 1.5020	Test Acc: 0.4392	Class Acc: {0: 0.702, 1: 0.496, 2: 0.441, 3: 0.339, 4: 0.148, 5: 0.377, 6: 0.553, 7: 0.525, 8: 0.311, 9: 0.5}
+Subset 4	Train Loss: 1.4564	Test Loss: 1.5244	Test Acc: 0.4398	Class Acc: {0: 0.429, 1: 0.559, 2: 0.31, 3: 0.262, 4: 0.096, 5: 0.327, 6: 0.637, 7: 0.62, 8: 0.481, 9: 0.677}
+Subset 5	Train Loss: 1.4628	Test Loss: 1.5138	Test Acc: 0.4340	Class Acc: {0: 0.455, 1: 0.457, 2: 0.261, 3: 0.382, 4: 0.545, 5: 0.163, 6: 0.508, 7: 0.471, 8: 0.554, 9: 0.544}
+Subset 6	Train Loss: 1.7355	Test Loss: 1.7669	Test Acc: 0.3386	Class Acc: {0: 0.422, 1: 0.624, 2: 0.075, 3: 0.339, 4: 0.164, 5: 0.019, 6: 0.75, 7: 0.449, 8: 0.288, 9: 0.256}
+Subset 7	Train Loss: 1.7997	Test Loss: 1.7904	Test Acc: 0.3370	Class Acc: {0: 0.607, 1: 0.346, 2: 0.169, 3: 0.059, 4: 0.237, 5: 0.298, 6: 0.411, 7: 0.532, 8: 0.571, 9: 0.14}
+Subset 8	Train Loss: 1.7758	Test Loss: 1.7885	Test Acc: 0.3036	Class Acc: {0: 0.45, 1: 0.748, 2: 0.048, 3: 0.005, 4: 0.045, 5: 0.548, 6: 0.399, 7: 0.425, 8: 0.205, 9: 0.163}
+Subset 9	Train Loss: 1.6883	Test Loss: 1.7133	Test Acc: 0.3572	Class Acc: {0: 0.591, 1: 0.321, 2: 0.099, 3: 0.421, 4: 0.12, 5: 0.372, 6: 0.576, 7: 0.36, 8: 0.302, 9: 0.41}
+Subset 10	Train Loss: 1.7608	Test Loss: 1.7576	Test Acc: 0.3283	Class Acc: {0: 0.472, 1: 0.136, 2: 0.348, 3: 0.074, 4: 0.068, 5: 0.339, 6: 0.356, 7: 0.688, 8: 0.284, 9: 0.518}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 37.367623 seconds
+Aggregated Test Loss: 1.5505	Aggregated Test Acc: 0.4688	Aggregated Class Acc: {0: 0.467, 1: 0.644, 2: 0.34, 3: 0.186, 4: 0.222, 5: 0.575, 6: 0.628, 7: 0.579, 8: 0.608, 9: 0.439}
+Round 55 use time: 1.29 min, ETA: 3.11 hours
+================================================================================
+Round 56
+Subset 1	Train Loss: 1.3830	Test Loss: 1.4834	Test Acc: 0.4483	Class Acc: {0: 0.529, 1: 0.282, 2: 0.223, 3: 0.304, 4: 0.239, 5: 0.599, 6: 0.498, 7: 0.675, 8: 0.527, 9: 0.607}
+Subset 2	Train Loss: 1.3150	Test Loss: 1.4276	Test Acc: 0.4640	Class Acc: {0: 0.308, 1: 0.428, 2: 0.519, 3: 0.452, 4: 0.178, 5: 0.274, 6: 0.562, 7: 0.591, 8: 0.645, 9: 0.683}
+Subset 3	Train Loss: 1.4348	Test Loss: 1.4885	Test Acc: 0.4526	Class Acc: {0: 0.602, 1: 0.562, 2: 0.389, 3: 0.302, 4: 0.304, 5: 0.439, 6: 0.623, 7: 0.576, 8: 0.407, 9: 0.322}
+Subset 4	Train Loss: 1.4967	Test Loss: 1.5780	Test Acc: 0.4253	Class Acc: {0: 0.716, 1: 0.552, 2: 0.167, 3: 0.102, 4: 0.372, 5: 0.474, 6: 0.517, 7: 0.556, 8: 0.444, 9: 0.353}
+Subset 5	Train Loss: 1.4199	Test Loss: 1.4840	Test Acc: 0.4578	Class Acc: {0: 0.551, 1: 0.656, 2: 0.176, 3: 0.198, 4: 0.324, 5: 0.508, 6: 0.605, 7: 0.652, 8: 0.513, 9: 0.395}
+Subset 6	Train Loss: 1.7090	Test Loss: 1.7353	Test Acc: 0.3569	Class Acc: {0: 0.42, 1: 0.656, 2: 0.017, 3: 0.174, 4: 0.195, 5: 0.312, 6: 0.802, 7: 0.375, 8: 0.357, 9: 0.261}
+Subset 7	Train Loss: 1.7569	Test Loss: 1.7379	Test Acc: 0.3430	Class Acc: {0: 0.309, 1: 0.147, 2: 0.189, 3: 0.21, 4: 0.176, 5: 0.571, 6: 0.35, 7: 0.341, 8: 0.779, 9: 0.358}
+Subset 8	Train Loss: 1.6846	Test Loss: 1.7137	Test Acc: 0.3598	Class Acc: {0: 0.437, 1: 0.366, 2: 0.041, 3: 0.427, 4: 0.238, 5: 0.4, 6: 0.382, 7: 0.576, 8: 0.219, 9: 0.512}
+Subset 9	Train Loss: 1.6643	Test Loss: 1.6987	Test Acc: 0.3713	Class Acc: {0: 0.432, 1: 0.749, 2: 0.019, 3: 0.059, 4: 0.171, 5: 0.382, 6: 0.668, 7: 0.47, 8: 0.515, 9: 0.248}
+Subset 10	Train Loss: 1.7270	Test Loss: 1.7305	Test Acc: 0.3592	Class Acc: {0: 0.465, 1: 0.623, 2: 0.089, 3: 0.132, 4: 0.47, 5: 0.264, 6: 0.45, 7: 0.458, 8: 0.32, 9: 0.321}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 34.756984 seconds
+Aggregated Test Loss: 1.5340	Aggregated Test Acc: 0.4772	Aggregated Class Acc: {0: 0.409, 1: 0.642, 2: 0.289, 3: 0.247, 4: 0.258, 5: 0.543, 6: 0.727, 7: 0.586, 8: 0.591, 9: 0.48}
+Round 56 use time: 1.18 min, ETA: 2.82 hours
+================================================================================
+Round 57
+Subset 1	Train Loss: 1.3129	Test Loss: 1.4251	Test Acc: 0.4758	Class Acc: {0: 0.572, 1: 0.637, 2: 0.211, 3: 0.229, 4: 0.361, 5: 0.589, 6: 0.639, 7: 0.594, 8: 0.477, 9: 0.449}
+Subset 2	Train Loss: 1.2844	Test Loss: 1.4083	Test Acc: 0.4717	Class Acc: {0: 0.498, 1: 0.675, 2: 0.281, 3: 0.344, 4: 0.31, 5: 0.468, 6: 0.547, 7: 0.626, 8: 0.613, 9: 0.355}
+Subset 3	Train Loss: 1.4122	Test Loss: 1.4768	Test Acc: 0.4547	Class Acc: {0: 0.418, 1: 0.592, 2: 0.293, 3: 0.142, 4: 0.374, 5: 0.55, 6: 0.521, 7: 0.58, 8: 0.709, 9: 0.368}
+Subset 4	Train Loss: 1.4078	Test Loss: 1.4798	Test Acc: 0.4578	Class Acc: {0: 0.356, 1: 0.622, 2: 0.356, 3: 0.165, 4: 0.362, 5: 0.506, 6: 0.527, 7: 0.536, 8: 0.613, 9: 0.535}
+Subset 5	Train Loss: 1.6323	Test Loss: 1.6591	Test Acc: 0.3914	Class Acc: {0: 0.283, 1: 0.78, 2: 0.22, 3: 0.258, 4: 0.3, 5: 0.421, 6: 0.475, 7: 0.247, 8: 0.765, 9: 0.165}
+Subset 6	Train Loss: 1.7414	Test Loss: 1.7453	Test Acc: 0.3277	Class Acc: {0: 0.379, 1: 0.787, 2: 0.114, 3: 0.054, 4: 0.343, 5: 0.566, 6: 0.278, 7: 0.384, 8: 0.27, 9: 0.102}
+Subset 7	Train Loss: 1.7217	Test Loss: 1.7261	Test Acc: 0.3585	Class Acc: {0: 0.27, 1: 0.275, 2: 0.135, 3: 0.194, 4: 0.308, 5: 0.2, 6: 0.519, 7: 0.431, 8: 0.673, 9: 0.58}
+Subset 8	Train Loss: 1.7720	Test Loss: 1.8022	Test Acc: 0.3313	Class Acc: {0: 0.461, 1: 0.289, 2: 0.027, 3: 0.169, 4: 0.302, 5: 0.38, 6: 0.291, 7: 0.631, 8: 0.512, 9: 0.251}
+Subset 9	Train Loss: 1.8255	Test Loss: 1.8427	Test Acc: 0.2990	Class Acc: {0: 0.092, 1: 0.436, 2: 0.027, 3: 0.0, 4: 0.063, 5: 0.267, 6: 0.892, 7: 0.387, 8: 0.33, 9: 0.496}
+Subset 10	Train Loss: 1.7073	Test Loss: 1.7364	Test Acc: 0.3516	Class Acc: {0: 0.551, 1: 0.553, 2: 0.04, 3: 0.114, 4: 0.273, 5: 0.329, 6: 0.328, 7: 0.608, 8: 0.33, 9: 0.39}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 29.577987 seconds
+Aggregated Test Loss: 1.5335	Aggregated Test Acc: 0.4687	Aggregated Class Acc: {0: 0.416, 1: 0.746, 2: 0.337, 3: 0.187, 4: 0.319, 5: 0.405, 6: 0.753, 7: 0.545, 8: 0.613, 9: 0.366}
+Round 57 use time: 1.10 min, ETA: 2.62 hours
+================================================================================
+Round 58
+Subset 1	Train Loss: 1.2976	Test Loss: 1.4160	Test Acc: 0.4745	Class Acc: {0: 0.452, 1: 0.552, 2: 0.257, 3: 0.296, 4: 0.29, 5: 0.565, 6: 0.569, 7: 0.668, 8: 0.514, 9: 0.582}
+Subset 2	Train Loss: 1.3604	Test Loss: 1.5032	Test Acc: 0.4405	Class Acc: {0: 0.607, 1: 0.266, 2: 0.16, 3: 0.276, 4: 0.326, 5: 0.497, 6: 0.354, 7: 0.761, 8: 0.453, 9: 0.705}
+Subset 3	Train Loss: 1.4720	Test Loss: 1.5202	Test Acc: 0.4432	Class Acc: {0: 0.615, 1: 0.489, 2: 0.169, 3: 0.219, 4: 0.324, 5: 0.418, 6: 0.625, 7: 0.542, 8: 0.47, 9: 0.561}
+Subset 4	Train Loss: 1.4278	Test Loss: 1.4790	Test Acc: 0.4532	Class Acc: {0: 0.511, 1: 0.617, 2: 0.26, 3: 0.407, 4: 0.417, 5: 0.112, 6: 0.543, 7: 0.616, 8: 0.541, 9: 0.508}
+Subset 5	Train Loss: 1.4902	Test Loss: 1.5518	Test Acc: 0.4350	Class Acc: {0: 0.427, 1: 0.795, 2: 0.188, 3: 0.207, 4: 0.257, 5: 0.298, 6: 0.653, 7: 0.627, 8: 0.518, 9: 0.38}
+Subset 6	Train Loss: 1.7663	Test Loss: 1.7908	Test Acc: 0.3039	Class Acc: {0: 0.505, 1: 0.583, 2: 0.127, 3: 0.082, 4: 0.436, 5: 0.002, 6: 0.63, 7: 0.271, 8: 0.117, 9: 0.286}
+Subset 7	Train Loss: 1.6700	Test Loss: 1.6823	Test Acc: 0.3641	Class Acc: {0: 0.532, 1: 0.307, 2: 0.336, 3: 0.038, 4: 0.039, 5: 0.265, 6: 0.696, 7: 0.534, 8: 0.247, 9: 0.647}
+Subset 8	Train Loss: 1.6694	Test Loss: 1.7096	Test Acc: 0.3566	Class Acc: {0: 0.582, 1: 0.549, 2: 0.061, 3: 0.097, 4: 0.191, 5: 0.627, 6: 0.468, 7: 0.523, 8: 0.29, 9: 0.178}
+Subset 9	Train Loss: 1.6399	Test Loss: 1.6763	Test Acc: 0.3702	Class Acc: {0: 0.523, 1: 0.579, 2: 0.085, 3: 0.291, 4: 0.328, 5: 0.242, 6: 0.559, 7: 0.556, 8: 0.258, 9: 0.281}
+Subset 10	Train Loss: 1.6838	Test Loss: 1.7136	Test Acc: 0.3527	Class Acc: {0: 0.356, 1: 0.687, 2: 0.025, 3: 0.119, 4: 0.206, 5: 0.299, 6: 0.569, 7: 0.483, 8: 0.497, 9: 0.286}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 30.481090 seconds
+Aggregated Test Loss: 1.5456	Aggregated Test Acc: 0.4751	Aggregated Class Acc: {0: 0.419, 1: 0.52, 2: 0.311, 3: 0.232, 4: 0.239, 5: 0.61, 6: 0.496, 7: 0.691, 8: 0.575, 9: 0.658}
+Round 58 use time: 1.13 min, ETA: 2.68 hours
+================================================================================
+Round 59
+Subset 1	Train Loss: 1.3552	Test Loss: 1.4635	Test Acc: 0.4628	Class Acc: {0: 0.436, 1: 0.357, 2: 0.202, 3: 0.408, 4: 0.406, 5: 0.319, 6: 0.743, 7: 0.481, 8: 0.656, 9: 0.62}
+Subset 2	Train Loss: 1.2962	Test Loss: 1.4453	Test Acc: 0.4746	Class Acc: {0: 0.473, 1: 0.645, 2: 0.329, 3: 0.355, 4: 0.201, 5: 0.543, 6: 0.526, 7: 0.666, 8: 0.51, 9: 0.498}
+Subset 3	Train Loss: 1.5324	Test Loss: 1.5841	Test Acc: 0.4356	Class Acc: {0: 0.433, 1: 0.497, 2: 0.349, 3: 0.205, 4: 0.285, 5: 0.361, 6: 0.541, 7: 0.452, 8: 0.736, 9: 0.497}
+Subset 4	Train Loss: 1.4769	Test Loss: 1.5190	Test Acc: 0.4424	Class Acc: {0: 0.392, 1: 0.616, 2: 0.342, 3: 0.313, 4: 0.371, 5: 0.167, 6: 0.618, 7: 0.578, 8: 0.726, 9: 0.301}
+Subset 5	Train Loss: 1.4090	Test Loss: 1.4599	Test Acc: 0.4577	Class Acc: {0: 0.612, 1: 0.359, 2: 0.192, 3: 0.179, 4: 0.468, 5: 0.493, 6: 0.47, 7: 0.661, 8: 0.521, 9: 0.622}
+Subset 6	Train Loss: 1.7687	Test Loss: 1.7946	Test Acc: 0.3251	Class Acc: {0: 0.266, 1: 0.496, 2: 0.003, 3: 0.186, 4: 0.148, 5: 0.512, 6: 0.265, 7: 0.637, 8: 0.16, 9: 0.578}
+Subset 7	Train Loss: 1.6943	Test Loss: 1.6853	Test Acc: 0.3569	Class Acc: {0: 0.235, 1: 0.78, 2: 0.281, 3: 0.301, 4: 0.121, 5: 0.154, 6: 0.462, 7: 0.674, 8: 0.474, 9: 0.087}
+Subset 8	Train Loss: 1.7133	Test Loss: 1.7491	Test Acc: 0.3434	Class Acc: {0: 0.407, 1: 0.355, 2: 0.141, 3: 0.184, 4: 0.281, 5: 0.037, 6: 0.368, 7: 0.518, 8: 0.577, 9: 0.566}
+Subset 9	Train Loss: 1.6706	Test Loss: 1.7001	Test Acc: 0.3492	Class Acc: {0: 0.541, 1: 0.441, 2: 0.17, 3: 0.276, 4: 0.168, 5: 0.088, 6: 0.587, 7: 0.557, 8: 0.227, 9: 0.437}
+Subset 10	Train Loss: 1.7408	Test Loss: 1.7586	Test Acc: 0.3420	Class Acc: {0: 0.304, 1: 0.553, 2: 0.046, 3: 0.156, 4: 0.423, 5: 0.291, 6: 0.486, 7: 0.399, 8: 0.722, 9: 0.04}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 36.869106 seconds
+Aggregated Test Loss: 1.4976	Aggregated Test Acc: 0.4817	Aggregated Class Acc: {0: 0.431, 1: 0.606, 2: 0.209, 3: 0.284, 4: 0.311, 5: 0.452, 6: 0.626, 7: 0.668, 8: 0.634, 9: 0.596}
+Round 59 use time: 1.30 min, ETA: 3.05 hours
+================================================================================
+Round 60
+Subset 1	Train Loss: 1.3567	Test Loss: 1.4687	Test Acc: 0.4581	Class Acc: {0: 0.57, 1: 0.445, 2: 0.382, 3: 0.283, 4: 0.115, 5: 0.592, 6: 0.427, 7: 0.658, 8: 0.463, 9: 0.646}
+Subset 2	Train Loss: 1.2977	Test Loss: 1.4487	Test Acc: 0.4737	Class Acc: {0: 0.37, 1: 0.59, 2: 0.141, 3: 0.301, 4: 0.488, 5: 0.384, 6: 0.674, 7: 0.529, 8: 0.694, 9: 0.566}
+Subset 3	Train Loss: 1.4748	Test Loss: 1.5236	Test Acc: 0.4484	Class Acc: {0: 0.616, 1: 0.437, 2: 0.279, 3: 0.304, 4: 0.336, 5: 0.503, 6: 0.5, 7: 0.487, 8: 0.644, 9: 0.378}
+Subset 4	Train Loss: 1.4200	Test Loss: 1.4917	Test Acc: 0.4592	Class Acc: {0: 0.44, 1: 0.481, 2: 0.224, 3: 0.251, 4: 0.178, 5: 0.535, 6: 0.738, 7: 0.55, 8: 0.56, 9: 0.635}
+Subset 5	Train Loss: 1.4473	Test Loss: 1.5169	Test Acc: 0.4402	Class Acc: {0: 0.647, 1: 0.45, 2: 0.267, 3: 0.134, 4: 0.441, 5: 0.628, 6: 0.498, 7: 0.527, 8: 0.438, 9: 0.372}
+Subset 6	Train Loss: 1.7036	Test Loss: 1.7332	Test Acc: 0.3550	Class Acc: {0: 0.466, 1: 0.418, 2: 0.118, 3: 0.245, 4: 0.138, 5: 0.429, 6: 0.504, 7: 0.32, 8: 0.704, 9: 0.208}
+Subset 7	Train Loss: 1.6873	Test Loss: 1.6662	Test Acc: 0.3779	Class Acc: {0: 0.481, 1: 0.69, 2: 0.124, 3: 0.098, 4: 0.541, 5: 0.215, 6: 0.257, 7: 0.598, 8: 0.508, 9: 0.267}
+Subset 8	Train Loss: 1.7487	Test Loss: 1.7749	Test Acc: 0.3340	Class Acc: {0: 0.518, 1: 0.364, 2: 0.044, 3: 0.0, 4: 0.196, 5: 0.179, 6: 0.815, 7: 0.467, 8: 0.386, 9: 0.371}
+Subset 9	Train Loss: 1.7152	Test Loss: 1.7425	Test Acc: 0.3379	Class Acc: {0: 0.479, 1: 0.503, 2: 0.041, 3: 0.106, 4: 0.53, 5: 0.107, 6: 0.375, 7: 0.5, 8: 0.403, 9: 0.335}
+Subset 10	Train Loss: 1.8191	Test Loss: 1.8324	Test Acc: 0.2940	Class Acc: {0: 0.706, 1: 0.524, 2: 0.04, 3: 0.234, 4: 0.286, 5: 0.0, 6: 0.133, 7: 0.681, 8: 0.132, 9: 0.204}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 41.190129 seconds
+Aggregated Test Loss: 1.6204	Aggregated Test Acc: 0.4682	Aggregated Class Acc: {0: 0.42, 1: 0.653, 2: 0.339, 3: 0.189, 4: 0.192, 5: 0.556, 6: 0.598, 7: 0.593, 8: 0.726, 9: 0.416}
+Round 60 use time: 1.37 min, ETA: 3.19 hours
+================================================================================
+Round 61
+Subset 1	Train Loss: 1.3011	Test Loss: 1.4106	Test Acc: 0.4806	Class Acc: {0: 0.563, 1: 0.418, 2: 0.333, 3: 0.416, 4: 0.459, 5: 0.277, 6: 0.437, 7: 0.674, 8: 0.512, 9: 0.717}
+Subset 2	Train Loss: 1.2854	Test Loss: 1.4318	Test Acc: 0.4667	Class Acc: {0: 0.645, 1: 0.533, 2: 0.427, 3: 0.522, 4: 0.167, 5: 0.265, 6: 0.595, 7: 0.557, 8: 0.383, 9: 0.573}
+Subset 3	Train Loss: 1.4334	Test Loss: 1.4914	Test Acc: 0.4446	Class Acc: {0: 0.567, 1: 0.6, 2: 0.128, 3: 0.419, 4: 0.236, 5: 0.247, 6: 0.573, 7: 0.704, 8: 0.371, 9: 0.601}
+Subset 4	Train Loss: 1.3963	Test Loss: 1.4656	Test Acc: 0.4626	Class Acc: {0: 0.501, 1: 0.566, 2: 0.154, 3: 0.26, 4: 0.344, 5: 0.63, 6: 0.601, 7: 0.519, 8: 0.526, 9: 0.525}
+Subset 5	Train Loss: 1.4356	Test Loss: 1.5023	Test Acc: 0.4534	Class Acc: {0: 0.503, 1: 0.486, 2: 0.195, 3: 0.245, 4: 0.363, 5: 0.388, 6: 0.572, 7: 0.624, 8: 0.474, 9: 0.684}
+Subset 6	Train Loss: 1.6089	Test Loss: 1.6435	Test Acc: 0.3842	Class Acc: {0: 0.46, 1: 0.522, 2: 0.063, 3: 0.505, 4: 0.306, 5: 0.18, 6: 0.521, 7: 0.6, 8: 0.236, 9: 0.449}
+Subset 7	Train Loss: 1.7649	Test Loss: 1.7547	Test Acc: 0.3238	Class Acc: {0: 0.633, 1: 0.344, 2: 0.134, 3: 0.069, 4: 0.22, 5: 0.15, 6: 0.6, 7: 0.372, 8: 0.464, 9: 0.252}
+Subset 8	Train Loss: 1.7723	Test Loss: 1.8079	Test Acc: 0.3226	Class Acc: {0: 0.564, 1: 0.454, 2: 0.082, 3: 0.051, 4: 0.463, 5: 0.199, 6: 0.349, 7: 0.574, 8: 0.204, 9: 0.286}
+Subset 9	Train Loss: 1.7877	Test Loss: 1.8065	Test Acc: 0.3217	Class Acc: {0: 0.538, 1: 0.244, 2: 0.031, 3: 0.089, 4: 0.47, 5: 0.104, 6: 0.354, 7: 0.722, 8: 0.304, 9: 0.361}
+Subset 10	Train Loss: 1.7021	Test Loss: 1.7378	Test Acc: 0.3512	Class Acc: {0: 0.457, 1: 0.483, 2: 0.185, 3: 0.439, 4: 0.066, 5: 0.071, 6: 0.287, 7: 0.564, 8: 0.408, 9: 0.552}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 39.421482 seconds
+Aggregated Test Loss: 1.5293	Aggregated Test Acc: 0.4841	Aggregated Class Acc: {0: 0.467, 1: 0.611, 2: 0.167, 3: 0.299, 4: 0.335, 5: 0.513, 6: 0.671, 7: 0.681, 8: 0.484, 9: 0.613}
+Round 61 use time: 1.33 min, ETA: 3.07 hours
+================================================================================
+Round 62
+Subset 1	Train Loss: 1.2808	Test Loss: 1.4138	Test Acc: 0.4848	Class Acc: {0: 0.572, 1: 0.581, 2: 0.329, 3: 0.235, 4: 0.301, 5: 0.384, 6: 0.731, 7: 0.555, 8: 0.588, 9: 0.572}
+Subset 2	Train Loss: 1.2517	Test Loss: 1.3918	Test Acc: 0.4923	Class Acc: {0: 0.515, 1: 0.617, 2: 0.247, 3: 0.569, 4: 0.508, 5: 0.303, 6: 0.524, 7: 0.497, 8: 0.535, 9: 0.608}
+Subset 3	Train Loss: 1.4403	Test Loss: 1.4955	Test Acc: 0.4441	Class Acc: {0: 0.488, 1: 0.568, 2: 0.259, 3: 0.563, 4: 0.23, 5: 0.231, 6: 0.617, 7: 0.376, 8: 0.503, 9: 0.606}
+Subset 4	Train Loss: 1.4464	Test Loss: 1.5036	Test Acc: 0.4439	Class Acc: {0: 0.458, 1: 0.366, 2: 0.283, 3: 0.387, 4: 0.14, 5: 0.581, 6: 0.402, 7: 0.503, 8: 0.653, 9: 0.666}
+Subset 5	Train Loss: 1.4271	Test Loss: 1.4950	Test Acc: 0.4497	Class Acc: {0: 0.422, 1: 0.305, 2: 0.303, 3: 0.459, 4: 0.259, 5: 0.475, 6: 0.474, 7: 0.58, 8: 0.687, 9: 0.533}
+Subset 6	Train Loss: 1.7762	Test Loss: 1.7952	Test Acc: 0.3214	Class Acc: {0: 0.46, 1: 0.574, 2: 0.084, 3: 0.171, 4: 0.021, 5: 0.127, 6: 0.216, 7: 0.695, 8: 0.526, 9: 0.34}
+Subset 7	Train Loss: 1.6900	Test Loss: 1.7022	Test Acc: 0.3717	Class Acc: {0: 0.269, 1: 0.215, 2: 0.203, 3: 0.06, 4: 0.377, 5: 0.606, 6: 0.56, 7: 0.472, 8: 0.447, 9: 0.508}
+Subset 8	Train Loss: 1.6325	Test Loss: 1.6664	Test Acc: 0.3823	Class Acc: {0: 0.416, 1: 0.817, 2: 0.114, 3: 0.156, 4: 0.264, 5: 0.533, 6: 0.487, 7: 0.449, 8: 0.406, 9: 0.181}
+Subset 9	Train Loss: 1.7680	Test Loss: 1.7875	Test Acc: 0.3374	Class Acc: {0: 0.568, 1: 0.486, 2: 0.015, 3: 0.168, 4: 0.422, 5: 0.195, 6: 0.381, 7: 0.387, 8: 0.419, 9: 0.333}
+Subset 10	Train Loss: 1.6780	Test Loss: 1.7158	Test Acc: 0.3625	Class Acc: {0: 0.409, 1: 0.604, 2: 0.188, 3: 0.347, 4: 0.04, 5: 0.28, 6: 0.444, 7: 0.561, 8: 0.491, 9: 0.261}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 39.414024 seconds
+Aggregated Test Loss: 1.6275	Aggregated Test Acc: 0.4773	Aggregated Class Acc: {0: 0.385, 1: 0.647, 2: 0.197, 3: 0.248, 4: 0.347, 5: 0.412, 6: 0.823, 7: 0.573, 8: 0.604, 9: 0.537}
+Round 62 use time: 1.25 min, ETA: 2.88 hours
+================================================================================
+Round 63
+Subset 1	Train Loss: 1.2631	Test Loss: 1.3855	Test Acc: 0.4920	Class Acc: {0: 0.459, 1: 0.675, 2: 0.32, 3: 0.31, 4: 0.444, 5: 0.48, 6: 0.588, 7: 0.6, 8: 0.538, 9: 0.506}
+Subset 2	Train Loss: 1.2947	Test Loss: 1.4451	Test Acc: 0.4743	Class Acc: {0: 0.597, 1: 0.461, 2: 0.329, 3: 0.485, 4: 0.315, 5: 0.474, 6: 0.571, 7: 0.49, 8: 0.54, 9: 0.481}
+Subset 3	Train Loss: 1.3825	Test Loss: 1.4251	Test Acc: 0.4757	Class Acc: {0: 0.527, 1: 0.494, 2: 0.311, 3: 0.344, 4: 0.24, 5: 0.587, 6: 0.505, 7: 0.632, 8: 0.537, 9: 0.58}
+Subset 4	Train Loss: 1.3659	Test Loss: 1.4535	Test Acc: 0.4631	Class Acc: {0: 0.579, 1: 0.485, 2: 0.224, 3: 0.172, 4: 0.302, 5: 0.582, 6: 0.548, 7: 0.524, 8: 0.561, 9: 0.654}
+Subset 5	Train Loss: 1.4280	Test Loss: 1.5027	Test Acc: 0.4502	Class Acc: {0: 0.574, 1: 0.564, 2: 0.21, 3: 0.329, 4: 0.159, 5: 0.553, 6: 0.491, 7: 0.59, 8: 0.427, 9: 0.605}
+Subset 6	Train Loss: 1.7278	Test Loss: 1.7641	Test Acc: 0.3264	Class Acc: {0: 0.198, 1: 0.479, 2: 0.051, 3: 0.07, 4: 0.116, 5: 0.064, 6: 0.693, 7: 0.586, 8: 0.47, 9: 0.537}
+Subset 7	Train Loss: 1.7589	Test Loss: 1.7596	Test Acc: 0.3262	Class Acc: {0: 0.272, 1: 0.641, 2: 0.182, 3: 0.0, 4: 0.1, 5: 0.169, 6: 0.726, 7: 0.368, 8: 0.512, 9: 0.292}
+Subset 8	Train Loss: 1.6465	Test Loss: 1.6926	Test Acc: 0.3697	Class Acc: {0: 0.414, 1: 0.466, 2: 0.149, 3: 0.148, 4: 0.217, 5: 0.2, 6: 0.717, 7: 0.474, 8: 0.333, 9: 0.579}
+Subset 9	Train Loss: 1.7345	Test Loss: 1.7301	Test Acc: 0.3647	Class Acc: {0: 0.532, 1: 0.396, 2: 0.081, 3: 0.263, 4: 0.268, 5: 0.442, 6: 0.566, 7: 0.455, 8: 0.349, 9: 0.295}
+Subset 10	Train Loss: 1.7259	Test Loss: 1.7359	Test Acc: 0.3617	Class Acc: {0: 0.481, 1: 0.443, 2: 0.026, 3: 0.451, 4: 0.163, 5: 0.451, 6: 0.259, 7: 0.363, 8: 0.566, 9: 0.414}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 40.799156 seconds
+Aggregated Test Loss: 1.4970	Aggregated Test Acc: 0.4911	Aggregated Class Acc: {0: 0.511, 1: 0.728, 2: 0.251, 3: 0.271, 4: 0.282, 5: 0.569, 6: 0.654, 7: 0.62, 8: 0.564, 9: 0.461}
+Round 63 use time: 1.27 min, ETA: 2.90 hours
+================================================================================
+Round 64
+Subset 1	Train Loss: 1.2373	Test Loss: 1.3860	Test Acc: 0.4932	Class Acc: {0: 0.413, 1: 0.491, 2: 0.214, 3: 0.228, 4: 0.488, 5: 0.515, 6: 0.618, 7: 0.625, 8: 0.629, 9: 0.711}
+Subset 2	Train Loss: 1.2804	Test Loss: 1.4301	Test Acc: 0.4613	Class Acc: {0: 0.466, 1: 0.478, 2: 0.451, 3: 0.52, 4: 0.25, 5: 0.308, 6: 0.377, 7: 0.573, 8: 0.688, 9: 0.502}
+Subset 3	Train Loss: 1.4015	Test Loss: 1.4573	Test Acc: 0.4702	Class Acc: {0: 0.485, 1: 0.501, 2: 0.356, 3: 0.261, 4: 0.358, 5: 0.562, 6: 0.496, 7: 0.582, 8: 0.693, 9: 0.408}
+Subset 4	Train Loss: 1.4751	Test Loss: 1.5528	Test Acc: 0.4342	Class Acc: {0: 0.685, 1: 0.46, 2: 0.263, 3: 0.227, 4: 0.234, 5: 0.294, 6: 0.381, 7: 0.664, 8: 0.553, 9: 0.581}
+Subset 5	Train Loss: 1.4069	Test Loss: 1.4807	Test Acc: 0.4671	Class Acc: {0: 0.517, 1: 0.468, 2: 0.324, 3: 0.188, 4: 0.278, 5: 0.392, 6: 0.667, 7: 0.626, 8: 0.63, 9: 0.581}
+Subset 6	Train Loss: 1.6842	Test Loss: 1.7218	Test Acc: 0.3634	Class Acc: {0: 0.543, 1: 0.457, 2: 0.025, 3: 0.205, 4: 0.27, 5: 0.463, 6: 0.393, 7: 0.595, 8: 0.35, 9: 0.333}
+Subset 7	Train Loss: 1.8424	Test Loss: 1.8292	Test Acc: 0.3168	Class Acc: {0: 0.703, 1: 0.237, 2: 0.401, 3: 0.162, 4: 0.338, 5: 0.153, 6: 0.487, 7: 0.236, 8: 0.221, 9: 0.23}
+Subset 8	Train Loss: 1.6797	Test Loss: 1.7196	Test Acc: 0.3452	Class Acc: {0: 0.338, 1: 0.172, 2: 0.205, 3: 0.015, 4: 0.045, 5: 0.364, 6: 0.595, 7: 0.663, 8: 0.4, 9: 0.655}
+Subset 9	Train Loss: 1.6476	Test Loss: 1.6788	Test Acc: 0.3704	Class Acc: {0: 0.401, 1: 0.159, 2: 0.074, 3: 0.21, 4: 0.348, 5: 0.561, 6: 0.536, 7: 0.46, 8: 0.412, 9: 0.543}
+Subset 10	Train Loss: 1.6711	Test Loss: 1.6880	Test Acc: 0.3734	Class Acc: {0: 0.53, 1: 0.737, 2: 0.063, 3: 0.265, 4: 0.277, 5: 0.362, 6: 0.554, 7: 0.348, 8: 0.362, 9: 0.236}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 18.504310 seconds
+Aggregated Test Loss: 1.4890	Aggregated Test Acc: 0.4917	Aggregated Class Acc: {0: 0.379, 1: 0.73, 2: 0.321, 3: 0.263, 4: 0.325, 5: 0.507, 6: 0.707, 7: 0.566, 8: 0.613, 9: 0.506}
+Round 64 use time: 0.81 min, ETA: 1.83 hours
+================================================================================
+Round 65
+Subset 1	Train Loss: 1.3623	Test Loss: 1.4840	Test Acc: 0.4614	Class Acc: {0: 0.536, 1: 0.544, 2: 0.17, 3: 0.057, 4: 0.298, 5: 0.401, 6: 0.826, 7: 0.572, 8: 0.508, 9: 0.702}
+Subset 2	Train Loss: 1.2699	Test Loss: 1.3927	Test Acc: 0.4811	Class Acc: {0: 0.491, 1: 0.565, 2: 0.274, 3: 0.18, 4: 0.352, 5: 0.744, 6: 0.547, 7: 0.478, 8: 0.543, 9: 0.637}
+Subset 3	Train Loss: 1.4167	Test Loss: 1.4771	Test Acc: 0.4608	Class Acc: {0: 0.436, 1: 0.635, 2: 0.155, 3: 0.416, 4: 0.343, 5: 0.436, 6: 0.614, 7: 0.421, 8: 0.666, 9: 0.486}
+Subset 4	Train Loss: 1.3570	Test Loss: 1.4258	Test Acc: 0.4824	Class Acc: {0: 0.62, 1: 0.582, 2: 0.286, 3: 0.323, 4: 0.378, 5: 0.45, 6: 0.547, 7: 0.617, 8: 0.48, 9: 0.541}
+Subset 5	Train Loss: 1.5178	Test Loss: 1.5606	Test Acc: 0.4348	Class Acc: {0: 0.522, 1: 0.822, 2: 0.282, 3: 0.303, 4: 0.284, 5: 0.334, 6: 0.455, 7: 0.495, 8: 0.645, 9: 0.206}
+Subset 6	Train Loss: 1.6725	Test Loss: 1.6888	Test Acc: 0.3830	Class Acc: {0: 0.534, 1: 0.637, 2: 0.051, 3: 0.274, 4: 0.208, 5: 0.335, 6: 0.483, 7: 0.604, 8: 0.329, 9: 0.375}
+Subset 7	Train Loss: 1.6598	Test Loss: 1.6604	Test Acc: 0.3926	Class Acc: {0: 0.326, 1: 0.646, 2: 0.085, 3: 0.165, 4: 0.447, 5: 0.312, 6: 0.616, 7: 0.458, 8: 0.588, 9: 0.283}
+Subset 8	Train Loss: 1.6558	Test Loss: 1.6825	Test Acc: 0.3832	Class Acc: {0: 0.537, 1: 0.505, 2: 0.041, 3: 0.267, 4: 0.172, 5: 0.439, 6: 0.548, 7: 0.476, 8: 0.529, 9: 0.318}
+Subset 9	Train Loss: 1.5678	Test Loss: 1.6317	Test Acc: 0.3996	Class Acc: {0: 0.502, 1: 0.524, 2: 0.141, 3: 0.099, 4: 0.423, 5: 0.515, 6: 0.427, 7: 0.498, 8: 0.491, 9: 0.376}
+Subset 10	Train Loss: 1.6995	Test Loss: 1.7312	Test Acc: 0.3482	Class Acc: {0: 0.64, 1: 0.321, 2: 0.087, 3: 0.327, 4: 0.493, 5: 0.189, 6: 0.359, 7: 0.476, 8: 0.379, 9: 0.211}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 18.191034 seconds
+Aggregated Test Loss: 1.6114	Aggregated Test Acc: 0.4702	Aggregated Class Acc: {0: 0.374, 1: 0.782, 2: 0.183, 3: 0.161, 4: 0.377, 5: 0.454, 6: 0.792, 7: 0.505, 8: 0.674, 9: 0.4}
+Round 65 use time: 0.63 min, ETA: 1.42 hours
+================================================================================
+Round 66
+Subset 1	Train Loss: 1.2536	Test Loss: 1.3848	Test Acc: 0.4897	Class Acc: {0: 0.626, 1: 0.681, 2: 0.335, 3: 0.338, 4: 0.462, 5: 0.235, 6: 0.632, 7: 0.546, 8: 0.57, 9: 0.472}
+Subset 2	Train Loss: 1.2982	Test Loss: 1.4414	Test Acc: 0.4746	Class Acc: {0: 0.405, 1: 0.847, 2: 0.248, 3: 0.327, 4: 0.394, 5: 0.418, 6: 0.667, 7: 0.598, 8: 0.439, 9: 0.403}
+Subset 3	Train Loss: 1.3967	Test Loss: 1.4509	Test Acc: 0.4581	Class Acc: {0: 0.531, 1: 0.482, 2: 0.254, 3: 0.634, 4: 0.142, 5: 0.234, 6: 0.662, 7: 0.546, 8: 0.478, 9: 0.618}
+Subset 4	Train Loss: 1.3921	Test Loss: 1.4615	Test Acc: 0.4640	Class Acc: {0: 0.507, 1: 0.669, 2: 0.26, 3: 0.167, 4: 0.182, 5: 0.631, 6: 0.501, 7: 0.647, 8: 0.527, 9: 0.549}
+Subset 5	Train Loss: 1.3767	Test Loss: 1.4343	Test Acc: 0.4814	Class Acc: {0: 0.686, 1: 0.654, 2: 0.37, 3: 0.279, 4: 0.375, 5: 0.306, 6: 0.559, 7: 0.579, 8: 0.456, 9: 0.55}
+Subset 6	Train Loss: 1.7051	Test Loss: 1.7263	Test Acc: 0.3575	Class Acc: {0: 0.409, 1: 0.436, 2: 0.044, 3: 0.066, 4: 0.448, 5: 0.091, 6: 0.597, 7: 0.624, 8: 0.384, 9: 0.476}
+Subset 7	Train Loss: 1.8322	Test Loss: 1.8243	Test Acc: 0.3182	Class Acc: {0: 0.379, 1: 0.555, 2: 0.046, 3: 0.039, 4: 0.115, 5: 0.164, 6: 0.402, 7: 0.547, 8: 0.549, 9: 0.386}
+Subset 8	Train Loss: 1.7025	Test Loss: 1.7300	Test Acc: 0.3451	Class Acc: {0: 0.359, 1: 0.435, 2: 0.128, 3: 0.084, 4: 0.259, 5: 0.4, 6: 0.294, 7: 0.489, 8: 0.521, 9: 0.482}
+Subset 9	Train Loss: 1.6071	Test Loss: 1.6489	Test Acc: 0.3920	Class Acc: {0: 0.39, 1: 0.593, 2: 0.098, 3: 0.202, 4: 0.25, 5: 0.401, 6: 0.684, 7: 0.462, 8: 0.584, 9: 0.256}
+Subset 10	Train Loss: 1.6570	Test Loss: 1.6679	Test Acc: 0.3896	Class Acc: {0: 0.324, 1: 0.544, 2: 0.09, 3: 0.227, 4: 0.331, 5: 0.451, 6: 0.447, 7: 0.582, 8: 0.354, 9: 0.546}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 18.232494 seconds
+Aggregated Test Loss: 1.6114	Aggregated Test Acc: 0.4866	Aggregated Class Acc: {0: 0.429, 1: 0.745, 2: 0.198, 3: 0.149, 4: 0.479, 5: 0.453, 6: 0.777, 7: 0.596, 8: 0.565, 9: 0.475}
+Round 66 use time: 0.63 min, ETA: 1.40 hours
+================================================================================
+Round 67
+Subset 1	Train Loss: 1.2546	Test Loss: 1.3864	Test Acc: 0.4958	Class Acc: {0: 0.485, 1: 0.509, 2: 0.332, 3: 0.424, 4: 0.4, 5: 0.406, 6: 0.688, 7: 0.452, 8: 0.694, 9: 0.568}
+Subset 2	Train Loss: 1.2910	Test Loss: 1.4606	Test Acc: 0.4678	Class Acc: {0: 0.374, 1: 0.655, 2: 0.471, 3: 0.259, 4: 0.318, 5: 0.204, 6: 0.742, 7: 0.699, 8: 0.56, 9: 0.396}
+Subset 3	Train Loss: 1.3617	Test Loss: 1.4305	Test Acc: 0.4739	Class Acc: {0: 0.558, 1: 0.622, 2: 0.163, 3: 0.433, 4: 0.312, 5: 0.47, 6: 0.562, 7: 0.612, 8: 0.495, 9: 0.512}
+Subset 4	Train Loss: 1.3811	Test Loss: 1.4567	Test Acc: 0.4669	Class Acc: {0: 0.597, 1: 0.782, 2: 0.227, 3: 0.336, 4: 0.172, 5: 0.276, 6: 0.711, 7: 0.59, 8: 0.519, 9: 0.459}
+Subset 5	Train Loss: 1.3387	Test Loss: 1.4064	Test Acc: 0.4842	Class Acc: {0: 0.517, 1: 0.469, 2: 0.369, 3: 0.374, 4: 0.34, 5: 0.487, 6: 0.601, 7: 0.557, 8: 0.561, 9: 0.567}
+Subset 6	Train Loss: 1.8338	Test Loss: 1.8579	Test Acc: 0.3014	Class Acc: {0: 0.614, 1: 0.215, 2: 0.069, 3: 0.37, 4: 0.377, 5: 0.224, 6: 0.284, 7: 0.385, 8: 0.401, 9: 0.075}
+Subset 7	Train Loss: 1.8159	Test Loss: 1.8088	Test Acc: 0.3171	Class Acc: {0: 0.563, 1: 0.046, 2: 0.296, 3: 0.362, 4: 0.284, 5: 0.131, 6: 0.01, 7: 0.551, 8: 0.36, 9: 0.568}
+Subset 8	Train Loss: 1.7005	Test Loss: 1.7486	Test Acc: 0.3547	Class Acc: {0: 0.674, 1: 0.299, 2: 0.102, 3: 0.013, 4: 0.139, 5: 0.595, 6: 0.449, 7: 0.564, 8: 0.377, 9: 0.335}
+Subset 9	Train Loss: 1.6611	Test Loss: 1.6962	Test Acc: 0.3746	Class Acc: {0: 0.445, 1: 0.624, 2: 0.184, 3: 0.177, 4: 0.403, 5: 0.405, 6: 0.502, 7: 0.506, 8: 0.243, 9: 0.257}
+Subset 10	Train Loss: 1.7328	Test Loss: 1.7592	Test Acc: 0.3337	Class Acc: {0: 0.498, 1: 0.715, 2: 0.045, 3: 0.467, 4: 0.243, 5: 0.022, 6: 0.233, 7: 0.565, 8: 0.383, 9: 0.166}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 18.109442 seconds
+Aggregated Test Loss: 1.5830	Aggregated Test Acc: 0.4957	Aggregated Class Acc: {0: 0.446, 1: 0.757, 2: 0.32, 3: 0.216, 4: 0.369, 5: 0.378, 6: 0.741, 7: 0.596, 8: 0.678, 9: 0.456}
+Round 67 use time: 0.63 min, ETA: 1.39 hours
+================================================================================
+Round 68
+Subset 1	Train Loss: 1.2546	Test Loss: 1.3879	Test Acc: 0.4857	Class Acc: {0: 0.54, 1: 0.741, 2: 0.446, 3: 0.314, 4: 0.131, 5: 0.545, 6: 0.504, 7: 0.599, 8: 0.666, 9: 0.371}
+Subset 2	Train Loss: 1.2116	Test Loss: 1.3852	Test Acc: 0.4919	Class Acc: {0: 0.478, 1: 0.772, 2: 0.22, 3: 0.363, 4: 0.495, 5: 0.555, 6: 0.627, 7: 0.482, 8: 0.53, 9: 0.397}
+Subset 3	Train Loss: 1.4106	Test Loss: 1.4568	Test Acc: 0.4696	Class Acc: {0: 0.571, 1: 0.655, 2: 0.395, 3: 0.195, 4: 0.367, 5: 0.56, 6: 0.652, 7: 0.364, 8: 0.474, 9: 0.463}
+Subset 4	Train Loss: 1.4023	Test Loss: 1.4748	Test Acc: 0.4566	Class Acc: {0: 0.562, 1: 0.713, 2: 0.349, 3: 0.225, 4: 0.204, 5: 0.429, 6: 0.78, 7: 0.401, 8: 0.561, 9: 0.342}
+Subset 5	Train Loss: 1.3883	Test Loss: 1.4438	Test Acc: 0.4784	Class Acc: {0: 0.677, 1: 0.611, 2: 0.211, 3: 0.27, 4: 0.279, 5: 0.546, 6: 0.629, 7: 0.675, 8: 0.45, 9: 0.436}
+Subset 6	Train Loss: 1.6290	Test Loss: 1.6486	Test Acc: 0.3852	Class Acc: {0: 0.36, 1: 0.374, 2: 0.194, 3: 0.218, 4: 0.364, 5: 0.311, 6: 0.598, 7: 0.431, 8: 0.493, 9: 0.509}
+Subset 7	Train Loss: 1.7036	Test Loss: 1.6949	Test Acc: 0.3612	Class Acc: {0: 0.385, 1: 0.388, 2: 0.146, 3: 0.254, 4: 0.204, 5: 0.471, 6: 0.267, 7: 0.553, 8: 0.687, 9: 0.257}
+Subset 8	Train Loss: 1.6842	Test Loss: 1.7005	Test Acc: 0.3660	Class Acc: {0: 0.349, 1: 0.401, 2: 0.036, 3: 0.129, 4: 0.154, 5: 0.463, 6: 0.248, 7: 0.582, 8: 0.581, 9: 0.717}
+Subset 9	Train Loss: 1.6867	Test Loss: 1.7302	Test Acc: 0.3511	Class Acc: {0: 0.604, 1: 0.508, 2: 0.154, 3: 0.134, 4: 0.112, 5: 0.344, 6: 0.514, 7: 0.404, 8: 0.469, 9: 0.268}
+Subset 10	Train Loss: 1.6147	Test Loss: 1.6396	Test Acc: 0.4008	Class Acc: {0: 0.395, 1: 0.592, 2: 0.129, 3: 0.371, 4: 0.155, 5: 0.435, 6: 0.406, 7: 0.544, 8: 0.584, 9: 0.397}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 18.227470 seconds
+Aggregated Test Loss: 1.4798	Aggregated Test Acc: 0.5046	Aggregated Class Acc: {0: 0.5, 1: 0.789, 2: 0.315, 3: 0.28, 4: 0.314, 5: 0.543, 6: 0.69, 7: 0.59, 8: 0.618, 9: 0.407}
+Round 68 use time: 0.63 min, ETA: 1.38 hours
+================================================================================
+Round 69
+Subset 1	Train Loss: 1.2659	Test Loss: 1.3887	Test Acc: 0.4956	Class Acc: {0: 0.535, 1: 0.582, 2: 0.117, 3: 0.243, 4: 0.543, 5: 0.472, 6: 0.686, 7: 0.602, 8: 0.539, 9: 0.637}
+Subset 2	Train Loss: 1.2042	Test Loss: 1.3833	Test Acc: 0.4915	Class Acc: {0: 0.574, 1: 0.508, 2: 0.123, 3: 0.343, 4: 0.423, 5: 0.458, 6: 0.517, 7: 0.732, 8: 0.624, 9: 0.613}
+Subset 3	Train Loss: 1.3666	Test Loss: 1.4041	Test Acc: 0.4849	Class Acc: {0: 0.478, 1: 0.682, 2: 0.273, 3: 0.361, 4: 0.352, 5: 0.344, 6: 0.661, 7: 0.596, 8: 0.64, 9: 0.462}
+Subset 4	Train Loss: 1.4025	Test Loss: 1.4582	Test Acc: 0.4662	Class Acc: {0: 0.513, 1: 0.626, 2: 0.254, 3: 0.267, 4: 0.368, 5: 0.468, 6: 0.645, 7: 0.455, 8: 0.734, 9: 0.332}
+Subset 5	Train Loss: 1.3744	Test Loss: 1.4245	Test Acc: 0.4782	Class Acc: {0: 0.512, 1: 0.609, 2: 0.266, 3: 0.262, 4: 0.33, 5: 0.543, 6: 0.452, 7: 0.644, 8: 0.615, 9: 0.549}
+Subset 6	Train Loss: 1.6289	Test Loss: 1.6720	Test Acc: 0.3956	Class Acc: {0: 0.374, 1: 0.547, 2: 0.212, 3: 0.276, 4: 0.121, 5: 0.495, 6: 0.549, 7: 0.483, 8: 0.674, 9: 0.225}
+Subset 7	Train Loss: 1.7413	Test Loss: 1.7235	Test Acc: 0.3569	Class Acc: {0: 0.16, 1: 0.566, 2: 0.195, 3: 0.34, 4: 0.221, 5: 0.297, 6: 0.367, 7: 0.431, 8: 0.726, 9: 0.266}
+Subset 8	Train Loss: 1.6111	Test Loss: 1.6739	Test Acc: 0.3632	Class Acc: {0: 0.521, 1: 0.381, 2: 0.217, 3: 0.408, 4: 0.07, 5: 0.193, 6: 0.305, 7: 0.495, 8: 0.511, 9: 0.531}
+Subset 9	Train Loss: 1.6780	Test Loss: 1.7066	Test Acc: 0.3710	Class Acc: {0: 0.316, 1: 0.684, 2: 0.07, 3: 0.113, 4: 0.242, 5: 0.462, 6: 0.818, 7: 0.373, 8: 0.277, 9: 0.355}
+Subset 10	Train Loss: 1.7535	Test Loss: 1.7668	Test Acc: 0.3434	Class Acc: {0: 0.096, 1: 0.572, 2: 0.014, 3: 0.113, 4: 0.367, 5: 0.47, 6: 0.339, 7: 0.569, 8: 0.656, 9: 0.238}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 18.244391 seconds
+Aggregated Test Loss: 1.4975	Aggregated Test Acc: 0.5052	Aggregated Class Acc: {0: 0.506, 1: 0.704, 2: 0.295, 3: 0.27, 4: 0.433, 5: 0.475, 6: 0.674, 7: 0.57, 8: 0.719, 9: 0.406}
+Round 69 use time: 0.63 min, ETA: 1.37 hours
+================================================================================
+Round 70
+Subset 1	Train Loss: 1.2179	Test Loss: 1.3704	Test Acc: 0.5008	Class Acc: {0: 0.532, 1: 0.651, 2: 0.238, 3: 0.26, 4: 0.534, 5: 0.4, 6: 0.623, 7: 0.7, 8: 0.504, 9: 0.566}
+Subset 2	Train Loss: 1.1863	Test Loss: 1.3661	Test Acc: 0.5026	Class Acc: {0: 0.54, 1: 0.44, 2: 0.337, 3: 0.214, 4: 0.399, 5: 0.528, 6: 0.607, 7: 0.687, 8: 0.749, 9: 0.525}
+Subset 3	Train Loss: 1.4424	Test Loss: 1.5008	Test Acc: 0.4534	Class Acc: {0: 0.666, 1: 0.536, 2: 0.289, 3: 0.208, 4: 0.557, 5: 0.325, 6: 0.635, 7: 0.449, 8: 0.447, 9: 0.422}
+Subset 4	Train Loss: 1.3748	Test Loss: 1.4477	Test Acc: 0.4646	Class Acc: {0: 0.573, 1: 0.61, 2: 0.296, 3: 0.575, 4: 0.238, 5: 0.237, 6: 0.605, 7: 0.454, 8: 0.597, 9: 0.461}
+Subset 5	Train Loss: 1.4256	Test Loss: 1.4792	Test Acc: 0.4488	Class Acc: {0: 0.58, 1: 0.393, 2: 0.123, 3: 0.587, 4: 0.272, 5: 0.386, 6: 0.559, 7: 0.559, 8: 0.307, 9: 0.722}
+Subset 6	Train Loss: 1.6831	Test Loss: 1.7099	Test Acc: 0.3557	Class Acc: {0: 0.378, 1: 0.595, 2: 0.127, 3: 0.58, 4: 0.269, 5: 0.0, 6: 0.298, 7: 0.36, 8: 0.498, 9: 0.452}
+Subset 7	Train Loss: 1.7438	Test Loss: 1.7161	Test Acc: 0.3450	Class Acc: {0: 0.591, 1: 0.074, 2: 0.045, 3: 0.282, 4: 0.467, 5: 0.271, 6: 0.345, 7: 0.554, 8: 0.502, 9: 0.319}
+Subset 8	Train Loss: 1.6193	Test Loss: 1.6738	Test Acc: 0.3784	Class Acc: {0: 0.461, 1: 0.226, 2: 0.089, 3: 0.089, 4: 0.211, 5: 0.322, 6: 0.482, 7: 0.718, 8: 0.482, 9: 0.704}
+Subset 9	Train Loss: 1.6815	Test Loss: 1.7207	Test Acc: 0.3674	Class Acc: {0: 0.395, 1: 0.397, 2: 0.024, 3: 0.204, 4: 0.221, 5: 0.572, 6: 0.461, 7: 0.655, 8: 0.267, 9: 0.478}
+Subset 10	Train Loss: 1.5695	Test Loss: 1.5988	Test Acc: 0.4117	Class Acc: {0: 0.393, 1: 0.652, 2: 0.072, 3: 0.227, 4: 0.304, 5: 0.554, 6: 0.601, 7: 0.502, 8: 0.453, 9: 0.359}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 18.196042 seconds
+Aggregated Test Loss: 1.4780	Aggregated Test Acc: 0.5033	Aggregated Class Acc: {0: 0.506, 1: 0.687, 2: 0.188, 3: 0.219, 4: 0.482, 5: 0.549, 6: 0.715, 7: 0.595, 8: 0.609, 9: 0.483}
+Round 70 use time: 0.63 min, ETA: 1.36 hours
+================================================================================
+Round 71
+Subset 1	Train Loss: 1.2752	Test Loss: 1.3858	Test Acc: 0.4779	Class Acc: {0: 0.44, 1: 0.774, 2: 0.282, 3: 0.673, 4: 0.337, 5: 0.131, 6: 0.572, 7: 0.558, 8: 0.532, 9: 0.48}
+Subset 2	Train Loss: 1.2209	Test Loss: 1.3732	Test Acc: 0.5015	Class Acc: {0: 0.63, 1: 0.733, 2: 0.245, 3: 0.16, 4: 0.461, 5: 0.477, 6: 0.695, 7: 0.639, 8: 0.529, 9: 0.446}
+Subset 3	Train Loss: 1.3845	Test Loss: 1.4442	Test Acc: 0.4709	Class Acc: {0: 0.4, 1: 0.721, 2: 0.329, 3: 0.345, 4: 0.322, 5: 0.489, 6: 0.728, 7: 0.45, 8: 0.559, 9: 0.366}
+Subset 4	Train Loss: 1.4213	Test Loss: 1.4869	Test Acc: 0.4591	Class Acc: {0: 0.667, 1: 0.465, 2: 0.371, 3: 0.194, 4: 0.408, 5: 0.347, 6: 0.708, 7: 0.53, 8: 0.623, 9: 0.278}
+Subset 5	Train Loss: 1.4002	Test Loss: 1.4543	Test Acc: 0.4648	Class Acc: {0: 0.523, 1: 0.439, 2: 0.41, 3: 0.44, 4: 0.236, 5: 0.494, 6: 0.363, 7: 0.612, 8: 0.735, 9: 0.396}
+Subset 6	Train Loss: 1.6469	Test Loss: 1.6891	Test Acc: 0.3662	Class Acc: {0: 0.431, 1: 0.337, 2: 0.334, 3: 0.427, 4: 0.111, 5: 0.065, 6: 0.593, 7: 0.43, 8: 0.73, 9: 0.204}
+Subset 7	Train Loss: 1.8005	Test Loss: 1.7769	Test Acc: 0.3425	Class Acc: {0: 0.24, 1: 0.364, 2: 0.062, 3: 0.046, 4: 0.339, 5: 0.485, 6: 0.625, 7: 0.514, 8: 0.494, 9: 0.256}
+Subset 8	Train Loss: 1.7206	Test Loss: 1.7433	Test Acc: 0.3430	Class Acc: {0: 0.528, 1: 0.296, 2: 0.227, 3: 0.172, 4: 0.187, 5: 0.438, 6: 0.469, 7: 0.218, 8: 0.588, 9: 0.307}
+Subset 9	Train Loss: 1.6046	Test Loss: 1.6524	Test Acc: 0.3849	Class Acc: {0: 0.569, 1: 0.435, 2: 0.142, 3: 0.092, 4: 0.179, 5: 0.407, 6: 0.485, 7: 0.735, 8: 0.416, 9: 0.389}
+Subset 10	Train Loss: 1.5979	Test Loss: 1.6239	Test Acc: 0.4096	Class Acc: {0: 0.456, 1: 0.519, 2: 0.252, 3: 0.187, 4: 0.336, 5: 0.533, 6: 0.461, 7: 0.439, 8: 0.564, 9: 0.349}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 26.405346 seconds
+Aggregated Test Loss: 1.5547	Aggregated Test Acc: 0.4843	Aggregated Class Acc: {0: 0.425, 1: 0.785, 2: 0.225, 3: 0.249, 4: 0.398, 5: 0.398, 6: 0.847, 7: 0.546, 8: 0.613, 9: 0.357}
+Round 71 use time: 0.77 min, ETA: 1.66 hours
+================================================================================
+Round 72
+Subset 1	Train Loss: 1.2241	Test Loss: 1.3798	Test Acc: 0.4927	Class Acc: {0: 0.593, 1: 0.531, 2: 0.323, 3: 0.303, 4: 0.624, 5: 0.3, 6: 0.596, 7: 0.528, 8: 0.565, 9: 0.564}
+Subset 2	Train Loss: 1.2593	Test Loss: 1.4359	Test Acc: 0.4818	Class Acc: {0: 0.55, 1: 0.601, 2: 0.094, 3: 0.331, 4: 0.18, 5: 0.682, 6: 0.593, 7: 0.685, 8: 0.555, 9: 0.547}
+Subset 3	Train Loss: 1.3371	Test Loss: 1.4123	Test Acc: 0.4806	Class Acc: {0: 0.502, 1: 0.465, 2: 0.517, 3: 0.32, 4: 0.289, 5: 0.387, 6: 0.59, 7: 0.588, 8: 0.635, 9: 0.513}
+Subset 4	Train Loss: 1.3730	Test Loss: 1.4585	Test Acc: 0.4729	Class Acc: {0: 0.575, 1: 0.481, 2: 0.29, 3: 0.136, 4: 0.198, 5: 0.599, 6: 0.549, 7: 0.679, 8: 0.663, 9: 0.559}
+Subset 5	Train Loss: 1.3640	Test Loss: 1.4315	Test Acc: 0.4720	Class Acc: {0: 0.654, 1: 0.794, 2: 0.087, 3: 0.339, 4: 0.379, 5: 0.35, 6: 0.721, 7: 0.622, 8: 0.477, 9: 0.297}
+Subset 6	Train Loss: 1.6612	Test Loss: 1.6796	Test Acc: 0.3609	Class Acc: {0: 0.474, 1: 0.593, 2: 0.4, 3: 0.058, 4: 0.1, 5: 0.001, 6: 0.629, 7: 0.588, 8: 0.468, 9: 0.298}
+Subset 7	Train Loss: 1.7463	Test Loss: 1.7232	Test Acc: 0.3583	Class Acc: {0: 0.353, 1: 0.512, 2: 0.014, 3: 0.278, 4: 0.133, 5: 0.601, 6: 0.199, 7: 0.412, 8: 0.739, 9: 0.342}
+Subset 8	Train Loss: 1.6717	Test Loss: 1.7152	Test Acc: 0.3763	Class Acc: {0: 0.497, 1: 0.471, 2: 0.176, 3: 0.025, 4: 0.462, 5: 0.27, 6: 0.439, 7: 0.423, 8: 0.598, 9: 0.402}
+Subset 9	Train Loss: 1.6335	Test Loss: 1.6837	Test Acc: 0.3887	Class Acc: {0: 0.474, 1: 0.566, 2: 0.25, 3: 0.045, 4: 0.385, 5: 0.341, 6: 0.571, 7: 0.439, 8: 0.455, 9: 0.361}
+Subset 10	Train Loss: 1.6638	Test Loss: 1.6976	Test Acc: 0.3664	Class Acc: {0: 0.373, 1: 0.457, 2: 0.105, 3: 0.31, 4: 0.114, 5: 0.198, 6: 0.451, 7: 0.63, 8: 0.651, 9: 0.375}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 35.005388 seconds
+Aggregated Test Loss: 1.5672	Aggregated Test Acc: 0.4925	Aggregated Class Acc: {0: 0.49, 1: 0.648, 2: 0.173, 3: 0.275, 4: 0.307, 5: 0.62, 6: 0.579, 7: 0.737, 8: 0.559, 9: 0.537}
+Round 72 use time: 1.22 min, ETA: 2.60 hours
+================================================================================
+Round 73
+Subset 1	Train Loss: 1.2425	Test Loss: 1.3899	Test Acc: 0.4958	Class Acc: {0: 0.567, 1: 0.459, 2: 0.327, 3: 0.337, 4: 0.447, 5: 0.389, 6: 0.564, 7: 0.559, 8: 0.775, 9: 0.534}
+Subset 2	Train Loss: 1.2553	Test Loss: 1.4170	Test Acc: 0.4882	Class Acc: {0: 0.562, 1: 0.561, 2: 0.131, 3: 0.111, 4: 0.612, 5: 0.446, 6: 0.663, 7: 0.7, 8: 0.432, 9: 0.664}
+Subset 3	Train Loss: 1.3851	Test Loss: 1.4257	Test Acc: 0.4803	Class Acc: {0: 0.568, 1: 0.64, 2: 0.301, 3: 0.255, 4: 0.328, 5: 0.394, 6: 0.56, 7: 0.78, 8: 0.522, 9: 0.455}
+Subset 4	Train Loss: 1.3609	Test Loss: 1.4744	Test Acc: 0.4770	Class Acc: {0: 0.695, 1: 0.548, 2: 0.27, 3: 0.277, 4: 0.299, 5: 0.38, 6: 0.633, 7: 0.759, 8: 0.298, 9: 0.611}
+Subset 5	Train Loss: 1.3640	Test Loss: 1.4287	Test Acc: 0.4739	Class Acc: {0: 0.666, 1: 0.568, 2: 0.313, 3: 0.359, 4: 0.251, 5: 0.537, 6: 0.491, 7: 0.612, 8: 0.326, 9: 0.616}
+Subset 6	Train Loss: 1.5755	Test Loss: 1.6144	Test Acc: 0.4076	Class Acc: {0: 0.423, 1: 0.483, 2: 0.049, 3: 0.312, 4: 0.146, 5: 0.574, 6: 0.607, 7: 0.539, 8: 0.504, 9: 0.439}
+Subset 7	Train Loss: 1.6365	Test Loss: 1.6348	Test Acc: 0.3893	Class Acc: {0: 0.439, 1: 0.323, 2: 0.176, 3: 0.265, 4: 0.257, 5: 0.428, 6: 0.533, 7: 0.51, 8: 0.663, 9: 0.299}
+Subset 8	Train Loss: 1.6533	Test Loss: 1.7136	Test Acc: 0.3689	Class Acc: {0: 0.467, 1: 0.509, 2: 0.124, 3: 0.088, 4: 0.348, 5: 0.288, 6: 0.5, 7: 0.583, 8: 0.546, 9: 0.236}
+Subset 9	Train Loss: 1.6588	Test Loss: 1.6975	Test Acc: 0.3608	Class Acc: {0: 0.51, 1: 0.364, 2: 0.139, 3: 0.168, 4: 0.235, 5: 0.336, 6: 0.283, 7: 0.661, 8: 0.533, 9: 0.379}
+Subset 10	Train Loss: 1.6191	Test Loss: 1.6657	Test Acc: 0.3864	Class Acc: {0: 0.442, 1: 0.525, 2: 0.199, 3: 0.028, 4: 0.276, 5: 0.705, 6: 0.335, 7: 0.479, 8: 0.625, 9: 0.25}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 46.173110 seconds
+Aggregated Test Loss: 1.4486	Aggregated Test Acc: 0.5112	Aggregated Class Acc: {0: 0.494, 1: 0.593, 2: 0.237, 3: 0.24, 4: 0.379, 5: 0.478, 6: 0.691, 7: 0.702, 8: 0.666, 9: 0.632}
+Round 73 use time: 1.36 min, ETA: 2.88 hours
+================================================================================
+Round 74
+Subset 1	Train Loss: 1.3371	Test Loss: 1.4785	Test Acc: 0.4631	Class Acc: {0: 0.463, 1: 0.467, 2: 0.427, 3: 0.272, 4: 0.104, 5: 0.653, 6: 0.442, 7: 0.497, 8: 0.781, 9: 0.525}
+Subset 2	Train Loss: 1.1974	Test Loss: 1.3673	Test Acc: 0.5118	Class Acc: {0: 0.584, 1: 0.582, 2: 0.2, 3: 0.385, 4: 0.547, 5: 0.36, 6: 0.677, 7: 0.548, 8: 0.522, 9: 0.713}
+Subset 3	Train Loss: 1.3610	Test Loss: 1.4283	Test Acc: 0.4824	Class Acc: {0: 0.415, 1: 0.608, 2: 0.402, 3: 0.383, 4: 0.356, 5: 0.357, 6: 0.627, 7: 0.389, 8: 0.704, 9: 0.583}
+Subset 4	Train Loss: 1.3415	Test Loss: 1.4352	Test Acc: 0.4821	Class Acc: {0: 0.566, 1: 0.595, 2: 0.212, 3: 0.153, 4: 0.294, 5: 0.604, 6: 0.535, 7: 0.578, 8: 0.659, 9: 0.625}
+Subset 5	Train Loss: 1.3320	Test Loss: 1.3962	Test Acc: 0.4893	Class Acc: {0: 0.497, 1: 0.485, 2: 0.321, 3: 0.392, 4: 0.361, 5: 0.241, 6: 0.706, 7: 0.624, 8: 0.554, 9: 0.712}
+Subset 6	Train Loss: 1.7343	Test Loss: 1.7394	Test Acc: 0.3645	Class Acc: {0: 0.466, 1: 0.368, 2: 0.088, 3: 0.338, 4: 0.205, 5: 0.509, 6: 0.59, 7: 0.378, 8: 0.296, 9: 0.407}
+Subset 7	Train Loss: 1.6901	Test Loss: 1.6945	Test Acc: 0.3602	Class Acc: {0: 0.457, 1: 0.611, 2: 0.248, 3: 0.106, 4: 0.105, 5: 0.209, 6: 0.586, 7: 0.562, 8: 0.551, 9: 0.167}
+Subset 8	Train Loss: 1.7109	Test Loss: 1.7431	Test Acc: 0.3446	Class Acc: {0: 0.587, 1: 0.309, 2: 0.323, 3: 0.144, 4: 0.173, 5: 0.344, 6: 0.058, 7: 0.723, 8: 0.347, 9: 0.438}
+Subset 9	Train Loss: 1.6587	Test Loss: 1.6929	Test Acc: 0.3639	Class Acc: {0: 0.344, 1: 0.584, 2: 0.107, 3: 0.14, 4: 0.233, 5: 0.488, 6: 0.421, 7: 0.481, 8: 0.628, 9: 0.213}
+Subset 10	Train Loss: 1.5598	Test Loss: 1.5953	Test Acc: 0.4218	Class Acc: {0: 0.493, 1: 0.612, 2: 0.326, 3: 0.468, 4: 0.314, 5: 0.228, 6: 0.403, 7: 0.533, 8: 0.539, 9: 0.302}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 45.610259 seconds
+Aggregated Test Loss: 1.4769	Aggregated Test Acc: 0.5193	Aggregated Class Acc: {0: 0.438, 1: 0.673, 2: 0.372, 3: 0.295, 4: 0.358, 5: 0.515, 6: 0.684, 7: 0.609, 8: 0.732, 9: 0.517}
+Round 74 use time: 1.57 min, ETA: 3.31 hours
+================================================================================
+Round 75
+Subset 1	Train Loss: 1.1762	Test Loss: 1.3191	Test Acc: 0.5177	Class Acc: {0: 0.55, 1: 0.477, 2: 0.401, 3: 0.242, 4: 0.313, 5: 0.581, 6: 0.682, 7: 0.683, 8: 0.606, 9: 0.642}
+Subset 2	Train Loss: 1.1548	Test Loss: 1.3133	Test Acc: 0.5179	Class Acc: {0: 0.667, 1: 0.577, 2: 0.318, 3: 0.364, 4: 0.501, 5: 0.418, 6: 0.57, 7: 0.685, 8: 0.526, 9: 0.553}
+Subset 3	Train Loss: 1.3169	Test Loss: 1.3785	Test Acc: 0.4972	Class Acc: {0: 0.676, 1: 0.486, 2: 0.326, 3: 0.278, 4: 0.36, 5: 0.362, 6: 0.586, 7: 0.72, 8: 0.496, 9: 0.682}
+Subset 4	Train Loss: 1.3866	Test Loss: 1.4402	Test Acc: 0.4750	Class Acc: {0: 0.574, 1: 0.571, 2: 0.124, 3: 0.208, 4: 0.374, 5: 0.425, 6: 0.643, 7: 0.661, 8: 0.524, 9: 0.646}
+Subset 5	Train Loss: 1.3330	Test Loss: 1.3960	Test Acc: 0.4920	Class Acc: {0: 0.574, 1: 0.615, 2: 0.292, 3: 0.405, 4: 0.504, 5: 0.255, 6: 0.57, 7: 0.6, 8: 0.48, 9: 0.625}
+Subset 6	Train Loss: 1.6735	Test Loss: 1.7143	Test Acc: 0.3597	Class Acc: {0: 0.499, 1: 0.422, 2: 0.11, 3: 0.167, 4: 0.302, 5: 0.131, 6: 0.596, 7: 0.491, 8: 0.493, 9: 0.386}
+Subset 7	Train Loss: 1.6703	Test Loss: 1.6731	Test Acc: 0.3854	Class Acc: {0: 0.443, 1: 0.508, 2: 0.209, 3: 0.105, 4: 0.278, 5: 0.623, 6: 0.655, 7: 0.241, 8: 0.525, 9: 0.267}
+Subset 8	Train Loss: 1.6541	Test Loss: 1.7057	Test Acc: 0.3618	Class Acc: {0: 0.435, 1: 0.23, 2: 0.164, 3: 0.016, 4: 0.279, 5: 0.485, 6: 0.376, 7: 0.711, 8: 0.433, 9: 0.489}
+Subset 9	Train Loss: 1.6649	Test Loss: 1.6917	Test Acc: 0.3796	Class Acc: {0: 0.505, 1: 0.575, 2: 0.02, 3: 0.032, 4: 0.387, 5: 0.499, 6: 0.524, 7: 0.611, 8: 0.392, 9: 0.251}
+Subset 10	Train Loss: 1.6607	Test Loss: 1.6846	Test Acc: 0.3760	Class Acc: {0: 0.459, 1: 0.673, 2: 0.067, 3: 0.4, 4: 0.286, 5: 0.274, 6: 0.493, 7: 0.415, 8: 0.453, 9: 0.24}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 44.663836 seconds
+Aggregated Test Loss: 1.4087	Aggregated Test Acc: 0.5158	Aggregated Class Acc: {0: 0.508, 1: 0.613, 2: 0.322, 3: 0.266, 4: 0.389, 5: 0.571, 6: 0.572, 7: 0.678, 8: 0.7, 9: 0.539}
+Round 75 use time: 1.58 min, ETA: 3.30 hours
+================================================================================
+Round 76
+Subset 1	Train Loss: 1.2402	Test Loss: 1.3803	Test Acc: 0.4910	Class Acc: {0: 0.489, 1: 0.481, 2: 0.584, 3: 0.206, 4: 0.427, 5: 0.286, 6: 0.657, 7: 0.418, 8: 0.673, 9: 0.689}
+Subset 2	Train Loss: 1.3229	Test Loss: 1.4872	Test Acc: 0.4593	Class Acc: {0: 0.571, 1: 0.398, 2: 0.562, 3: 0.169, 4: 0.283, 5: 0.635, 6: 0.371, 7: 0.562, 8: 0.651, 9: 0.391}
+Subset 3	Train Loss: 1.4723	Test Loss: 1.5179	Test Acc: 0.4539	Class Acc: {0: 0.633, 1: 0.534, 2: 0.288, 3: 0.426, 4: 0.356, 5: 0.367, 6: 0.618, 7: 0.393, 8: 0.705, 9: 0.219}
+Subset 4	Train Loss: 1.3479	Test Loss: 1.4518	Test Acc: 0.4743	Class Acc: {0: 0.665, 1: 0.721, 2: 0.299, 3: 0.161, 4: 0.439, 5: 0.359, 6: 0.602, 7: 0.599, 8: 0.461, 9: 0.437}
+Subset 5	Train Loss: 1.3437	Test Loss: 1.4100	Test Acc: 0.4848	Class Acc: {0: 0.624, 1: 0.406, 2: 0.383, 3: 0.529, 4: 0.282, 5: 0.346, 6: 0.525, 7: 0.567, 8: 0.574, 9: 0.612}
+Subset 6	Train Loss: 1.6648	Test Loss: 1.6854	Test Acc: 0.3635	Class Acc: {0: 0.176, 1: 0.417, 2: 0.008, 3: 0.571, 4: 0.327, 5: 0.03, 6: 0.699, 7: 0.422, 8: 0.64, 9: 0.345}
+Subset 7	Train Loss: 1.7033	Test Loss: 1.7117	Test Acc: 0.3641	Class Acc: {0: 0.599, 1: 0.561, 2: 0.309, 3: 0.065, 4: 0.232, 5: 0.256, 6: 0.446, 7: 0.431, 8: 0.375, 9: 0.367}
+Subset 8	Train Loss: 1.5850	Test Loss: 1.6503	Test Acc: 0.3905	Class Acc: {0: 0.48, 1: 0.456, 2: 0.141, 3: 0.108, 4: 0.183, 5: 0.407, 6: 0.556, 7: 0.591, 8: 0.695, 9: 0.288}
+Subset 9	Train Loss: 1.6506	Test Loss: 1.6820	Test Acc: 0.3717	Class Acc: {0: 0.616, 1: 0.202, 2: 0.14, 3: 0.484, 4: 0.347, 5: 0.259, 6: 0.179, 7: 0.634, 8: 0.338, 9: 0.518}
+Subset 10	Train Loss: 1.7145	Test Loss: 1.7486	Test Acc: 0.3414	Class Acc: {0: 0.432, 1: 0.653, 2: 0.102, 3: 0.438, 4: 0.231, 5: 0.075, 6: 0.164, 7: 0.626, 8: 0.387, 9: 0.306}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 46.352902 seconds
+Aggregated Test Loss: 1.4183	Aggregated Test Acc: 0.5165	Aggregated Class Acc: {0: 0.444, 1: 0.641, 2: 0.415, 3: 0.276, 4: 0.408, 5: 0.473, 6: 0.702, 7: 0.535, 8: 0.752, 9: 0.519}
+Round 76 use time: 1.59 min, ETA: 3.29 hours
+================================================================================
+Round 77
+Subset 1	Train Loss: 1.1785	Test Loss: 1.3405	Test Acc: 0.5119	Class Acc: {0: 0.612, 1: 0.675, 2: 0.174, 3: 0.296, 4: 0.569, 5: 0.356, 6: 0.595, 7: 0.676, 8: 0.58, 9: 0.586}
+Subset 2	Train Loss: 1.1886	Test Loss: 1.3748	Test Acc: 0.4998	Class Acc: {0: 0.526, 1: 0.673, 2: 0.333, 3: 0.505, 4: 0.202, 5: 0.489, 6: 0.49, 7: 0.658, 8: 0.573, 9: 0.549}
+Subset 3	Train Loss: 1.3367	Test Loss: 1.3840	Test Acc: 0.4971	Class Acc: {0: 0.641, 1: 0.696, 2: 0.273, 3: 0.304, 4: 0.395, 5: 0.524, 6: 0.647, 7: 0.621, 8: 0.453, 9: 0.417}
+Subset 4	Train Loss: 1.3476	Test Loss: 1.4052	Test Acc: 0.4742	Class Acc: {0: 0.472, 1: 0.368, 2: 0.519, 3: 0.282, 4: 0.297, 5: 0.235, 6: 0.556, 7: 0.716, 8: 0.56, 9: 0.737}
+Subset 5	Train Loss: 1.3405	Test Loss: 1.4188	Test Acc: 0.4777	Class Acc: {0: 0.498, 1: 0.646, 2: 0.294, 3: 0.207, 4: 0.303, 5: 0.587, 6: 0.512, 7: 0.599, 8: 0.627, 9: 0.504}
+Subset 6	Train Loss: 1.6011	Test Loss: 1.6154	Test Acc: 0.4078	Class Acc: {0: 0.483, 1: 0.55, 2: 0.133, 3: 0.141, 4: 0.336, 5: 0.584, 6: 0.345, 7: 0.634, 8: 0.635, 9: 0.237}
+Subset 7	Train Loss: 1.7322	Test Loss: 1.7467	Test Acc: 0.3439	Class Acc: {0: 0.39, 1: 0.536, 2: 0.112, 3: 0.034, 4: 0.13, 5: 0.499, 6: 0.444, 7: 0.535, 8: 0.603, 9: 0.156}
+Subset 8	Train Loss: 1.6062	Test Loss: 1.6677	Test Acc: 0.3771	Class Acc: {0: 0.398, 1: 0.571, 2: 0.27, 3: 0.07, 4: 0.235, 5: 0.396, 6: 0.504, 7: 0.518, 8: 0.631, 9: 0.178}
+Subset 9	Train Loss: 1.6555	Test Loss: 1.6870	Test Acc: 0.3789	Class Acc: {0: 0.549, 1: 0.089, 2: 0.091, 3: 0.098, 4: 0.389, 5: 0.607, 6: 0.433, 7: 0.568, 8: 0.393, 9: 0.572}
+Subset 10	Train Loss: 1.7563	Test Loss: 1.7775	Test Acc: 0.3284	Class Acc: {0: 0.395, 1: 0.181, 2: 0.04, 3: 0.046, 4: 0.243, 5: 0.396, 6: 0.05, 7: 0.787, 8: 0.627, 9: 0.519}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 44.459410 seconds
+Aggregated Test Loss: 1.4533	Aggregated Test Acc: 0.5214	Aggregated Class Acc: {0: 0.517, 1: 0.648, 2: 0.29, 3: 0.31, 4: 0.411, 5: 0.49, 6: 0.624, 7: 0.734, 8: 0.595, 9: 0.595}
+Round 77 use time: 1.73 min, ETA: 3.54 hours
+================================================================================
+Round 78
+Subset 1	Train Loss: 1.2175	Test Loss: 1.3781	Test Acc: 0.5045	Class Acc: {0: 0.573, 1: 0.621, 2: 0.379, 3: 0.302, 4: 0.302, 5: 0.589, 6: 0.468, 7: 0.699, 8: 0.613, 9: 0.499}
+Subset 2	Train Loss: 1.1921	Test Loss: 1.4057	Test Acc: 0.5021	Class Acc: {0: 0.717, 1: 0.605, 2: 0.413, 3: 0.306, 4: 0.451, 5: 0.323, 6: 0.486, 7: 0.666, 8: 0.583, 9: 0.471}
+Subset 3	Train Loss: 1.3602	Test Loss: 1.4072	Test Acc: 0.4867	Class Acc: {0: 0.585, 1: 0.687, 2: 0.112, 3: 0.357, 4: 0.3, 5: 0.391, 6: 0.762, 7: 0.591, 8: 0.537, 9: 0.545}
+Subset 4	Train Loss: 1.3827	Test Loss: 1.4858	Test Acc: 0.4661	Class Acc: {0: 0.704, 1: 0.268, 2: 0.251, 3: 0.161, 4: 0.277, 5: 0.558, 6: 0.553, 7: 0.659, 8: 0.617, 9: 0.613}
+Subset 5	Train Loss: 1.3688	Test Loss: 1.4463	Test Acc: 0.4716	Class Acc: {0: 0.641, 1: 0.401, 2: 0.391, 3: 0.301, 4: 0.295, 5: 0.489, 6: 0.559, 7: 0.736, 8: 0.315, 9: 0.588}
+Subset 6	Train Loss: 1.7120	Test Loss: 1.7156	Test Acc: 0.3694	Class Acc: {0: 0.488, 1: 0.375, 2: 0.26, 3: 0.494, 4: 0.167, 5: 0.064, 6: 0.474, 7: 0.466, 8: 0.461, 9: 0.445}
+Subset 7	Train Loss: 1.6441	Test Loss: 1.6414	Test Acc: 0.3896	Class Acc: {0: 0.616, 1: 0.511, 2: 0.199, 3: 0.307, 4: 0.238, 5: 0.216, 6: 0.554, 7: 0.542, 8: 0.354, 9: 0.359}
+Subset 8	Train Loss: 1.7149	Test Loss: 1.7235	Test Acc: 0.3590	Class Acc: {0: 0.525, 1: 0.513, 2: 0.254, 3: 0.053, 4: 0.409, 5: 0.431, 6: 0.443, 7: 0.314, 8: 0.351, 9: 0.297}
+Subset 9	Train Loss: 1.7769	Test Loss: 1.7980	Test Acc: 0.3116	Class Acc: {0: 0.206, 1: 0.387, 2: 0.004, 3: 0.116, 4: 0.473, 5: 0.202, 6: 0.228, 7: 0.596, 8: 0.634, 9: 0.27}
+Subset 10	Train Loss: 1.7471	Test Loss: 1.7501	Test Acc: 0.3404	Class Acc: {0: 0.373, 1: 0.618, 2: 0.285, 3: 0.129, 4: 0.062, 5: 0.612, 6: 0.047, 7: 0.433, 8: 0.617, 9: 0.228}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 44.765341 seconds
+Aggregated Test Loss: 1.5047	Aggregated Test Acc: 0.5157	Aggregated Class Acc: {0: 0.589, 1: 0.71, 2: 0.235, 3: 0.234, 4: 0.374, 5: 0.514, 6: 0.636, 7: 0.763, 8: 0.575, 9: 0.527}
+Round 78 use time: 1.65 min, ETA: 3.37 hours
+================================================================================
+Round 79
+Subset 1	Train Loss: 1.1905	Test Loss: 1.3619	Test Acc: 0.5085	Class Acc: {0: 0.61, 1: 0.622, 2: 0.441, 3: 0.266, 4: 0.415, 5: 0.304, 6: 0.734, 7: 0.584, 8: 0.537, 9: 0.572}
+Subset 2	Train Loss: 1.1936	Test Loss: 1.3904	Test Acc: 0.5031	Class Acc: {0: 0.589, 1: 0.753, 2: 0.294, 3: 0.292, 4: 0.429, 5: 0.46, 6: 0.512, 7: 0.587, 8: 0.75, 9: 0.365}
+Subset 3	Train Loss: 1.5274	Test Loss: 1.5972	Test Acc: 0.4302	Class Acc: {0: 0.673, 1: 0.601, 2: 0.203, 3: 0.284, 4: 0.544, 5: 0.1, 6: 0.808, 7: 0.391, 8: 0.303, 9: 0.395}
+Subset 4	Train Loss: 1.3380	Test Loss: 1.4093	Test Acc: 0.4842	Class Acc: {0: 0.529, 1: 0.59, 2: 0.256, 3: 0.519, 4: 0.337, 5: 0.325, 6: 0.612, 7: 0.616, 8: 0.534, 9: 0.524}
+Subset 5	Train Loss: 1.2990	Test Loss: 1.3909	Test Acc: 0.4962	Class Acc: {0: 0.469, 1: 0.653, 2: 0.249, 3: 0.209, 4: 0.312, 5: 0.522, 6: 0.615, 7: 0.699, 8: 0.666, 9: 0.568}
+Subset 6	Train Loss: 1.6403	Test Loss: 1.6742	Test Acc: 0.3770	Class Acc: {0: 0.442, 1: 0.393, 2: 0.115, 3: 0.365, 4: 0.115, 5: 0.403, 6: 0.362, 7: 0.573, 8: 0.632, 9: 0.37}
+Subset 7	Train Loss: 1.6998	Test Loss: 1.6778	Test Acc: 0.3858	Class Acc: {0: 0.432, 1: 0.662, 2: 0.52, 3: 0.028, 4: 0.238, 5: 0.214, 6: 0.571, 7: 0.337, 8: 0.486, 9: 0.37}
+Subset 8	Train Loss: 1.6868	Test Loss: 1.7053	Test Acc: 0.3578	Class Acc: {0: 0.374, 1: 0.238, 2: 0.224, 3: 0.174, 4: 0.141, 5: 0.163, 6: 0.717, 7: 0.537, 8: 0.341, 9: 0.669}
+Subset 9	Train Loss: 1.6864	Test Loss: 1.7153	Test Acc: 0.3519	Class Acc: {0: 0.502, 1: 0.396, 2: 0.206, 3: 0.499, 4: 0.098, 5: 0.278, 6: 0.263, 7: 0.325, 8: 0.47, 9: 0.482}
+Subset 10	Train Loss: 1.6548	Test Loss: 1.7054	Test Acc: 0.3645	Class Acc: {0: 0.47, 1: 0.636, 2: 0.204, 3: 0.282, 4: 0.377, 5: 0.17, 6: 0.385, 7: 0.619, 8: 0.349, 9: 0.153}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 45.518174 seconds
+Aggregated Test Loss: 1.6720	Aggregated Test Acc: 0.4841	Aggregated Class Acc: {0: 0.579, 1: 0.742, 2: 0.247, 3: 0.181, 4: 0.426, 5: 0.176, 6: 0.807, 7: 0.608, 8: 0.525, 9: 0.55}
+Round 79 use time: 1.62 min, ETA: 3.26 hours
+================================================================================
+Round 80
+Subset 1	Train Loss: 1.2186	Test Loss: 1.4005	Test Acc: 0.5041	Class Acc: {0: 0.519, 1: 0.526, 2: 0.147, 3: 0.222, 4: 0.309, 5: 0.671, 6: 0.632, 7: 0.728, 8: 0.576, 9: 0.711}
+Subset 2	Train Loss: 1.1706	Test Loss: 1.3786	Test Acc: 0.5079	Class Acc: {0: 0.508, 1: 0.497, 2: 0.259, 3: 0.386, 4: 0.474, 5: 0.326, 6: 0.697, 7: 0.783, 8: 0.503, 9: 0.646}
+Subset 3	Train Loss: 1.2964	Test Loss: 1.3726	Test Acc: 0.4981	Class Acc: {0: 0.661, 1: 0.687, 2: 0.297, 3: 0.213, 4: 0.278, 5: 0.446, 6: 0.744, 7: 0.612, 8: 0.596, 9: 0.447}
+Subset 4	Train Loss: 1.3286	Test Loss: 1.4010	Test Acc: 0.4821	Class Acc: {0: 0.456, 1: 0.638, 2: 0.449, 3: 0.226, 4: 0.297, 5: 0.564, 6: 0.594, 7: 0.518, 8: 0.732, 9: 0.347}
+Subset 5	Train Loss: 1.4486	Test Loss: 1.5114	Test Acc: 0.4608	Class Acc: {0: 0.733, 1: 0.554, 2: 0.522, 3: 0.214, 4: 0.197, 5: 0.354, 6: 0.564, 7: 0.542, 8: 0.65, 9: 0.278}
+Subset 6	Train Loss: 1.7260	Test Loss: 1.7628	Test Acc: 0.3556	Class Acc: {0: 0.508, 1: 0.37, 2: 0.08, 3: 0.057, 4: 0.386, 5: 0.277, 6: 0.539, 7: 0.547, 8: 0.522, 9: 0.27}
+Subset 7	Train Loss: 1.6242	Test Loss: 1.6094	Test Acc: 0.4074	Class Acc: {0: 0.364, 1: 0.461, 2: 0.125, 3: 0.407, 4: 0.248, 5: 0.209, 6: 0.594, 7: 0.534, 8: 0.674, 9: 0.458}
+Subset 8	Train Loss: 1.6510	Test Loss: 1.7065	Test Acc: 0.3766	Class Acc: {0: 0.474, 1: 0.651, 2: 0.235, 3: 0.279, 4: 0.151, 5: 0.622, 6: 0.275, 7: 0.322, 8: 0.424, 9: 0.333}
+Subset 9	Train Loss: 1.6253	Test Loss: 1.6546	Test Acc: 0.3950	Class Acc: {0: 0.54, 1: 0.636, 2: 0.124, 3: 0.124, 4: 0.295, 5: 0.213, 6: 0.743, 7: 0.421, 8: 0.575, 9: 0.279}
+Subset 10	Train Loss: 1.6464	Test Loss: 1.6749	Test Acc: 0.3879	Class Acc: {0: 0.425, 1: 0.507, 2: 0.214, 3: 0.09, 4: 0.37, 5: 0.503, 6: 0.365, 7: 0.55, 8: 0.51, 9: 0.345}
+Using `aggregate_resnet18`
+[aggregate_resnet18] Average time over 1 runs: 46.926269 seconds
+Aggregated Test Loss: 1.4959	Aggregated Test Acc: 0.5189	Aggregated Class Acc: {0: 0.56, 1: 0.771, 2: 0.22, 3: 0.268, 4: 0.353, 5: 0.529, 6: 0.74, 7: 0.69, 8: 0.554, 9: 0.504}
+Round 80 use time: 1.67 min, ETA: 3.33 hours
+================================================================================
