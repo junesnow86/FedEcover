@@ -1,4 +1,3 @@
-import argparse
 import csv
 import os
 import random
@@ -16,35 +15,18 @@ from modules.aggregation import vanilla_federated_averaging, aggregate_resnet18_
 from modules.heterofl_utils import prune_cnn
 from modules.models import CNN
 from modules.pruning import prune_resnet18
-from modules.utils import replace_bn_with_ln, test, train
+from modules.utils import replace_bn_with_ln, test, train, calculate_model_size
 from modules.debugging import create_empty_pruned_indices_dict
+from modules.args_parser import get_args
 
-parser = argparse.ArgumentParser()
-parser.add_argument(
-    "--save-dir",
-    type=str,
-    default=None,
-    help="Directory to save the results",
-)
-parser.add_argument(
-    "--model",
-    type=str,
-    choices=["cnn", "resnet"],
-    default="cnn",
-    help="Model to use for training",
-)
-args = parser.parse_args()
+args = get_args()
 save_dir = args.save_dir
 model_type = args.model
-print(f"Model type: {model_type}")
-print(f"Save directory: {save_dir}")
-if save_dir is None:
-    print("Results will not be saved.")
 
-ROUNDS = 100
-EPOCHS = 1
-LR = 0.001
-BATCH_SIZE = 128
+ROUNDS = args.round
+EPOCHS = args.epochs
+LR = args.lr
+BATCH_SIZE = args.batch_size
 
 seed = 18
 random.seed(seed)
@@ -91,18 +73,31 @@ dataloaders = [
     for subset_indices in subsets_indices
 ]
 
-# original_cnn = CNN()
-original_cnn = resnet18(weights=None)
-replace_bn_with_ln(original_cnn)
+if model_type == "cnn":
+    original_cnn = CNN()
+elif model_type == "resnet":
+    original_cnn = resnet18(weights=None)
+    replace_bn_with_ln(original_cnn)
+else:
+    raise ValueError(f"Model type {model_type} not supported.")
 
 p = 0.8
+if model_type == "cnn":
+    global_cnn, _ = prune_cnn(original_cnn, p, position=0)
+elif model_type == "resnet":
+    global_cnn, _ = prune_resnet18(original_cnn, p)
+else:
+    raise ValueError(f"Model type {model_type} not supported.")
+
 num_models = 10
-# global_cnn, _ = prune_cnn(original_cnn, p, position=0)
-global_cnn, _ = prune_resnet18(original_cnn, p)
 all_client_models = []
 for i in range(num_models):
-    # client_model, _ = prune_cnn(original_cnn, p, position=0)
-    client_model, _ = prune_resnet18(original_cnn, p)
+    if model_type == "cnn":
+        client_model, _ = prune_cnn(original_cnn, p, position=0)
+    elif model_type == "resnet":
+        client_model, _ = prune_resnet18(original_cnn, p)
+    else:
+        raise ValueError(f"Model type {model_type} not supported.")
     all_client_models.append(client_model)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -115,7 +110,7 @@ class_acc_results = []
 
 start_time = time()
 for round in range(ROUNDS):
-    round_results = {"Round": round + 1}
+    print(f"Round {round + 1}")
     round_start_time = time()
 
     round_train_loss_results = {"Round": round + 1}
@@ -137,8 +132,9 @@ for round in range(ROUNDS):
         local_test_loss, local_test_acc, local_class_acc = test(
             local_model, criterion, test_loader, device, num_classes=10
         )
+        model_size = calculate_model_size(local_model, print_result=False, unit="MB")
         print(
-            f"Subset {i + 1}\tTrain Loss: {local_train_loss:.4f}\tTest Loss: {local_test_loss:.4f}\tTest Acc: {local_test_acc:.4f}\tClass Acc: {local_class_acc}"
+            f"Subset {i + 1}\tModel Size: {model_size:.2f} MB\tTrain Loss: {local_train_loss:.4f}\tTest Loss: {local_test_loss:.4f}\tTest Acc: {local_test_acc:.4f}\tClass Acc: {local_class_acc}"
         )
         round_train_loss_results[f"Subset {i + 1}"] = local_train_loss
         round_test_loss_results[f"Subset {i + 1}"] = local_test_loss
@@ -146,16 +142,20 @@ for round in range(ROUNDS):
         round_class_acc_results[f"Subset {i + 1}"] = local_class_acc
 
     # Aggregation
-    # aggregated_weight = vanilla_federated_averaging(
-    #     models=all_client_models, sample_numbers=subset_sizes
-    # )
-    # global_cnn.load_state_dict(aggregated_weight)
-    aggregate_resnet18_vanilla(
-        global_model=global_cnn,
-        local_models=all_client_models,
-        client_weights=subset_sizes,
-        pruned_indices_dicts=[create_empty_pruned_indices_dict() for _ in range(num_models)],
-    )
+    if model_type == "cnn":
+        aggregated_weight = vanilla_federated_averaging(
+            models=all_client_models, sample_numbers=subset_sizes
+        )
+        global_cnn.load_state_dict(aggregated_weight)
+    elif model_type == "resnet":
+        aggregate_resnet18_vanilla(
+            global_model=global_cnn,
+            local_models=all_client_models,
+            client_weights=subset_sizes,
+            pruned_indices_dicts=[create_empty_pruned_indices_dict() for _ in range(num_models)],
+        )
+    else:
+        raise ValueError(f"Model type {model_type} not supported.")
 
     global_test_loss, global_test_acc, global_class_acc = test(
         global_cnn, criterion, test_loader, device, num_classes=10

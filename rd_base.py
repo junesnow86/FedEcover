@@ -1,4 +1,3 @@
-import argparse
 import csv
 import os
 import random
@@ -10,44 +9,27 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, Subset
 from torchvision import datasets, transforms
-from torchvision.models import resnet18, ResNet
+from torchvision.models import ResNet, resnet18
 
 from modules.aggregation import aggregate_cnn, aggregate_resnet18
+from modules.args_parser import get_args
 from modules.models import CNN
 from modules.pruning import prune_cnn, prune_resnet18
 from modules.utils import (
+    calculate_model_size,
+    replace_bn_with_ln,
     test,
     train,
-    replace_bn_with_ln,
 )
 
-parser = argparse.ArgumentParser()
-parser.add_argument(
-    "--save-dir",
-    type=str,
-    default=None,
-    help="Directory to save the results",
-)
-parser.add_argument(
-    "--model",
-    type=str,
-    choices=["cnn", "resnet"],
-    default="cnn",
-    help="Model to use for training",
-)
-args = parser.parse_args()
+args = get_args()
 save_dir = args.save_dir
 model_type = args.model
-print(f"Model type: {model_type}")
-print(f"Save directory: {save_dir}")
-if save_dir is None:
-    print("Results will not be saved.")
-
-ROUNDS = 200
-EPOCHS = 1
-LR = 0.001
-BATCH_SIZE = 128
-LR_DECAY = True
+LR_DECAY = args.lr_decay
+ROUNDS = args.round
+EPOCHS = args.epochs
+LR = args.lr
+BATCH_SIZE = args.batch_size
 
 # Set random seed for reproducibility
 seed = 18
@@ -93,13 +75,13 @@ dataloaders = [
     for subset_indices in subsets_indices
 ]
 
-# global_model = CNN()
-global_model = resnet18(weights=None)
-replace_bn_with_ln(global_model)
 
 if model_type == "cnn":
+    global_model = CNN()
     assert isinstance(global_model, CNN), f"Model type should be CNN, but got {type(global_model)}"
 elif model_type == "resnet":
+    global_model = resnet18(weights=None)
+    replace_bn_with_ln(global_model)
     assert isinstance(global_model, ResNet), f"Model type should be ResNet, but got {type(global_model)}"
 
 num_models = 10
@@ -176,8 +158,9 @@ for round in range(ROUNDS):
         local_test_loss, local_test_acc, local_class_acc = test(
             local_model, criterion, test_loader, device=device, num_classes=10
         )
+        model_size = calculate_model_size(local_model, print_result=False, unit="MB")
         print(
-            f"Subset {i + 1}\tTrain Loss: {local_train_loss:.4f}\tTest Loss: {local_test_loss:.4f}\tTest Acc: {local_test_acc:.4f}\tClass Acc: {local_class_acc}"
+            f"Subset {i + 1}\tModel Size: {model_size:.2f} MB\tTrain Loss: {local_train_loss:.4f}\tTest Loss: {local_test_loss:.4f}\tTest Acc: {local_test_acc:.4f}\tClass Acc: {local_class_acc}"
         )
         round_train_loss_results[f"Subset {i + 1}"] = local_train_loss
         round_test_loss_results[f"Subset {i + 1}"] = local_test_loss
