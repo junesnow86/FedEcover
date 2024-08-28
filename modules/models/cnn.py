@@ -1,36 +1,6 @@
 import torch.nn as nn
 
 
-class LinearPrameterPredictor(nn.Module):
-    def __init__(self, input_size=25 * 4 * 4 * 10, output_size=256 * 4 * 4 * 10):
-        super().__init__()
-        self.sequential = nn.Sequential(
-            nn.Linear(input_size, 2048),
-            nn.ReLU(),
-            nn.Linear(2048, output_size),
-        )
-
-    def forward(self, x):
-        x = x.view(x.size(0), -1)  # 展平输入
-        x = self.model(x)
-        x = x.view(x.size(0), 4096, 10)  # 恢复到目标形状
-        return x
-
-
-class ConvParameterPredictor(nn.Module):
-    pass
-
-
-class DropoutScaling(nn.Module):
-    def __init__(self, p):
-        super().__init__()
-        self.p = p
-        self.scale = 1.0 / (1.0 - p)
-
-    def forward(self, x):
-        return x * self.scale
-
-
 class CNN(nn.Module):
     def __init__(self):
         super().__init__()
@@ -113,3 +83,23 @@ class SonarModel(nn.Module):
         x = self.act2(self.layer2(x))
         x = self.sigmoid(self.output(x))
         return x
+
+
+class LinearPrameterPredictor(nn.Module):
+    def __init__(self, input_size=25 * 4 * 4 * 10, output_size=256 * 4 * 4 * 10):
+        super().__init__()
+        self.sequential = nn.Sequential(
+            nn.Linear(input_size, 2048),
+            nn.ReLU(),
+            nn.Linear(2048, output_size),
+        )
+
+    def forward(self, x):
+        x = x.view(x.size(0), -1)  # 展平输入
+        x = self.model(x)
+        x = x.view(x.size(0), 4096, 10)  # 恢复到目标形状
+        return x
+
+
+class ConvParameterPredictor(nn.Module):
+    pass

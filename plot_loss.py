@@ -2,8 +2,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # Read the CSV files
-df_train_loss = pd.read_csv("results_0821/rd_base_unbalanced_train_loss.csv")
-df_val_loss = pd.read_csv("results_0821/rd_base_unbalanced_test_loss.csv")
+df_train_loss = pd.read_csv("results/0827_300round/vanilla_resnet_train_loss.csv")
+df_val_loss = pd.read_csv("results/0827_300round/vanilla_resnet_test_loss.csv")
 
 # Create a figure and a single subplot
 fig, ax = plt.subplots(figsize=(10, 8))
@@ -43,7 +43,7 @@ ax.plot(
 # Customize the plot
 ax.set_xlabel("Round")
 ax.set_ylabel("Loss")
-fig.suptitle("Subset and Aggregated Loss Over Rounds (Base - Unbalanced)", y=0.95)
+fig.suptitle("Subset and Aggregated Loss Over Rounds of ResNet18(Vanilla)", y=0.95)
 
 # Combine legends from both axes
 lines, labels = ax.get_legend_handles_labels()
@@ -58,4 +58,4 @@ custom_labels = ['Train Loss', 'Validation Loss']
 ax.legend(lines + custom_lines, labels + custom_labels, loc="upper left")
 
 plt.grid(True)
-plt.savefig("figures/0821/rd_base_unbalanced_loss.png")
+plt.savefig("figures/0827/vanilla_300round_loss.png")

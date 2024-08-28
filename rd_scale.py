@@ -48,7 +48,7 @@ ROUNDS = 200
 EPOCHS = 1
 LR = 0.001
 BATCH_SIZE = 128
-LR_DECAY = True
+LR_DECAY = False
 
 # Set random seed for reproducibility
 seed = 18
