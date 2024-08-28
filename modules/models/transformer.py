@@ -168,7 +168,7 @@ class EncoderBlock(nn.Module):
         x = x + ffn_output
         x = self.norm2(x)
         return x
-    
+
 
 class DecoderBlock(nn.Module):
     def __init__(self, d_model=512, num_heads=8, d_ff=2048, dropout=0.0):
@@ -200,7 +200,17 @@ class DecoderBlock(nn.Module):
 
 
 class Transformer(nn.Module):
-    def __init__(self, src_vocab_size, tgt_vocab_size, d_model, num_heads, d_ff, num_layers, max_seq_len, dropout=0.0):
+    def __init__(
+        self,
+        src_vocab_size,
+        tgt_vocab_size,
+        num_heads,
+        num_layers,
+        d_model,
+        d_ff,
+        max_seq_len,
+        dropout=0.0,
+    ):
         super().__init__()
         self.encoder_embedding = nn.Embedding(src_vocab_size, d_model)
         self.decoder_embedding = nn.Embedding(tgt_vocab_size, d_model)
@@ -222,10 +232,15 @@ class Transformer(nn.Module):
         src_mask = (src != 0).unsqueeze(1).unsqueeze(2)  # (batch_size, 1, 1, src_len)
         tgt_mask = (tgt != 0).unsqueeze(1).unsqueeze(3)  # (batch_size, 1, tgt_len, 1)
         seq_len = tgt.size(1)
-        nopeak_mask = (1 - torch.triu(torch.ones(1, seq_len, seq_len), diagonal=1)).bool()
+        nopeak_mask = (
+            1
+            - torch.triu(
+                torch.ones(1, seq_len, seq_len, device=tgt_mask.device), diagonal=1
+            )
+        ).bool()
         tgt_mask = tgt_mask & nopeak_mask
         return src_mask, tgt_mask
-    
+
     def forward(self, src, tgt):
         src_mask, tgt_mask = self.generate_mask(src, tgt)
         src = self.positional_encoding(self.encoder_embedding(src))
