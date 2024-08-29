@@ -2,7 +2,7 @@ import torch.nn as nn
 
 
 class CNN(nn.Module):
-    def __init__(self):
+    def __init__(self, num_classes=10):
         super().__init__()
         self.layer1 = nn.Sequential(
             nn.Conv2d(3, 64, kernel_size=3, padding=1),
@@ -22,7 +22,7 @@ class CNN(nn.Module):
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2),
         )
-        self.fc = nn.Linear(256 * 4 * 4, 10)
+        self.fc = nn.Linear(256 * 4 * 4, num_classes)
 
     def forward(self, x):
         out = self.layer1(x)
