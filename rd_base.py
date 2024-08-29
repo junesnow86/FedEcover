@@ -80,9 +80,11 @@ if model_type == "cnn":
     global_model = CNN()
     assert isinstance(global_model, CNN), f"Model type should be CNN, but got {type(global_model)}"
 elif model_type == "resnet":
-    global_model = resnet18(weights=None)
+    global_model = resnet18(weights=None, num_classes=10)
     replace_bn_with_ln(global_model)
     assert isinstance(global_model, ResNet), f"Model type should be ResNet, but got {type(global_model)}"
+
+print(f"[Model Architecture]\n{global_model}")
 
 num_models = 10
 

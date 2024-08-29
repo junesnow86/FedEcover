@@ -76,10 +76,12 @@ dataloaders = [
 if model_type == "cnn":
     original_cnn = CNN()
 elif model_type == "resnet":
-    original_cnn = resnet18(weights=None)
+    original_cnn = resnet18(weights=None, num_classes=10)
     replace_bn_with_ln(original_cnn)
 else:
     raise ValueError(f"Model type {model_type} not supported.")
+
+print(f"[Model Architecture]\n{original_cnn}")
 
 p = 0.8
 if model_type == "cnn":
