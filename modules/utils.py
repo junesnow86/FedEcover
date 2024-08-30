@@ -111,13 +111,14 @@ def train_and_validate(
             correct += pred.eq(target.view_as(pred)).sum().item()
 
         train_acc = correct / len(train_loader.dataset)
-        val_loss, val_acc, _ = test(model, device, val_loader, criterion)
+        # val_loss, val_acc, _ = test(model, device, val_loader, criterion)
+        val_result = evaluate_acc(model, val_loader, device=device)
         print(
-            f"Epoch {epoch + 1}/{epochs}, Traing Loss: {total_loss:.6f}, Training Accuracy: {correct}/{len(train_loader.dataset)} ({100. * correct / len(train_loader.dataset):.2f}%)\tValidation Loss: {val_loss:.6f}, Validation Accuracy: {val_acc}"
+            f"Epoch {epoch + 1}/{epochs}, Traing Loss: {total_loss:.6f}, Training Accuracy: {correct}/{len(train_loader.dataset)} ({100. * correct / len(train_loader.dataset):.2f}%)\tValidation Loss: {val_result["loss"]:.6f}, Validation Accuracy: {val_result["accuracy"]:.4f}"
         )
 
         train_acc_list.append(train_acc)
-        val_acc_list.append(val_acc)
+        val_acc_list.append(val_result["accuracy"])
 
     model.to(original_device)
     return train_acc_list, val_acc_list
@@ -160,6 +161,64 @@ def test(model, criterion, test_loader, device="cuda", num_classes=10):
     }
     model.to(original_model_device)
     return test_loss, accuracy, class_accuracy
+
+
+def evaluate_acc(model, dataloader, device="cuda", class_wise=False):
+    original_model_device = next(model.parameters()).device
+    if device == "cuda":
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    else:
+        device = torch.device("cpu")
+    model.to(device)
+    model.eval()
+
+    criterion = nn.CrossEntropyLoss()
+
+    test_loss = 0
+    correct = 0
+    if class_wise:
+        class_correct = dict()
+        class_total = dict()
+
+    with torch.no_grad():
+        for data, target in dataloader:
+            data, target = data.to(device), target.to(device)
+            output = model(data)
+            test_loss += criterion(output, target).item()
+            pred = output.argmax(dim=1, keepdim=True)
+            correct += pred.eq(target.view_as(pred)).sum().item()
+
+            if class_wise:
+                for label, prediction in zip(target.view_as(pred), pred):
+                    if label.item() not in class_correct:
+                        class_correct[label.item()] = 0
+                    if label.item() not in class_total:
+                        class_total[label.item()] = 0
+
+                    if label == prediction:
+                        class_correct[label.item()] += 1
+
+                    class_total[label.item()] += 1
+
+    test_loss /= len(dataloader)
+    accuracy = correct / len(dataloader.dataset)
+    if class_wise:
+        class_accuracy = {
+            cls: class_correct[cls] / class_total[cls]
+            for cls in sorted(class_total)
+            if class_total[cls] > 0
+        }
+
+    model.to(original_model_device)
+
+    result = {
+        "loss": test_loss,
+        "accuracy": accuracy,
+    }
+    if class_wise:
+        result["class_wise_accuracy"] = class_accuracy
+
+    return result
 
 
 def replace_bn_with_ln(model: nn.Module, affine=False):
