@@ -292,7 +292,7 @@ def aggregate_resnet18(
                 aggregate_conv_layers(
                     global_model._modules[layer][int(block)].downsample[0],
                     [
-                        model._modules[layer][int(block)].downsample[0][0]
+                        model._modules[layer][int(block)].downsample[0]
                         for model in local_models
                     ],
                     [
@@ -350,9 +350,9 @@ def aggregate_resnet18_vanilla(
             downsample_key = f"{layer}.{block}.downsample.0"
             if downsample_key in pruned_indices_dicts[0]:
                 aggregate_conv_layers(
-                    global_model._modules[layer][int(block)].downsample[0][0],
+                    global_model._modules[layer][int(block)].downsample[0],
                     [
-                        model._modules[layer][int(block)].downsample[0][0]
+                        model._modules[layer][int(block)].downsample[0]
                         for model in local_models
                     ],
                     [
@@ -371,185 +371,154 @@ def aggregate_resnet18_vanilla(
     )
 
 
-def recover_global_from_pruned_resnet18(global_model, pruned_model, pruned_indices_dict):
+def update_global_linear_layer(global_layer, local_layer, pruned_indices_dict):
+    """Update the global layer inplacely with the weights and biases of the local layer.
+
+    Args:
+        global_layer: The global layer to be updated.
+        local_layer: The local layer which is pruned from the global layer, and then updated.
+        pruned_indices_dict: A dictionary containing the indices indicating which neurons have been pruned from global layer.
+
     """
-    Recover a global model from a pruned model and the indices that were pruned.
-    """
-
-    new_global_model = copy.deepcopy(global_model)
-
-    # First conv layer
-    key = "conv1"
-    if key in pruned_indices_dict:
-        pruned_indices = pruned_indices_dict[key]
-        global_in_channels = global_model.conv1.in_channels
-        global_out_channels = global_model.conv1.out_channels
-        unpruned_input_indices = np.setdiff1d(
-            range(global_in_channels), pruned_indices.get("input", np.array([]))
+    # Update the weights
+    new_weight = global_layer.weight.detach().clone()
+    new_weight[
+        np.ix_(
+            np.sort(
+                np.setdiff1d(
+                    range(global_layer.out_features), pruned_indices_dict.get("output", np.array([]))
+                )
+            ),
+            np.sort(
+                np.setdiff1d(
+                    range(global_layer.in_features), pruned_indices_dict.get("input", np.array([]))
+                )
+            ),
         )
-        unpruned_output_indices = np.setdiff1d(
-            range(global_out_channels), pruned_indices.get("output", np.array([]))
-        )
+    ] = local_layer.weight.detach().clone()
 
-        # for out_idx_layer, out_idx_global in enumerate(unpruned_output_indices):
-        #     for in_idx_layer, in_idx_global in enumerate(unpruned_input_indices):
-        #         new_global_model.conv1.weight.data[
-        #             out_idx_global, in_idx_global, :, :
-        #         ] = pruned_model.conv1.weight.data[out_idx_layer, in_idx_layer, :, :]
-        new_global_model.conv1.weight.data[
-            np.ix_(unpruned_output_indices, unpruned_input_indices)
-        ] = pruned_model.conv1[0].weight.data[
-            np.ix_(
-                range(len(unpruned_output_indices)), range(len(unpruned_input_indices))
+    # Update the biases
+    if global_layer.bias is not None:
+        new_bias = global_layer.bias.detach().clone()
+        new_bias[
+            np.sort(
+                np.setdiff1d(
+                    range(global_layer.out_features), pruned_indices_dict.get("output", np.array([]))
+                )
             )
-        ]
+        ] = local_layer.bias.detach().clone()
+    else:
+        new_bias = None
 
-    # LayerNorm
-    new_global_model.bn1 = nn.LayerNorm([64, 16, 16], elementwise_affine=False)
+    # Copy the updated weights and biases back to the global layer
+    global_layer.weight.data.copy_(new_weight)
+    if new_bias is not None:
+        global_layer.bias.data.copy_(new_bias)
 
-    layers = ["layer1", "layer2", "layer3", "layer4"]
-    layer_norm_shapes = [
-        [64, 8, 8],
-        [128, 4, 4],
-        [256, 2, 2],
-        [512, 1, 1],
-    ]
-    for i, layer in enumerate(layers):
-        for block in ["0", "1"]:
-            for conv in ["conv1", "conv2"]:
-                key = f"{layer}.{block}.{conv}"
-                if key in pruned_indices_dict:
-                    pruned_indices = pruned_indices_dict[key]
-                    global_in_channels = (
-                        global_model._modules[layer][int(block)]
-                        ._modules[conv]
-                        .in_channels
-                    )
-                    global_out_channels = (
-                        global_model._modules[layer][int(block)]
-                        ._modules[conv]
-                        .out_channels
-                    )
-                    unpruned_input_indices = np.setdiff1d(
-                        range(global_in_channels),
-                        pruned_indices.get("input", np.array([])),
-                    )
-                    unpruned_output_indices = np.setdiff1d(
-                        range(global_out_channels),
-                        pruned_indices.get("output", np.array([])),
-                    )
 
-                    # for out_idx_layer, out_idx_global in enumerate(
-                    #     unpruned_output_indices
-                    # ):
-                    #     for in_idx_layer, in_idx_global in enumerate(
-                    #         unpruned_input_indices
-                    #     ):
-                    #         new_global_model._modules[layer][int(block)]._modules[conv][
-                    #             0
-                    #         ].weight.data[out_idx_global, in_idx_global, :, :] = (
-                    #             pruned_model._modules[layer][int(block)]
-                    #             ._modules[conv][0]
-                    #             .weight.data[out_idx_layer, in_idx_layer, :, :]
-                    #         )
-                    new_global_model._modules[layer][int(block)]._modules[
-                        conv
-                    ].weight.data[
-                        np.ix_(unpruned_output_indices, unpruned_input_indices)
-                    ] = (
-                        pruned_model._modules[layer][int(block)]
-                        ._modules[conv][0]
-                        .weight.data[
-                            np.ix_(
-                                range(len(unpruned_output_indices)),
-                                range(len(unpruned_input_indices)),
-                            )
-                        ]
-                    )
+def update_global_conv_layer(global_layer, local_layer, pruned_indices_dict):
+    """Update the global layer inplacely with the weights and biases of the local layer.
 
-            downsample_key = f"{layer}.{block}.downsample.0"
-            if downsample_key in pruned_indices_dict:
-                pruned_indices = pruned_indices_dict[downsample_key]
-                global_in_channels = (
-                    global_model._modules[layer][int(block)]
-                    ._modules["downsample"][0]
-                    .in_channels
+    Args:
+        global_layer: The global layer to be updated.
+        local_layer: The local layer which is pruned from the global layer, and then updated.
+        pruned_indices_dict: A dictionary containing the indices indicating which neurons have been pruned from global layer.
+    """
+    # Update the weights
+    new_weight = global_layer.weight.detach().clone()
+    new_weight[
+        np.ix_(
+            np.sort(
+                np.setdiff1d(
+                    range(global_layer.out_channels), pruned_indices_dict.get("output", np.array([]))
                 )
-                global_out_channels = (
-                    global_model._modules[layer][int(block)]
-                    ._modules["downsample"][0]
-                    .out_channels
+            ),
+            np.sort(
+                np.setdiff1d(
+                    range(global_layer.in_channels), pruned_indices_dict.get("input", np.array([]))
                 )
-                unpruned_input_indices = np.setdiff1d(
-                    range(global_in_channels), pruned_indices.get("input", np.array([]))
-                )
-                unpruned_output_indices = np.setdiff1d(
-                    range(global_out_channels),
-                    pruned_indices.get("output", np.array([])),
-                )
+            ),
+        )
+    ] = local_layer.weight.detach().clone()
 
-                # for out_idx_layer, out_idx_global in enumerate(unpruned_output_indices):
-                #     for in_idx_layer, in_idx_global in enumerate(
-                #         unpruned_input_indices
-                #     ):
-                #         new_global_model._modules[layer][int(block)]._modules[
-                #             "downsample"
-                #         ][0].weight.data[out_idx_global, in_idx_global, :, :] = (
-                #             pruned_model._modules[layer][int(block)]
-                #             ._modules["downsample"][0]
-                #             .weight.data[out_idx_layer, in_idx_layer, :, :]
-                #         )
-                new_global_model._modules[layer][int(block)]._modules["downsample"][
-                    0
-                ].weight.data[
-                    np.ix_(unpruned_output_indices, unpruned_input_indices)
-                ] = (
-                    pruned_model._modules[layer][int(block)]
-                    ._modules["downsample"][0][0]
-                    .weight.data[
-                        np.ix_(
-                            range(len(unpruned_output_indices)),
-                            range(len(unpruned_input_indices)),
-                        )
-                    ]
+    # Update the biases
+    if global_layer.bias is not None:
+        new_bias = global_layer.bias.detach().clone()
+        new_bias[
+            np.sort(
+                np.setdiff1d(
+                    range(global_layer.out_channels), pruned_indices_dict.get("output", np.array([]))
+                )
+            )
+        ] = local_layer.bias.detach().clone()
+    else:
+        new_bias = None
+
+    # Copy the updated weights and biases back to the global layer
+    global_layer.weight.data.copy_(new_weight)
+    if new_bias is not None:
+        global_layer.bias.data.copy_(new_bias)
+
+
+def recover_global_from_pruned_cnn(global_model, pruned_model, pruned_indices_dicts):
+    clone_global_model = copy.deepcopy(global_model)
+
+    # conv1
+    update_global_conv_layer(
+        clone_global_model.layer1[0], pruned_model.layer1[0], pruned_indices_dicts["layer1"]
+    )
+
+    # conv2
+    update_global_conv_layer(
+        clone_global_model.layer2[0], pruned_model.layer2[0], pruned_indices_dicts["layer2"]
+    )
+
+    # conv3
+    update_global_conv_layer(
+        clone_global_model.layer3[0], pruned_model.layer3[0], pruned_indices_dicts["layer3"]
+    )
+
+    # Linear layer
+    update_global_linear_layer(clone_global_model.fc, pruned_model.fc, pruned_indices_dicts["fc"])
+
+    return clone_global_model
+
+
+def recover_global_from_pruned_resnet18(
+    global_model, pruned_model, pruned_indices_dicts
+):
+    clone_global_model = copy.deepcopy(global_model)
+
+    # conv1
+    update_global_conv_layer(
+        clone_global_model.conv1, pruned_model.conv1[0], pruned_indices_dicts["conv1"]
+    )
+
+    layer_names = ["layer1", "layer2", "layer3", "layer4"]
+    blocks = ["0", "1"]
+    convs = ["conv1", "conv2"]
+
+    for layer_name in layer_names:
+        for block in blocks:
+            for conv in convs:
+                key = f"{layer_name}.{block}.{conv}"
+                update_global_conv_layer(
+                    clone_global_model._modules[layer_name][int(block)]._modules[conv],
+                    pruned_model._modules[layer_name][int(block)]._modules[conv][0],
+                    pruned_indices_dicts[key],
                 )
 
-                # LayerNorm
-                new_global_model._modules[layer][int(block)]._modules["downsample"][
-                    1
-                ] = nn.LayerNorm(layer_norm_shapes[i], elementwise_affine=False)
-
-            # LayerNorm
-            for bn in ["bn1", "bn2"]:
-                normalized_shape = layer_norm_shapes[i]
-                new_global_model._modules[layer][int(block)]._modules[bn] = (
-                    nn.LayerNorm(normalized_shape, elementwise_affine=False)
+            downsample_key = f"{layer_name}.{block}.downsample.0"
+            if downsample_key in pruned_indices_dicts:
+                update_global_conv_layer(
+                    clone_global_model._modules[layer_name][int(block)].downsample[0],
+                    pruned_model._modules[layer_name][int(block)].downsample[0],
+                    pruned_indices_dicts[downsample_key],
                 )
 
     # Linear layer
-    key = "fc"
-    if key in pruned_indices_dict:
-        pruned_indices = pruned_indices_dict[key]
-        global_input_size = global_model.fc.in_features
-        global_output_size = global_model.fc.out_features
-        unpruned_input_indices = np.setdiff1d(
-            range(global_input_size), pruned_indices.get("input", np.array([]))
-        )
-        unpruned_output_indices = np.setdiff1d(
-            range(global_output_size), pruned_indices.get("output", np.array([]))
-        )
+    update_global_linear_layer(
+        clone_global_model.fc, pruned_model.fc, pruned_indices_dicts["fc"]
+    )
 
-        # for out_idx_layer, out_idx_global in enumerate(unpruned_output_indices):
-        #     for in_idx_layer, in_idx_global in enumerate(unpruned_input_indices):
-        #         new_global_model.fc.weight.data[out_idx_global, in_idx_global] = (
-        #             pruned_model.fc.weight.data[out_idx_layer, in_idx_layer]
-        #         )
-        new_global_model.fc.weight.data[
-            np.ix_(unpruned_output_indices, unpruned_input_indices)
-        ] = pruned_model.fc.weight.data[
-            np.ix_(
-                range(len(unpruned_output_indices)), range(len(unpruned_input_indices))
-            )
-        ]
-
-    return new_global_model
+    return clone_global_model
