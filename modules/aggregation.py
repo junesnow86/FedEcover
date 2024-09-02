@@ -371,6 +371,67 @@ def aggregate_resnet18_vanilla(
     )
 
 
+@measure_time(repeats=1)
+def aggregate_shallow_resnet(
+    global_model: ResNet,
+    local_models: List[ResNet],
+    client_weights: List[int],
+    pruned_indices_dicts: List[Dict[str, Dict[str, np.ndarray]]],
+):
+    """
+    Aggregate the weights of the conv and linear layers of the ResNet18 model.
+    """
+    print("Using `aggregate_resnet18`")
+
+    aggregate_conv_layers(
+        global_model.conv1,
+        [model.conv1[0] for model in local_models],
+        [pruned_indices_dict["conv1"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
+
+    # for layer in ["layer1", "layer2"]:
+    for layer in ["layer1"]:
+        for block in ["0", "1"]:
+            for conv in ["conv1", "conv2"]:
+                key = f"{layer}.{block}.{conv}"
+                aggregate_conv_layers(
+                    global_model._modules[layer][int(block)]._modules[conv],
+                    [
+                        model._modules[layer][int(block)]._modules[conv][0]
+                        for model in local_models
+                    ],
+                    [
+                        pruned_indices_dict[key]
+                        for pruned_indices_dict in pruned_indices_dicts
+                    ],
+                    client_weights,
+                )
+
+            downsample_key = f"{layer}.{block}.downsample.0"
+            if downsample_key in pruned_indices_dicts[0]:
+                aggregate_conv_layers(
+                    global_model._modules[layer][int(block)].downsample[0],
+                    [
+                        model._modules[layer][int(block)].downsample[0]
+                        for model in local_models
+                    ],
+                    [
+                        pruned_indices_dict[downsample_key]
+                        for pruned_indices_dict in pruned_indices_dicts
+                    ],
+                    client_weights,
+                )
+
+    # ----- Linear layer -----
+    aggregate_linear_layers(
+        global_model.fc,
+        [model.fc for model in local_models],
+        [pruned_indices_dict["fc"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
+
+
 def update_global_linear_layer(global_layer, local_layer, pruned_indices_dict):
     """Update the global layer inplacely with the weights and biases of the local layer.
 

@@ -17,7 +17,7 @@ def get_args(print_args=True):
     parser.add_argument(
         "--model",
         type=str,
-        choices=["cnn", "resnet"],
+        choices=["cnn", "resnet", "shallow_resnet"],
         default="cnn",
         help="Model to use for training",
     )
