@@ -1,20 +1,36 @@
 import csv
 import os
+import pickle
 import random
 from time import time
 
+import matplotlib.pyplot as plt
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, Subset
 from torchvision import datasets, transforms
-from torchvision.models import ResNet, resnet18
+from torchvision.models import resnet18
 
-from modules.aggregation import aggregate_cnn, aggregate_resnet18
+from modules.aggregation import (
+    aggregate_cnn,
+    aggregate_resnet18,
+    aggregate_shallow_resnet,
+    recover_global_from_pruned_cnn,
+    recover_global_from_pruned_resnet18,
+    vanilla_federated_averaging,
+)
 from modules.args_parser import get_args
-from modules.models import CNN
-from modules.pruning import prune_cnn, prune_resnet18
+from modules.constants import NORMALIZATION_STATS
+from modules.data import create_non_iid_data
+from modules.models import CNN, ShallowResNet
+from modules.pruning import (
+    prune_cnn,
+    prune_cnn_v2,
+    prune_resnet18,
+    prune_shallow_resnet,
+)
 from modules.utils import (
     calculate_model_size,
     replace_bn_with_ln,
@@ -23,13 +39,22 @@ from modules.utils import (
 )
 
 args = get_args()
-save_dir = args.save_dir
-model_type = args.model
+SAVE_DIR = args.save_dir
+MODEL_TYPE = args.model
+DATASET = args.dataset
+DATASET = args.dataset
+if DATASET == "cifar10":
+    NUM_CLASSES = 10
+elif DATASET == "cifar100":
+    NUM_CLASSES = 100
+else:
+    raise ValueError(f"Dataset {DATASET} not supported.")
 LR_DECAY = args.lr_decay
 ROUNDS = args.round
 EPOCHS = args.epochs
 LR = args.lr
 BATCH_SIZE = args.batch_size
+NUM_CLIENTS = args.num_clients
 
 # Set random seed for reproducibility
 seed = 18
@@ -42,29 +67,98 @@ torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
 
 transform = transforms.Compose(
-    [transforms.ToTensor(), transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]
+    [
+        transforms.ToTensor(),
+        transforms.Normalize(
+            NORMALIZATION_STATS[DATASET]["mean"], NORMALIZATION_STATS[DATASET]["std"]
+        ),
+    ]
 )
 
-train_dataset = datasets.CIFAR10(
-    root="./data", train=True, download=False, transform=transform
-)
+if DATASET == "cifar10":
+    train_dataset = datasets.CIFAR10(
+        root="./data", train=True, download=False, transform=transform
+    )
 
-test_dataset = datasets.CIFAR10(
-    root="./data", train=False, download=False, transform=transform
-)
+    test_dataset = datasets.CIFAR10(
+        root="./data", train=False, download=False, transform=transform
+    )
+elif DATASET == "cifar100":
+    train_dataset = datasets.CIFAR100(
+        root="./data", train=True, download=False, transform=transform
+    )
+
+    test_dataset = datasets.CIFAR100(
+        root="./data", train=False, download=False, transform=transform
+    )
+else:
+    raise ValueError(f"Dataset {DATASET} not supported.")
 
 test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False)
 
-num_train = len(train_dataset)
-indices = list(range(num_train))
-np.random.shuffle(indices)
+if args.distribution == "iid":
+    num_train = len(train_dataset)
+    indices = list(range(num_train))
+    np.random.shuffle(indices)
 
-num_subsets = 10
-subset_size = num_train // num_subsets
-subsets_indices = [
-    indices[i : i + subset_size] for i in range(0, num_train, subset_size)
-]
-subset_sizes = [len(subset) for subset in subsets_indices]
+    num_subsets = NUM_CLIENTS
+    subset_size = num_train // num_subsets
+    subsets_indices = [
+        indices[i : i + subset_size] for i in range(0, num_train, subset_size)
+    ]
+    subset_sizes = [len(subset) for subset in subsets_indices]
+elif args.distribution == "non-iid":
+    num_clients = NUM_CLIENTS
+    alpha = args.alpha
+    client_data_indices, client_stats = create_non_iid_data(
+        train_dataset, num_clients, alpha
+    )
+    subsets_indices = list(client_data_indices.values())
+    subset_sizes = [len(subset) for subset in subsets_indices]
+
+    client_ids = list(client_data_indices.keys())
+    total_samples = [client_stats[i]["total_samples"] for i in client_ids]
+    class_distributions = [client_stats[i]["class_distribution"] for i in client_ids]
+
+    # Plot the total number of samples of each client
+    plt.figure(figsize=(10, 5))
+    plt.bar(client_ids, total_samples, color="b", alpha=0.7)
+    plt.title("Total Number of Samples of Each Client")
+    plt.xlabel("Client ID")
+    plt.ylabel("Number of Samples")
+    plt.savefig("total_samples.png")
+
+    # Plot the class distribution of each client
+    num_classes = len(class_distributions[0])
+    ind = np.arange(num_classes)
+    width = 0.35
+    colors = plt.get_cmap("tab20", len(client_ids))
+    bottom = np.zeros(num_classes)
+    plt.figure(figsize=(20, 10))
+    for i, client_id in enumerate(client_ids):
+        class_counts = list(class_distributions[i].values())
+        # plt.bar(ind + i * width, class_counts, width, label=f"Client {client_id}")
+        plt.bar(
+            ind,
+            class_counts,
+            width,
+            label=f"Client {client_id}",
+            color=colors(i),
+            bottom=bottom,
+            alpha=0.7,
+        )
+        bottom += class_counts
+    plt.title("Class Distribution of Each Client")
+    plt.xlabel("Class")
+    plt.ylabel("Number of Samples")
+    # plt.xticks(ind + width * (num_clients // 2), [str(i) for i in range(NUM_CLASSES)])
+    plt.xticks(ind, [str(i) for i in range(NUM_CLASSES)])
+    # plt.legend()
+    # plt.legend(bbox_to_anchor=(1, 1), loc="upper left")
+    plt.legend(bbox_to_anchor=(0.5, -0.1), loc="upper center", ncol=10)
+    plt.savefig("class_distribution.png", bbox_inches="tight")
+else:
+    raise ValueError(f"Data distribution {args.distribution} not supported.")
 
 dataloaders = [
     DataLoader(
@@ -76,20 +170,27 @@ dataloaders = [
 ]
 
 
-if model_type == "cnn":
-    global_model = CNN()
-    assert isinstance(global_model, CNN), f"Model type should be CNN, but got {type(global_model)}"
-elif model_type == "resnet":
-    global_model = resnet18(weights=None, num_classes=10)
+if MODEL_TYPE == "cnn":
+    global_model = CNN(num_classes=NUM_CLASSES)
+elif MODEL_TYPE == "resnet":
+    global_model = resnet18(weights=None, num_classes=NUM_CLASSES)
     replace_bn_with_ln(global_model)
-    assert isinstance(global_model, ResNet), f"Model type should be ResNet, but got {type(global_model)}"
-
+elif MODEL_TYPE == "shallow_resnet":
+    global_model = ShallowResNet(num_classes=NUM_CLASSES)
+else:
+    raise ValueError(f"Model type {MODEL_TYPE} not supported.")
 print(f"[Model Architecture]\n{global_model}")
 
-num_models = 10
-
-# p = 0.8, 0.5, 0.2
+num_models = NUM_CLIENTS
 dropout_rates = [0.2, 0.2, 0.5, 0.5, 0.5, 0.8, 0.8, 0.8, 0.8, 0.8]
+# dropout_rates = [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.8, 0.8, 0.8, 0.8]
+# dropout_rates = [0.0] * num_models
+# dropout_rates = [0.1] * num_models
+# dropout_rates = [0.01] * num_models
+# dropout_rates = [0.005] * num_models
+assert (
+    len(dropout_rates) == num_models
+), f"Length of dropout rates {len(dropout_rates)} does not match number of clients {num_models}."
 learning_rates = [LR] * num_models
 decay_rounds = [20, 50, 100]
 
@@ -115,36 +216,54 @@ for round in range(ROUNDS):
 
     all_client_models = []
 
-    if model_type == "cnn":
-        indices_to_prune_conv1_list = []
-        indices_to_prune_conv2_list = []
-        indices_to_prune_conv3_list = []
-        indices_to_prune_fc_list = []
+    if MODEL_TYPE == "cnn":
+        # indices_to_prune_conv1_list = []
+        # indices_to_prune_conv2_list = []
+        # indices_to_prune_conv3_list = []
+        # indices_to_prune_fc_list = []
 
+        # for i in range(num_models):
+        #     (
+        #         client_model,
+        #         indices_to_prune_conv1,
+        #         indices_to_prune_conv2,
+        #         indices_to_prune_conv3,
+        #         indices_to_prune_fc,
+        #     ) = prune_cnn(
+        #         global_model,
+        #         dropout_rates[i],
+        #         scaling=True,
+        #     )
+        #     all_client_models.append(client_model)
+        #     indices_to_prune_conv1_list.append(indices_to_prune_conv1)
+        #     indices_to_prune_conv2_list.append(indices_to_prune_conv2)
+        #     indices_to_prune_conv3_list.append(indices_to_prune_conv3)
+        #     indices_to_prune_fc_list.append(indices_to_prune_fc)
+        pruned_indices_dicts = []
         for i in range(num_models):
-            (
-                client_model,
-                indices_to_prune_conv1,
-                indices_to_prune_conv2,
-                indices_to_prune_conv3,
-                indices_to_prune_fc,
-            ) = prune_cnn(
-                global_model,
-                dropout_rates[i],
-                scaling=True,
+            client_model, pruned_indices_dict = prune_cnn_v2(
+                global_model, dropout_rates[i]
             )
             all_client_models.append(client_model)
-            indices_to_prune_conv1_list.append(indices_to_prune_conv1)
-            indices_to_prune_conv2_list.append(indices_to_prune_conv2)
-            indices_to_prune_conv3_list.append(indices_to_prune_conv3)
-            indices_to_prune_fc_list.append(indices_to_prune_fc)
-    elif model_type == "resnet":
+            pruned_indices_dicts.append(pruned_indices_dict)
+    elif MODEL_TYPE == "resnet":
         pruned_indices_dicts = []
-
         for i in range(num_models):
-            client_model, pruned_indices_dict = prune_resnet18(global_model, dropout_rates[i])
+            client_model, pruned_indices_dict = prune_resnet18(
+                global_model, dropout_rates[i]
+            )
             all_client_models.append(client_model)
             pruned_indices_dicts.append(pruned_indices_dict)
+    elif MODEL_TYPE == "shallow_resnet":
+        pruned_indices_dicts = []
+        for i in range(num_models):
+            client_model, pruned_indices_dict = prune_shallow_resnet(
+                global_model, dropout_rates[i]
+            )
+            all_client_models.append(client_model)
+            pruned_indices_dicts.append(pruned_indices_dict)
+    else:
+        raise ValueError(f"Model type {MODEL_TYPE} not supported.")
 
     # Local training
     for i, dataloader in enumerate(dataloaders):
@@ -158,11 +277,11 @@ for round in range(ROUNDS):
             local_model, optimizer, criterion, dataloader, device=device, epochs=EPOCHS
         )
         local_test_loss, local_test_acc, local_class_acc = test(
-            local_model, criterion, test_loader, device=device, num_classes=10
+            local_model, criterion, test_loader, device=device, num_classes=NUM_CLASSES
         )
         model_size = calculate_model_size(local_model, print_result=False, unit="MB")
         print(
-            f"Subset {i + 1}\tModel Size: {model_size:.2f} MB\tTrain Loss: {local_train_loss:.4f}\tTest Loss: {local_test_loss:.4f}\tTest Acc: {local_test_acc:.4f}\tClass Acc: {local_class_acc}"
+            f"Subset {i + 1}\tModel Size: {model_size:.2f} MB\tTrain Loss: {local_train_loss:.4f}\tTest Loss: {local_test_loss:.4f}\tTest Acc: {local_test_acc:.4f}"
         )
         round_train_loss_results[f"Subset {i + 1}"] = local_train_loss
         round_test_loss_results[f"Subset {i + 1}"] = local_test_loss
@@ -170,29 +289,58 @@ for round in range(ROUNDS):
         round_results_class[f"Subset {i + 1}"] = local_class_acc
 
     # Aggregation
-    if model_type == "cnn":
-        aggregate_cnn(
-            global_model,
-            all_client_models,
-            subset_sizes,
-            indices_to_prune_conv1=indices_to_prune_conv1_list,
-            indices_to_prune_conv2=indices_to_prune_conv2_list,
-            indices_to_prune_conv3=indices_to_prune_conv3_list,
-            indices_to_prune_fc=indices_to_prune_fc_list,
+    if MODEL_TYPE == "cnn":
+        # aggregate_cnn(
+        #     global_model,
+        #     all_client_models,
+        #     subset_sizes,
+        #     indices_to_prune_conv1=indices_to_prune_conv1_list,
+        #     indices_to_prune_conv2=indices_to_prune_conv2_list,
+        #     indices_to_prune_conv3=indices_to_prune_conv3_list,
+        #     indices_to_prune_fc=indices_to_prune_fc_list,
+        # )
+        aggregated_weight = vanilla_federated_averaging(
+            models=[
+                recover_global_from_pruned_cnn(
+                    global_model, all_client_models[i], pruned_indices_dicts[i]
+                )
+                for i in range(num_models)
+            ],
+            sample_numbers=subset_sizes,
         )
-    elif model_type == "resnet":
-        aggregate_resnet18(
-            global_model,
-            all_client_models,
-            subset_sizes,
-            pruned_indices_dicts,
+        global_model.load_state_dict(aggregated_weight)
+    elif MODEL_TYPE == "resnet":
+        # aggregate_resnet18(
+        #     global_model=global_model,
+        #     local_models=all_client_models,
+        #     client_weights=subset_sizes,
+        #     pruned_indices_dicts=pruned_indices_dicts,
+        # )
+        aggregated_weight = vanilla_federated_averaging(
+            models=[
+                recover_global_from_pruned_resnet18(
+                    global_model, all_client_models[i], pruned_indices_dicts[i]
+                )
+                for i in range(num_models)
+            ],
+            sample_numbers=subset_sizes,
         )
+        global_model.load_state_dict(aggregated_weight)
+    elif MODEL_TYPE == "shallow_resnet":
+        aggregate_shallow_resnet(
+            global_model=global_model,
+            local_models=all_client_models,
+            client_weights=subset_sizes,
+            pruned_indices_dicts=pruned_indices_dicts,
+        )
+    else:
+        raise ValueError(f"Model type {MODEL_TYPE} not supported.")
 
     global_test_loss, global_test_acc, global_class_acc = test(
-        global_model, criterion, test_loader, device=device, num_classes=10
+        global_model, criterion, test_loader, device=device, num_classes=NUM_CLASSES
     )
     print(
-        f"Aggregated Test Loss: {global_test_loss:.4f}\tAggregated Test Acc: {global_test_acc:.4f}\tAggregated Class Acc: {global_class_acc}"
+        f"Aggregated Test Loss: {global_test_loss:.4f}\tAggregated Test Acc: {global_test_acc:.4f}"
     )
     round_test_loss_results["Aggregated"] = global_test_loss
     round_test_acc_results["Aggregated"] = global_test_acc
@@ -230,21 +378,30 @@ train_loss_results = format_results(train_loss_results)
 test_loss_results = format_results(test_loss_results)
 test_acc_results = format_results(test_acc_results)
 
-if save_dir is not None:
-    with open(os.path.join(save_dir, "rd_base_train_loss.csv"), "w") as csvfile:
+if SAVE_DIR is not None:
+    with open(
+        os.path.join(SAVE_DIR, f"rd_base_{MODEL_TYPE}_train_loss.csv"), "w"
+    ) as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=train_loss_results[0].keys())
         writer.writeheader()
         writer.writerows(train_loss_results)
 
-    with open(os.path.join(save_dir, "rd_base_test_loss.csv"), "w") as csvfile:
+    with open(
+        os.path.join(SAVE_DIR, f"rd_base_{MODEL_TYPE}_test_loss.csv"), "w"
+    ) as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=test_loss_results[0].keys())
         writer.writeheader()
         writer.writerows(test_loss_results)
 
-    with open(os.path.join(save_dir, "rd_base_test_acc.csv"), "w") as csvfile:
+    with open(
+        os.path.join(SAVE_DIR, f"rd_base_{MODEL_TYPE}_test_acc.csv"), "w"
+    ) as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=test_acc_results[0].keys())
         writer.writeheader()
         writer.writerows(test_acc_results)
+
+    with open(os.path.join(SAVE_DIR, f"rd_base_{MODEL_TYPE}_class_acc.pkl"), "wb") as f:
+        pickle.dump(results_class, f)
 
     print("Results saved.")
 else:
