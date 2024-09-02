@@ -15,11 +15,37 @@ def get_args(print_args=True):
         help="Directory to save the results",
     )
     parser.add_argument(
+        "--num-clients",
+        type=int,
+        default=10,
+        help="Number of clients to simulate",
+    )
+    parser.add_argument(
         "--model",
         type=str,
         choices=["cnn", "resnet", "shallow_resnet"],
         default="cnn",
         help="Model to use for training",
+    )
+    parser.add_argument(
+        "--dataset",
+        type=str,
+        choices=["cifar10", "cifar100"],
+        default="cifar10",
+        help="Dataset to use for training",
+    )
+    parser.add_argument(
+        "--distribution",
+        type=str,
+        choices=["iid", "non-iid"],
+        default="iid",
+        help="Data distribution for clients",
+    )
+    parser.add_argument(
+        "--alpha",
+        type=float,
+        default=1.0,
+        help="Alpha value for Dirichlet distribution",
     )
     parser.add_argument(
         "--lr-decay",
@@ -56,6 +82,10 @@ def get_args(print_args=True):
 
     if print_args:
         print(f"Model type: {args.model}")
+        print(f"Dataset: {args.dataset}")
+        print(f"Data distribution: {args.distribution}")
+        if args.distribution == "non-iid":
+            print(f"Alpha: {args.alpha}")
         print(f"Number of rounds: {args.round}")
         print(f"Number of local epochs: {args.epochs}")
         print(f"Batch size: {args.batch_size}")
