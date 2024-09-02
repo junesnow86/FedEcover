@@ -55,6 +55,7 @@ EPOCHS = args.epochs
 LR = args.lr
 BATCH_SIZE = args.batch_size
 NUM_CLIENTS = args.num_clients
+AGG_WAY = args.aggregation
 
 # Set random seed for reproducibility
 seed = 18
@@ -290,42 +291,46 @@ for round in range(ROUNDS):
 
     # Aggregation
     if MODEL_TYPE == "cnn":
-        # aggregate_cnn(
-        #     global_model,
-        #     all_client_models,
-        #     subset_sizes,
-        #     indices_to_prune_conv1=indices_to_prune_conv1_list,
-        #     indices_to_prune_conv2=indices_to_prune_conv2_list,
-        #     indices_to_prune_conv3=indices_to_prune_conv3_list,
-        #     indices_to_prune_fc=indices_to_prune_fc_list,
-        # )
-        aggregated_weight = vanilla_federated_averaging(
-            models=[
-                recover_global_from_pruned_cnn(
-                    global_model, all_client_models[i], pruned_indices_dicts[i]
-                )
-                for i in range(num_models)
-            ],
-            sample_numbers=subset_sizes,
-        )
-        global_model.load_state_dict(aggregated_weight)
+        if AGG_WAY == "sparse":
+            aggregate_cnn(
+                global_model,
+                all_client_models,
+                subset_sizes,
+                indices_to_prune_conv1=[pruned_indices_dicts[i]["layer1"] for i in range(num_models)],
+                indices_to_prune_conv2=[pruned_indices_dicts[i]["layer2"] for i in range(num_models)],
+                indices_to_prune_conv3=[pruned_indices_dicts[i]["layer3"] for i in range(num_models)],
+                indices_to_prune_fc=[pruned_indices_dicts[i]["fc"] for i in range(num_models)],
+            )
+        elif AGG_WAY == "recovery":
+            aggregated_weight = vanilla_federated_averaging(
+                models=[
+                    recover_global_from_pruned_cnn(
+                        global_model, all_client_models[i], pruned_indices_dicts[i]
+                    )
+                    for i in range(num_models)
+                ],
+                sample_numbers=subset_sizes,
+            )
+            global_model.load_state_dict(aggregated_weight)
     elif MODEL_TYPE == "resnet":
-        # aggregate_resnet18(
-        #     global_model=global_model,
-        #     local_models=all_client_models,
-        #     client_weights=subset_sizes,
-        #     pruned_indices_dicts=pruned_indices_dicts,
-        # )
-        aggregated_weight = vanilla_federated_averaging(
-            models=[
-                recover_global_from_pruned_resnet18(
-                    global_model, all_client_models[i], pruned_indices_dicts[i]
-                )
-                for i in range(num_models)
-            ],
-            sample_numbers=subset_sizes,
-        )
-        global_model.load_state_dict(aggregated_weight)
+        if AGG_WAY == "sparse":
+            aggregate_resnet18(
+                global_model=global_model,
+                local_models=all_client_models,
+                client_weights=subset_sizes,
+                pruned_indices_dicts=pruned_indices_dicts,
+            )
+        elif AGG_WAY == "recovery":
+            aggregated_weight = vanilla_federated_averaging(
+                models=[
+                    recover_global_from_pruned_resnet18(
+                        global_model, all_client_models[i], pruned_indices_dicts[i]
+                    )
+                    for i in range(num_models)
+                ],
+                sample_numbers=subset_sizes,
+            )
+            global_model.load_state_dict(aggregated_weight)
     elif MODEL_TYPE == "shallow_resnet":
         aggregate_shallow_resnet(
             global_model=global_model,

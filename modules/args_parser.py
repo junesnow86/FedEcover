@@ -77,6 +77,13 @@ def get_args(print_args=True):
         default=0.001,
         help="Learning rate for local training",
     )
+    parser.add_argument(
+        "--aggregation",
+        type=str,
+        choices=["sparse", "recovery"],
+        default="sparse",
+        help="Aggregation method to use",
+    )
 
     args = parser.parse_args()
 
@@ -86,6 +93,7 @@ def get_args(print_args=True):
         print(f"Data distribution: {args.distribution}")
         if args.distribution == "non-iid":
             print(f"Alpha: {args.alpha}")
+        print(f"Aggregation method: {args.aggregation}")
         print(f"Number of rounds: {args.round}")
         print(f"Number of local epochs: {args.epochs}")
         print(f"Batch size: {args.batch_size}")
