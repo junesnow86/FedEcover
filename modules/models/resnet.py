@@ -56,25 +56,25 @@ class ShallowResNet(nn.Module):
 
         self.layer1 = nn.Sequential(
             BasicBlock(64, 64),
-            BasicBlock(64, 64),
+            # BasicBlock(64, 64),
         )
 
-        # self.layer2 = nn.Sequential(
-        #     BasicBlock(64, 128, stride=2),
-        #     BasicBlock(128, 128),
-        # )
+        self.layer2 = nn.Sequential(
+            BasicBlock(64, 128, stride=2),
+            # BasicBlock(128, 128),
+        )
 
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
-        # self.fc = nn.Linear(128, num_classes)
-        self.fc = nn.Linear(64, num_classes)
+        self.fc = nn.Linear(128, num_classes)
+        # self.fc = nn.Linear(64, num_classes)
 
         self.layer1[0].bn1 = nn.LayerNorm([64, 8, 8], elementwise_affine=False)
         self.layer1[0].bn2 = nn.LayerNorm([64, 8, 8], elementwise_affine=False)
-        self.layer1[1].bn1 = nn.LayerNorm([64, 8, 8], elementwise_affine=False)
-        self.layer1[1].bn2 = nn.LayerNorm([64, 8, 8], elementwise_affine=False)
-        # self.layer2[0].bn1 = nn.LayerNorm([128, 4, 4], elementwise_affine=False)
-        # self.layer2[0].bn2 = nn.LayerNorm([128, 4, 4], elementwise_affine=False)
-        # self.layer2[0].downsample[1] = nn.LayerNorm([128, 4, 4], elementwise_affine=False)
+        # self.layer1[1].bn1 = nn.LayerNorm([64, 8, 8], elementwise_affine=False)
+        # self.layer1[1].bn2 = nn.LayerNorm([64, 8, 8], elementwise_affine=False)
+        self.layer2[0].bn1 = nn.LayerNorm([128, 4, 4], elementwise_affine=False)
+        self.layer2[0].bn2 = nn.LayerNorm([128, 4, 4], elementwise_affine=False)
+        self.layer2[0].downsample[1] = nn.LayerNorm([128, 4, 4], elementwise_affine=False)
         # self.layer2[1].bn1 = nn.LayerNorm([128, 4, 4], elementwise_affine=False)
         # self.layer2[1].bn2 = nn.LayerNorm([128, 4, 4], elementwise_affine=False)
 
@@ -85,7 +85,7 @@ class ShallowResNet(nn.Module):
         out = self.maxpool(out)
 
         out = self.layer1(out)
-        # out = self.layer2(out)
+        out = self.layer2(out)
 
         out = self.avgpool(out)
         out = torch.flatten(out, 1)

@@ -621,7 +621,7 @@ def prune_resnet18(model, dropout_rate=0.5):
     return new_model, pruned_indices_dicts
 
 
-def prune_shallow_resnet(model, dropout_rate=0.5):
+def prune_shallow_resnet(model: ResNet, dropout_rate=0.5):
     """
     Prune a ResNet18 model by using the provided dropout rate.
 
@@ -635,10 +635,6 @@ def prune_shallow_resnet(model, dropout_rate=0.5):
     """
     # Note: using static layer normlization
     new_model = copy.deepcopy(model)
-
-    # if has_batchnorm_layer(new_model):
-    #     replace_bn_with_ln(new_model)
-    #     print("BatchNorm layers replaced with LayerNorm layers.")
 
     pruned_indices_dicts = {}
 
@@ -661,9 +657,10 @@ def prune_shallow_resnet(model, dropout_rate=0.5):
     )
     setattr(new_model, "bn1", new_layer_norm)
 
-    # layer_names = ["layer1", "layer2"]
-    layer_names = ["layer1"]
-    blocks = ["0", "1"]
+    layer_names = ["layer1", "layer2"]
+    # layer_names = ["layer1"]
+    # blocks = ["0", "1"]
+    blocks = ["0"]
     convs = ["conv1", "conv2"]
     layer_norm_shapes = [
         [64, 8, 8],
