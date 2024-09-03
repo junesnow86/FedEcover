@@ -241,7 +241,7 @@ def prune_conv_layer_v2(
     return new_layer
 
 
-def prune_cnn(original_cnn: CNN, dropout_rate=0.5, scaling=True, **indices_to_prune):
+def prune_cnn_legacy(original_cnn: CNN, dropout_rate=0.5, scaling=True, **indices_to_prune):
     indices_to_prune_conv1 = indices_to_prune.get("indices_to_prune_conv1", None)
     indices_to_prune_conv2 = indices_to_prune.get("indices_to_prune_conv2", None)
     indices_to_prune_conv3 = indices_to_prune.get("indices_to_prune_conv3", None)
@@ -371,6 +371,100 @@ def prune_cnn_v2(model, dropout_rate=0.5):
     return pruned_cnn, pruned_indices_dict
 
 
+def prune_cnn(
+    model: nn.Module,
+    dropout_rate: float,
+    optional_indices_dict: Optional[Dict[str, np.ndarray]] = None,
+    scaling: bool = True,
+):
+    """Prune a CNN model by using the provided dropout rate and optional indices to prune.
+    Pick the right number of channels to prune for each layer based on the dropout rate.
+    Then pick the channels to prune, and the indices picked must be within the optional indices.
+
+    Args:
+        model: The CNN model to prune.
+        dropout_rate: The dropout rate to use for pruning.
+        optional_indices_dict: A dictionary containing the optional indices to prune for each layer.
+
+    Returns:
+        pruned_model: The pruned CNN model.
+        pruned_indices_dict: A dictionary containing the indices to prune for each pruned layer.
+    """
+    pruned_indices_dict = {}
+
+    conv1 = model.layer1[0]
+    num_output_channels_to_prune_conv1 = int(conv1.out_channels * dropout_rate)
+    if optional_indices_dict is not None:
+        optional_output_indices_conv1 = optional_indices_dict["layer1"]["output"]
+        assert num_output_channels_to_prune_conv1 <= len(optional_output_indices_conv1)
+    else:
+        optional_output_indices_conv1 = np.arange(conv1.out_channels)
+    output_indices_to_prune_conv1 = np.random.choice(
+        optional_output_indices_conv1, num_output_channels_to_prune_conv1, replace=False
+    )
+    indices_to_prune_conv1 = {"output": output_indices_to_prune_conv1}
+    pruned_layer1 = prune_conv_layer_v2(conv1, indices_to_prune_conv1)
+    pruned_indices_dict["layer1"] = indices_to_prune_conv1
+
+    conv2 = model.layer2[0]
+    num_output_channels_to_prune_conv2 = int(conv2.out_channels * dropout_rate)
+    if optional_indices_dict is not None:
+        optional_output_indices_conv2 = optional_indices_dict["layer2"]["output"]
+        assert num_output_channels_to_prune_conv2 <= len(optional_output_indices_conv2)
+    else:
+        optional_output_indices_conv2 = np.arange(conv2.out_channels)
+    output_indices_to_prune_conv2 = np.random.choice(
+        optional_output_indices_conv2, num_output_channels_to_prune_conv2, replace=False
+    )
+    indices_to_prune_conv2 = {
+        "input": output_indices_to_prune_conv1,
+        "output": output_indices_to_prune_conv2,
+    }
+    pruned_layer2 = prune_conv_layer_v2(conv2, indices_to_prune_conv2)
+    pruned_indices_dict["layer2"] = indices_to_prune_conv2
+
+    conv3 = model.layer3[0]
+    num_output_channels_to_prune_conv3 = int(conv3.out_channels * dropout_rate)
+    if optional_indices_dict is not None:
+        optional_output_indices_conv3 = optional_indices_dict["layer3"]["output"]
+        assert num_output_channels_to_prune_conv3 <= len(optional_output_indices_conv3)
+    else:
+        optional_output_indices_conv3 = np.arange(conv3.out_channels)
+    output_indices_to_prune_conv3 = np.random.choice(
+        optional_output_indices_conv3, num_output_channels_to_prune_conv3, replace=False
+    )
+    indices_to_prune_conv3 = {
+        "input": output_indices_to_prune_conv2,
+        "output": output_indices_to_prune_conv3,
+    }
+    pruned_layer3 = prune_conv_layer_v2(conv3, indices_to_prune_conv3)
+    pruned_indices_dict["layer3"] = indices_to_prune_conv3
+
+    fc = model.fc
+    input_indices_to_prune_fc = []
+    for channel_index in output_indices_to_prune_conv3:
+        start_index = channel_index * 4 * 4
+        end_index = (channel_index + 1) * 4 * 4
+        input_indices_to_prune_fc.extend(list(range(start_index, end_index)))
+    input_indices_to_prune_fc = np.sort(input_indices_to_prune_fc)
+    indices_to_prune_fc = {"input": input_indices_to_prune_fc}
+    pruned_fc = prune_linear_layer_v2(fc, indices_to_prune_fc)
+    pruned_indices_dict["fc"] = indices_to_prune_fc
+
+    pruned_cnn = CNN()
+    pruned_cnn.layer1[0] = pruned_layer1
+    pruned_cnn.layer2[0] = pruned_layer2
+    pruned_cnn.layer3[0] = pruned_layer3
+    setattr(pruned_cnn, "fc", pruned_fc)
+
+    if scaling:
+        pruned_cnn.layer1.add_module("scaling", DropoutScaling(dropout_rate))
+        pruned_cnn.layer2.add_module("scaling", DropoutScaling(dropout_rate))
+        pruned_cnn.layer3.add_module("scaling", DropoutScaling(dropout_rate))
+
+    return pruned_cnn, pruned_indices_dict
+
+
 def create_random_even_groups(num_total_elements, num_groups):
     num_elements_per_group = num_total_elements // num_groups
     indices = np.arange(num_total_elements)
@@ -380,25 +474,24 @@ def create_random_even_groups(num_total_elements, num_groups):
 
 
 def select_random_group(groups):
-    """
-    Select a random group from the list of groups and remove it from the list.
+    """Select a random group from the list of groups and remove it from the list.
 
-    Parameters:
-    - groups: A list of groups, where each group is a numpy array of indices.
+    Args:
+        groups: A list of groups, where each group is a numpy array of indices.
 
     Returns:
-    - selected_group: The selected group.
-    - groups: The list of groups with the selected group removed.
+        selected_group: The selected group.
+        groups: The list of groups with the selected group removed.
     """
     group_index = np.random.choice(len(groups))
     selected_group = groups.pop(group_index)
     return selected_group, groups
 
 
-def prune_cnn_into_groups(
+def prune_cnn_groups_evenly(
     original_cnn: CNN,
-    dropout_rate=0.5,
-    scaling=True,
+    dropout_rate: float = 0.5,
+    scaling=True
 ) -> Tuple[List[CNN], List[Dict]]:
     """
     Prune a CNN into multiple groups based on the dropout rate.
@@ -477,35 +570,28 @@ def prune_cnn_into_groups(
     return pruned_models, indices_to_prune_list
 
 
-def has_batchnorm_layer(model):
-    for layer in model.modules():
-        if isinstance(layer, nn.BatchNorm2d) or isinstance(layer, nn.BatchNorm1d):
-            return True
-    return False
-
-
-def prune_resnet18(model, dropout_rate=0.5):
+def prune_resnet18(
+    model: ResNet,
+    dropout_rate: float = 0.5,
+    optional_indices_dict: Optional[Dict[str, np.ndarray]] = None,
+):
     """
-    Prune a ResNet18 model by using the provided dropout rate.
+    Prune a ResNet18 model by using the provided dropout rate and optional indices to prune.
+    Pick the right number of channels to prune for each layer based on the dropout rate.
+    Then pick the channels to prune, and the indices picked must be within the optional indices.
 
-    Parameters:
-    - model: The ResNet18 model to prune.
-    - dropout_rate: The dropout rate to use for pruning.
+    Args:
+        model: The ResNet18 model to prune.
+        dropout_rate: The dropout rate to use for pruning.
+        optional_indices_dict: A dictionary containing the optional indices to prune for each layer.
 
     Returns:
-    - pruned_model: The pruned ResNet18 model.
-    - pruned_indices_dict: A dictionary containing the indices to prune for each pruned layer.
+        pruned_model: The pruned ResNet18 model.
+        pruned_indices_dict: A dictionary containing the indices to prune for each pruned layer.
     """
     # Note: using static layer normlization
 
-    if not isinstance(model, ResNet):
-        raise ValueError("Only ResNet18 is supported for now.")
-
     new_model = copy.deepcopy(model)
-
-    # if has_batchnorm_layer(new_model):
-    #     replace_bn_with_ln(new_model)
-    #     print("BatchNorm layers replaced with LayerNorm layers.")
 
     pruned_indices_dicts = {}
 
@@ -513,8 +599,13 @@ def prune_resnet18(model, dropout_rate=0.5):
     current_layer = new_model.conv1
     num_out_channels = current_layer.out_channels
     num_out_channels_to_prune = int(num_out_channels * dropout_rate)
+    if optional_indices_dict is not None:
+        optional_output_indices = optional_indices_dict[layer_key]["output"]
+        assert num_out_channels_to_prune <= len(optional_output_indices)
+    else:
+        optional_output_indices = np.arange(num_out_channels)
     out_channel_indices_to_prune = np.random.choice(
-        num_out_channels, num_out_channels_to_prune, replace=False
+        optional_output_indices, num_out_channels_to_prune, replace=False
     )
     pruned_indices_dicts[layer_key] = {"output": out_channel_indices_to_prune}
     new_layer = prune_conv_layer_v2(current_layer, pruned_indices_dicts[layer_key])
@@ -541,15 +632,20 @@ def prune_resnet18(model, dropout_rate=0.5):
     for i, layer_name in enumerate(layer_names):
         for block in blocks:
             for conv in convs:
+                in_channel_indices_to_prune = out_channel_indices_to_prune  # input indices to prune should be the same as the output indices to prune of the previous layer
                 layer_key = f"{layer_name}.{block}.{conv}"
                 current_layer = getattr(
                     getattr(new_model, layer_name)[int(block)], conv
                 )
                 num_out_channels = current_layer.out_channels
                 num_out_channels_to_prune = int(num_out_channels * dropout_rate)
-                in_channel_indices_to_prune = out_channel_indices_to_prune  # input indices to prune should be the same as the output indices to prune of the previous layer
+                if optional_indices_dict is not None:
+                    optional_output_indices = optional_indices_dict[layer_key]["output"]
+                    assert num_out_channels_to_prune <= len(optional_output_indices)
+                else:
+                    optional_output_indices = np.arange(num_out_channels)
                 out_channel_indices_to_prune = np.random.choice(
-                    num_out_channels, num_out_channels_to_prune, replace=False
+                    optional_output_indices, num_out_channels_to_prune, replace=False
                 )
                 pruned_indices_dicts[layer_key] = {
                     "input": in_channel_indices_to_prune,
@@ -756,3 +852,75 @@ def prune_shallow_resnet(model: ResNet, dropout_rate=0.5):
     setattr(new_model, layer_key, new_layer)
 
     return new_model, pruned_indices_dicts
+
+
+def prune_cnn_groups_nested(model: nn.Module, dropout_rates: List[float]):
+    """Prune a group of CNNs with different dropout rates.
+    The `dropout_rates` list should contain the dropout rates in descending order.
+    Prune the model with the first dropout rate and get a `pruned_indices_dict`,
+    then prune the model with the second dropout rate but within the first pruned indices,
+    and so on.
+
+    Args:
+        model: The CNN model to prune.
+        dropout_rates: A list of dropout rates in descending order.
+
+    Returns:
+        pruned_models: A list of pruned CNN models.
+        pruned_indices_dicts: A list of dictionaries containing the indices to prune for each pruned layer.
+    """
+    # Make sure the dropout rates in descending order
+    dropout_rates = sorted(dropout_rates, reverse=True)
+
+    pruned_models = []
+    pruned_indices_dicts = []
+
+    for i, dropout_rate in enumerate(dropout_rates):
+        if i == 0:
+            pruned_model, pruned_indices_dict = prune_cnn(model, dropout_rate)
+            pruned_models.append(pruned_model)
+            pruned_indices_dicts.append(pruned_indices_dict)
+        else:
+            pruned_model, pruned_indices_dict = prune_cnn(
+                model, dropout_rate, pruned_indices_dicts[i - 1]
+            )
+            pruned_models.append(pruned_model)
+            pruned_indices_dicts.append(pruned_indices_dict)
+
+    return pruned_models, pruned_indices_dicts
+
+
+def prune_resnet18_groups_nested(model: ResNet, dropout_rates: List[float]):
+    """Prune a group of ResNet models with different dropout rates.
+    The `dropout_rates` list should contain the dropout rates in descending order.
+    Prune the model with the first dropout rate and get a `pruned_indices_dict`,
+    then prune the model with the second dropout rate but within the first pruned indices,
+    and so on.
+
+    Args:
+        model: The ResNet model to prune.
+        dropout_rates: A list of dropout rates in descending order.
+
+    Returns:
+        pruned_models: A list of pruned ResNet models.
+        pruned_indices_dicts: A list of dictionaries containing the indices to prune for each pruned layer.
+    """
+    # Make sure the dropout rates in descending order
+    dropout_rates = sorted(dropout_rates, reverse=True)
+
+    pruned_models = []
+    pruned_indices_dicts = []
+
+    for i, dropout_rate in enumerate(dropout_rates):
+        if i == 0:
+            pruned_model, pruned_indices_dict = prune_resnet18(model, dropout_rate)
+            pruned_models.append(pruned_model)
+            pruned_indices_dicts.append(pruned_indices_dict)
+        else:
+            pruned_model, pruned_indices_dict = prune_resnet18(
+                model, dropout_rate, pruned_indices_dicts[i - 1]
+            )
+            pruned_models.append(pruned_model)
+            pruned_indices_dicts.append(pruned_indices_dict)
+
+    return pruned_models, pruned_indices_dicts
