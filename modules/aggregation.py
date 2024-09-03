@@ -391,7 +391,7 @@ def aggregate_shallow_resnet(
     )
 
     for layer in ["layer1", "layer2"]:
-    # for layer in ["layer1"]:
+        # for layer in ["layer1"]:
         # for block in ["0", "1"]:
         for block in ["0"]:
             for conv in ["conv1", "conv2"]:
@@ -433,14 +433,16 @@ def aggregate_shallow_resnet(
     )
 
 
-def update_global_linear_layer(global_layer, local_layer, pruned_indices_dict):
+def update_global_linear_layer(
+    global_layer, local_layer, pruned_indices_dict, scaler=1.0
+):
     """Update the global layer inplacely with the weights and biases of the local layer.
 
     Args:
         global_layer: The global layer to be updated.
         local_layer: The local layer which is pruned from the global layer, and then updated.
         pruned_indices_dict: A dictionary containing the indices indicating which neurons have been pruned from global layer.
-
+        scaler: A scalar to scale the weights of the local layer before updating the global layer.
     """
     # Update the weights
     new_weight = global_layer.weight.detach().clone()
@@ -459,7 +461,7 @@ def update_global_linear_layer(global_layer, local_layer, pruned_indices_dict):
                 )
             ),
         )
-    ] = local_layer.weight.detach().clone()
+    ] = local_layer.weight.detach().clone() * scaler
 
     # Update the biases
     if global_layer.bias is not None:
@@ -471,7 +473,7 @@ def update_global_linear_layer(global_layer, local_layer, pruned_indices_dict):
                     pruned_indices_dict.get("output", np.array([])),
                 )
             )
-        ] = local_layer.bias.detach().clone()
+        ] = local_layer.bias.detach().clone() * scaler
     else:
         new_bias = None
 
@@ -481,13 +483,16 @@ def update_global_linear_layer(global_layer, local_layer, pruned_indices_dict):
         global_layer.bias.data.copy_(new_bias)
 
 
-def update_global_conv_layer(global_layer, local_layer, pruned_indices_dict):
+def update_global_conv_layer(
+    global_layer, local_layer, pruned_indices_dict, scaler=1.0
+):
     """Update the global layer inplacely with the weights and biases of the local layer.
 
     Args:
         global_layer: The global layer to be updated.
         local_layer: The local layer which is pruned from the global layer, and then updated.
         pruned_indices_dict: A dictionary containing the indices indicating which neurons have been pruned from global layer.
+        scaler: A scalar to scale the weights of the local layer before updating the global layer.
     """
     # Update the weights
     new_weight = global_layer.weight.detach().clone()
@@ -506,7 +511,7 @@ def update_global_conv_layer(global_layer, local_layer, pruned_indices_dict):
                 )
             ),
         )
-    ] = local_layer.weight.detach().clone()
+    ] = local_layer.weight.detach().clone() * scaler
 
     # Update the biases
     if global_layer.bias is not None:
@@ -518,7 +523,7 @@ def update_global_conv_layer(global_layer, local_layer, pruned_indices_dict):
                     pruned_indices_dict.get("output", np.array([])),
                 )
             )
-        ] = local_layer.bias.detach().clone()
+        ] = local_layer.bias.detach().clone() * scaler
     else:
         new_bias = None
 
@@ -532,6 +537,7 @@ def recover_global_from_pruned_cnn(
     global_model: nn.Module,
     pruned_model: nn.Module,
     pruned_indices_dict: Dict[str, np.ndarray],
+    scaler: float = 1.0,
 ):
     clone_global_model = copy.deepcopy(global_model)
 
@@ -540,6 +546,7 @@ def recover_global_from_pruned_cnn(
         clone_global_model.layer1[0],
         pruned_model.layer1[0],
         pruned_indices_dict["layer1"],
+        scaler,
     )
 
     # conv2
@@ -547,6 +554,7 @@ def recover_global_from_pruned_cnn(
         clone_global_model.layer2[0],
         pruned_model.layer2[0],
         pruned_indices_dict["layer2"],
+        scaler,
     )
 
     # conv3
@@ -554,11 +562,12 @@ def recover_global_from_pruned_cnn(
         clone_global_model.layer3[0],
         pruned_model.layer3[0],
         pruned_indices_dict["layer3"],
+        scaler,
     )
 
     # Linear layer
     update_global_linear_layer(
-        clone_global_model.fc, pruned_model.fc, pruned_indices_dict["fc"]
+        clone_global_model.fc, pruned_model.fc, pruned_indices_dict["fc"], scaler
     )
 
     return clone_global_model
@@ -568,12 +577,16 @@ def recover_global_from_pruned_resnet18(
     global_model: nn.Module,
     pruned_model: nn.Module,
     pruned_indices_dict: Dict[str, np.ndarray],
+    scaler: float = 1.0,
 ):
     clone_global_model = copy.deepcopy(global_model)
 
     # conv1
     update_global_conv_layer(
-        clone_global_model.conv1, pruned_model.conv1[0], pruned_indices_dict["conv1"]
+        clone_global_model.conv1,
+        pruned_model.conv1[0],
+        pruned_indices_dict["conv1"],
+        scaler,
     )
 
     layer_names = ["layer1", "layer2", "layer3", "layer4"]
@@ -588,6 +601,7 @@ def recover_global_from_pruned_resnet18(
                     clone_global_model._modules[layer_name][int(block)]._modules[conv],
                     pruned_model._modules[layer_name][int(block)]._modules[conv][0],
                     pruned_indices_dict[key],
+                    scaler,
                 )
 
             downsample_key = f"{layer_name}.{block}.downsample.0"
@@ -596,11 +610,12 @@ def recover_global_from_pruned_resnet18(
                     clone_global_model._modules[layer_name][int(block)].downsample[0],
                     pruned_model._modules[layer_name][int(block)].downsample[0],
                     pruned_indices_dict[downsample_key],
+                    scaler,
                 )
 
     # Linear layer
     update_global_linear_layer(
-        clone_global_model.fc, pruned_model.fc, pruned_indices_dict["fc"]
+        clone_global_model.fc, pruned_model.fc, pruned_indices_dict["fc"], scaler
     )
 
     return clone_global_model
@@ -610,12 +625,16 @@ def recover_global_from_pruned_shallow_resnet(
     global_model: nn.Module,
     pruned_model: nn.Module,
     pruned_indices_dict: Dict[str, np.ndarray],
+    scaler: float = 1.0,
 ):
     clone_global_model = copy.deepcopy(global_model)
 
     # conv1
     update_global_conv_layer(
-        clone_global_model.conv1, pruned_model.conv1[0], pruned_indices_dict["conv1"]
+        clone_global_model.conv1,
+        pruned_model.conv1[0],
+        pruned_indices_dict["conv1"],
+        scaler,
     )
 
     # layer_names = ["layer1", "layer2", "layer3", "layer4"]
@@ -631,6 +650,7 @@ def recover_global_from_pruned_shallow_resnet(
                     clone_global_model._modules[layer_name][int(block)]._modules[conv],
                     pruned_model._modules[layer_name][int(block)]._modules[conv][0],
                     pruned_indices_dict[key],
+                    scaler,
                 )
 
             downsample_key = f"{layer_name}.{block}.downsample.0"
@@ -639,11 +659,12 @@ def recover_global_from_pruned_shallow_resnet(
                     clone_global_model._modules[layer_name][int(block)].downsample[0],
                     pruned_model._modules[layer_name][int(block)].downsample[0],
                     pruned_indices_dict[downsample_key],
+                    scaler,
                 )
 
     # Linear layer
     update_global_linear_layer(
-        clone_global_model.fc, pruned_model.fc, pruned_indices_dict["fc"]
+        clone_global_model.fc, pruned_model.fc, pruned_indices_dict["fc"], scaler
     )
 
     return clone_global_model
