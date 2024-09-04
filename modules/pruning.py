@@ -1,5 +1,5 @@
 import copy
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 
 import numpy as np
 import torch
@@ -9,7 +9,240 @@ from torchvision.models import ResNet
 from modules.models import CNN, DropoutScaling
 
 
-def prune_linear_layer_legacy(linear_layer, pruned_indices: Dict[str, np.ndarray] = None):
+def create_indices_bags(num_elements: int, bag_size: int) -> List[np.ndarray]:
+    assert num_elements >= bag_size, "Number of elements must be greater than bag size."
+
+    all_indices = np.arange(num_elements)
+    np.random.shuffle(all_indices)
+
+    indices_bags = []
+    total_collected = 0
+    while total_collected < num_elements:
+        if num_elements - total_collected < bag_size:
+            num_remaining = num_elements - total_collected
+            num_additional_needed = bag_size - num_remaining
+            indices_bag = np.concatenate(
+                [all_indices[total_collected:], all_indices[:num_additional_needed]]
+            )
+            total_collected += num_remaining
+        else:
+            indices_bag = all_indices[total_collected : total_collected + bag_size]
+            total_collected += bag_size
+
+        indices_bags.append(indices_bag)
+
+    return indices_bags
+
+
+def pruned_indices_dict_bagging_cnn(dropout_rate: float):
+    """Pack the indices to prune for each layer of a CNN model into bags.
+
+    Args:
+        dropout_rate: The dropout rate to use for pruning.
+
+    Returns:
+        pruned_indices_bags: A list of dictionaries containing the indices to prune for each layer.
+    """
+    pruned_indices_bags = []
+
+    # conv1
+    num_output_channels_conv1 = 64
+    num_output_channels_to_prune_conv1 = int(num_output_channels_conv1 * dropout_rate)
+    num_output_channels_keep_conv1 = (
+        num_output_channels_conv1 - num_output_channels_to_prune_conv1
+    )
+    keep_indices_bags_conv1 = create_indices_bags(
+        num_output_channels_conv1, num_output_channels_keep_conv1
+    )
+    pruned_indices_bags_conv1 = [
+        np.sort(np.setdiff1d(np.arange(num_output_channels_conv1), keep_indices_bag))
+        for keep_indices_bag in keep_indices_bags_conv1
+    ]
+
+    # conv2
+    num_output_channels_conv2 = 128
+    num_output_channels_to_prune_conv2 = int(num_output_channels_conv2 * dropout_rate)
+    num_output_channels_keep_conv2 = (
+        num_output_channels_conv2 - num_output_channels_to_prune_conv2
+    )
+    keep_indices_bags_conv2 = create_indices_bags(
+        num_output_channels_conv2, num_output_channels_keep_conv2
+    )
+    pruned_indices_bags_conv2 = [
+        np.sort(np.setdiff1d(np.arange(num_output_channels_conv2), keep_indices_bag))
+        for keep_indices_bag in keep_indices_bags_conv2
+    ]
+
+    # conv3
+    num_output_channels_conv3 = 256
+    num_output_channels_to_prune_conv3 = int(num_output_channels_conv3 * dropout_rate)
+    num_output_channels_keep_conv3 = (
+        num_output_channels_conv3 - num_output_channels_to_prune_conv3
+    )
+    keep_indices_bags_conv3 = create_indices_bags(
+        num_output_channels_conv3, num_output_channels_keep_conv3
+    )
+    pruned_indices_bags_conv3 = [
+        np.sort(np.setdiff1d(np.arange(num_output_channels_conv3), keep_indices_bag))
+        for keep_indices_bag in keep_indices_bags_conv3
+    ]
+
+    # Make sure the length of the bags are the same
+    min_length = min(
+        len(pruned_indices_bags_conv1),
+        len(pruned_indices_bags_conv2),
+        len(pruned_indices_bags_conv3),
+    )
+    pruned_indices_bags_conv1 = pruned_indices_bags_conv1[:min_length]
+    pruned_indices_bags_conv2 = pruned_indices_bags_conv2[:min_length]
+    pruned_indices_bags_conv3 = pruned_indices_bags_conv3[:min_length]
+
+    # fc
+    H = 4
+    W = 4
+    pruned_indices_bags_fc = []
+    for bag in pruned_indices_bags_conv3:
+        input_indices_to_prune_fc = []
+        for channel_index in bag:
+            start_index = channel_index * H * W
+            end_index = (channel_index + 1) * H * W
+            input_indices_to_prune_fc.extend(list(range(start_index, end_index)))
+        input_indices_to_prune_fc = np.sort(input_indices_to_prune_fc)
+        pruned_indices_bags_fc.append(input_indices_to_prune_fc)
+
+    num_bags = min_length
+    for i in range(num_bags):
+        pruned_indices_bag = {
+            "layer1": {"output": pruned_indices_bags_conv1[i]},
+            "layer2": {
+                "input": pruned_indices_bags_conv1[i],
+                "output": pruned_indices_bags_conv2[i],
+            },
+            "layer3": {
+                "input": pruned_indices_bags_conv2[i],
+                "output": pruned_indices_bags_conv3[i],
+            },
+            "fc": {"input": pruned_indices_bags_fc[i]},
+        }
+        pruned_indices_bags.append(pruned_indices_bag)
+
+    return pruned_indices_bags
+
+
+def pruned_indices_dict_bagging_resnet18(dropout_rate: float):
+    """Pack the indices to prune for each layer of a resnet18 model into bags.
+
+    Args:
+        dropout_rate: The dropout rate to use for pruning.
+
+    Returns:
+        pruned_indices_bags: A list of dictionaries containing the indices to prune for each layer.
+    """
+    pruned_indices_dict_bags = []
+    pruned_out_indices_bags_for_each_layer = {}
+
+    num_out_channels = 64
+    num_out_channels_to_prune = int(num_out_channels * dropout_rate)
+    num_out_channels_keep = num_out_channels - num_out_channels_to_prune
+    keep_out_indices_bags = create_indices_bags(num_out_channels, num_out_channels_keep)
+    pruned_out_indices_bags = [
+        np.sort(np.setdiff1d(np.arange(num_out_channels), bag))
+        for bag in keep_out_indices_bags
+    ]
+    pruned_out_indices_bags_for_each_layer["conv1"] = pruned_out_indices_bags
+
+    layer_names = ["layer1", "layer2", "layer3", "layer4"]
+    out_channels_numbers = [64, 128, 256, 512]
+    blocks = ["0", "1"]
+    convs = ["conv1", "conv2"]
+
+    for i, layer_name in enumerate(layer_names):
+        num_out_channels = out_channels_numbers[i]
+        num_out_channels_to_prune = int(num_out_channels * dropout_rate)
+        num_out_channels_keep = num_out_channels - num_out_channels_to_prune
+        for block in blocks:
+            for conv in convs:
+                layer_key = f"{layer_name}.{block}.{conv}"
+                keep_out_indices_bags = create_indices_bags(
+                    num_out_channels, num_out_channels_keep
+                )
+                pruned_out_indices_bags = [
+                    np.sort(np.setdiff1d(np.arange(num_out_channels), bag))
+                    for bag in keep_out_indices_bags
+                ]
+                pruned_out_indices_bags_for_each_layer[layer_key] = (
+                    pruned_out_indices_bags
+                )
+
+    # Make sure the length of the bags are the same
+    min_length = min(
+        [
+            len(pruned_out_indices_bags)
+            for pruned_out_indices_bags in pruned_out_indices_bags_for_each_layer.values()
+        ]
+    )
+    for key in pruned_out_indices_bags_for_each_layer.keys():
+        pruned_out_indices_bags_for_each_layer[key] = (
+            pruned_out_indices_bags_for_each_layer[key][:min_length]
+        )
+
+    # fc
+    H = 1
+    W = 1
+    pruned_out_indices_bags = []
+    for bag in pruned_out_indices_bags_for_each_layer["layer4.1.conv2"]:
+        in_indices_to_prune = []
+        for channel_index in bag:
+            start_index = channel_index * H * W
+            end_index = (channel_index + 1) * H * W
+            in_indices_to_prune.extend(list(range(start_index, end_index)))
+        in_indices_to_prune = np.sort(in_indices_to_prune)
+        pruned_out_indices_bags.append(in_indices_to_prune)
+
+    num_bags = min_length
+    for i in range(num_bags):
+        pruned_indices_dict_bag = {}
+        # conv1
+        pruned_indices_dict_bag["conv1"] = {
+            "output": pruned_out_indices_bags_for_each_layer["conv1"][i]
+        }
+
+        # layers
+        former_layer_key = "conv1"
+        for j, layer_name in enumerate(layer_names):
+            for block in blocks:
+                for conv in convs:
+                    layer_key = f"{layer_name}.{block}.{conv}"
+                    pruned_indices_dict_bag[layer_key] = {
+                        "input": pruned_out_indices_bags_for_each_layer[
+                            former_layer_key
+                        ][i],
+                        "output": pruned_out_indices_bags_for_each_layer[layer_key][i],
+                    }
+                    former_layer_key = layer_key
+
+                # If there is downsample layer
+                if j > 0 and block == "0":
+                    layer_key = f"{layer_name}.{block}.downsample.0"
+                    pruned_indices_dict_bag[layer_key] = {
+                        "input": pruned_indices_dict_bag[f"{layer_name}.0.conv1"][
+                            "input"
+                        ],
+                        "output": pruned_indices_dict_bag[f"{layer_name}.0.conv2"][
+                            "output"
+                        ],
+                    }
+
+        # fc
+        pruned_indices_dict_bag["fc"] = {"input": pruned_out_indices_bags[i]}
+        pruned_indices_dict_bags.append(pruned_indices_dict_bag)
+
+    return pruned_indices_dict_bags
+
+
+def prune_linear_layer_legacy(
+    linear_layer, pruned_indices: Dict[str, np.ndarray] = None
+):
     """
     Prune a linear layer by using provided pruned_indices to directly select neurons to drop.
 
@@ -174,9 +407,7 @@ def prune_conv_layer_legacy(conv_layer, pruned_indices: Dict[str, np.ndarray] = 
     return new_conv_layer
 
 
-def prune_conv_layer(
-    layer, prune_indices_dict: Optional[Dict[str, np.ndarray]] = None
-):
+def prune_conv_layer(layer, prune_indices_dict: Optional[Dict[str, np.ndarray]] = None):
     """Prune a convolution layer by using provided `prune_indices_dict` to directly select channels to drop.
 
     Args:
@@ -241,7 +472,9 @@ def prune_conv_layer(
     return new_layer
 
 
-def prune_cnn_legacy(original_cnn: CNN, dropout_rate=0.5, scaling=True, **indices_to_prune):
+def prune_cnn_legacy(
+    original_cnn: CNN, dropout_rate=0.5, scaling=True, **indices_to_prune
+):
     indices_to_prune_conv1 = indices_to_prune.get("indices_to_prune_conv1", None)
     indices_to_prune_conv2 = indices_to_prune.get("indices_to_prune_conv2", None)
     indices_to_prune_conv3 = indices_to_prune.get("indices_to_prune_conv3", None)
@@ -463,111 +696,6 @@ def prune_cnn(
         pruned_cnn.layer3.add_module("scaling", DropoutScaling(dropout_rate))
 
     return pruned_cnn, pruned_indices_dict
-
-
-def create_random_even_groups(num_total_elements, num_groups):
-    num_elements_per_group = num_total_elements // num_groups
-    indices = np.arange(num_total_elements)
-    np.random.shuffle(indices)
-    indices = indices[: num_elements_per_group * num_groups]
-    return np.array_split(indices, num_groups)
-
-
-def select_random_group(groups):
-    """Select a random group from the list of groups and remove it from the list.
-
-    Args:
-        groups: A list of groups, where each group is a numpy array of indices.
-
-    Returns:
-        selected_group: The selected group.
-        groups: The list of groups with the selected group removed.
-    """
-    group_index = np.random.choice(len(groups))
-    selected_group = groups.pop(group_index)
-    return selected_group, groups
-
-
-def prune_cnn_groups_evenly(
-    original_cnn: CNN,
-    dropout_rate: float = 0.5,
-    scaling=True
-) -> Tuple[List[CNN], List[Dict]]:
-    """
-    Prune a CNN into multiple groups based on the dropout rate.
-
-    Parameters:
-    - original_cnn: The original CNN to prune.
-    - dropout_rate: The dropout rate to use for pruning.
-    - scaling: Whether to add a scaling layer after each pruned layer.
-
-    Returns:
-    - pruned_models: A list of pruned CNNs.
-    - indices_to_prune_list: A list of dictionaries containing the indices to prune for each pruned CNN.
-    """
-    num_groups = max(int(1 / (1 - dropout_rate)), 1)
-    pruned_models = []
-    indices_to_prune_list = []
-
-    conv1 = original_cnn.layer1[0]
-    conv2 = original_cnn.layer2[0]
-    conv3 = original_cnn.layer3[0]
-    fc = original_cnn.fc
-
-    groups_conv1 = create_random_even_groups(conv1.out_channels, num_groups)
-    groups_conv2 = create_random_even_groups(conv2.out_channels, num_groups)
-    groups_conv3 = create_random_even_groups(conv3.out_channels, num_groups)
-
-    for _ in range(num_groups):
-        group_conv1, groups_conv1 = select_random_group(groups_conv1)
-        group_conv2, groups_conv2 = select_random_group(groups_conv2)
-        group_conv3, groups_conv3 = select_random_group(groups_conv3)
-
-        indices_to_prune_conv1 = {"output": group_conv1}
-        indices_to_prune_conv2 = {
-            "input": group_conv1,
-            "output": group_conv2,
-        }
-        indices_to_prune_conv3 = {
-            "input": group_conv2,
-            "output": group_conv3,
-        }
-
-        input_indices_to_prune_fc = []
-        for channel_index in group_conv3:
-            start_index = channel_index * 4 * 4
-            end_index = (channel_index + 1) * 4 * 4
-            input_indices_to_prune_fc.extend(list(range(start_index, end_index)))
-        input_indices_to_prune_fc = np.sort(input_indices_to_prune_fc)
-        indices_to_prune_fc = {"input": input_indices_to_prune_fc}
-
-        pruned_layer1 = prune_conv_layer(conv1, indices_to_prune_conv1)
-        pruned_layer2 = prune_conv_layer(conv2, indices_to_prune_conv2)
-        pruned_layer3 = prune_conv_layer(conv3, indices_to_prune_conv3)
-        pruned_fc = prune_linear_layer(fc, indices_to_prune_fc)
-
-        pruned_cnn = CNN()
-        pruned_cnn.layer1[0] = pruned_layer1
-        pruned_cnn.layer2[0] = pruned_layer2
-        pruned_cnn.layer3[0] = pruned_layer3
-        pruned_cnn.fc = pruned_fc
-
-        if scaling:
-            pruned_cnn.layer1.add_module("scaling", DropoutScaling(dropout_rate))
-            pruned_cnn.layer2.add_module("scaling", DropoutScaling(dropout_rate))
-            pruned_cnn.layer3.add_module("scaling", DropoutScaling(dropout_rate))
-
-        pruned_models.append(pruned_cnn)
-        indices_to_prune_list.append(
-            {
-                "indices_to_prune_conv1": indices_to_prune_conv1,
-                "indices_to_prune_conv2": indices_to_prune_conv2,
-                "indices_to_prune_conv3": indices_to_prune_conv3,
-                "indices_to_prune_fc": indices_to_prune_fc,
-            }
-        )
-
-    return pruned_models, indices_to_prune_list
 
 
 def prune_resnet18(

@@ -19,6 +19,7 @@ from modules.aggregation import (
     aggregate_shallow_resnet,
     recover_global_from_pruned_cnn,
     recover_global_from_pruned_resnet18,
+    recover_global_from_pruned_shallow_resnet,
     vanilla_federated_averaging,
 )
 from modules.args_parser import get_args
@@ -27,12 +28,15 @@ from modules.data import create_non_iid_data
 from modules.models import CNN, ShallowResNet
 from modules.pruning import (
     prune_cnn,
-    prune_cnn_v2,
+    # prune_cnn_v2,
     prune_resnet18,
     prune_shallow_resnet,
+    pruned_indices_dict_bagging_cnn,
+    pruned_indices_dict_bagging_resnet18,
 )
 from modules.utils import (
     calculate_model_size,
+    evaluate_acc,
     replace_bn_with_ln,
     test,
     train,
@@ -56,6 +60,7 @@ LR = args.lr
 BATCH_SIZE = args.batch_size
 NUM_CLIENTS = args.num_clients
 AGG_WAY = args.aggregation
+DEBUGGING = args.debugging
 
 # Set random seed for reproducibility
 seed = 18
@@ -67,6 +72,7 @@ torch.cuda.manual_seed(seed)
 torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
 
+# Data preparation
 transform = transforms.Compose(
     [
         transforms.ToTensor(),
@@ -127,7 +133,7 @@ elif args.distribution == "non-iid":
     plt.title("Total Number of Samples of Each Client")
     plt.xlabel("Client ID")
     plt.ylabel("Number of Samples")
-    plt.savefig("total_samples.png")
+    plt.savefig(f"num_samples_distribution_{DATASET}_alpha{alpha}.png")
 
     # Plot the class distribution of each client
     num_classes = len(class_distributions[0])
@@ -157,7 +163,7 @@ elif args.distribution == "non-iid":
     # plt.legend()
     # plt.legend(bbox_to_anchor=(1, 1), loc="upper left")
     plt.legend(bbox_to_anchor=(0.5, -0.1), loc="upper center", ncol=10)
-    plt.savefig("class_distribution.png", bbox_inches="tight")
+    plt.savefig(f"class_distribution_{DATASET}_{alpha}.png", bbox_inches="tight")
 else:
     raise ValueError(f"Data distribution {args.distribution} not supported.")
 
@@ -171,6 +177,7 @@ dataloaders = [
 ]
 
 
+# Model preparation
 if MODEL_TYPE == "cnn":
     global_model = CNN(num_classes=NUM_CLASSES)
 elif MODEL_TYPE == "resnet":
@@ -183,12 +190,11 @@ else:
 print(f"[Model Architecture]\n{global_model}")
 
 num_models = NUM_CLIENTS
-dropout_rates = [0.2, 0.2, 0.5, 0.5, 0.5, 0.8, 0.8, 0.8, 0.8, 0.8]
-# dropout_rates = [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.8, 0.8, 0.8, 0.8]
-# dropout_rates = [0.0] * num_models
-# dropout_rates = [0.1] * num_models
-# dropout_rates = [0.01] * num_models
-# dropout_rates = [0.005] * num_models
+if num_models == 10:
+    dropout_rates = [0.2, 0.2, 0.5, 0.5, 0.5, 0.8, 0.8, 0.8, 0.8, 0.8]
+    # dropout_rates = [0.1, 0.1, 0.25, 0.25, 0.5, 0.5, 0.75, 0.75, 0.9, 0.9]
+elif num_models == 20:
+    dropout_rates = [0.2, 0.2, 0.2, 0.2, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8]
 assert (
     len(dropout_rates) == num_models
 ), f"Length of dropout rates {len(dropout_rates)} does not match number of clients {num_models}."
@@ -198,10 +204,14 @@ decay_rounds = [20, 50, 100]
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 criterion = nn.CrossEntropyLoss()
 
+
 results_class = []
 train_loss_results = []
 test_loss_results = []
 test_acc_results = []
+
+
+pruned_indices_dict_bags_for_each_p = [[] for _ in range(num_models)]
 
 
 # Training by rounds
@@ -218,43 +228,44 @@ for round in range(ROUNDS):
     all_client_models = []
 
     if MODEL_TYPE == "cnn":
-        # indices_to_prune_conv1_list = []
-        # indices_to_prune_conv2_list = []
-        # indices_to_prune_conv3_list = []
-        # indices_to_prune_fc_list = []
-
-        # for i in range(num_models):
-        #     (
-        #         client_model,
-        #         indices_to_prune_conv1,
-        #         indices_to_prune_conv2,
-        #         indices_to_prune_conv3,
-        #         indices_to_prune_fc,
-        #     ) = prune_cnn(
-        #         global_model,
-        #         dropout_rates[i],
-        #         scaling=True,
-        #     )
-        #     all_client_models.append(client_model)
-        #     indices_to_prune_conv1_list.append(indices_to_prune_conv1)
-        #     indices_to_prune_conv2_list.append(indices_to_prune_conv2)
-        #     indices_to_prune_conv3_list.append(indices_to_prune_conv3)
-        #     indices_to_prune_fc_list.append(indices_to_prune_fc)
         pruned_indices_dicts = []
         for i in range(num_models):
-            client_model, pruned_indices_dict = prune_cnn_v2(
-                global_model, dropout_rates[i]
+            if len(pruned_indices_dict_bags_for_each_p[i]) == 0:
+                pruned_indices_dict_bags_for_each_p[i] = (
+                    pruned_indices_dict_bagging_cnn(dropout_rates[i])
+                )
+            optional_indices_dict = pruned_indices_dict_bags_for_each_p[i].pop()
+            client_model, pruned_indices_dict = prune_cnn(
+                global_model,
+                dropout_rates[i],
+                scaling=True,
+                optional_indices_dict=optional_indices_dict,
             )
             all_client_models.append(client_model)
             pruned_indices_dicts.append(pruned_indices_dict)
+
+        # all_client_models, pruned_indices_dicts = prune_cnn_groups_nested(
+        #     global_model, dropout_rates
+        # )
     elif MODEL_TYPE == "resnet":
         pruned_indices_dicts = []
         for i in range(num_models):
+            if len(pruned_indices_dict_bags_for_each_p[i]) == 0:
+                pruned_indices_dict_bags_for_each_p[i] = (
+                    pruned_indices_dict_bagging_resnet18(dropout_rates[i])
+                )
+            optional_indices_dict = pruned_indices_dict_bags_for_each_p[i].pop()
             client_model, pruned_indices_dict = prune_resnet18(
-                global_model, dropout_rates[i]
+                global_model,
+                dropout_rates[i],
+                optional_indices_dict=optional_indices_dict,
             )
             all_client_models.append(client_model)
             pruned_indices_dicts.append(pruned_indices_dict)
+
+        # all_client_models, pruned_indices_dicts = prune_resnet18_groups_nested(
+        #     global_model, dropout_rates
+        # )
     elif MODEL_TYPE == "shallow_resnet":
         pruned_indices_dicts = []
         for i in range(num_models):
@@ -289,6 +300,51 @@ for round in range(ROUNDS):
         round_test_acc_results[f"Subset {i + 1}"] = local_test_acc
         round_results_class[f"Subset {i + 1}"] = local_class_acc
 
+    # debugging
+    if DEBUGGING:
+        for debug_i in range(num_models):
+            debug_model = all_client_models[debug_i]
+            debug_model_result = evaluate_acc(debug_model, test_loader, device=device)
+            print(
+                f"Subset {debug_i + 1}\tTest Loss: {debug_model_result["loss"]:.4f}\tTest Acc: {debug_model_result["accuracy"]:.4f}"
+            )
+
+            for param in global_model.parameters():
+                param.data.zero_()
+
+            evaluate_acc(global_model, test_loader, device=device)
+
+            # for name, param in global_model.named_parameters():
+            #     print(f"Parameter {name}: {param.data}")
+
+            if MODEL_TYPE == "cnn":
+                recovered_model = recover_global_from_pruned_cnn(
+                    global_model,
+                    debug_model,
+                    pruned_indices_dicts[debug_i],
+                    # scaler=(1 / (1 - dropout_rates[debug_i])) ** 2,
+                )
+            elif MODEL_TYPE == "resnet":
+                recovered_model = recover_global_from_pruned_resnet18(
+                    global_model,
+                    debug_model,
+                    pruned_indices_dicts[debug_i],
+                    # scaler=(1 / (1 - dropout_rates[debug_i])) ** 2,
+                )
+            elif MODEL_TYPE == "shallow_resnet":
+                recovered_model = recover_global_from_pruned_shallow_resnet(
+                    global_model,
+                    debug_model,
+                    pruned_indices_dicts[debug_i],
+                    # scaler=(1 / (1 - dropout_rates[debug_i])) ** 2,
+                )
+            recovered_model_result = evaluate_acc(
+                recovered_model, test_loader, device=device
+            )
+            print(
+                f"Subset {debug_i + 1} Rec\tTest Loss: {recovered_model_result['loss']:.4f}\tTest Acc: {recovered_model_result['accuracy']:.4f}"
+            )
+
     # Aggregation
     if MODEL_TYPE == "cnn":
         if AGG_WAY == "sparse":
@@ -296,10 +352,18 @@ for round in range(ROUNDS):
                 global_model,
                 all_client_models,
                 subset_sizes,
-                indices_to_prune_conv1=[pruned_indices_dicts[i]["layer1"] for i in range(num_models)],
-                indices_to_prune_conv2=[pruned_indices_dicts[i]["layer2"] for i in range(num_models)],
-                indices_to_prune_conv3=[pruned_indices_dicts[i]["layer3"] for i in range(num_models)],
-                indices_to_prune_fc=[pruned_indices_dicts[i]["fc"] for i in range(num_models)],
+                indices_to_prune_conv1=[
+                    pruned_indices_dicts[i]["layer1"] for i in range(num_models)
+                ],
+                indices_to_prune_conv2=[
+                    pruned_indices_dicts[i]["layer2"] for i in range(num_models)
+                ],
+                indices_to_prune_conv3=[
+                    pruned_indices_dicts[i]["layer3"] for i in range(num_models)
+                ],
+                indices_to_prune_fc=[
+                    pruned_indices_dicts[i]["fc"] for i in range(num_models)
+                ],
             )
         elif AGG_WAY == "recovery":
             aggregated_weight = vanilla_federated_averaging(
@@ -385,27 +449,29 @@ test_acc_results = format_results(test_acc_results)
 
 if SAVE_DIR is not None:
     with open(
-        os.path.join(SAVE_DIR, f"rd_base_{MODEL_TYPE}_train_loss.csv"), "w"
+        os.path.join(SAVE_DIR, f"rd_base_{MODEL_TYPE}_{DATASET}_train_loss.csv"), "w"
     ) as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=train_loss_results[0].keys())
         writer.writeheader()
         writer.writerows(train_loss_results)
 
     with open(
-        os.path.join(SAVE_DIR, f"rd_base_{MODEL_TYPE}_test_loss.csv"), "w"
+        os.path.join(SAVE_DIR, f"rd_base_{MODEL_TYPE}_{DATASET}_test_loss.csv"), "w"
     ) as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=test_loss_results[0].keys())
         writer.writeheader()
         writer.writerows(test_loss_results)
 
     with open(
-        os.path.join(SAVE_DIR, f"rd_base_{MODEL_TYPE}_test_acc.csv"), "w"
+        os.path.join(SAVE_DIR, f"rd_base_{MODEL_TYPE}_{DATASET}_test_acc.csv"), "w"
     ) as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=test_acc_results[0].keys())
         writer.writeheader()
         writer.writerows(test_acc_results)
 
-    with open(os.path.join(SAVE_DIR, f"rd_base_{MODEL_TYPE}_class_acc.pkl"), "wb") as f:
+    with open(
+        os.path.join(SAVE_DIR, f"rd_base_{MODEL_TYPE}_{DATASET}_class_acc.pkl"), "wb"
+    ) as f:
         pickle.dump(results_class, f)
 
     print("Results saved.")

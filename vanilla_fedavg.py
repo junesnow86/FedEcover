@@ -19,6 +19,7 @@ from modules.constants import NORMALIZATION_STATS
 from modules.data import create_non_iid_data
 from modules.debugging import create_empty_pruned_indices_dict
 from modules.models import CNN
+
 # from modules.heterofl_utils import prune_cnn
 from modules.pruning import prune_cnn_v2, prune_resnet18
 from modules.utils import calculate_model_size, replace_bn_with_ln, test, train
@@ -108,7 +109,7 @@ elif args.distribution == "non-iid":
     plt.title("Total Number of Samples of Each Client")
     plt.xlabel("Client ID")
     plt.ylabel("Number of Samples")
-    plt.savefig("total_samples.png")
+    plt.savefig(f"num_samples_distribution_{DATASET}_alpha{alpha}.png")
 
     # Plot the class distribution of each client
     num_classes = len(class_distributions[0])
@@ -138,7 +139,7 @@ elif args.distribution == "non-iid":
     # plt.legend()
     # plt.legend(bbox_to_anchor=(1, 1), loc="upper left")
     plt.legend(bbox_to_anchor=(0.5, -0.1), loc="upper center", ncol=10)
-    plt.savefig("class_distribution.png", bbox_inches="tight")
+    plt.savefig(f"class_distribution_{DATASET}_{alpha}.png", bbox_inches="tight")
 else:
     raise ValueError(f"Data distribution {args.distribution} not supported.")
 
@@ -160,7 +161,7 @@ else:
     raise ValueError(f"Model type {MODEL_TYPE} not supported.")
 print(f"[Model Architecture]\n{original_cnn}")
 
-p = 0.9
+p = 0.8
 if MODEL_TYPE == "cnn":
     # global_cnn, _ = prune_cnn(original_cnn, p, position=0)
     global_cnn, _ = prune_cnn_v2(original_cnn, p)
@@ -284,27 +285,29 @@ test_acc_results = format_results(test_acc_results)
 
 if SAVE_DIR is not None:
     with open(
-        os.path.join(SAVE_DIR, f"vanilla_{MODEL_TYPE}_train_loss.csv"), "w"
+        os.path.join(SAVE_DIR, f"vanilla_{MODEL_TYPE}_{DATASET}_train_loss.csv"), "w"
     ) as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=train_loss_results[0].keys())
         writer.writeheader()
         writer.writerows(train_loss_results)
 
     with open(
-        os.path.join(SAVE_DIR, f"vanilla_{MODEL_TYPE}_test_loss.csv"), "w"
+        os.path.join(SAVE_DIR, f"vanilla_{MODEL_TYPE}_{DATASET}_test_loss.csv"), "w"
     ) as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=test_loss_results[0].keys())
         writer.writeheader()
         writer.writerows(test_loss_results)
 
     with open(
-        os.path.join(SAVE_DIR, f"vanilla_{MODEL_TYPE}_test_acc.csv"), "w"
+        os.path.join(SAVE_DIR, f"vanilla_{MODEL_TYPE}_{DATASET}_test_acc.csv"), "w"
     ) as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=test_acc_results[0].keys())
         writer.writeheader()
         writer.writerows(test_acc_results)
 
-    with open(os.path.join(SAVE_DIR, f"vanilla_{MODEL_TYPE}_class_acc.pkl"), "wb") as f:
+    with open(
+        os.path.join(SAVE_DIR, f"vanilla_{MODEL_TYPE}_{DATASET}_class_acc.pkl"), "wb"
+    ) as f:
         pickle.dump(class_acc_results, f)
 
     print("Results saved.")
