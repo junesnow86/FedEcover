@@ -214,7 +214,7 @@ def aggregate_conv_layers(
         )
 
 
-def aggregate_cnn(
+def aggregate_cnn_legacy(
     original_cnn: CNN,
     pruned_cnn_list: List[CNN],
     num_samples_list: List[int],
@@ -251,6 +251,45 @@ def aggregate_cnn(
     )
 
 
+def aggregate_cnn(
+    global_model: CNN,
+    local_models: List[CNN],
+    client_weights: List[int],
+    pruned_indices_dicts: List[Dict[str, Dict[str, np.ndarray]]],
+):
+    """
+    Aggregate the weights of the conv and linear layers of the ResNet18 model.
+    """
+    aggregate_conv_layers(
+        global_model.layer1[0],
+        [model.layer1[0] for model in local_models],
+        [pruned_indices_dict["layer1"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
+
+    aggregate_conv_layers(
+        global_model.layer2[0],
+        [model.layer2[0] for model in local_models],
+        [pruned_indices_dict["layer2"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
+
+    aggregate_conv_layers(
+        global_model.layer3[0],
+        [model.layer3[0] for model in local_models],
+        [pruned_indices_dict["layer3"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
+
+    # ----- Linear layer -----
+    aggregate_linear_layers(
+        global_model.fc,
+        [model.fc for model in local_models],
+        [pruned_indices_dict["fc"] for pruned_indices_dict in pruned_indices_dicts],
+        client_weights,
+    )
+
+
 @measure_time(repeats=1)
 def aggregate_resnet18(
     global_model: ResNet,
@@ -265,7 +304,7 @@ def aggregate_resnet18(
 
     aggregate_conv_layers(
         global_model.conv1,
-        [model.conv1[0] for model in local_models],
+        [model.conv1[0] for model in local_models],  # use index 0 because of nn.Sequential, due to DropoutScaling module
         [pruned_indices_dict["conv1"] for pruned_indices_dict in pruned_indices_dicts],
         client_weights,
     )
