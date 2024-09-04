@@ -84,6 +84,12 @@ def get_args(print_args=True):
         default="sparse",
         help="Aggregation method to use",
     )
+    parser.add_argument(
+        "--debugging",
+        type=bool,
+        default=False,
+        help="Debugging mode",
+    )
 
     args = parser.parse_args()
 
@@ -93,6 +99,7 @@ def get_args(print_args=True):
         print(f"Data distribution: {args.distribution}")
         if args.distribution == "non-iid":
             print(f"Alpha: {args.alpha}")
+        print(f"Number of clients: {args.num_clients}")
         print(f"Aggregation method: {args.aggregation}")
         print(f"Number of rounds: {args.round}")
         print(f"Number of local epochs: {args.epochs}")
