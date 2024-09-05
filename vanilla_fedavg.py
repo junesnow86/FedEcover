@@ -20,8 +20,7 @@ from modules.data import create_non_iid_data
 from modules.debugging import create_empty_pruned_indices_dict
 from modules.models import CNN
 
-# from modules.heterofl_utils import prune_cnn
-from modules.pruning import prune_cnn_v2, prune_resnet18
+from modules.pruning import prune_cnn, prune_resnet18
 from modules.utils import calculate_model_size, replace_bn_with_ln, test, train
 
 args = get_args()
@@ -164,7 +163,7 @@ print(f"[Model Architecture]\n{original_cnn}")
 p = 0.8
 if MODEL_TYPE == "cnn":
     # global_cnn, _ = prune_cnn(original_cnn, p, position=0)
-    global_cnn, _ = prune_cnn_v2(original_cnn, p)
+    global_cnn, _ = prune_cnn(original_cnn, p)
 elif MODEL_TYPE == "resnet":
     global_cnn, _ = prune_resnet18(original_cnn, p)
 else:
@@ -174,8 +173,7 @@ num_models = NUM_CLIENTS
 all_client_models = []
 for i in range(num_models):
     if MODEL_TYPE == "cnn":
-        # client_model, _ = prune_cnn(original_cnn, p, position=0)
-        client_model, _ = prune_cnn_v2(original_cnn, p)
+        client_model, _ = prune_cnn(original_cnn, p)
     elif MODEL_TYPE == "resnet":
         client_model, _ = prune_resnet18(original_cnn, p)
     else:
@@ -230,14 +228,18 @@ for round in range(ROUNDS):
         )
         global_cnn.load_state_dict(aggregated_weight)
     elif MODEL_TYPE == "resnet":
-        aggregate_resnet18_vanilla(
-            global_model=global_cnn,
-            local_models=all_client_models,
-            client_weights=subset_sizes,
-            pruned_indices_dicts=[
-                create_empty_pruned_indices_dict() for _ in range(num_models)
-            ],
+        # aggregate_resnet18_vanilla(
+        #     global_model=global_cnn,
+        #     local_models=all_client_models,
+        #     client_weights=subset_sizes,
+        #     pruned_indices_dicts=[
+        #         create_empty_pruned_indices_dict() for _ in range(num_models)
+        #     ],
+        # )
+        aggregated_weight = vanilla_federated_averaging(
+            models=all_client_models, sample_numbers=subset_sizes
         )
+        global_cnn.load_state_dict(aggregated_weight)
     else:
         raise ValueError(f"Model type {MODEL_TYPE} not supported.")
 
