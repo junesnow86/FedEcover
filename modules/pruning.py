@@ -702,6 +702,7 @@ def prune_resnet18(
     model: ResNet,
     dropout_rate: float = 0.5,
     optional_indices_dict: Optional[Dict[str, np.ndarray]] = None,
+    scaling: bool = True,
 ):
     """
     Prune a ResNet18 model by using the provided dropout rate and optional indices to prune.
@@ -737,7 +738,10 @@ def prune_resnet18(
     )
     pruned_indices_dicts[layer_key] = {"output": out_channel_indices_to_prune}
     new_layer = prune_conv_layer(current_layer, pruned_indices_dicts[layer_key])
-    new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
+    if scaling:
+        new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
+    else:
+        new_layer = nn.Sequential(new_layer)
     setattr(new_model, layer_key, new_layer)
 
     # Update layer norm's input shape
@@ -759,22 +763,43 @@ def prune_resnet18(
 
     for i, layer_name in enumerate(layer_names):
         for block in blocks:
+            downsample = True
+            if (
+                getattr(getattr(new_model, layer_name)[int(block)], "downsample")
+                is None
+            ):  # no downsample layer
+                downsample = False
+
             for conv in convs:
+                # Note: If there is no downsample, the pruned out channel indices should be the same as the output indices of the previous block
+                # also the same as the pruned in channel indices of the first conv layer in the block
+
                 in_channel_indices_to_prune = out_channel_indices_to_prune  # input indices to prune should be the same as the output indices to prune of the previous layer
                 layer_key = f"{layer_name}.{block}.{conv}"
                 current_layer = getattr(
                     getattr(new_model, layer_name)[int(block)], conv
                 )
-                num_out_channels = current_layer.out_channels
-                num_out_channels_to_prune = int(num_out_channels * dropout_rate)
-                if optional_indices_dict is not None:
-                    optional_output_indices = optional_indices_dict[layer_key]["output"]
-                    assert num_out_channels_to_prune <= len(optional_output_indices)
+
+                if conv == "conv2" and downsample is False:
+                    out_channel_indices_to_prune = pruned_indices_dicts[
+                        f"{layer_name}.{int(block)}.conv1"
+                    ]["input"]
                 else:
-                    optional_output_indices = np.arange(num_out_channels)
-                out_channel_indices_to_prune = np.random.choice(
-                    optional_output_indices, num_out_channels_to_prune, replace=False
-                )
+                    num_out_channels = current_layer.out_channels
+                    num_out_channels_to_prune = int(num_out_channels * dropout_rate)
+                    if optional_indices_dict is not None:
+                        optional_output_indices = optional_indices_dict[layer_key][
+                            "output"
+                        ]
+                        assert num_out_channels_to_prune <= len(optional_output_indices)
+                    else:
+                        optional_output_indices = np.arange(num_out_channels)
+                    out_channel_indices_to_prune = np.random.choice(
+                        optional_output_indices,
+                        num_out_channels_to_prune,
+                        replace=False,
+                    )
+
                 pruned_indices_dicts[layer_key] = {
                     "input": in_channel_indices_to_prune,
                     "output": out_channel_indices_to_prune,
@@ -782,7 +807,10 @@ def prune_resnet18(
                 new_layer = prune_conv_layer(
                     current_layer, pruned_indices_dicts[layer_key]
                 )
-                new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
+                if scaling:
+                    new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
+                else:
+                    new_layer = nn.Sequential(new_layer)
                 setattr(getattr(new_model, layer_name)[int(block)], conv, new_layer)
 
                 # Update layer norm's input shape
@@ -799,10 +827,7 @@ def prune_resnet18(
                 )
 
             # If there is downsample layer
-            if (
-                getattr(getattr(new_model, layer_name)[int(block)], "downsample")
-                is not None
-            ):
+            if downsample:
                 layer_key = f"{layer_name}.{block}.downsample.0"
                 current_layer = getattr(
                     getattr(new_model, layer_name)[int(block)], "downsample"
@@ -824,9 +849,12 @@ def prune_resnet18(
                 new_layer_norm = nn.LayerNorm(
                     layer_norm_shape, elementwise_affine=False
                 )
-                new_layer = nn.Sequential(
-                    new_layer, DropoutScaling(dropout_rate), new_layer_norm
-                )
+                if scaling:
+                    new_layer = nn.Sequential(
+                        new_layer, DropoutScaling(dropout_rate), new_layer_norm
+                    )
+                else:
+                    new_layer = nn.Sequential(new_layer, new_layer_norm)
                 setattr(
                     getattr(new_model, layer_name)[int(block)], "downsample", new_layer
                 )

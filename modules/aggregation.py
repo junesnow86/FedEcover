@@ -31,16 +31,16 @@ def vanilla_federated_averaging(models, sample_numbers):
 
 def aggregate_linear_layers(
     global_linear_layer: nn.Linear,
-    linear_layer_list: List[nn.Linear],
-    pruned_indices_list: List[Dict[str, np.ndarray]],
-    num_samples_list: List[int],
+    pruned_linear_layers: List[nn.Linear],
+    layer_pruned_indices_dicts: List[Dict[str, np.ndarray]],
+    client_weights: List[int],
 ):
-    assert len(linear_layer_list) == len(
-        pruned_indices_list
-    ), f"Length mismatch: {len(linear_layer_list)} vs {len(pruned_indices_list)}"
-    assert len(linear_layer_list) == len(
-        num_samples_list
-    ), f"Length mismatch: {len(linear_layer_list)} vs {len(num_samples_list)}"
+    assert (
+        len(pruned_linear_layers) == len(layer_pruned_indices_dicts)
+    ), f"Length mismatch: {len(pruned_linear_layers)} vs {len(layer_pruned_indices_dicts)}"
+    assert len(pruned_linear_layers) == len(
+        client_weights
+    ), f"Length mismatch: {len(pruned_linear_layers)} vs {len(client_weights)}"
 
     global_output_size = global_linear_layer.weight.data.shape[0]
     global_input_size = global_linear_layer.weight.data.shape[1]
@@ -53,15 +53,19 @@ def aggregate_linear_layers(
         sample_accumulator_bias = torch.zeros(global_output_size)
 
     for linear_layer, pruned_indices, num_samples in zip(
-        linear_layer_list, pruned_indices_list, num_samples_list
+        pruned_linear_layers, layer_pruned_indices_dicts, client_weights
     ):
         layer_weight = linear_layer.weight.data
 
-        unpruned_input_indices = np.setdiff1d(
-            range(global_input_size), pruned_indices.get("input", np.array([]))
+        unpruned_input_indices = np.sort(
+            np.setdiff1d(
+                range(global_input_size), pruned_indices.get("input", np.array([]))
+            )
         )
-        unpruned_output_indices = np.setdiff1d(
-            range(global_output_size), pruned_indices.get("output", np.array([]))
+        unpruned_output_indices = np.sort(
+            np.setdiff1d(
+                range(global_output_size), pruned_indices.get("output", np.array([]))
+            )
         )
 
         # for out_idx_layer, out_idx_global in enumerate(unpruned_output_indices):
@@ -123,16 +127,16 @@ def aggregate_linear_layers(
 
 def aggregate_conv_layers(
     global_conv_layer: nn.Conv2d,
-    conv_layer_list: List[nn.Conv2d],
-    pruned_indices_list: List[Dict[str, np.ndarray]],
-    num_samples_list: List[int],
+    pruned_conv_layers: List[nn.Conv2d],
+    layer_pruned_indices_dicts: List[Dict[str, np.ndarray]],
+    client_weights: List[int],
 ):
-    assert len(conv_layer_list) == len(
-        pruned_indices_list
-    ), f"Length mismatch: {len(conv_layer_list)} vs {len(pruned_indices_list)}"
-    assert len(conv_layer_list) == len(
-        num_samples_list
-    ), f"Length mismatch: {len(conv_layer_list)} vs {len(num_samples_list)}"
+    assert (
+        len(pruned_conv_layers) == len(layer_pruned_indices_dicts)
+    ), f"Length mismatch: {len(pruned_conv_layers)} vs {len(layer_pruned_indices_dicts)}"
+    assert len(pruned_conv_layers) == len(
+        client_weights
+    ), f"Length mismatch: {len(pruned_conv_layers)} vs {len(client_weights)}"
 
     global_out_channels = global_conv_layer.out_channels
     global_in_channels = global_conv_layer.in_channels
@@ -145,15 +149,19 @@ def aggregate_conv_layers(
         sample_accumulator_bias = torch.zeros(global_out_channels)
 
     for conv_layer, pruned_indices, num_samples in zip(
-        conv_layer_list, pruned_indices_list, num_samples_list
+        pruned_conv_layers, layer_pruned_indices_dicts, client_weights
     ):
         layer_weight = conv_layer.weight.data
 
-        unpruned_in_indices = np.setdiff1d(
-            range(global_in_channels), pruned_indices.get("input", np.array([]))
+        unpruned_in_indices = np.sort(
+            np.setdiff1d(
+                range(global_in_channels), pruned_indices.get("input", np.array([]))
+            )
         )
-        unpruned_out_indices = np.setdiff1d(
-            range(global_out_channels), pruned_indices.get("output", np.array([]))
+        unpruned_out_indices = np.sort(
+            np.setdiff1d(
+                range(global_out_channels), pruned_indices.get("output", np.array([]))
+            )
         )
 
         # for out_idx_layer, out_idx_global in enumerate(unpruned_out_indices):
@@ -251,6 +259,7 @@ def aggregate_cnn_legacy(
     )
 
 
+@measure_time(repeats=1)
 def aggregate_cnn(
     global_model: CNN,
     local_models: List[CNN],
@@ -300,11 +309,11 @@ def aggregate_resnet18(
     """
     Aggregate the weights of the conv and linear layers of the ResNet18 model.
     """
-    print("Using `aggregate_resnet18`")
-
     aggregate_conv_layers(
         global_model.conv1,
-        [model.conv1[0] for model in local_models],  # use index 0 because of nn.Sequential, due to DropoutScaling module
+        [
+            model.conv1[0] for model in local_models
+        ],  # use index 0 because of nn.Sequential, due to DropoutScaling module
         [pruned_indices_dict["conv1"] for pruned_indices_dict in pruned_indices_dicts],
         client_weights,
     )
