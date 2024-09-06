@@ -24,7 +24,7 @@ class PositionalEncoding(nn.Module):
                 pe[pos, i] = math.sin(pos / (10000 ** ((2 * i) / emb_dim)))
                 pe[pos, i + 1] = math.cos(pos / (10000 ** ((2 * (i + 1)) / emb_dim)))
 
-        pe = pe.unsqueeze(0)  # insert a dimension at the 0th position
+        pe = pe.unsqueeze(0)  # insert a dimension at the 0th position, shape (1, max_seq_len, emb_dim)
         self.register_buffer("pe", pe)
 
     def forward(self, x):
@@ -46,19 +46,19 @@ class MultiHeadAttention(nn.Module):
             num_heads: int, number of self-attention heads
         """
         super().__init__()
-        self.d_model = d_model
         self.num_heads = num_heads
+        self.d_model = d_model
         self.d_k = d_model // num_heads  # dimension of each head's key, query, value
         assert d_model % num_heads == 0, "d_model must be divisible by num_heads"
 
-        # key, query, value weight matrices, 64 x 64
+        # key, query, value weight matrices
         self.W_q = nn.Linear(d_model, d_model)
         self.W_k = nn.Linear(d_model, d_model)
         self.W_v = nn.Linear(d_model, d_model)
         self.W_o = nn.Linear(d_model, d_model)  # output layer
 
     def scaled_dot_product_attention(self, Q, K, V, mask=None):
-        """
+        """Calculate the attention scores and the weighted values.
         attention score is usually with shape (batch_size, num_heads, seq_len, seq_len)
         """
         # Calculate the attention scores
@@ -142,13 +142,17 @@ class FeedForward(nn.Module):
 
 
 class EncoderBlock(nn.Module):
-    def __init__(self, d_model=512, num_heads=8, d_ff=2048, dropout=0.0):
+    def __init__(self, d_model=512, num_heads=8, d_ff=2048):
         super().__init__()
+        self.num_heads = num_heads
+        self.d_model = d_model
+        self.d_ff = d_ff
+
         self.self_attn = MultiHeadAttention(d_model, num_heads)
         self.ffn = FeedForward(d_model, d_ff)
         self.norm1 = nn.LayerNorm(d_model)
         self.norm2 = nn.LayerNorm(d_model)
-        self.dropout = nn.Dropout(dropout)
+        # self.dropout = nn.Dropout(dropout)
 
     def forward(self, x, mask):
         """
@@ -158,42 +162,46 @@ class EncoderBlock(nn.Module):
         """
         # Apply self-attention
         attn_output = self.self_attn(x, x, x, mask)  # Q, K, V are all x
-        attn_output = self.dropout(attn_output)
+        # attn_output = self.dropout(attn_output)
         x = x + attn_output  # residual connection
         x = self.norm1(x)
 
         # Apply feed-forward network
         ffn_output = self.ffn(x)
-        ffn_output = self.dropout(ffn_output)
+        # ffn_output = self.dropout(ffn_output)
         x = x + ffn_output
         x = self.norm2(x)
         return x
 
 
 class DecoderBlock(nn.Module):
-    def __init__(self, d_model=512, num_heads=8, d_ff=2048, dropout=0.0):
+    def __init__(self, d_model=512, num_heads=8, d_ff=2048):
         super().__init__()
+        self.num_heads = num_heads
+        self.d_model = d_model
+        self.d_ff = d_ff
+
         self.self_attn = MultiHeadAttention(d_model, num_heads)
         self.cross_attn = MultiHeadAttention(d_model, num_heads)
         self.ffn = FeedForward(d_model, d_ff)
         self.norm1 = nn.LayerNorm(d_model)
         self.norm2 = nn.LayerNorm(d_model)
         self.norm3 = nn.LayerNorm(d_model)
-        self.dropout = nn.Dropout(dropout)
+        # self.dropout = nn.Dropout(dropout)
 
     def forward(self, x, enc_output, src_mask, tgt_mask):
         attn_output = self.self_attn(x, x, x, tgt_mask)
-        attn_output = self.dropout(attn_output)
+        # attn_output = self.dropout(attn_output)
         x = x + attn_output
         x = self.norm1(x)
 
         attn_output = self.cross_attn(x, enc_output, enc_output, src_mask)
-        attn_output = self.dropout(attn_output)
+        # attn_output = self.dropout(attn_output)
         x = x + attn_output
         x = self.norm2(x)
 
         ffn_output = self.ffn(x)
-        ffn_output = self.dropout(ffn_output)
+        # ffn_output = self.dropout(ffn_output)
         x = x + ffn_output
         x = self.norm3(x)
         return x
@@ -209,18 +217,25 @@ class Transformer(nn.Module):
         d_model,
         d_ff,
         max_seq_len,
-        dropout=0.0,
+        # dropout=0.0,
     ):
         super().__init__()
+        self.num_heads = num_heads
+        self.num_layers = num_layers
+        self.d_model = d_model
+        self.d_ff = d_ff
+
         self.encoder_embedding = nn.Embedding(src_vocab_size, d_model)
         self.decoder_embedding = nn.Embedding(tgt_vocab_size, d_model)
         self.positional_encoding = PositionalEncoding(max_seq_len, d_model)
 
         self.encoder_blocks = nn.ModuleList(
-            [EncoderBlock(d_model, num_heads, d_ff, dropout) for _ in range(num_layers)]
+            # [EncoderBlock(d_model, num_heads, d_ff, dropout) for _ in range(num_layers)]
+            [EncoderBlock(d_model, num_heads, d_ff) for _ in range(num_layers)]
         )
         self.decoder_blocks = nn.ModuleList(
-            [DecoderBlock(d_model, num_heads, d_ff, dropout) for _ in range(num_layers)]
+            # [DecoderBlock(d_model, num_heads, d_ff, dropout) for _ in range(num_layers)]
+            [DecoderBlock(d_model, num_heads, d_ff) for _ in range(num_layers)]
         )
 
         self.fc = nn.Linear(d_model, tgt_vocab_size)

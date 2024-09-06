@@ -6,7 +6,14 @@ import torch
 import torch.nn as nn
 from torchvision.models import ResNet
 
-from modules.models import CNN, DropoutScaling
+from modules.models import CNN, DropoutScaling, Transformer
+
+from .prune_layers import (
+    prune_conv_layer,
+    prune_embedding_layer,
+    prune_linear_layer,
+    prune_transformer_block,
+)
 
 
 def create_indices_bags(num_elements: int, bag_size: int) -> List[np.ndarray]:
@@ -240,370 +247,6 @@ def pruned_indices_dict_bagging_resnet18(dropout_rate: float):
     return pruned_indices_dict_bags
 
 
-def prune_linear_layer_legacy(
-    linear_layer, pruned_indices: Dict[str, np.ndarray] = None
-):
-    """
-    Prune a linear layer by using provided pruned_indices to directly select neurons to drop.
-
-    Parameters:
-    - linear_layer: The linear layer to prune (an instance of torch.nn.Linear).
-    - pruned_indices: A dictionary with keys 'input' and 'output', indicating the indices of neurons to prune directly.
-
-    Returns:
-    - new_layer: The new linear layer with pruned neurons.
-    """
-    assert isinstance(
-        linear_layer, torch.nn.Linear
-    ), "Input linear_layer must be an instance of torch.nn.Linear"
-
-    input_features = linear_layer.in_features
-    output_features = linear_layer.out_features
-
-    if pruned_indices is not None:
-        # Make sure the pruned indices are in relative order
-        input_indices_to_keep = np.sort(
-            np.setdiff1d(
-                range(input_features), pruned_indices.get("input", np.array([]))
-            )
-        )
-        output_indices_to_keep = np.sort(
-            np.setdiff1d(
-                range(output_features), pruned_indices.get("output", np.array([]))
-            )
-        )
-
-    # Extract the weights and biases for the remaining neurons
-    new_weight = linear_layer.weight.data[output_indices_to_keep, :][
-        :, input_indices_to_keep
-    ]
-    new_bias = (
-        linear_layer.bias.data[output_indices_to_keep]
-        if linear_layer.bias is not None
-        else None
-    )
-
-    # Create a new Linear layer with the pruned neurons
-    new_layer = torch.nn.Linear(len(input_indices_to_keep), len(output_indices_to_keep))
-    new_layer.weight.data = new_weight
-    if new_bias is not None:
-        new_layer.bias.data = new_bias
-
-    return new_layer
-
-
-def prune_linear_layer(
-    layer, prune_indices_dict: Optional[Dict[str, np.ndarray]] = None
-):
-    """Prune a linear layer by using provided `prune_indices_dict` to directly select neurons to drop.
-
-    Args:
-        - linear_layer: The linear layer to prune (an instance of torch.nn.Linear).
-        - prune_indices_dict: A dictionary with keys 'input' and 'output', indicating the indices of neurons to prune directly.
-
-    Returns:
-        - new_layer: The new linear layer with pruned neurons and smaller size.
-    """
-    assert isinstance(
-        layer, torch.nn.Linear
-    ), "Input layer must be an instance of torch.nn.Linear"
-
-    in_features = layer.in_features
-    out_features = layer.out_features
-
-    if prune_indices_dict is not None:
-        # Note: Make sure the pruned indices are in relative order
-        input_indices_keep = np.sort(
-            np.setdiff1d(
-                range(in_features), prune_indices_dict.get("input", np.array([]))
-            )
-        )
-        output_indices_keep = np.sort(
-            np.setdiff1d(
-                range(out_features), prune_indices_dict.get("output", np.array([]))
-            )
-        )
-
-        new_weight = torch.index_select(
-            torch.index_select(layer.weight.data, 0, torch.tensor(output_indices_keep)),
-            1,
-            torch.tensor(input_indices_keep),
-        )
-
-        new_bias = (
-            torch.index_select(layer.bias.data, 0, torch.tensor(output_indices_keep))
-            if layer.bias is not None
-            else None
-        )
-    else:
-        input_indices_keep = np.arange(in_features)
-        output_indices_keep = np.arange(out_features)
-        new_weight = layer.weight.detach().clone()
-        new_bias = layer.bias.detach.clone() if layer.bias is not None else None
-
-    new_layer = torch.nn.Linear(len(input_indices_keep), len(output_indices_keep))
-    with torch.no_grad():
-        new_layer.weight.data.copy_(new_weight)
-        if new_bias is not None:
-            new_layer.bias.data.copy_(new_bias)
-
-    return new_layer
-
-
-def prune_conv_layer_legacy(conv_layer, pruned_indices: Dict[str, np.ndarray] = None):
-    """
-    Prune a convolution layer by using provided pruned_indices to directly select channels to drop.
-
-    Parameters:
-    - layer: The convolution layer to prune (an instance of torch.nn.Conv2d).
-    - pruned_indices: A dictionary with keys 'input' and 'output', indicating the indices of channels to prune directly.
-
-    Returns:
-    - new_layer: The new convolution layer with pruned channels.
-    """
-    assert isinstance(
-        conv_layer, torch.nn.Conv2d
-    ), "Input layer must be an instance of torch.nn.Conv2d"
-
-    in_channels = conv_layer.in_channels
-    out_channels = conv_layer.out_channels
-
-    if pruned_indices is not None:
-        # Make sure the pruned indices are in relative order
-        in_indices_to_keep = np.sort(
-            np.setdiff1d(range(in_channels), pruned_indices.get("input", np.array([])))
-        )
-        out_indices_to_keep = np.sort(
-            np.setdiff1d(
-                range(out_channels), pruned_indices.get("output", np.array([]))
-            )
-        )
-
-    # Extract the weights and biases for the remaining filters
-    new_weight = conv_layer.weight.data[out_indices_to_keep, :][
-        :, in_indices_to_keep, :, :
-    ]
-    new_bias = (
-        conv_layer.bias.data[out_indices_to_keep]
-        if conv_layer.bias is not None
-        else None
-    )
-
-    # Create a new Conv layer with the pruned filters
-    new_conv_layer = torch.nn.Conv2d(
-        len(in_indices_to_keep),
-        len(out_indices_to_keep),
-        kernel_size=conv_layer.kernel_size,
-        stride=conv_layer.stride,
-        padding=conv_layer.padding,
-        dilation=conv_layer.dilation,
-        groups=conv_layer.groups,
-        bias=(conv_layer.bias is not None),
-    )
-    new_conv_layer.weight.data = new_weight
-    if new_bias is not None:
-        new_conv_layer.bias.data = new_bias
-
-    return new_conv_layer
-
-
-def prune_conv_layer(layer, prune_indices_dict: Optional[Dict[str, np.ndarray]] = None):
-    """Prune a convolution layer by using provided `prune_indices_dict` to directly select channels to drop.
-
-    Args:
-        - layer: The convolution layer to prune (an instance of torch.nn.Conv2d).
-        - prune_indices_dict: A dictionary with keys 'input' and 'output', indicating the indices of channels to prune directly.
-
-    Returns:
-        - new_layer: The new convolution layer with pruned channels.
-    """
-    assert isinstance(
-        layer, torch.nn.Conv2d
-    ), "Input layer must be an instance of torch.nn.Conv2d"
-
-    in_channels = layer.in_channels
-    out_channels = layer.out_channels
-
-    if prune_indices_dict is not None:
-        # Note: Make sure the pruned indices are in relative order
-        in_indices_keep = np.sort(
-            np.setdiff1d(
-                range(in_channels), prune_indices_dict.get("input", np.array([]))
-            )
-        )
-        out_indices_keep = np.sort(
-            np.setdiff1d(
-                range(out_channels), prune_indices_dict.get("output", np.array([]))
-            )
-        )
-
-        new_weight = torch.index_select(
-            torch.index_select(layer.weight.data, 0, torch.tensor(out_indices_keep)),
-            1,
-            torch.tensor(in_indices_keep),
-        )
-
-        new_bias = (
-            torch.index_select(layer.bias.data, 0, torch.tensor(out_indices_keep))
-            if layer.bias is not None
-            else None
-        )
-    else:
-        in_indices_keep = np.arange(in_channels)
-        out_indices_keep = np.arange(out_channels)
-        new_weight = layer.weight.detach().clone()
-        new_bias = layer.bias.detach().clone() if layer.bias is not None else None
-
-    new_layer = torch.nn.Conv2d(
-        len(in_indices_keep),
-        len(out_indices_keep),
-        kernel_size=layer.kernel_size,
-        stride=layer.stride,
-        padding=layer.padding,
-        dilation=layer.dilation,
-        groups=layer.groups,
-        bias=(layer.bias is not None),
-    )
-    with torch.no_grad():
-        new_layer.weight.data.copy_(new_weight)
-        if new_bias is not None:
-            new_layer.bias.data.copy_(new_bias)
-
-    return new_layer
-
-
-def prune_cnn_legacy(
-    original_cnn: CNN, dropout_rate=0.5, scaling=True, **indices_to_prune
-):
-    indices_to_prune_conv1 = indices_to_prune.get("indices_to_prune_conv1", None)
-    indices_to_prune_conv2 = indices_to_prune.get("indices_to_prune_conv2", None)
-    indices_to_prune_conv3 = indices_to_prune.get("indices_to_prune_conv3", None)
-    indices_to_prune_fc = indices_to_prune.get("indices_to_prune_fc", None)
-
-    conv1 = original_cnn.layer1[0]
-    if indices_to_prune_conv1 is None:
-        num_output_channels_to_prune_conv1 = int(conv1.out_channels * dropout_rate)
-        output_indices_to_prune_conv1 = np.random.choice(
-            conv1.out_channels, num_output_channels_to_prune_conv1, replace=False
-        )
-        indices_to_prune_conv1 = {"output": output_indices_to_prune_conv1}
-    pruned_layer1 = prune_conv_layer(conv1, indices_to_prune_conv1)
-
-    conv2 = original_cnn.layer2[0]
-    if indices_to_prune_conv2 is None:
-        num_output_channels_to_prune_conv2 = int(conv2.out_channels * dropout_rate)
-        output_indices_to_prune_conv2 = np.random.choice(
-            conv2.out_channels, num_output_channels_to_prune_conv2, replace=False
-        )
-        indices_to_prune_conv2 = {
-            "input": output_indices_to_prune_conv1,
-            "output": output_indices_to_prune_conv2,
-        }
-    pruned_layer2 = prune_conv_layer(conv2, indices_to_prune_conv2)
-
-    conv3 = original_cnn.layer3[0]
-    if indices_to_prune_conv3 is None:
-        num_output_channels_to_prune_conv3 = int(conv3.out_channels * dropout_rate)
-        output_indices_to_prune_conv3 = np.random.choice(
-            conv3.out_channels, num_output_channels_to_prune_conv3, replace=False
-        )
-        indices_to_prune_conv3 = {
-            "input": output_indices_to_prune_conv2,
-            "output": output_indices_to_prune_conv3,
-        }
-    pruned_layer3 = prune_conv_layer(conv3, indices_to_prune_conv3)
-
-    fc = original_cnn.fc
-    if indices_to_prune_fc is None:
-        input_indices_to_prune_fc = []
-        for channel_index in output_indices_to_prune_conv3:
-            start_index = channel_index * 4 * 4
-            end_index = (channel_index + 1) * 4 * 4
-            input_indices_to_prune_fc.extend(list(range(start_index, end_index)))
-        input_indices_to_prune_fc = np.sort(input_indices_to_prune_fc)
-        indices_to_prune_fc = {"input": input_indices_to_prune_fc}
-    pruned_fc = prune_linear_layer(fc, indices_to_prune_fc)
-
-    pruned_cnn = CNN()
-    pruned_cnn.layer1[0] = pruned_layer1
-    pruned_cnn.layer2[0] = pruned_layer2
-    pruned_cnn.layer3[0] = pruned_layer3
-    pruned_cnn.fc = pruned_fc
-
-    if scaling:
-        pruned_cnn.layer1.add_module("scaling", DropoutScaling(dropout_rate))
-        pruned_cnn.layer2.add_module("scaling", DropoutScaling(dropout_rate))
-        pruned_cnn.layer3.add_module("scaling", DropoutScaling(dropout_rate))
-
-    return (
-        pruned_cnn,
-        indices_to_prune_conv1,
-        indices_to_prune_conv2,
-        indices_to_prune_conv3,
-        indices_to_prune_fc,
-    )
-
-
-def prune_cnn_v2(model, dropout_rate=0.5):
-    pruned_indices_dict = {}
-
-    conv1 = model.layer1[0]
-    num_output_channels_to_prune_conv1 = int(conv1.out_channels * dropout_rate)
-    output_indices_to_prune_conv1 = np.random.choice(
-        conv1.out_channels, num_output_channels_to_prune_conv1, replace=False
-    )
-    indices_to_prune_conv1 = {"output": output_indices_to_prune_conv1}
-    pruned_layer1 = prune_conv_layer(conv1, indices_to_prune_conv1)
-    pruned_indices_dict["layer1"] = indices_to_prune_conv1
-
-    conv2 = model.layer2[0]
-    num_output_channels_to_prune_conv2 = int(conv2.out_channels * dropout_rate)
-    output_indices_to_prune_conv2 = np.random.choice(
-        conv2.out_channels, num_output_channels_to_prune_conv2, replace=False
-    )
-    indices_to_prune_conv2 = {
-        "input": output_indices_to_prune_conv1,
-        "output": output_indices_to_prune_conv2,
-    }
-    pruned_layer2 = prune_conv_layer(conv2, indices_to_prune_conv2)
-    pruned_indices_dict["layer2"] = indices_to_prune_conv2
-
-    conv3 = model.layer3[0]
-    num_output_channels_to_prune_conv3 = int(conv3.out_channels * dropout_rate)
-    output_indices_to_prune_conv3 = np.random.choice(
-        conv3.out_channels, num_output_channels_to_prune_conv3, replace=False
-    )
-    indices_to_prune_conv3 = {
-        "input": output_indices_to_prune_conv2,
-        "output": output_indices_to_prune_conv3,
-    }
-    pruned_layer3 = prune_conv_layer(conv3, indices_to_prune_conv3)
-    pruned_indices_dict["layer3"] = indices_to_prune_conv3
-
-    fc = model.fc
-    input_indices_to_prune_fc = []
-    for channel_index in output_indices_to_prune_conv3:
-        start_index = channel_index * 4 * 4
-        end_index = (channel_index + 1) * 4 * 4
-        input_indices_to_prune_fc.extend(list(range(start_index, end_index)))
-    input_indices_to_prune_fc = np.sort(input_indices_to_prune_fc)
-    indices_to_prune_fc = {"input": input_indices_to_prune_fc}
-    pruned_fc = prune_linear_layer(fc, indices_to_prune_fc)
-    pruned_indices_dict["fc"] = indices_to_prune_fc
-
-    pruned_cnn = CNN()
-    pruned_cnn.layer1[0] = pruned_layer1
-    pruned_cnn.layer2[0] = pruned_layer2
-    pruned_cnn.layer3[0] = pruned_layer3
-    pruned_cnn.fc = pruned_fc
-
-    pruned_cnn.layer1.add_module("scaling", DropoutScaling(dropout_rate))
-    pruned_cnn.layer2.add_module("scaling", DropoutScaling(dropout_rate))
-    pruned_cnn.layer3.add_module("scaling", DropoutScaling(dropout_rate))
-
-    return pruned_cnn, pruned_indices_dict
-
-
 def prune_cnn(
     model: nn.Module,
     dropout_rate: float,
@@ -618,6 +261,7 @@ def prune_cnn(
         model: The CNN model to prune.
         dropout_rate: The dropout rate to use for pruning.
         optional_indices_dict: A dictionary containing the optional indices to prune for each layer.
+        scaling: Whether to use scaling after pruning.
 
     Returns:
         pruned_model: The pruned CNN model.
@@ -713,6 +357,7 @@ def prune_resnet18(
         model: The ResNet18 model to prune.
         dropout_rate: The dropout rate to use for pruning.
         optional_indices_dict: A dictionary containing the optional indices to prune for each layer.
+        scaling: Whether to use scaling after pruning.
 
     Returns:
         pruned_model: The pruned ResNet18 model.
@@ -869,6 +514,188 @@ def prune_resnet18(
     pruned_indices_dicts[layer_key] = {"input": in_features_to_prune}
     new_layer = prune_linear_layer(current_layer, pruned_indices_dicts[layer_key])
     setattr(new_model, layer_key, new_layer)
+
+    return new_model, pruned_indices_dicts
+
+
+def prune_transformer(
+    model: Transformer,
+    dropout_rate: float = 0.5,
+    optional_indices_dict: Optional[Dict[str, np.ndarray]] = None,
+    scaling: bool = True,
+):
+    """Prune a Transformer model by using the provided dropout rate and optional indices to prune.
+    Pick the right number of channels to prune for each layer based on the dropout rate.
+    Then pick the channels to prune, and the indices picked must be within the optional indices.
+
+    Args:
+        model: The Transformer model to prune.
+        dropout_rate: The dropout rate to use for pruning.
+        optional_indices_dict: A dictionary containing the optional indices to prune for each layer.
+        scaling: Whether to use scaling after pruning.
+
+    Returns:
+        pruned_model: The pruned Transformer model.
+        pruned_indices_dict: A dictionary containing the indices to prune for each pruned layer.
+    """
+    new_model = copy.deepcopy(model)
+
+    pruned_indices_dicts = {}
+
+    num_heads = new_model.num_heads
+    num_layers = new_model.num_layers
+    d_model = new_model.d_model
+    d_ff = new_model.d_ff
+    d_k = d_model // num_heads
+
+    num_out_emb_to_prune = int(d_model * dropout_rate)
+    if (
+        num_out_emb_to_prune % 2 != 0
+    ):  # Mkae sure the number of out embeddings to prune is even
+        num_out_emb_to_prune -= 1
+    out_indices_to_prune = np.random.choice(
+        range(d_model), num_out_emb_to_prune, replace=False
+    )
+    pruned_indices_dicts["embedding"] = {"output": out_indices_to_prune}
+
+    # ----- Prune embedding layer -----
+    new_encoder_embedding = prune_embedding_layer(
+        new_model.encoder_embedding, pruned_indices_dicts["embedding"]
+    )
+    new_decoder_embedding = prune_embedding_layer(
+        new_model.decoder_embedding, pruned_indices_dicts["embedding"]
+    )
+    if scaling:
+        new_encoder_embedding = nn.Sequential(
+            new_encoder_embedding, DropoutScaling(dropout_rate)
+        )
+        new_decoder_embedding = nn.Sequential(
+            new_decoder_embedding, DropoutScaling(dropout_rate)
+        )
+    # Encoder embedding and decoder embedding pruned the same indices because of the cross attention
+    setattr(new_model, "encoder_embedding", new_encoder_embedding)
+    setattr(new_model, "decoder_embedding", new_decoder_embedding)
+
+    # ----- Prune PositionalEncoding -----
+    new_model.positional_encoding.emb_dim = d_model - len(out_indices_to_prune)
+    out_emb_indices_keep = np.sort(
+        np.setdiff1d(np.arange(d_model), out_indices_to_prune)
+    )
+    new_pe = torch.index_select(
+        new_model.positional_encoding.pe, 2, torch.tensor(out_emb_indices_keep)
+    )
+    setattr(new_model.positional_encoding, "pe", new_pe)
+
+    # ----- Prune Encoder and Decoder Blocks -----
+    # Inside the block, for W_q, W_k, W_v, the out pruned indices can be picked randomly, by should be by uniformly picked for each head
+    # And the pruned indices should be the same for W_q, W_k, W_v
+    # the in pruned indices should be the same as the out pruned indices of the embedding layer
+    # For W_o, the in pruned indices should be the same as the out pruned indices of the multihead attention layers
+    # the out pruned indices should be the same as the embedding layer because of residual connection
+    for block in range(num_layers):
+        for type in ["encoder", "decoder"]:
+            # Generate the attention pruned indices for each block
+            key = f"{type}.{block}.self_attention"
+            out_indices_to_prune = []
+            for head in range(num_heads):
+                start_index = head * d_k
+                end_index = (head + 1) * d_k
+                head_indices = range(start_index, end_index)
+                num_out_indices_to_prune_per_head = int(d_k * dropout_rate)
+                out_indices_to_prune_per_head = np.random.choice(
+                    head_indices, num_out_indices_to_prune_per_head, replace=False
+                )
+                out_indices_to_prune.extend(out_indices_to_prune_per_head.tolist())
+            out_indices_to_prune = np.array(out_indices_to_prune)
+            in_indices_to_prune = pruned_indices_dicts["embedding"]["output"]
+            pruned_indices_dicts[key] = {
+                "input": in_indices_to_prune,
+                "output": out_indices_to_prune,
+            }
+
+            if type == "decoder":
+                key = f"{type}.{block}.cross_attention"
+                out_indices_to_prune = []
+                for head in range(num_heads):
+                    start_index = head * d_k
+                    end_index = (head + 1) * d_k
+                    head_indices = range(start_index, end_index)
+                    num_out_indices_to_prune_per_head = int(d_k * dropout_rate)
+                    out_indices_to_prune_per_head = np.random.choice(
+                        head_indices, num_out_indices_to_prune_per_head, replace=False
+                    )
+                    out_indices_to_prune.extend(out_indices_to_prune_per_head.tolist())
+                out_indices_to_prune = np.array(out_indices_to_prune)
+                in_indices_to_prune = pruned_indices_dicts["embedding"]["output"]
+                pruned_indices_dicts[key] = {
+                    "input": in_indices_to_prune,
+                    "output": out_indices_to_prune,
+                }
+
+            # Generate the feedforward pruned indices for each block
+            key = f"{type}.{block}.feedforward"
+            num_out_indices_to_prune = int(d_ff * dropout_rate)
+            out_indices_to_prune = np.random.choice(
+                range(d_ff), num_out_indices_to_prune, replace=False
+            )
+            if type == "encoder":
+                in_indices_to_prune = pruned_indices_dicts[
+                    key.replace("feedforward", "self_attention")
+                ]["output"]
+            else:
+                in_indices_to_prune = pruned_indices_dicts[
+                    key.replace("feedforward", "cross_attention")
+                ]["output"]
+            pruned_indices_dicts[key] = {
+                "input": in_indices_to_prune,
+                "output": out_indices_to_prune,
+            }
+
+            if type == "encoder":
+                block_pruned_indices_dicts = {
+                    "self_attention": pruned_indices_dicts[
+                        f"encoder.{block}.self_attention"
+                    ],
+                    "feedforward": pruned_indices_dicts[f"encoder.{block}.feedforward"],
+                }
+            else:
+                block_pruned_indices_dicts = {
+                    "self_attention": pruned_indices_dicts[
+                        f"encoder.{block}.self_attention"
+                    ],
+                    "cross_attention": pruned_indices_dicts[
+                        f"decoder.{block}.cross_attention"
+                    ],
+                    "feedforward": pruned_indices_dicts[f"encoder.{block}.feedforward"],
+                }
+
+            if type == "encoder":
+                original_encoder_block = getattr(new_model, "encoder_blocks")[block]
+                new_encoder_block = prune_transformer_block(
+                    original_encoder_block,
+                    block_pruned_indices_dicts,
+                    dropout_rate,
+                    scaling,
+                )
+                new_model.encoder_blocks[block] = new_encoder_block
+            else:
+                original_decoder_block = getattr(new_model, "decoder_blocks")[block]
+                new_decoder_block = prune_transformer_block(
+                    original_decoder_block,
+                    block_pruned_indices_dicts,
+                    dropout_rate,
+                    scaling,
+                )
+                new_model.decoder_blocks[block] = new_decoder_block
+
+    # ----- Prune output layer -----
+    key = "fc"
+    in_indices_to_prune = pruned_indices_dicts[f"decoder.{num_layers - 1}.feedforward"][
+        "input"
+    ]
+    pruned_indices_dicts[key] = {"input": in_indices_to_prune}
+    new_fc = prune_linear_layer(new_model.fc, pruned_indices_dicts[key])
+    setattr(new_model, key, new_fc)
 
     return new_model, pruned_indices_dicts
 
@@ -1080,3 +907,135 @@ def prune_resnet18_groups_nested(model: ResNet, dropout_rates: List[float]):
             pruned_indices_dicts.append(pruned_indices_dict)
 
     return pruned_models, pruned_indices_dicts
+
+
+def prune_cnn_legacy(
+    original_cnn: CNN, dropout_rate=0.5, scaling=True, **indices_to_prune
+):
+    indices_to_prune_conv1 = indices_to_prune.get("indices_to_prune_conv1", None)
+    indices_to_prune_conv2 = indices_to_prune.get("indices_to_prune_conv2", None)
+    indices_to_prune_conv3 = indices_to_prune.get("indices_to_prune_conv3", None)
+    indices_to_prune_fc = indices_to_prune.get("indices_to_prune_fc", None)
+
+    conv1 = original_cnn.layer1[0]
+    if indices_to_prune_conv1 is None:
+        num_output_channels_to_prune_conv1 = int(conv1.out_channels * dropout_rate)
+        output_indices_to_prune_conv1 = np.random.choice(
+            conv1.out_channels, num_output_channels_to_prune_conv1, replace=False
+        )
+        indices_to_prune_conv1 = {"output": output_indices_to_prune_conv1}
+    pruned_layer1 = prune_conv_layer(conv1, indices_to_prune_conv1)
+
+    conv2 = original_cnn.layer2[0]
+    if indices_to_prune_conv2 is None:
+        num_output_channels_to_prune_conv2 = int(conv2.out_channels * dropout_rate)
+        output_indices_to_prune_conv2 = np.random.choice(
+            conv2.out_channels, num_output_channels_to_prune_conv2, replace=False
+        )
+        indices_to_prune_conv2 = {
+            "input": output_indices_to_prune_conv1,
+            "output": output_indices_to_prune_conv2,
+        }
+    pruned_layer2 = prune_conv_layer(conv2, indices_to_prune_conv2)
+
+    conv3 = original_cnn.layer3[0]
+    if indices_to_prune_conv3 is None:
+        num_output_channels_to_prune_conv3 = int(conv3.out_channels * dropout_rate)
+        output_indices_to_prune_conv3 = np.random.choice(
+            conv3.out_channels, num_output_channels_to_prune_conv3, replace=False
+        )
+        indices_to_prune_conv3 = {
+            "input": output_indices_to_prune_conv2,
+            "output": output_indices_to_prune_conv3,
+        }
+    pruned_layer3 = prune_conv_layer(conv3, indices_to_prune_conv3)
+
+    fc = original_cnn.fc
+    if indices_to_prune_fc is None:
+        input_indices_to_prune_fc = []
+        for channel_index in output_indices_to_prune_conv3:
+            start_index = channel_index * 4 * 4
+            end_index = (channel_index + 1) * 4 * 4
+            input_indices_to_prune_fc.extend(list(range(start_index, end_index)))
+        input_indices_to_prune_fc = np.sort(input_indices_to_prune_fc)
+        indices_to_prune_fc = {"input": input_indices_to_prune_fc}
+    pruned_fc = prune_linear_layer(fc, indices_to_prune_fc)
+
+    pruned_cnn = CNN()
+    pruned_cnn.layer1[0] = pruned_layer1
+    pruned_cnn.layer2[0] = pruned_layer2
+    pruned_cnn.layer3[0] = pruned_layer3
+    pruned_cnn.fc = pruned_fc
+
+    if scaling:
+        pruned_cnn.layer1.add_module("scaling", DropoutScaling(dropout_rate))
+        pruned_cnn.layer2.add_module("scaling", DropoutScaling(dropout_rate))
+        pruned_cnn.layer3.add_module("scaling", DropoutScaling(dropout_rate))
+
+    return (
+        pruned_cnn,
+        indices_to_prune_conv1,
+        indices_to_prune_conv2,
+        indices_to_prune_conv3,
+        indices_to_prune_fc,
+    )
+
+
+def prune_cnn_v2(model, dropout_rate=0.5):
+    pruned_indices_dict = {}
+
+    conv1 = model.layer1[0]
+    num_output_channels_to_prune_conv1 = int(conv1.out_channels * dropout_rate)
+    output_indices_to_prune_conv1 = np.random.choice(
+        conv1.out_channels, num_output_channels_to_prune_conv1, replace=False
+    )
+    indices_to_prune_conv1 = {"output": output_indices_to_prune_conv1}
+    pruned_layer1 = prune_conv_layer(conv1, indices_to_prune_conv1)
+    pruned_indices_dict["layer1"] = indices_to_prune_conv1
+
+    conv2 = model.layer2[0]
+    num_output_channels_to_prune_conv2 = int(conv2.out_channels * dropout_rate)
+    output_indices_to_prune_conv2 = np.random.choice(
+        conv2.out_channels, num_output_channels_to_prune_conv2, replace=False
+    )
+    indices_to_prune_conv2 = {
+        "input": output_indices_to_prune_conv1,
+        "output": output_indices_to_prune_conv2,
+    }
+    pruned_layer2 = prune_conv_layer(conv2, indices_to_prune_conv2)
+    pruned_indices_dict["layer2"] = indices_to_prune_conv2
+
+    conv3 = model.layer3[0]
+    num_output_channels_to_prune_conv3 = int(conv3.out_channels * dropout_rate)
+    output_indices_to_prune_conv3 = np.random.choice(
+        conv3.out_channels, num_output_channels_to_prune_conv3, replace=False
+    )
+    indices_to_prune_conv3 = {
+        "input": output_indices_to_prune_conv2,
+        "output": output_indices_to_prune_conv3,
+    }
+    pruned_layer3 = prune_conv_layer(conv3, indices_to_prune_conv3)
+    pruned_indices_dict["layer3"] = indices_to_prune_conv3
+
+    fc = model.fc
+    input_indices_to_prune_fc = []
+    for channel_index in output_indices_to_prune_conv3:
+        start_index = channel_index * 4 * 4
+        end_index = (channel_index + 1) * 4 * 4
+        input_indices_to_prune_fc.extend(list(range(start_index, end_index)))
+    input_indices_to_prune_fc = np.sort(input_indices_to_prune_fc)
+    indices_to_prune_fc = {"input": input_indices_to_prune_fc}
+    pruned_fc = prune_linear_layer(fc, indices_to_prune_fc)
+    pruned_indices_dict["fc"] = indices_to_prune_fc
+
+    pruned_cnn = CNN()
+    pruned_cnn.layer1[0] = pruned_layer1
+    pruned_cnn.layer2[0] = pruned_layer2
+    pruned_cnn.layer3[0] = pruned_layer3
+    pruned_cnn.fc = pruned_fc
+
+    pruned_cnn.layer1.add_module("scaling", DropoutScaling(dropout_rate))
+    pruned_cnn.layer2.add_module("scaling", DropoutScaling(dropout_rate))
+    pruned_cnn.layer3.add_module("scaling", DropoutScaling(dropout_rate))
+
+    return pruned_cnn, pruned_indices_dict
