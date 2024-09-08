@@ -290,20 +290,20 @@ def prune_embedding_layer(
 
 def prune_multihead_attention_layer(
     layer,
-    prune_indices_dict: Optional[Dict[str, np.ndarray]] = None,
+    layer_pruned_indices_dict: Optional[Dict[str, np.ndarray]] = None,
     dropout_rate=0.0,
     scaling=True,
 ):
     num_heads = layer.num_heads
 
-    if prune_indices_dict is not None:
-        new_W_q = prune_linear_layer(layer.W_q, prune_indices_dict)
-        new_W_k = prune_linear_layer(layer.W_k, prune_indices_dict)
-        new_W_v = prune_linear_layer(layer.W_v, prune_indices_dict)
+    if layer_pruned_indices_dict is not None:
+        new_W_q = prune_linear_layer(layer.W_q, layer_pruned_indices_dict)
+        new_W_k = prune_linear_layer(layer.W_k, layer_pruned_indices_dict)
+        new_W_v = prune_linear_layer(layer.W_v, layer_pruned_indices_dict)
 
         W_o_pruned_indices_dict = {
-            "input": prune_indices_dict.get("output", np.array([])),
-            "output": prune_indices_dict.get("input", np.array([])),
+            "input": layer_pruned_indices_dict.get("output", np.array([])),
+            "output": layer_pruned_indices_dict.get("input", np.array([])),
         }
         new_W_o = prune_linear_layer(layer.W_o, W_o_pruned_indices_dict)
 
@@ -312,11 +312,14 @@ def prune_multihead_attention_layer(
             new_W_k = nn.Sequential(new_W_k, DropoutScaling(dropout_rate))
             new_W_v = nn.Sequential(new_W_v, DropoutScaling(dropout_rate))
             new_W_o = nn.Sequential(new_W_o, DropoutScaling(dropout_rate))
-
-        if scaling:
-            new_d_model = new_W_o[0].out_features
         else:
-            new_d_model = new_W_o.out_features
+            # Wrap the pruned linear layers in nn.Sequential for alignment with aggregation functions
+            new_W_q = nn.Sequential(new_W_q)
+            new_W_k = nn.Sequential(new_W_k)
+            new_W_v = nn.Sequential(new_W_v)
+            new_W_o = nn.Sequential(new_W_o)
+
+        new_d_model = new_W_o[0].out_features
         new_layer = MultiHeadAttention(new_d_model, num_heads)
         setattr(new_layer, "W_q", new_W_q)
         setattr(new_layer, "W_k", new_W_k)
@@ -330,29 +333,29 @@ def prune_multihead_attention_layer(
 
 def prune_feedforward_layer(
     layer,
-    prune_indices_dict: Optional[Dict[str, np.ndarray]] = None,
+    layer_pruned_indices_dict: Optional[Dict[str, np.ndarray]] = None,
     dropout_rate=0.0,
     scaling=True,
 ):
-    if prune_indices_dict is not None:
-        new_fc1 = prune_linear_layer(layer.fc1, prune_indices_dict)
+    if layer_pruned_indices_dict is not None:
+        new_fc1 = prune_linear_layer(layer.fc1, layer_pruned_indices_dict)
         new_fc2 = prune_linear_layer(
             layer.fc2,
             {
-                "input": prune_indices_dict.get("output", np.array([])),
-                "output": prune_indices_dict.get("input", np.array([])),
+                "input": layer_pruned_indices_dict.get("output", np.array([])),
+                "output": layer_pruned_indices_dict.get("input", np.array([])),
             },
         )
         if scaling:
             new_fc1 = nn.Sequential(new_fc1, DropoutScaling(dropout_rate))
             new_fc2 = nn.Sequential(new_fc2, DropoutScaling(dropout_rate))
-
-        if scaling:
-            new_d_model = new_fc2[0].out_features
-            new_d_ff = new_fc1[0].out_features
         else:
-            new_d_model = new_fc2.out_features
-            new_d_ff = new_fc1.out_features
+            # Wrap the pruned linear layers in nn.Sequential for alignment with aggregation functions
+            new_fc1 = nn.Sequential(new_fc1)
+            new_fc2 = nn.Sequential(new_fc2)
+
+        new_d_model = new_fc2[0].out_features
+        new_d_ff = new_fc1[0].out_features
         new_layer = FeedForward(new_d_model, new_d_ff)
         setattr(new_layer, "fc1", new_fc1)
         setattr(new_layer, "fc2", new_fc2)
@@ -364,7 +367,7 @@ def prune_feedforward_layer(
 
 def prune_transformer_block(
     block: Union[EncoderBlock, DecoderBlock],
-    prune_indices_dict: Optional[Dict[str, np.ndarray]] = None,
+    block_pruned_indices_dict: Optional[Dict[str, np.ndarray]] = None,
     dropout_rate: float = 0.0,
     scaling: bool = True,
 ):
@@ -377,11 +380,13 @@ def prune_transformer_block(
             "Input block must be an instance of EncoderBlock or DecoderBlock"
         )
 
-    self_attention_pruned_indices_dict = prune_indices_dict.get("self_attention", None)
-    feedforward_pruned_indices_dict = prune_indices_dict.get("feedforward", None)
+    self_attention_pruned_indices_dict = block_pruned_indices_dict.get(
+        "self_attn", None
+    )
+    feedforward_pruned_indices_dict = block_pruned_indices_dict.get("feedforward", None)
     if not is_encoder:
-        cross_attention_pruned_indices_dict = prune_indices_dict.get(
-            "cross_attention", None
+        cross_attention_pruned_indices_dict = block_pruned_indices_dict.get(
+            "cross_attn", None
         )
     else:
         cross_attention_pruned_indices_dict = None
@@ -412,7 +417,7 @@ def prune_transformer_block(
     if is_encoder:
         assert (
             new_self_attn.d_model == new_ffn.d_model
-        ), "Dimension mismatch between attention and feedforward layers"
+        ), f"Dimension mismatch between attention({new_self_attn.d_model}) and feedforward layers({new_ffn.d_model})"
     else:
         assert (
             new_self_attn.d_model == new_cross_attn.d_model

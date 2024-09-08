@@ -7,6 +7,11 @@ import torch.nn as nn
 from torchvision.models import ResNet
 
 from modules.models import CNN, DropoutScaling, Transformer
+from modules.pruned_indices_dicts import (
+    BlockPrunedIndicesDict,
+    LayerPrunedIndicesDict,
+    ModelPrunedIndicesDict,
+)
 
 from .prune_layers import (
     prune_conv_layer,
@@ -536,11 +541,11 @@ def prune_transformer(
 
     Returns:
         pruned_model: The pruned Transformer model.
-        pruned_indices_dict: A dictionary containing the indices to prune for each pruned layer.
+        model_pruned_indices_dict: A dictionary containing the indices to prune for each pruned layer.
     """
     new_model = copy.deepcopy(model)
 
-    pruned_indices_dicts = {}
+    model_pruned_indices_dict = ModelPrunedIndicesDict()
 
     num_heads = new_model.num_heads
     num_layers = new_model.num_layers
@@ -548,7 +553,8 @@ def prune_transformer(
     d_ff = new_model.d_ff
     d_k = d_model // num_heads
 
-    num_out_emb_to_prune = int(d_model * dropout_rate)
+    # num_out_emb_to_prune = int(d_model * dropout_rate)
+    num_out_emb_to_prune = int(d_k * dropout_rate) * num_heads
     if (
         num_out_emb_to_prune % 2 != 0
     ):  # Mkae sure the number of out embeddings to prune is even
@@ -556,14 +562,16 @@ def prune_transformer(
     out_indices_to_prune = np.random.choice(
         range(d_model), num_out_emb_to_prune, replace=False
     )
-    pruned_indices_dicts["embedding"] = {"output": out_indices_to_prune}
+    embedding_pruned_indices_dict = LayerPrunedIndicesDict()
+    embedding_pruned_indices_dict["output"] = out_indices_to_prune
+    model_pruned_indices_dict["embedding"] = embedding_pruned_indices_dict
 
     # ----- Prune embedding layer -----
     new_encoder_embedding = prune_embedding_layer(
-        new_model.encoder_embedding, pruned_indices_dicts["embedding"]
+        new_model.encoder_embedding, embedding_pruned_indices_dict
     )
     new_decoder_embedding = prune_embedding_layer(
-        new_model.decoder_embedding, pruned_indices_dicts["embedding"]
+        new_model.decoder_embedding, embedding_pruned_indices_dict
     )
     if scaling:
         new_encoder_embedding = nn.Sequential(
@@ -572,6 +580,10 @@ def prune_transformer(
         new_decoder_embedding = nn.Sequential(
             new_decoder_embedding, DropoutScaling(dropout_rate)
         )
+    else:
+        # Wrap a Sequential for alignment with aggregation interface
+        new_encoder_embedding = nn.Sequential(new_encoder_embedding)
+        new_decoder_embedding = nn.Sequential(new_decoder_embedding)
     # Encoder embedding and decoder embedding pruned the same indices because of the cross attention
     setattr(new_model, "encoder_embedding", new_encoder_embedding)
     setattr(new_model, "decoder_embedding", new_decoder_embedding)
@@ -594,8 +606,8 @@ def prune_transformer(
     # the out pruned indices should be the same as the embedding layer because of residual connection
     for block in range(num_layers):
         for type in ["encoder", "decoder"]:
-            # Generate the attention pruned indices for each block
-            key = f"{type}.{block}.self_attention"
+            block_pruned_indices_dict = BlockPrunedIndicesDict()
+            # Generate the self attention pruned indices for the block
             out_indices_to_prune = []
             for head in range(num_heads):
                 start_index = head * d_k
@@ -607,14 +619,14 @@ def prune_transformer(
                 )
                 out_indices_to_prune.extend(out_indices_to_prune_per_head.tolist())
             out_indices_to_prune = np.array(out_indices_to_prune)
-            in_indices_to_prune = pruned_indices_dicts["embedding"]["output"]
-            pruned_indices_dicts[key] = {
-                "input": in_indices_to_prune,
-                "output": out_indices_to_prune,
-            }
+            in_indices_to_prune = embedding_pruned_indices_dict["output"]
+            self_attn_pruned_indices_dict = LayerPrunedIndicesDict()
+            self_attn_pruned_indices_dict["input"] = in_indices_to_prune
+            self_attn_pruned_indices_dict["output"] = out_indices_to_prune
+            block_pruned_indices_dict["self_attn"] = self_attn_pruned_indices_dict
 
             if type == "decoder":
-                key = f"{type}.{block}.cross_attention"
+                # Generate the cross attention pruned indices for the block
                 out_indices_to_prune = []
                 for head in range(num_heads):
                     start_index = head * d_k
@@ -626,54 +638,31 @@ def prune_transformer(
                     )
                     out_indices_to_prune.extend(out_indices_to_prune_per_head.tolist())
                 out_indices_to_prune = np.array(out_indices_to_prune)
-                in_indices_to_prune = pruned_indices_dicts["embedding"]["output"]
-                pruned_indices_dicts[key] = {
-                    "input": in_indices_to_prune,
-                    "output": out_indices_to_prune,
-                }
+                in_indices_to_prune = embedding_pruned_indices_dict["output"]
+                cross_attn_pruned_indices_dict = LayerPrunedIndicesDict()
+                cross_attn_pruned_indices_dict["input"] = in_indices_to_prune
+                cross_attn_pruned_indices_dict["output"] = out_indices_to_prune
+                block_pruned_indices_dict["cross_attn"] = cross_attn_pruned_indices_dict
 
-            # Generate the feedforward pruned indices for each block
-            key = f"{type}.{block}.feedforward"
+            # Generate the feedforward pruned indices for the block
+            if type == "encoder":
+                in_indices_to_prune = block_pruned_indices_dict["self_attn"]["output"]
+            else:
+                in_indices_to_prune = block_pruned_indices_dict["cross_attn"]["output"]
             num_out_indices_to_prune = int(d_ff * dropout_rate)
             out_indices_to_prune = np.random.choice(
                 range(d_ff), num_out_indices_to_prune, replace=False
             )
-            if type == "encoder":
-                in_indices_to_prune = pruned_indices_dicts[
-                    key.replace("feedforward", "self_attention")
-                ]["output"]
-            else:
-                in_indices_to_prune = pruned_indices_dicts[
-                    key.replace("feedforward", "cross_attention")
-                ]["output"]
-            pruned_indices_dicts[key] = {
-                "input": in_indices_to_prune,
-                "output": out_indices_to_prune,
-            }
-
-            if type == "encoder":
-                block_pruned_indices_dicts = {
-                    "self_attention": pruned_indices_dicts[
-                        f"encoder.{block}.self_attention"
-                    ],
-                    "feedforward": pruned_indices_dicts[f"encoder.{block}.feedforward"],
-                }
-            else:
-                block_pruned_indices_dicts = {
-                    "self_attention": pruned_indices_dicts[
-                        f"encoder.{block}.self_attention"
-                    ],
-                    "cross_attention": pruned_indices_dicts[
-                        f"decoder.{block}.cross_attention"
-                    ],
-                    "feedforward": pruned_indices_dicts[f"encoder.{block}.feedforward"],
-                }
+            feedforward_pruned_indices_dict = LayerPrunedIndicesDict()
+            feedforward_pruned_indices_dict["input"] = in_indices_to_prune
+            feedforward_pruned_indices_dict["output"] = out_indices_to_prune
+            block_pruned_indices_dict["feedforward"] = feedforward_pruned_indices_dict
 
             if type == "encoder":
                 original_encoder_block = getattr(new_model, "encoder_blocks")[block]
                 new_encoder_block = prune_transformer_block(
                     original_encoder_block,
-                    block_pruned_indices_dicts,
+                    block_pruned_indices_dict,
                     dropout_rate,
                     scaling,
                 )
@@ -682,22 +671,25 @@ def prune_transformer(
                 original_decoder_block = getattr(new_model, "decoder_blocks")[block]
                 new_decoder_block = prune_transformer_block(
                     original_decoder_block,
-                    block_pruned_indices_dicts,
+                    block_pruned_indices_dict,
                     dropout_rate,
                     scaling,
                 )
                 new_model.decoder_blocks[block] = new_decoder_block
 
-    # ----- Prune output layer -----
-    key = "fc"
-    in_indices_to_prune = pruned_indices_dicts[f"decoder.{num_layers - 1}.feedforward"][
-        "input"
-    ]
-    pruned_indices_dicts[key] = {"input": in_indices_to_prune}
-    new_fc = prune_linear_layer(new_model.fc, pruned_indices_dicts[key])
-    setattr(new_model, key, new_fc)
+            model_pruned_indices_dict[f"{type}.{block}"] = block_pruned_indices_dict
 
-    return new_model, pruned_indices_dicts
+    # ----- Prune output layer -----
+    in_indices_to_prune = model_pruned_indices_dict[f"decoder.{num_layers - 1}"][
+        "feedforward"
+    ]["input"]
+    fc_pruned_indices_dict = LayerPrunedIndicesDict()
+    fc_pruned_indices_dict["input"] = in_indices_to_prune
+    new_fc = prune_linear_layer(new_model.fc, fc_pruned_indices_dict)
+    setattr(new_model, "fc", new_fc)
+    model_pruned_indices_dict["fc"] = fc_pruned_indices_dict
+
+    return new_model, model_pruned_indices_dict
 
 
 def prune_shallow_resnet(model: ResNet, dropout_rate=0.5):
