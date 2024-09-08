@@ -1,10 +1,11 @@
 import torch
 from torch.utils.data import Dataset
+from datasets.arrow_dataset import Dataset as HFDataset
 
 
 # Create input-output pairs for next word prediction
 class NextWordPredictionDataset(Dataset):
-    def __init__(self, tokenized_data):
+    def __init__(self, tokenized_data: HFDataset):
         self.input_ids = tokenized_data["input_ids"]
         self.attention_mask = tokenized_data["attention_mask"]
 
