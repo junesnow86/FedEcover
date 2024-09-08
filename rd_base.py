@@ -16,32 +16,32 @@ from torchvision.models import resnet18
 from modules.aggregation import (
     aggregate_cnn,
     aggregate_resnet18,
+    vanilla_federated_averaging,
+)
+from modules.aggregation.aggregate_models import (
     aggregate_shallow_resnet,
     recover_global_from_pruned_cnn,
     recover_global_from_pruned_resnet18,
     recover_global_from_pruned_shallow_resnet,
-    vanilla_federated_averaging,
 )
 from modules.args_parser import get_args
 from modules.constants import NORMALIZATION_STATS
 from modules.data import create_non_iid_data
+from modules.debugging import replace_bn_with_identity
+from modules.evaluation import evaluate_acc, test
 from modules.models import CNN, ShallowResNet
 from modules.pruning import (
     prune_cnn,
-    # prune_cnn_v2,
     prune_resnet18,
-    prune_shallow_resnet,
     pruned_indices_dict_bagging_cnn,
     pruned_indices_dict_bagging_resnet18,
 )
+from modules.pruning.prune_models import prune_shallow_resnet
+from modules.training import train
 from modules.utils import (
     calculate_model_size,
-    evaluate_acc,
     replace_bn_with_ln,
-    test,
-    train,
 )
-from modules.debugging import replace_bn_with_identity
 
 args = get_args()
 SAVE_DIR = args.save_dir
@@ -294,9 +294,13 @@ for round in range(ROUNDS):
         local_train_loss = train(
             local_model, optimizer, criterion, dataloader, device=device, epochs=EPOCHS
         )
-        local_test_loss, local_test_acc, local_class_acc = test(
-            local_model, criterion, test_loader, device=device, num_classes=NUM_CLASSES
-        )
+        # local_test_loss, local_test_acc, local_class_acc = test(
+        #     local_model, criterion, test_loader, device=device, num_classes=NUM_CLASSES
+        # )
+        local_evaluation_result = evaluate_acc(local_model, dataloader, device=device, class_wise=True)
+        local_test_loss = local_evaluation_result["loss"]
+        local_test_acc = local_evaluation_result["accuracy"]
+        local_class_acc = local_evaluation_result["class_accuracy"]
         model_size = calculate_model_size(local_model, print_result=False, unit="MB")
         print(
             f"Subset {i + 1}\tModel Size: {model_size:.2f} MB\tTrain Loss: {local_train_loss:.4f}\tTest Loss: {local_test_loss:.4f}\tTest Acc: {local_test_acc:.4f}"
@@ -425,9 +429,13 @@ for round in range(ROUNDS):
     else:
         raise ValueError(f"Model type {MODEL_TYPE} not supported.")
 
-    global_test_loss, global_test_acc, global_class_acc = test(
-        global_model, criterion, test_loader, device=device, num_classes=NUM_CLASSES
-    )
+    # global_test_loss, global_test_acc, global_class_acc = test(
+    #     global_model, criterion, test_loader, device=device, num_classes=NUM_CLASSES
+    # )
+    evaluation_result = evaluate_acc(global_model, test_loader, device=device, class_wise=True)
+    global_test_loss = evaluation_result["loss"]
+    global_test_acc = evaluation_result["accuracy"]
+    global_class_acc = evaluation_result["class_accuracy"]
     print(
         f"Aggregated Test Loss: {global_test_loss:.4f}\tAggregated Test Acc: {global_test_acc:.4f}"
     )

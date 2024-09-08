@@ -13,15 +13,17 @@ from torch.utils.data import DataLoader, Subset
 from torchvision import datasets, transforms
 from torchvision.models import resnet18
 
-from modules.aggregation import aggregate_resnet18_vanilla, vanilla_federated_averaging
+from modules.aggregation import vanilla_federated_averaging
+from modules.aggregation.aggregate_models import aggregate_resnet18_vanilla
 from modules.args_parser import get_args
 from modules.constants import NORMALIZATION_STATS
 from modules.data import create_non_iid_data
 from modules.debugging import create_empty_pruned_indices_dict
+from modules.evaluation import test
 from modules.models import CNN
-
 from modules.pruning import prune_cnn, prune_resnet18
-from modules.utils import calculate_model_size, replace_bn_with_ln, test, train
+from modules.training import train
+from modules.utils import calculate_model_size, replace_bn_with_ln
 
 args = get_args()
 SAVE_DIR = args.save_dir
