@@ -1,0 +1,71 @@
+Pruned model size: 110.6301040649414 MB
+Training: 99it [00:05, 18.91it/s]Batch 100/1148, Loss: 3.9798, Acc: 0.5745
+Training: 199it [00:10, 18.78it/s]Batch 200/1148, Loss: 3.1786, Acc: 0.5880
+Training: 299it [00:16, 18.82it/s]Batch 300/1148, Loss: 3.3472, Acc: 0.5956
+Training: 399it [00:21, 18.81it/s]Batch 400/1148, Loss: 2.5000, Acc: 0.6039
+Training: 499it [00:26, 18.79it/s]Batch 500/1148, Loss: 3.0579, Acc: 0.6104
+Training: 599it [00:31, 18.75it/s]Batch 600/1148, Loss: 3.3411, Acc: 0.6164
+Training: 699it [00:37, 18.76it/s]Batch 700/1148, Loss: 3.4377, Acc: 0.6207
+Training: 799it [00:42, 18.70it/s]Batch 800/1148, Loss: 2.8381, Acc: 0.6251
+Training: 899it [00:48, 18.69it/s]Batch 900/1148, Loss: 3.0880, Acc: 0.6279
+Training: 999it [00:53, 18.67it/s]Batch 1000/1148, Loss: 2.7886, Acc: 0.6304
+Training: 1099it [00:58, 18.64it/s]Batch 1100/1148, Loss: 2.3814, Acc: 0.6320
+Training: 1148it [01:01, 18.72it/s]
+Validation: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 118/118 [00:02<00:00, 55.90it/s]
+Epoch 1/5       Train Loss: 3.1244      Train Acc: 0.6331       Val Loss: 2.7902        Val Acc: 0.6494
+Training: 98it [00:05, 18.66it/s]Batch 100/1148, Loss: 2.6219, Acc: 0.6602
+Training: 198it [00:10, 18.66it/s]Batch 200/1148, Loss: 3.3019, Acc: 0.6599
+Training: 298it [00:15, 18.66it/s]Batch 300/1148, Loss: 2.4635, Acc: 0.6578
+Training: 398it [00:21, 18.62it/s]Batch 400/1148, Loss: 2.2024, Acc: 0.6589
+Training: 498it [00:26, 18.58it/s]Batch 500/1148, Loss: 2.1691, Acc: 0.6587
+Training: 598it [00:32, 18.59it/s]Batch 600/1148, Loss: 2.3063, Acc: 0.6598
+Training: 698it [00:37, 18.57it/s]Batch 700/1148, Loss: 3.0545, Acc: 0.6622
+Training: 798it [00:42, 18.59it/s]Batch 800/1148, Loss: 2.6998, Acc: 0.6626
+Training: 898it [00:48, 18.57it/s]Batch 900/1148, Loss: 2.5833, Acc: 0.6640
+Training: 999it [00:57,  8.38it/s]Batch 1000/1148, Loss: 2.1217, Acc: 0.6644
+Training: 1099it [01:09,  8.34it/s]Batch 1100/1148, Loss: 2.2140, Acc: 0.6655
+Training: 1148it [01:15, 15.26it/s]
+Validation: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 118/118 [00:05<00:00, 21.45it/s]
+Epoch 2/5       Train Loss: 2.5782      Train Acc: 0.6657       Val Loss: 2.6305        Val Acc: 0.6615
+Training: 99it [00:11,  8.22it/s]Batch 100/1148, Loss: 2.3572, Acc: 0.6741
+Training: 199it [00:17, 18.55it/s]Batch 200/1148, Loss: 2.6361, Acc: 0.6788
+Training: 299it [00:23, 18.58it/s]Batch 300/1148, Loss: 2.0920, Acc: 0.6753
+Training: 399it [00:28, 18.58it/s]Batch 400/1148, Loss: 2.7360, Acc: 0.6763
+Training: 499it [00:34, 18.56it/s]Batch 500/1148, Loss: 3.3599, Acc: 0.6775
+Training: 599it [00:39, 18.58it/s]Batch 600/1148, Loss: 2.5106, Acc: 0.6787
+Training: 699it [00:46,  8.33it/s]Batch 700/1148, Loss: 1.9567, Acc: 0.6781
+Training: 799it [00:58,  8.26it/s]Batch 800/1148, Loss: 2.0125, Acc: 0.6789
+Training: 899it [01:10,  8.23it/s]Batch 900/1148, Loss: 2.2788, Acc: 0.6788
+Training: 999it [01:22,  8.21it/s]Batch 1000/1148, Loss: 1.8965, Acc: 0.6782
+Training: 1099it [01:34,  8.21it/s]Batch 1100/1148, Loss: 2.7696, Acc: 0.6791
+Training: 1148it [01:40, 11.48it/s]
+Validation: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 118/118 [00:05<00:00, 21.51it/s]
+Epoch 3/5       Train Loss: 2.4003      Train Acc: 0.6788       Val Loss: 2.5128        Val Acc: 0.6712
+Training: 99it [00:11,  8.42it/s]Batch 100/1148, Loss: 2.7734, Acc: 0.6867
+Training: 199it [00:23,  8.39it/s]Batch 200/1148, Loss: 1.9391, Acc: 0.6856
+Training: 299it [00:36,  8.36it/s]Batch 300/1148, Loss: 1.8960, Acc: 0.6856
+Training: 399it [00:48,  8.35it/s]Batch 400/1148, Loss: 2.4139, Acc: 0.6864
+Training: 499it [01:00,  8.42it/s]Batch 500/1148, Loss: 2.6204, Acc: 0.6876
+Training: 599it [01:12,  8.45it/s]Batch 600/1148, Loss: 2.4253, Acc: 0.6883
+Training: 699it [01:24,  8.46it/s]Batch 700/1148, Loss: 2.6461, Acc: 0.6884
+Training: 799it [01:36,  8.40it/s]Batch 800/1148, Loss: 2.0523, Acc: 0.6896
+Training: 899it [01:48,  8.40it/s]Batch 900/1148, Loss: 2.9434, Acc: 0.6897
+Training: 999it [02:00,  8.40it/s]Batch 1000/1148, Loss: 1.9718, Acc: 0.6901
+Training: 1099it [02:12,  8.17it/s]Batch 1100/1148, Loss: 2.0850, Acc: 0.6905
+Training: 1148it [02:18,  8.31it/s]
+Validation: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 118/118 [00:05<00:00, 21.50it/s]
+Epoch 4/5       Train Loss: 2.2453      Train Acc: 0.6905       Val Loss: 2.4215        Val Acc: 0.6786
+Training: 99it [00:11,  8.33it/s]Batch 100/1148, Loss: 2.5425, Acc: 0.6874
+Training: 199it [00:23,  8.33it/s]Batch 200/1148, Loss: 1.7956, Acc: 0.6948
+Training: 299it [00:35,  9.15it/s]Batch 300/1148, Loss: 2.4941, Acc: 0.6957
+Training: 399it [00:47,  8.44it/s]Batch 400/1148, Loss: 1.6141, Acc: 0.6970
+Training: 499it [00:59,  8.39it/s]Batch 500/1148, Loss: 2.5660, Acc: 0.6989
+Training: 599it [01:11,  8.40it/s]Batch 600/1148, Loss: 2.5695, Acc: 0.6991
+Training: 699it [01:23,  8.40it/s]Batch 700/1148, Loss: 2.0054, Acc: 0.7000
+Training: 799it [01:35,  8.21it/s]Batch 800/1148, Loss: 1.8299, Acc: 0.7007
+Training: 899it [01:47,  8.20it/s]Batch 900/1148, Loss: 2.2456, Acc: 0.7008
+Training: 999it [01:59,  8.23it/s]Batch 1000/1148, Loss: 2.1152, Acc: 0.7006
+Training: 1099it [02:11,  8.18it/s]Batch 1100/1148, Loss: 1.8337, Acc: 0.7007
+Training: 1148it [02:17,  8.37it/s]
+Validation: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 118/118 [00:05<00:00, 21.42it/s]
+Epoch 5/5       Train Loss: 2.1070      Train Acc: 0.7007       Val Loss: 2.3490        Val Acc: 0.6840
