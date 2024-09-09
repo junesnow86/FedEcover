@@ -300,7 +300,7 @@ for round in range(ROUNDS):
         local_evaluation_result = evaluate_acc(local_model, dataloader, device=device, class_wise=True)
         local_test_loss = local_evaluation_result["loss"]
         local_test_acc = local_evaluation_result["accuracy"]
-        local_class_acc = local_evaluation_result["class_accuracy"]
+        local_class_acc = local_evaluation_result["class_wise_accuracy"]
         model_size = calculate_model_size(local_model, print_result=False, unit="MB")
         print(
             f"Subset {i + 1}\tModel Size: {model_size:.2f} MB\tTrain Loss: {local_train_loss:.4f}\tTest Loss: {local_test_loss:.4f}\tTest Acc: {local_test_acc:.4f}"
@@ -435,7 +435,7 @@ for round in range(ROUNDS):
     evaluation_result = evaluate_acc(global_model, test_loader, device=device, class_wise=True)
     global_test_loss = evaluation_result["loss"]
     global_test_acc = evaluation_result["accuracy"]
-    global_class_acc = evaluation_result["class_accuracy"]
+    global_class_acc = evaluation_result["class_wise_accuracy"]
     print(
         f"Aggregated Test Loss: {global_test_loss:.4f}\tAggregated Test Acc: {global_test_acc:.4f}"
     )
