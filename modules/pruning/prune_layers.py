@@ -12,6 +12,10 @@ from modules.models.transformer import (
     FeedForward,
     MultiHeadAttention,
 )
+from modules.pruned_indices_dicts import (
+    BlockPrunedIndicesDict,
+    LayerPrunedIndicesDict,
+)
 
 
 def prune_linear_layer_legacy(
@@ -124,13 +128,13 @@ def prune_conv_layer_legacy(conv_layer, pruned_indices: Dict[str, np.ndarray] = 
 
 
 def prune_linear_layer(
-    layer, prune_indices_dict: Optional[Dict[str, np.ndarray]] = None
+    layer, layer_prune_indices_dict: Optional[LayerPrunedIndicesDict] = None
 ):
-    """Prune a linear layer by using provided `prune_indices_dict` to directly select neurons to drop.
+    """Prune a linear layer by using provided `layer_prune_indices_dict` to directly select neurons to drop.
 
     Args:
         - linear_layer: The linear layer to prune (an instance of torch.nn.Linear).
-        - prune_indices_dict: A dictionary with keys 'input' and 'output', indicating the indices of neurons to prune directly.
+        - layer_prune_indices_dict: A dictionary with keys 'input' and 'output', indicating the indices of neurons to prune directly.
 
     Returns:
         - new_layer: The new linear layer with pruned neurons and smaller size.
@@ -142,16 +146,16 @@ def prune_linear_layer(
     in_features = layer.in_features
     out_features = layer.out_features
 
-    if prune_indices_dict is not None:
+    if layer_prune_indices_dict is not None:
         # Note: Make sure the pruned indices are in relative order
         input_indices_keep = np.sort(
             np.setdiff1d(
-                range(in_features), prune_indices_dict.get("input", np.array([]))
+                range(in_features), layer_prune_indices_dict.get("input", np.array([]))
             )
         )
         output_indices_keep = np.sort(
             np.setdiff1d(
-                range(out_features), prune_indices_dict.get("output", np.array([]))
+                range(out_features), layer_prune_indices_dict.get("output", np.array([]))
             )
         )
 
@@ -181,12 +185,12 @@ def prune_linear_layer(
     return new_layer
 
 
-def prune_conv_layer(layer, prune_indices_dict: Optional[Dict[str, np.ndarray]] = None):
-    """Prune a convolution layer by using provided `prune_indices_dict` to directly select channels to drop.
+def prune_conv_layer(layer, layer_prune_indices_dict: Optional[LayerPrunedIndicesDict] = None):
+    """Prune a convolution layer by using provided `layer_prune_indices_dict` to directly select channels to drop.
 
     Args:
         - layer: The convolution layer to prune (an instance of torch.nn.Conv2d).
-        - prune_indices_dict: A dictionary with keys 'input' and 'output', indicating the indices of channels to prune directly.
+        - layer_prune_indices_dict: A dictionary with keys 'input' and 'output', indicating the indices of channels to prune directly.
 
     Returns:
         - new_layer: The new convolution layer with pruned channels.
@@ -198,16 +202,16 @@ def prune_conv_layer(layer, prune_indices_dict: Optional[Dict[str, np.ndarray]] 
     in_channels = layer.in_channels
     out_channels = layer.out_channels
 
-    if prune_indices_dict is not None:
+    if layer_prune_indices_dict is not None:
         # Note: Make sure the pruned indices are in relative order
         in_indices_keep = np.sort(
             np.setdiff1d(
-                range(in_channels), prune_indices_dict.get("input", np.array([]))
+                range(in_channels), layer_prune_indices_dict.get("input", np.array([]))
             )
         )
         out_indices_keep = np.sort(
             np.setdiff1d(
-                range(out_channels), prune_indices_dict.get("output", np.array([]))
+                range(out_channels), layer_prune_indices_dict.get("output", np.array([]))
             )
         )
 
@@ -247,13 +251,13 @@ def prune_conv_layer(layer, prune_indices_dict: Optional[Dict[str, np.ndarray]] 
 
 
 def prune_embedding_layer(
-    layer, prune_indices_dict: Optional[Dict[str, np.ndarray]] = None
+    layer, layer_prune_indices_dict: Optional[LayerPrunedIndicesDict] = None
 ):
-    """Prune an embedding layer by using provided `prune_indices_dict` to directly select embeddings to drop.
+    """Prune an embedding layer by using provided `layer_prune_indices_dict` to directly select embeddings to drop.
 
     Args:
         - layer: The embedding layer to prune (an instance of torch.nn.Embedding).
-        - prune_indices_dict: A dictionary with keys 'input' and 'output', indicating the indices of embeddings to prune directly.
+        - layer_prune_indices_dict: A dictionary with keys 'input' and 'output', indicating the indices of embeddings to prune directly.
 
     Returns:
         - new_layer: The new embedding layer with pruned embeddings.
@@ -265,12 +269,12 @@ def prune_embedding_layer(
     num_embeddings = layer.num_embeddings
     embedding_dim = layer.embedding_dim
 
-    if prune_indices_dict is not None:
+    if layer_prune_indices_dict is not None:
         # Note: Make sure the pruned indices are in relative order
         out_indices_keep = np.sort(
             np.setdiff1d(
                 range(embedding_dim),
-                prune_indices_dict.get("output", np.array([])),
+                layer_prune_indices_dict.get("output", np.array([])),
             )
         )
 
@@ -290,7 +294,7 @@ def prune_embedding_layer(
 
 def prune_multihead_attention_layer(
     layer,
-    layer_pruned_indices_dict: Optional[Dict[str, np.ndarray]] = None,
+    layer_pruned_indices_dict: Optional[LayerPrunedIndicesDict] = None,
     dropout_rate=0.0,
     scaling=True,
 ):
@@ -333,7 +337,7 @@ def prune_multihead_attention_layer(
 
 def prune_feedforward_layer(
     layer,
-    layer_pruned_indices_dict: Optional[Dict[str, np.ndarray]] = None,
+    layer_pruned_indices_dict: Optional[LayerPrunedIndicesDict] = None,
     dropout_rate=0.0,
     scaling=True,
 ):
@@ -367,7 +371,7 @@ def prune_feedforward_layer(
 
 def prune_transformer_block(
     block: Union[EncoderBlock, DecoderBlock],
-    block_pruned_indices_dict: Optional[Dict[str, np.ndarray]] = None,
+    block_pruned_indices_dict: Optional[BlockPrunedIndicesDict] = None,
     dropout_rate: float = 0.0,
     scaling: bool = True,
 ):

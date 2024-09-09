@@ -255,7 +255,7 @@ def pruned_indices_dict_bagging_resnet18(dropout_rate: float):
 def prune_cnn(
     model: nn.Module,
     dropout_rate: float,
-    optional_indices_dict: Optional[Dict[str, np.ndarray]] = None,
+    optional_indices_dict: Optional[ModelPrunedIndicesDict] = None,
     scaling: bool = True,
 ):
     """Prune a CNN model by using the provided dropout rate and optional indices to prune.
@@ -272,7 +272,7 @@ def prune_cnn(
         pruned_model: The pruned CNN model.
         pruned_indices_dict: A dictionary containing the indices to prune for each pruned layer.
     """
-    pruned_indices_dict = {}
+    model_pruned_indices_dict = ModelPrunedIndicesDict()
 
     conv1 = model.layer1[0]
     num_output_channels_to_prune_conv1 = int(conv1.out_channels * dropout_rate)
@@ -284,9 +284,10 @@ def prune_cnn(
     output_indices_to_prune_conv1 = np.random.choice(
         optional_output_indices_conv1, num_output_channels_to_prune_conv1, replace=False
     )
-    indices_to_prune_conv1 = {"output": output_indices_to_prune_conv1}
+    indices_to_prune_conv1 = LayerPrunedIndicesDict()
+    indices_to_prune_conv1["output"] = output_indices_to_prune_conv1
     pruned_layer1 = prune_conv_layer(conv1, indices_to_prune_conv1)
-    pruned_indices_dict["layer1"] = indices_to_prune_conv1
+    model_pruned_indices_dict["layer1"] = indices_to_prune_conv1
 
     conv2 = model.layer2[0]
     num_output_channels_to_prune_conv2 = int(conv2.out_channels * dropout_rate)
@@ -298,12 +299,11 @@ def prune_cnn(
     output_indices_to_prune_conv2 = np.random.choice(
         optional_output_indices_conv2, num_output_channels_to_prune_conv2, replace=False
     )
-    indices_to_prune_conv2 = {
-        "input": output_indices_to_prune_conv1,
-        "output": output_indices_to_prune_conv2,
-    }
+    indices_to_prune_conv2 = LayerPrunedIndicesDict()
+    indices_to_prune_conv2["input"] = output_indices_to_prune_conv1
+    indices_to_prune_conv2["output"] = output_indices_to_prune_conv2
     pruned_layer2 = prune_conv_layer(conv2, indices_to_prune_conv2)
-    pruned_indices_dict["layer2"] = indices_to_prune_conv2
+    model_pruned_indices_dict["layer2"] = indices_to_prune_conv2
 
     conv3 = model.layer3[0]
     num_output_channels_to_prune_conv3 = int(conv3.out_channels * dropout_rate)
@@ -315,12 +315,11 @@ def prune_cnn(
     output_indices_to_prune_conv3 = np.random.choice(
         optional_output_indices_conv3, num_output_channels_to_prune_conv3, replace=False
     )
-    indices_to_prune_conv3 = {
-        "input": output_indices_to_prune_conv2,
-        "output": output_indices_to_prune_conv3,
-    }
+    indices_to_prune_conv3 = LayerPrunedIndicesDict()
+    indices_to_prune_conv3["input"] = output_indices_to_prune_conv2
+    indices_to_prune_conv3["output"] = output_indices_to_prune_conv3
     pruned_layer3 = prune_conv_layer(conv3, indices_to_prune_conv3)
-    pruned_indices_dict["layer3"] = indices_to_prune_conv3
+    model_pruned_indices_dict["layer3"] = indices_to_prune_conv3
 
     fc = model.fc
     input_indices_to_prune_fc = []
@@ -329,9 +328,10 @@ def prune_cnn(
         end_index = (channel_index + 1) * 4 * 4
         input_indices_to_prune_fc.extend(list(range(start_index, end_index)))
     input_indices_to_prune_fc = np.sort(input_indices_to_prune_fc)
-    indices_to_prune_fc = {"input": input_indices_to_prune_fc}
+    indices_to_prune_fc = LayerPrunedIndicesDict()
+    indices_to_prune_fc["input"] = input_indices_to_prune_fc
     pruned_fc = prune_linear_layer(fc, indices_to_prune_fc)
-    pruned_indices_dict["fc"] = indices_to_prune_fc
+    model_pruned_indices_dict["fc"] = indices_to_prune_fc
 
     pruned_cnn = CNN()
     pruned_cnn.layer1[0] = pruned_layer1
@@ -344,13 +344,13 @@ def prune_cnn(
         pruned_cnn.layer2.add_module("scaling", DropoutScaling(dropout_rate))
         pruned_cnn.layer3.add_module("scaling", DropoutScaling(dropout_rate))
 
-    return pruned_cnn, pruned_indices_dict
+    return pruned_cnn, model_pruned_indices_dict
 
 
 def prune_resnet18(
     model: ResNet,
     dropout_rate: float = 0.5,
-    optional_indices_dict: Optional[Dict[str, np.ndarray]] = None,
+    optional_indices_dict: Optional[ModelPrunedIndicesDict] = None,
     scaling: bool = True,
 ):
     """
@@ -366,13 +366,13 @@ def prune_resnet18(
 
     Returns:
         pruned_model: The pruned ResNet18 model.
-        pruned_indices_dict: A dictionary containing the indices to prune for each pruned layer.
+        model_pruned_indices_dict: A dictionary containing the indices to prune for each pruned layer.
     """
     # Note: using static layer normlization
 
     new_model = copy.deepcopy(model)
 
-    pruned_indices_dicts = {}
+    model_pruned_indices_dict = ModelPrunedIndicesDict()
 
     layer_key = "conv1"
     current_layer = new_model.conv1
@@ -386,8 +386,10 @@ def prune_resnet18(
     out_channel_indices_to_prune = np.random.choice(
         optional_output_indices, num_out_channels_to_prune, replace=False
     )
-    pruned_indices_dicts[layer_key] = {"output": out_channel_indices_to_prune}
-    new_layer = prune_conv_layer(current_layer, pruned_indices_dicts[layer_key])
+    layer_pruned_indices_dict = LayerPrunedIndicesDict()
+    layer_pruned_indices_dict["output"] = out_channel_indices_to_prune
+    model_pruned_indices_dict[layer_key] = layer_pruned_indices_dict
+    new_layer = prune_conv_layer(current_layer, model_pruned_indices_dict[layer_key])
     if scaling:
         new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
     else:
@@ -431,7 +433,7 @@ def prune_resnet18(
                 )
 
                 if conv == "conv2" and downsample is False:
-                    out_channel_indices_to_prune = pruned_indices_dicts[
+                    out_channel_indices_to_prune = model_pruned_indices_dict[
                         f"{layer_name}.{int(block)}.conv1"
                     ]["input"]
                 else:
@@ -449,13 +451,12 @@ def prune_resnet18(
                         num_out_channels_to_prune,
                         replace=False,
                     )
-
-                pruned_indices_dicts[layer_key] = {
-                    "input": in_channel_indices_to_prune,
-                    "output": out_channel_indices_to_prune,
-                }
+                layer_pruned_indices_dict = LayerPrunedIndicesDict()
+                layer_pruned_indices_dict["input"] = in_channel_indices_to_prune
+                layer_pruned_indices_dict["output"] = out_channel_indices_to_prune
+                model_pruned_indices_dict[layer_key] = layer_pruned_indices_dict
                 new_layer = prune_conv_layer(
-                    current_layer, pruned_indices_dicts[layer_key]
+                    current_layer, model_pruned_indices_dict[layer_key]
                 )
                 if scaling:
                     new_layer = nn.Sequential(new_layer, DropoutScaling(dropout_rate))
@@ -482,16 +483,16 @@ def prune_resnet18(
                 current_layer = getattr(
                     getattr(new_model, layer_name)[int(block)], "downsample"
                 )[0]
-                pruned_indices_dicts[layer_key] = {
-                    "input": pruned_indices_dicts[f"{layer_name}.{block}.conv1"][
-                        "input"
-                    ],
-                    "output": pruned_indices_dicts[f"{layer_name}.{block}.conv2"][
-                        "output"
-                    ],
-                }
+                layer_pruned_indices_dict = LayerPrunedIndicesDict()
+                layer_pruned_indices_dict["input"] = model_pruned_indices_dict[
+                    f"{layer_name}.{int(block)}.conv1"
+                ]["input"]
+                layer_pruned_indices_dict["output"] = model_pruned_indices_dict[
+                    f"{layer_name}.{int(block)}.conv2"
+                ]["output"]
+                model_pruned_indices_dict[layer_key] = layer_pruned_indices_dict
                 new_layer = prune_conv_layer(
-                    current_layer, pruned_indices_dicts[layer_key]
+                    current_layer, model_pruned_indices_dict[layer_key]
                 )
                 num_out_channels_left = new_layer.out_channels
                 layer_norm_shape = layer_norm_shapes[i]
@@ -516,11 +517,13 @@ def prune_resnet18(
         out_channel_indices_to_prune  # the last conv layer's output indices
     )
     # Since the last conv output H, W is 1, 1, we can just use the channel indices
-    pruned_indices_dicts[layer_key] = {"input": in_features_to_prune}
-    new_layer = prune_linear_layer(current_layer, pruned_indices_dicts[layer_key])
+    layer_pruned_indices_dict = LayerPrunedIndicesDict()
+    layer_pruned_indices_dict["input"] = in_features_to_prune
+    model_pruned_indices_dict[layer_key] = layer_pruned_indices_dict
+    new_layer = prune_linear_layer(current_layer, model_pruned_indices_dict[layer_key])
     setattr(new_model, layer_key, new_layer)
 
-    return new_model, pruned_indices_dicts
+    return new_model, model_pruned_indices_dict
 
 
 def prune_transformer(
@@ -707,7 +710,7 @@ def prune_shallow_resnet(model: ResNet, dropout_rate=0.5):
     # Note: using static layer normlization
     new_model = copy.deepcopy(model)
 
-    pruned_indices_dicts = {}
+    pruned_indices_dicts = ModelPrunedIndicesDict()
 
     layer_key = "conv1"
     current_layer = new_model.conv1

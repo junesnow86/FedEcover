@@ -28,7 +28,7 @@ from modules.args_parser import get_args
 from modules.constants import NORMALIZATION_STATS
 from modules.data import create_non_iid_data
 from modules.debugging import replace_bn_with_identity
-from modules.evaluation import evaluate_acc, test
+from modules.evaluation import evaluate_acc
 from modules.models import CNN, ShallowResNet
 from modules.pruning import (
     prune_cnn,
@@ -196,7 +196,6 @@ print(f"Global Model size: {calculate_model_size(global_model, print_result=Fals
 num_models = NUM_CLIENTS
 if num_models == 10:
     dropout_rates = [0.2, 0.2, 0.5, 0.5, 0.5, 0.8, 0.8, 0.8, 0.8, 0.8]
-    # dropout_rates = [0.1, 0.1, 0.25, 0.25, 0.5, 0.5, 0.75, 0.75, 0.9, 0.9]
 elif num_models == 20:
     dropout_rates = [0.2, 0.2, 0.2, 0.2, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8]
 assert (
@@ -297,7 +296,7 @@ for round in range(ROUNDS):
         # local_test_loss, local_test_acc, local_class_acc = test(
         #     local_model, criterion, test_loader, device=device, num_classes=NUM_CLASSES
         # )
-        local_evaluation_result = evaluate_acc(local_model, dataloader, device=device, class_wise=True)
+        local_evaluation_result = evaluate_acc(local_model, test_loader, device=device, class_wise=True)
         local_test_loss = local_evaluation_result["loss"]
         local_test_acc = local_evaluation_result["accuracy"]
         local_class_acc = local_evaluation_result["class_wise_accuracy"]
@@ -387,7 +386,7 @@ for round in range(ROUNDS):
                 global_model=global_model,
                 local_models=all_client_models,
                 client_weights=subset_sizes,
-                pruned_indices_dicts=pruned_indices_dicts,
+                model_pruned_indices_dicts=pruned_indices_dicts,
             )
         elif AGG_WAY == "recovery":
             aggregated_weight = vanilla_federated_averaging(
@@ -406,7 +405,7 @@ for round in range(ROUNDS):
                 global_model=global_model,
                 local_models=all_client_models,
                 client_weights=subset_sizes,
-                pruned_indices_dicts=pruned_indices_dicts,
+                model_pruned_indices_dicts=pruned_indices_dicts,
             )
         elif AGG_WAY == "recovery":
             aggregated_weight = vanilla_federated_averaging(

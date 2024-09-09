@@ -1,4 +1,4 @@
-from typing import Dict, List, Union
+from typing import List, Union
 
 import numpy as np
 import torch
@@ -20,7 +20,7 @@ from modules.pruned_indices_dicts import (
 def aggregate_linear_layers(
     global_linear_layer: nn.Linear,
     pruned_linear_layers: List[nn.Linear],
-    layer_pruned_indices_dicts: List[Dict[str, np.ndarray]],
+    layer_pruned_indices_dicts: List[LayerPrunedIndicesDict],
     client_weights: List[int],
 ):
     assert (
@@ -116,7 +116,7 @@ def aggregate_linear_layers(
 def aggregate_conv_layers(
     global_conv_layer: nn.Conv2d,
     pruned_conv_layers: List[nn.Conv2d],
-    layer_pruned_indices_dicts: List[Dict[str, np.ndarray]],
+    layer_pruned_indices_dicts: List[LayerPrunedIndicesDict],
     client_weights: List[int],
 ):
     assert (
@@ -213,7 +213,7 @@ def aggregate_conv_layers(
 def aggregate_embedding_layers(
     global_embedding_layer: nn.Embedding,
     pruned_embedding_layers: List[nn.Embedding],
-    layer_pruned_indices_dicts: List[Dict[str, np.ndarray]],
+    layer_pruned_indices_dicts: List[LayerPrunedIndicesDict],
     client_weights: List[int],
 ):
     num_clients = len(pruned_embedding_layers)
