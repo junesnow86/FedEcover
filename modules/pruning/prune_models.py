@@ -22,6 +22,7 @@ from .prune_layers import (
 
 
 def create_indices_bags(num_elements: int, bag_size: int) -> List[np.ndarray]:
+    """Packing a given number of indices into bags of a given size."""
     assert num_elements >= bag_size, "Number of elements must be greater than bag size."
 
     all_indices = np.arange(num_elements)
@@ -47,15 +48,15 @@ def create_indices_bags(num_elements: int, bag_size: int) -> List[np.ndarray]:
 
 
 def pruned_indices_dict_bagging_cnn(dropout_rate: float):
-    """Pack the indices to prune for each layer of a CNN model into bags.
+    """Pack the indices to prune for each layer in a CNN model into bags.
 
     Args:
         dropout_rate: The dropout rate to use for pruning.
 
     Returns:
-        pruned_indices_bags: A list of dictionaries containing the indices to prune for each layer.
+        model_pruned_indices_dicts: A list of `ModelPrunedIndicesDict`.
     """
-    pruned_indices_bags = []
+    model_pruned_indices_dicts = []
 
     # conv1
     num_output_channels_conv1 = 64
@@ -124,33 +125,42 @@ def pruned_indices_dict_bagging_cnn(dropout_rate: float):
 
     num_bags = min_length
     for i in range(num_bags):
-        pruned_indices_bag = {
-            "layer1": {"output": pruned_indices_bags_conv1[i]},
-            "layer2": {
-                "input": pruned_indices_bags_conv1[i],
-                "output": pruned_indices_bags_conv2[i],
-            },
-            "layer3": {
-                "input": pruned_indices_bags_conv2[i],
-                "output": pruned_indices_bags_conv3[i],
-            },
-            "fc": {"input": pruned_indices_bags_fc[i]},
-        }
-        pruned_indices_bags.append(pruned_indices_bag)
+        model_pruned_indices_dict = ModelPrunedIndicesDict()
 
-    return pruned_indices_bags
+        layer1_pruned_indices_dict = LayerPrunedIndicesDict()
+        layer1_pruned_indices_dict["output"] = pruned_indices_bags_conv1[i]
+
+        layer2_pruned_indices_dict = LayerPrunedIndicesDict()
+        layer2_pruned_indices_dict["input"] = pruned_indices_bags_conv1[i]
+        layer2_pruned_indices_dict["output"] = pruned_indices_bags_conv2[i]
+
+        layer3_pruned_indices_dict = LayerPrunedIndicesDict()
+        layer3_pruned_indices_dict["input"] = pruned_indices_bags_conv2[i]
+        layer3_pruned_indices_dict["output"] = pruned_indices_bags_conv3[i]
+
+        fc_pruned_indices_dict = LayerPrunedIndicesDict()
+        fc_pruned_indices_dict["input"] = pruned_indices_bags_fc[i]
+
+        model_pruned_indices_dict["layer1"] = layer1_pruned_indices_dict
+        model_pruned_indices_dict["layer2"] = layer2_pruned_indices_dict
+        model_pruned_indices_dict["layer3"] = layer3_pruned_indices_dict
+        model_pruned_indices_dict["fc"] = fc_pruned_indices_dict
+
+        model_pruned_indices_dicts.append(model_pruned_indices_dict)
+
+    return model_pruned_indices_dicts
 
 
 def pruned_indices_dict_bagging_resnet18(dropout_rate: float):
-    """Pack the indices to prune for each layer of a resnet18 model into bags.
+    """Pack the indices to prune for each layer in a ResNet18 model into bags.
 
     Args:
         dropout_rate: The dropout rate to use for pruning.
 
     Returns:
-        pruned_indices_bags: A list of dictionaries containing the indices to prune for each layer.
+        model_pruned_indices_dicts: A list of `ModelPrunedIndicesDict`.
     """
-    pruned_indices_dict_bags = []
+    model_pruned_indices_dicts = []
     pruned_out_indices_bags_for_each_layer = {}
 
     num_out_channels = 64
@@ -210,14 +220,19 @@ def pruned_indices_dict_bagging_resnet18(dropout_rate: float):
             in_indices_to_prune.extend(list(range(start_index, end_index)))
         in_indices_to_prune = np.sort(in_indices_to_prune)
         pruned_out_indices_bags.append(in_indices_to_prune)
+    pruned_out_indices_bags_for_each_layer["fc"] = pruned_out_indices_bags
 
     num_bags = min_length
-    for i in range(num_bags):
-        pruned_indices_dict_bag = {}
+    for i in range(num_bags):  # one bag for each model
+        pruned_indices_dict_bag = (
+            ModelPrunedIndicesDict()
+        )  # pruned_indices of layers for a model
         # conv1
-        pruned_indices_dict_bag["conv1"] = {
-            "output": pruned_out_indices_bags_for_each_layer["conv1"][i]
-        }
+        layer_pruned_indices_dict = LayerPrunedIndicesDict()
+        layer_pruned_indices_dict["output"] = pruned_out_indices_bags_for_each_layer[
+            "conv1"
+        ][i]
+        pruned_indices_dict_bag["conv1"] = layer_pruned_indices_dict
 
         # layers
         former_layer_key = "conv1"
@@ -225,31 +240,37 @@ def pruned_indices_dict_bagging_resnet18(dropout_rate: float):
             for block in blocks:
                 for conv in convs:
                     layer_key = f"{layer_name}.{block}.{conv}"
-                    pruned_indices_dict_bag[layer_key] = {
-                        "input": pruned_out_indices_bags_for_each_layer[
-                            former_layer_key
-                        ][i],
-                        "output": pruned_out_indices_bags_for_each_layer[layer_key][i],
-                    }
+                    layer_pruned_indices_dict = LayerPrunedIndicesDict()
+                    layer_pruned_indices_dict["input"] = (
+                        pruned_out_indices_bags_for_each_layer[former_layer_key][i]
+                    )
+                    layer_pruned_indices_dict["output"] = (
+                        pruned_out_indices_bags_for_each_layer[layer_key][i]
+                    )
+                    pruned_indices_dict_bag[layer_key] = layer_pruned_indices_dict
                     former_layer_key = layer_key
 
                 # If there is downsample layer
                 if j > 0 and block == "0":
                     layer_key = f"{layer_name}.{block}.downsample.0"
-                    pruned_indices_dict_bag[layer_key] = {
-                        "input": pruned_indices_dict_bag[f"{layer_name}.0.conv1"][
-                            "input"
-                        ],
-                        "output": pruned_indices_dict_bag[f"{layer_name}.0.conv2"][
-                            "output"
-                        ],
-                    }
+                    layer_pruned_indices_dict = LayerPrunedIndicesDict()
+                    layer_pruned_indices_dict["input"] = pruned_indices_dict_bag[
+                        f"{layer_name}.0.conv1"
+                    ]["input"]
+                    layer_pruned_indices_dict["output"] = pruned_indices_dict_bag[
+                        f"{layer_name}.0.conv2"
+                    ]["output"]
+                    pruned_indices_dict_bag[layer_key] = layer_pruned_indices_dict
 
         # fc
-        pruned_indices_dict_bag["fc"] = {"input": pruned_out_indices_bags[i]}
-        pruned_indices_dict_bags.append(pruned_indices_dict_bag)
+        layer_pruned_indices_dict = LayerPrunedIndicesDict()
+        layer_pruned_indices_dict["input"] = pruned_out_indices_bags_for_each_layer[
+            "fc"
+        ][i]
+        pruned_indices_dict_bag["fc"] = layer_pruned_indices_dict
+        model_pruned_indices_dicts.append(pruned_indices_dict_bag)
 
-    return pruned_indices_dict_bags
+    return model_pruned_indices_dicts
 
 
 def prune_cnn(
