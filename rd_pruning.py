@@ -19,10 +19,8 @@ from modules.aggregation import (
     vanilla_federated_averaging,
 )
 from modules.aggregation.aggregate_models import (
-    aggregate_shallow_resnet,
     recover_global_from_pruned_cnn,
     recover_global_from_pruned_resnet18,
-    recover_global_from_pruned_shallow_resnet,
 )
 from modules.args_parser import get_args
 from modules.constants import NORMALIZATION_STATS
@@ -36,7 +34,6 @@ from modules.pruning import (
     generate_model_pruned_indices_dicts_bag_for_cnn,
     generate_model_pruned_indices_dicts_bag_for_resnet18,
 )
-from modules.pruning.prune_models import prune_shallow_resnet
 from modules.training import train
 from modules.utils import (
     calculate_model_size,
@@ -62,6 +59,7 @@ BATCH_SIZE = args.batch_size
 NUM_CLIENTS = args.num_clients
 AGG_WAY = args.aggregation
 DEBUGGING = args.debugging
+BAGGING = args.bagging
 
 # Set random seed for reproducibility
 seed = 18
@@ -191,13 +189,36 @@ elif MODEL_TYPE == "shallow_resnet":
 else:
     raise ValueError(f"Model type {MODEL_TYPE} not supported.")
 print(f"[Model Architecture]\n{global_model}")
-print(f"Global Model size: {calculate_model_size(global_model, print_result=False, unit='MB'):.2f} MB")
+print(
+    f"Global Model size: {calculate_model_size(global_model, print_result=False, unit='MB'):.2f} MB"
+)
 
 num_models = NUM_CLIENTS
 if num_models == 10:
     dropout_rates = [0.2, 0.2, 0.5, 0.5, 0.5, 0.8, 0.8, 0.8, 0.8, 0.8]
 elif num_models == 20:
-    dropout_rates = [0.2, 0.2, 0.2, 0.2, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8]
+    dropout_rates = [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.8,
+        0.8,
+        0.8,
+        0.8,
+        0.8,
+        0.8,
+        0.8,
+        0.8,
+        0.8,
+        0.8,
+    ]
 assert (
     len(dropout_rates) == num_models
 ), f"Length of dropout rates {len(dropout_rates)} does not match number of clients {num_models}."
@@ -214,7 +235,7 @@ test_loss_results = []
 test_acc_results = []
 
 
-pruned_indices_dict_bags_for_each_p = [[] for _ in range(num_models)]
+optional_model_pruned_indices_dicts = [[] for _ in range(num_models)]
 
 
 # Training by rounds
@@ -230,59 +251,53 @@ for round in range(ROUNDS):
 
     all_client_models = []
 
-    # Pruning
+    # <-------------------- Pruning -------------------->
     if MODEL_TYPE == "cnn":
-        pruned_indices_dicts = []
-        for i in range(num_models):
-            if len(pruned_indices_dict_bags_for_each_p[i]) == 0:
-                pruned_indices_dict_bags_for_each_p[i] = (
-                    generate_model_pruned_indices_dicts_bag_for_cnn(dropout_rates[i])
+        if BAGGING:
+            print("Bagging")
+            model_pruned_indices_dicts = []
+            for i in range(num_models):
+                if len(optional_model_pruned_indices_dicts[i]) == 0:
+                    optional_model_pruned_indices_dicts[i] = (
+                        generate_model_pruned_indices_dicts_bag_for_cnn(
+                            dropout_rates[i]
+                        )
+                    )
+                optional_indices_dict = optional_model_pruned_indices_dicts[i].pop()
+                client_model, model_pruned_indices_dict = prune_cnn(
+                    global_model,
+                    dropout_rates[i],
+                    optional_indices_dict=optional_indices_dict,
                 )
-            optional_indices_dict = pruned_indices_dict_bags_for_each_p[i].pop()
-            client_model, pruned_indices_dict = prune_cnn(
-                global_model,
-                dropout_rates[i],
-                optional_indices_dict=optional_indices_dict,
-                # scaling=False,
-            )
-            all_client_models.append(client_model)
-            pruned_indices_dicts.append(pruned_indices_dict)
-
-        # all_client_models, pruned_indices_dicts = prune_cnn_groups_nested(
-        #     global_model, dropout_rates
-        # )
+                all_client_models.append(client_model)
+                model_pruned_indices_dicts.append(model_pruned_indices_dict)
+        else:
+            raise NotImplementedError
     elif MODEL_TYPE == "resnet":
-        pruned_indices_dicts = []
-        for i in range(num_models):
-            if len(pruned_indices_dict_bags_for_each_p[i]) == 0:
-                pruned_indices_dict_bags_for_each_p[i] = (
-                    generate_model_pruned_indices_dicts_bag_for_resnet18(dropout_rates[i])
+        if BAGGING:
+            print("Bagging")
+            model_pruned_indices_dicts = []
+            for i in range(num_models):
+                if len(optional_model_pruned_indices_dicts[i]) == 0:
+                    optional_model_pruned_indices_dicts[i] = (
+                        generate_model_pruned_indices_dicts_bag_for_resnet18(
+                            dropout_rates[i]
+                        )
+                    )
+                optional_indices_dict = optional_model_pruned_indices_dicts[i].pop()
+                client_model, model_pruned_indices_dict = prune_resnet18(
+                    global_model,
+                    dropout_rates[i],
+                    optional_indices_dict=optional_indices_dict,
                 )
-            optional_indices_dict = pruned_indices_dict_bags_for_each_p[i].pop()
-            client_model, pruned_indices_dict = prune_resnet18(
-                global_model,
-                dropout_rates[i],
-                optional_indices_dict=optional_indices_dict,
-                # scaling=False,
-            )
-            all_client_models.append(client_model)
-            pruned_indices_dicts.append(pruned_indices_dict)
-
-        # all_client_models, pruned_indices_dicts = prune_resnet18_groups_nested(
-        #     global_model, dropout_rates
-        # )
-    elif MODEL_TYPE == "shallow_resnet":
-        pruned_indices_dicts = []
-        for i in range(num_models):
-            client_model, pruned_indices_dict = prune_shallow_resnet(
-                global_model, dropout_rates[i]
-            )
-            all_client_models.append(client_model)
-            pruned_indices_dicts.append(pruned_indices_dict)
+                all_client_models.append(client_model)
+                model_pruned_indices_dicts.append(model_pruned_indices_dict)
+        else:
+            raise NotImplementedError
     else:
         raise ValueError(f"Model type {MODEL_TYPE} not supported.")
 
-    # Local training
+    # <-------------------- Local Training -------------------->
     for i, dataloader in enumerate(dataloaders):
         local_model = all_client_models[i]
         if LR_DECAY and dropout_rates[i] == 0.8 and round in decay_rounds:
@@ -293,10 +308,9 @@ for round in range(ROUNDS):
         local_train_loss = train(
             local_model, optimizer, criterion, dataloader, device=device, epochs=EPOCHS
         )
-        # local_test_loss, local_test_acc, local_class_acc = test(
-        #     local_model, criterion, test_loader, device=device, num_classes=NUM_CLASSES
-        # )
-        local_evaluation_result = evaluate_acc(local_model, test_loader, device=device, class_wise=True)
+        local_evaluation_result = evaluate_acc(
+            local_model, test_loader, device=device, class_wise=True
+        )
         local_test_loss = local_evaluation_result["loss"]
         local_test_acc = local_evaluation_result["accuracy"]
         local_class_acc = local_evaluation_result["class_wise_accuracy"]
@@ -309,90 +323,22 @@ for round in range(ROUNDS):
         round_test_acc_results[f"Subset {i + 1}"] = local_test_acc
         round_results_class[f"Subset {i + 1}"] = local_class_acc
 
-    # debugging
-    if DEBUGGING:
-        for debug_i in range(1):
-            debug_model = all_client_models[debug_i]
-            print(debug_model)
-            # debug_model_result = evaluate_acc(debug_model, test_loader, device=device)
-            # print(
-            #     f"Subset {debug_i + 1}\tTest Loss: {debug_model_result["loss"]:.4f}\tTest Acc: {debug_model_result["accuracy"]:.4f}"
-            # )
-
-            for param in global_model.parameters():
-                param.data.zero_()
-
-            # evaluate_acc(global_model, test_loader, device=device)
-
-            # for name, param in global_model.named_parameters():
-            #     print(f"Parameter {name}: {param.data}")
-
-            if MODEL_TYPE == "cnn":
-                recovered_model = recover_global_from_pruned_cnn(
-                    global_model,
-                    debug_model,
-                    pruned_indices_dicts[debug_i],
-                    # scaler=(1 / (1 - dropout_rates[debug_i])) ** 2,
-                )
-                aggregate_cnn(
-                    global_model=global_model,
-                    local_models=[all_client_models[debug_i]],
-                    client_weights=[subset_sizes[debug_i]],
-                    pruned_indices_dicts=[pruned_indices_dicts[debug_i]],
-                )
-            elif MODEL_TYPE == "resnet":
-                recovered_model = recover_global_from_pruned_resnet18(
-                    global_model,
-                    debug_model,
-                    pruned_indices_dicts[debug_i],
-                    # scaler=(1 / (1 - dropout_rates[debug_i])) ** 2,
-                )
-                aggregate_resnet18(
-                    global_model=global_model,
-                    local_models=[all_client_models[debug_i]],
-                    client_weights=[subset_sizes[debug_i]],
-                    pruned_indices_dicts=[pruned_indices_dicts[debug_i]],
-                )
-            elif MODEL_TYPE == "shallow_resnet":
-                recovered_model = recover_global_from_pruned_shallow_resnet(
-                    global_model,
-                    debug_model,
-                    pruned_indices_dicts[debug_i],
-                    # scaler=(1 / (1 - dropout_rates[debug_i])) ** 2,
-                )
-            # recovered_model_result = evaluate_acc(
-            #     recovered_model, test_loader, device=device
-            # )
-            x = torch.rand(1, 3, 32, 32).to(device)
-            debug_model.to(device)
-            global_model.to(device)
-            recovered_model.to(device)
-            global_y = global_model(x)
-            recovered_y = recovered_model(x)
-            subset_y = debug_model(x)
-            print(f"Global Model Output: {global_y}")
-            print(f"Recovered Model Output: {recovered_y}")
-            print(f"Subset 1 Model Output: {subset_y}")
-            # print(
-            #     f"Subset {debug_i + 1} Rec\tTest Loss: {recovered_model_result['loss']:.4f}\tTest Acc: {recovered_model_result['accuracy']:.4f}"
-            # )
-            exit()
-
-
-    # Aggregation
+    # <-------------------- Aggregation -------------------->
     if MODEL_TYPE == "cnn":
         if AGG_WAY == "sparse":
             aggregate_cnn(
                 global_model=global_model,
                 local_models=all_client_models,
                 client_weights=subset_sizes,
-                model_pruned_indices_dicts=pruned_indices_dicts,
+                model_pruned_indices_dicts=model_pruned_indices_dicts,
             )
         elif AGG_WAY == "recovery":
             aggregated_weight = vanilla_federated_averaging(
                 models=[
                     recover_global_from_pruned_cnn(
-                        global_model, all_client_models[i], pruned_indices_dicts[i]
+                        global_model,
+                        all_client_models[i],
+                        model_pruned_indices_dicts[i],
                     )
                     for i in range(num_models)
                 ],
@@ -405,33 +351,27 @@ for round in range(ROUNDS):
                 global_model=global_model,
                 local_models=all_client_models,
                 client_weights=subset_sizes,
-                model_pruned_indices_dicts=pruned_indices_dicts,
+                model_pruned_indices_dicts=model_pruned_indices_dicts,
             )
         elif AGG_WAY == "recovery":
             aggregated_weight = vanilla_federated_averaging(
                 models=[
                     recover_global_from_pruned_resnet18(
-                        global_model, all_client_models[i], pruned_indices_dicts[i]
+                        global_model,
+                        all_client_models[i],
+                        model_pruned_indices_dicts[i],
                     )
                     for i in range(num_models)
                 ],
                 sample_numbers=subset_sizes,
             )
             global_model.load_state_dict(aggregated_weight)
-    elif MODEL_TYPE == "shallow_resnet":
-        aggregate_shallow_resnet(
-            global_model=global_model,
-            local_models=all_client_models,
-            client_weights=subset_sizes,
-            pruned_indices_dicts=pruned_indices_dicts,
-        )
     else:
         raise ValueError(f"Model type {MODEL_TYPE} not supported.")
 
-    # global_test_loss, global_test_acc, global_class_acc = test(
-    #     global_model, criterion, test_loader, device=device, num_classes=NUM_CLASSES
-    # )
-    evaluation_result = evaluate_acc(global_model, test_loader, device=device, class_wise=True)
+    evaluation_result = evaluate_acc(
+        global_model, test_loader, device=device, class_wise=True
+    )
     global_test_loss = evaluation_result["loss"]
     global_test_acc = evaluation_result["accuracy"]
     global_class_acc = evaluation_result["class_wise_accuracy"]
