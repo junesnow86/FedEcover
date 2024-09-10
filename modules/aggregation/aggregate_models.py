@@ -6,7 +6,7 @@ import torch.nn as nn
 from torchvision.models import ResNet
 
 from modules.models import CNN, Transformer
-from modules.pruned_indices_dicts import ModelPrunedIndicesDict
+from modules.pruning import ModelPrunedIndicesDict
 from modules.utils import measure_time
 
 from .aggregate_layers import (

@@ -12,7 +12,7 @@ from modules.models.transformer import (
     FeedForward,
     MultiHeadAttention,
 )
-from modules.pruned_indices_dicts import (
+from .pruned_indices_dicts import (
     BlockPrunedIndicesDict,
     LayerPrunedIndicesDict,
 )

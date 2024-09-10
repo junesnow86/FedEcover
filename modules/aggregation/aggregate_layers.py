@@ -11,7 +11,7 @@ from modules.models.transformer import (
     FeedForward,
     MultiHeadAttention,
 )
-from modules.pruned_indices_dicts import (
+from modules.pruning import (
     BlockPrunedIndicesDict,
     LayerPrunedIndicesDict,
 )

@@ -7,7 +7,7 @@ import torch.nn as nn
 from torchvision.models import ResNet
 
 from modules.models import CNN, DropoutScaling, Transformer
-from modules.pruned_indices_dicts import (
+from .pruned_indices_dicts import (
     BlockPrunedIndicesDict,
     LayerPrunedIndicesDict,
     ModelPrunedIndicesDict,
