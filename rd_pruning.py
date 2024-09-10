@@ -33,8 +33,8 @@ from modules.models import CNN, ShallowResNet
 from modules.pruning import (
     prune_cnn,
     prune_resnet18,
-    pruned_indices_dict_bagging_cnn,
-    pruned_indices_dict_bagging_resnet18,
+    generate_model_pruned_indices_dicts_bag_for_cnn,
+    generate_model_pruned_indices_dicts_bag_for_resnet18,
 )
 from modules.pruning.prune_models import prune_shallow_resnet
 from modules.training import train
@@ -236,7 +236,7 @@ for round in range(ROUNDS):
         for i in range(num_models):
             if len(pruned_indices_dict_bags_for_each_p[i]) == 0:
                 pruned_indices_dict_bags_for_each_p[i] = (
-                    pruned_indices_dict_bagging_cnn(dropout_rates[i])
+                    generate_model_pruned_indices_dicts_bag_for_cnn(dropout_rates[i])
                 )
             optional_indices_dict = pruned_indices_dict_bags_for_each_p[i].pop()
             client_model, pruned_indices_dict = prune_cnn(
@@ -256,7 +256,7 @@ for round in range(ROUNDS):
         for i in range(num_models):
             if len(pruned_indices_dict_bags_for_each_p[i]) == 0:
                 pruned_indices_dict_bags_for_each_p[i] = (
-                    pruned_indices_dict_bagging_resnet18(dropout_rates[i])
+                    generate_model_pruned_indices_dicts_bag_for_resnet18(dropout_rates[i])
                 )
             optional_indices_dict = pruned_indices_dict_bags_for_each_p[i].pop()
             client_model, pruned_indices_dict = prune_resnet18(

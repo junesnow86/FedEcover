@@ -1,9 +1,9 @@
 from .prune_models import (
+    generate_model_pruned_indices_dicts_bag_for_cnn,
+    generate_model_pruned_indices_dicts_bag_for_resnet18,
     prune_cnn,
     prune_resnet18,
     prune_transformer,
-    pruned_indices_dict_bagging_cnn,
-    pruned_indices_dict_bagging_resnet18,
 )
 from .pruned_indices_dicts import (
     BlockPrunedIndicesDict,
@@ -15,8 +15,8 @@ __all__ = [
     "prune_cnn",
     "prune_resnet18",
     "prune_transformer",
-    "pruned_indices_dict_bagging_cnn",
-    "pruned_indices_dict_bagging_resnet18",
+    "generate_model_pruned_indices_dicts_bag_for_cnn",
+    "generate_model_pruned_indices_dicts_bag_for_resnet18",
     "LayerPrunedIndicesDict",
     "BlockPrunedIndicesDict",
     "ModelPrunedIndicesDict",

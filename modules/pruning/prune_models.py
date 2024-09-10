@@ -21,33 +21,33 @@ from .prune_layers import (
 )
 
 
-def create_indices_bags(num_elements: int, bag_size: int) -> List[np.ndarray]:
-    """Packing a given number of indices into bags of a given size."""
-    assert num_elements >= bag_size, "Number of elements must be greater than bag size."
+def generate_index_groups(num_elements: int, group_size: int) -> List[np.ndarray]:
+    """Packing a given number of indices into groups of a given group size."""
+    assert num_elements >= group_size, "Number of elements must be greater than a group size."
 
     all_indices = np.arange(num_elements)
     np.random.shuffle(all_indices)
 
-    indices_bags = []
+    index_groups = []
     total_collected = 0
     while total_collected < num_elements:
-        if num_elements - total_collected < bag_size:
+        if num_elements - total_collected < group_size:
             num_remaining = num_elements - total_collected
-            num_additional_needed = bag_size - num_remaining
-            indices_bag = np.concatenate(
+            num_additional_needed = group_size - num_remaining
+            group = np.concatenate(
                 [all_indices[total_collected:], all_indices[:num_additional_needed]]
             )
             total_collected += num_remaining
         else:
-            indices_bag = all_indices[total_collected : total_collected + bag_size]
-            total_collected += bag_size
+            group = all_indices[total_collected : total_collected + group_size]
+            total_collected += group_size
 
-        indices_bags.append(indices_bag)
+        index_groups.append(group)
 
-    return indices_bags
+    return index_groups
 
 
-def pruned_indices_dict_bagging_cnn(dropout_rate: float):
+def generate_model_pruned_indices_dicts_bag_for_cnn(dropout_rate: float):
     """Pack the indices to prune for each layer in a CNN model into bags.
 
     Args:
@@ -64,7 +64,7 @@ def pruned_indices_dict_bagging_cnn(dropout_rate: float):
     num_output_channels_keep_conv1 = (
         num_output_channels_conv1 - num_output_channels_to_prune_conv1
     )
-    keep_indices_bags_conv1 = create_indices_bags(
+    keep_indices_bags_conv1 = generate_index_groups(
         num_output_channels_conv1, num_output_channels_keep_conv1
     )
     pruned_indices_bags_conv1 = [
@@ -78,7 +78,7 @@ def pruned_indices_dict_bagging_cnn(dropout_rate: float):
     num_output_channels_keep_conv2 = (
         num_output_channels_conv2 - num_output_channels_to_prune_conv2
     )
-    keep_indices_bags_conv2 = create_indices_bags(
+    keep_indices_bags_conv2 = generate_index_groups(
         num_output_channels_conv2, num_output_channels_keep_conv2
     )
     pruned_indices_bags_conv2 = [
@@ -92,7 +92,7 @@ def pruned_indices_dict_bagging_cnn(dropout_rate: float):
     num_output_channels_keep_conv3 = (
         num_output_channels_conv3 - num_output_channels_to_prune_conv3
     )
-    keep_indices_bags_conv3 = create_indices_bags(
+    keep_indices_bags_conv3 = generate_index_groups(
         num_output_channels_conv3, num_output_channels_keep_conv3
     )
     pruned_indices_bags_conv3 = [
@@ -151,7 +151,7 @@ def pruned_indices_dict_bagging_cnn(dropout_rate: float):
     return model_pruned_indices_dicts
 
 
-def pruned_indices_dict_bagging_resnet18(dropout_rate: float):
+def generate_model_pruned_indices_dicts_bag_for_resnet18(dropout_rate: float):
     """Pack the indices to prune for each layer in a ResNet18 model into bags.
 
     Args:
@@ -166,7 +166,7 @@ def pruned_indices_dict_bagging_resnet18(dropout_rate: float):
     num_out_channels = 64
     num_out_channels_to_prune = int(num_out_channels * dropout_rate)
     num_out_channels_keep = num_out_channels - num_out_channels_to_prune
-    keep_out_indices_bags = create_indices_bags(num_out_channels, num_out_channels_keep)
+    keep_out_indices_bags = generate_index_groups(num_out_channels, num_out_channels_keep)
     pruned_out_indices_bags = [
         np.sort(np.setdiff1d(np.arange(num_out_channels), bag))
         for bag in keep_out_indices_bags
@@ -185,7 +185,7 @@ def pruned_indices_dict_bagging_resnet18(dropout_rate: float):
         for block in blocks:
             for conv in convs:
                 layer_key = f"{layer_name}.{block}.{conv}"
-                keep_out_indices_bags = create_indices_bags(
+                keep_out_indices_bags = generate_index_groups(
                     num_out_channels, num_out_channels_keep
                 )
                 pruned_out_indices_bags = [
