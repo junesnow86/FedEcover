@@ -90,6 +90,12 @@ def get_args(print_args=True):
         default=False,
         help="Debugging mode",
     )
+    parser.add_argument(
+        "--bagging",
+        type=bool,
+        default=True,
+        help="Bagging mode",
+    )
 
     args = parser.parse_args()
 
