@@ -56,12 +56,6 @@ def aggregate_linear_layers(
             )
         )
 
-        # for out_idx_layer, out_idx_global in enumerate(unpruned_output_indices):
-        #     for in_idx_layer, in_idx_global in enumerate(unpruned_input_indices):
-        #         weight_accumulator[out_idx_global, in_idx_global] += (
-        #             layer_weight[out_idx_layer, in_idx_layer] * num_samples
-        #         )
-        #         sample_accumulator_weight[out_idx_global, in_idx_global] += num_samples
         weight_accumulator[np.ix_(unpruned_output_indices, unpruned_input_indices)] += (
             layer_weight[
                 np.ix_(
@@ -77,36 +71,17 @@ def aggregate_linear_layers(
 
         if linear_layer.bias is not None:
             layer_bias = linear_layer.bias.data
-            # for out_idx_layer, out_idx_global in enumerate(unpruned_output_indices):
-            #     bias_accumulator[out_idx_global] += (
-            #         layer_bias[out_idx_layer] * num_samples
-            #     )
-            #     sample_accumulator_bias[out_idx_global] += num_samples
             bias_accumulator[unpruned_output_indices] += (
                 layer_bias[range(len(unpruned_output_indices))] * num_samples
             )
             sample_accumulator_bias[unpruned_output_indices] += num_samples
 
-    # Normalize the accumulated weights and biases by the number of samples after processing all layers
-    # for out_idx_global in range(global_output_size):
-    #     for in_idx_global in range(global_input_size):
-    #         if sample_accumulator_weight[out_idx_global, in_idx_global] > 0:
-    #             global_linear_layer.weight.data[out_idx_global, in_idx_global] = (
-    #                 weight_accumulator[out_idx_global, in_idx_global]
-    #                 / sample_accumulator_weight[out_idx_global, in_idx_global]
-    #             )
     nonzero_indices = sample_accumulator_weight > 0
     global_linear_layer.weight.data[nonzero_indices] = (
         weight_accumulator[nonzero_indices] / sample_accumulator_weight[nonzero_indices]
     )
 
     if global_linear_layer.bias is not None:
-        # for out_idx_global in range(global_output_size):
-        #     if sample_accumulator_bias[out_idx_global] > 0:
-        #         global_linear_layer.bias.data[out_idx_global] = (
-        #             bias_accumulator[out_idx_global]
-        #             / sample_accumulator_bias[out_idx_global]
-        #         )
         nonzero_indices = sample_accumulator_bias > 0
         global_linear_layer.bias.data[nonzero_indices] = (
             bias_accumulator[nonzero_indices] / sample_accumulator_bias[nonzero_indices]
@@ -152,12 +127,6 @@ def aggregate_conv_layers(
             )
         )
 
-        # for out_idx_layer, out_idx_global in enumerate(unpruned_out_indices):
-        #     for in_idx_layer, in_idx_global in enumerate(unpruned_in_indices):
-        #         weight_accumulator[out_idx_global, in_idx_global, :, :] += (
-        #             layer_weight[out_idx_layer, in_idx_layer, :, :] * num_samples
-        #         )
-        #         sample_accumulator_weight[out_idx_global, in_idx_global] += num_samples
         weight_accumulator[np.ix_(unpruned_out_indices, unpruned_in_indices)] += (
             layer_weight[
                 np.ix_(
@@ -173,11 +142,6 @@ def aggregate_conv_layers(
 
         if conv_layer.bias is not None:
             layer_bias = conv_layer.bias.data
-            # for out_idx_layer, out_idx_global in enumerate(unpruned_out_indices):
-            #     bias_accumulator[out_idx_global] += (
-            #         layer_bias[out_idx_layer] * num_samples
-            #     )
-            #     sample_accumulator_bias[out_idx_global] += num_samples
             bias_accumulator[unpruned_out_indices] += (
                 layer_bias[range(len(unpruned_out_indices))] * num_samples
             )
@@ -198,12 +162,6 @@ def aggregate_conv_layers(
     )
 
     if global_conv_layer.bias is not None:
-        # for out_idx_global in range(global_out_channels):
-        #     if sample_accumulator_bias[out_idx_global] > 0:
-        #         global_conv_layer.bias.data[out_idx_global] = (
-        #             bias_accumulator[out_idx_global]
-        #             / sample_accumulator_bias[out_idx_global]
-        #         )
         nonzero_indices = sample_accumulator_bias > 0
         global_conv_layer.bias.data[nonzero_indices] = (
             bias_accumulator[nonzero_indices] / sample_accumulator_bias[nonzero_indices]
