@@ -235,7 +235,8 @@ test_loss_results = []
 test_acc_results = []
 
 
-optional_model_pruned_indices_dicts = [[] for _ in range(num_models)]
+# optional_model_pruned_indices_dicts = [[] for _ in range(num_models)]
+optional_model_pruned_indices_dicts = {p: [] for p in set(dropout_rates)}
 
 
 # Training by rounds
@@ -255,15 +256,36 @@ for round in range(ROUNDS):
     if MODEL_TYPE == "cnn":
         if BAGGING:
             print("Bagging")
+            # round_optional_model_pruned_indices_dicts = {}
+            # for i in range(num_models):
+            #     if len(optional_model_pruned_indices_dicts[dropout_rates[i]]) == 0:
+            #         optional_model_pruned_indices_dicts[dropout_rates[i]] = (
+            #             generate_model_pruned_indices_dicts_bag_for_cnn(
+            #                 dropout_rates[i]
+            #             )
+            #         )
+            #     round_optional_model_pruned_indices_dicts[dropout_rates[i]] = (
+            #         optional_model_pruned_indices_dicts[dropout_rates[i]].pop()
+            #     )
             model_pruned_indices_dicts = []
             for i in range(num_models):
-                if len(optional_model_pruned_indices_dicts[i]) == 0:
-                    optional_model_pruned_indices_dicts[i] = (
+                # if len(optional_model_pruned_indices_dicts[i]) == 0:
+                #     optional_model_pruned_indices_dicts[i] = (
+                #         generate_model_pruned_indices_dicts_bag_for_cnn(
+                #             dropout_rates[i]
+                #         )
+                #     )
+                if len(optional_model_pruned_indices_dicts[dropout_rates[i]]) == 0:
+                    optional_model_pruned_indices_dicts[dropout_rates[i]] = (
                         generate_model_pruned_indices_dicts_bag_for_cnn(
                             dropout_rates[i]
                         )
                     )
-                optional_indices_dict = optional_model_pruned_indices_dicts[i].pop()
+                # optional_indices_dict = round_optional_model_pruned_indices_dicts[
+                #     dropout_rates[i]
+                # ]
+                # optional_indices_dict = optional_model_pruned_indices_dicts[i].pop()
+                optional_indices_dict = optional_model_pruned_indices_dicts[dropout_rates[i]].pop()
                 client_model, model_pruned_indices_dict = prune_cnn(
                     global_model,
                     dropout_rates[i],
@@ -278,13 +300,20 @@ for round in range(ROUNDS):
             print("Bagging")
             model_pruned_indices_dicts = []
             for i in range(num_models):
-                if len(optional_model_pruned_indices_dicts[i]) == 0:
-                    optional_model_pruned_indices_dicts[i] = (
+                # if len(optional_model_pruned_indices_dicts[i]) == 0:
+                #     optional_model_pruned_indices_dicts[i] = (
+                #         generate_model_pruned_indices_dicts_bag_for_resnet18(
+                #             dropout_rates[i]
+                #         )
+                #     )
+                if len(optional_model_pruned_indices_dicts[dropout_rates[i]]) == 0:
+                    optional_model_pruned_indices_dicts[dropout_rates[i]] = (
                         generate_model_pruned_indices_dicts_bag_for_resnet18(
                             dropout_rates[i]
                         )
                     )
-                optional_indices_dict = optional_model_pruned_indices_dicts[i].pop()
+                # optional_indices_dict = optional_model_pruned_indices_dicts[i].pop()
+                optional_indices_dict = optional_model_pruned_indices_dicts[dropout_rates[i]].pop()
                 client_model, model_pruned_indices_dict = prune_resnet18(
                     global_model,
                     dropout_rates[i],
