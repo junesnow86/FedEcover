@@ -41,7 +41,7 @@ LR = args.lr
 BATCH_SIZE = args.batch_size
 NUM_CLIENTS = args.num_clients
 
-seed = 18
+seed = args.seed
 random.seed(seed)
 np.random.seed(seed)
 torch.manual_seed(seed)

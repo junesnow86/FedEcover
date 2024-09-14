@@ -62,7 +62,7 @@ DEBUGGING = args.debugging
 BAGGING = args.bagging
 
 # Set random seed for reproducibility
-seed = 18
+seed = args.seed
 random.seed(seed)
 np.random.seed(seed)
 torch.manual_seed(seed)

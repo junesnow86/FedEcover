@@ -9,6 +9,12 @@ def get_args(print_args=True):
     """
     parser = argparse.ArgumentParser()
     parser.add_argument(
+        "--seed",
+        type=int,
+        default=42,
+        help="Random seed for reproducibility",
+    )
+    parser.add_argument(
         "--save-dir",
         type=str,
         default=None,
@@ -100,6 +106,7 @@ def get_args(print_args=True):
     args = parser.parse_args()
 
     if print_args:
+        print(f"Random seed: {args.seed}")
         print(f"Model type: {args.model}")
         print(f"Dataset: {args.dataset}")
         print(f"Data distribution: {args.distribution}")
