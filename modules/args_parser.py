@@ -23,7 +23,7 @@ def get_args(print_args=True):
     parser.add_argument(
         "--num-clients",
         type=int,
-        default=10,
+        default=100,
         help="Number of clients to simulate",
     )
     parser.add_argument(
@@ -54,13 +54,7 @@ def get_args(print_args=True):
         help="Alpha value for Dirichlet distribution",
     )
     parser.add_argument(
-        "--lr-decay",
-        type=bool,
-        default=False,
-        help="Whether to use learning rate decay",
-    )
-    parser.add_argument(
-        "--round",
+        "--rounds",
         type=int,
         default=200,
         help="Number of rounds to train",
@@ -97,29 +91,50 @@ def get_args(print_args=True):
         help="Debugging mode",
     )
     parser.add_argument(
-        "--bagging",
+        "--method",
+        type=str,
+        choices=["fedavg", "heterofl", "fedrolex", "fedrd", "bagging-rd"],
+        default="bagging-rd",
+        help="Federated learning method",
+    )
+    parser.add_argument(
+        "--select-ratio",
+        type=float,
+        default=0.1,
+        help="Ratio of selected clients per round",
+    )
+    parser.add_argument(
+        "--local-train-ratio",
+        type=float,
+        default=0.8,
+        help="Ratio of local training data",
+    )
+    parser.add_argument(
+        "--plot-data-distribution",
         type=bool,
-        default=True,
-        help="Bagging mode",
+        default=False,
+        help="Plot data distribution",
     )
 
     args = parser.parse_args()
 
     if print_args:
         print(f"Random seed: {args.seed}")
+        print(f"Method: {args.method}")
         print(f"Model type: {args.model}")
         print(f"Dataset: {args.dataset}")
         print(f"Data distribution: {args.distribution}")
         if args.distribution == "non-iid":
             print(f"Alpha: {args.alpha}")
-        print(f"Number of clients: {args.num_clients}")
         print(f"Aggregation method: {args.aggregation}")
-        print(f"Number of rounds: {args.round}")
+        print(f"Number of clients: {args.num_clients}")
+        print(f"Select ratio: {args.select_ratio}")
+        print(f"Local train ratio: {args.local_train_ratio}")
+        print(f"Number of rounds: {args.rounds}")
         print(f"Number of local epochs: {args.epochs}")
         print(f"Batch size: {args.batch_size}")
         print(f"Learning rate: {args.lr}")
-        print(f"Learning rate decay: {args.lr_decay}")
-        print(f"Save directory: {args.save_dir}")
+        print(f"Results save directory: {args.save_dir}")
         if args.save_dir is None:
             print("Results will not be saved.")
 

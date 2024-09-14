@@ -8,10 +8,10 @@ def train(
     model,
     optimizer,
     criterion,
-    train_loader,
+    dataloader,
     device="cuda",
     epochs=10,
-    print_log=False,
+    verbose=False,
 ):
     original_model_device = next(model.parameters()).device
     if device == "cuda":
@@ -21,7 +21,7 @@ def train(
 
     for epoch in tqdm(range(epochs), leave=False, desc="Training Epochs"):
         training_loss = 0
-        for _, (data, target) in enumerate(train_loader):
+        for _, (data, target) in enumerate(dataloader):
             data, target = data.to(device), target.to(device)
             optimizer.zero_grad()
             output = model(data)
@@ -29,36 +29,36 @@ def train(
             loss.backward()
             optimizer.step()
             training_loss += loss.item()
-        training_loss /= len(train_loader)
+        training_loss /= len(dataloader)
 
-        if print_log:
+        if verbose:
             correct = 0
             with torch.no_grad():
-                for data, target in train_loader:
+                for data, target in dataloader:
                     data, target = data.to(device), target.to(device)
                     output = model(data)
                     pred = output.argmax(dim=1, keepdim=True)
                     correct += pred.eq(target.view_as(pred)).sum().item()
             print(
-                f"Train Epoch: {epoch}/{epochs}\tAverage Training Loss: {training_loss:.6f}\tAccuracy: {correct}/{len(train_loader.dataset)} ({100. * correct / len(train_loader.dataset):.0f}%)"
+                f"Train Epoch: {epoch}/{epochs}\tAverage Training Loss: {training_loss:.6f}\tAccuracy: {correct}/{len(dataloader.dataset)} ({100. * correct / len(dataloader.dataset):.0f}%)"
             )
 
     # Calculate the final training loss
     train_loss = 0.0
     with torch.no_grad():
-        for data, target in train_loader:
+        for data, target in dataloader:
             data, target = data.to(device), target.to(device)
             output = model(data)
             loss = criterion(output, target)
             train_loss += loss.item()
-        train_loss /= len(train_loader)
+        train_loss /= len(dataloader)
 
     model.to(original_model_device)
     return train_loss
 
 
 def train_and_validate(
-    model, train_loader, val_loader, optimizer, criterion, epochs=30, device="cuda"
+    model, dataloader, val_loader, optimizer, criterion, epochs=30, device="cuda"
 ):
     original_device = next(model.parameters()).device
     model.to(device)
@@ -70,7 +70,7 @@ def train_and_validate(
     for epoch in range(epochs):
         total_loss = 0.0
         correct = 0
-        for data, target in train_loader:
+        for data, target in dataloader:
             data, target = data.to(device), target.to(device)
             optimizer.zero_grad()
             output = model(data)
@@ -81,11 +81,11 @@ def train_and_validate(
             pred = output.argmax(dim=1, keepdim=True)
             correct += pred.eq(target.view_as(pred)).sum().item()
 
-        train_acc = correct / len(train_loader.dataset)
+        train_acc = correct / len(dataloader.dataset)
         # val_loss, val_acc, _ = test(model, device, val_loader, criterion)
         val_result = evaluate_acc(model, val_loader, device=device)
         print(
-            f"Epoch {epoch + 1}/{epochs}, Traing Loss: {total_loss:.6f}, Training Accuracy: {correct}/{len(train_loader.dataset)} ({100. * correct / len(train_loader.dataset):.2f}%)\tValidation Loss: {val_result["loss"]:.6f}, Validation Accuracy: {val_result["accuracy"]:.4f}"
+            f"Epoch {epoch + 1}/{epochs}, Traing Loss: {total_loss:.6f}, Training Accuracy: {correct}/{len(dataloader.dataset)} ({100. * correct / len(dataloader.dataset):.2f}%)\tValidation Loss: {val_result["loss"]:.6f}, Validation Accuracy: {val_result["accuracy"]:.4f}"
         )
 
         train_acc_list.append(train_acc)

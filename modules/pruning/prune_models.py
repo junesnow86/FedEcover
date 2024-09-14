@@ -10,7 +10,7 @@ from modules.models import CNN, DropoutScaling, Transformer
 from .pruned_indices_dicts import (
     BlockPrunedIndicesDict,
     LayerPrunedIndicesDict,
-    ModelPrunedIndicesDict,
+    ModelPrunedIndicesBag,
 )
 
 from .prune_layers import (
@@ -54,7 +54,7 @@ def generate_model_pruned_indices_dicts_bag_for_cnn(dropout_rate: float):
         dropout_rate: The dropout rate to use for pruning.
 
     Returns:
-        model_pruned_indices_dicts: A list of `ModelPrunedIndicesDict`.
+        model_pruned_indices_dicts: A list of `ModelPrunedIndicesBag`.
     """
     model_pruned_indices_dicts = []
 
@@ -125,7 +125,7 @@ def generate_model_pruned_indices_dicts_bag_for_cnn(dropout_rate: float):
 
     num_bags = min_length
     for i in range(num_bags):
-        model_pruned_indices_dict = ModelPrunedIndicesDict()
+        model_pruned_indices_dict = ModelPrunedIndicesBag()
 
         layer1_pruned_indices_dict = LayerPrunedIndicesDict()
         layer1_pruned_indices_dict["output"] = pruned_indices_bags_conv1[i]
@@ -158,7 +158,7 @@ def generate_model_pruned_indices_dicts_bag_for_resnet18(dropout_rate: float):
         dropout_rate: The dropout rate to use for pruning.
 
     Returns:
-        model_pruned_indices_dicts: A list of `ModelPrunedIndicesDict`.
+        model_pruned_indices_dicts: A list of `ModelPrunedIndicesBag`.
     """
     model_pruned_indices_dicts = []
     pruned_out_indices_bags_for_each_layer = {}
@@ -225,7 +225,7 @@ def generate_model_pruned_indices_dicts_bag_for_resnet18(dropout_rate: float):
     num_bags = min_length
     for i in range(num_bags):  # one bag for each model
         pruned_indices_dict_bag = (
-            ModelPrunedIndicesDict()
+            ModelPrunedIndicesBag()
         )  # pruned_indices of layers for a model
         # conv1
         layer_pruned_indices_dict = LayerPrunedIndicesDict()
@@ -276,7 +276,7 @@ def generate_model_pruned_indices_dicts_bag_for_resnet18(dropout_rate: float):
 def prune_cnn(
     model: nn.Module,
     dropout_rate: float,
-    optional_indices_dict: Optional[ModelPrunedIndicesDict] = None,
+    optional_indices_dict: Optional[ModelPrunedIndicesBag] = None,
     scaling: bool = True,
 ):
     """Prune a CNN model by using the provided dropout rate and optional indices to prune.
@@ -293,7 +293,7 @@ def prune_cnn(
         pruned_model: The pruned CNN model.
         pruned_indices_dict: A dictionary containing the indices to prune for each pruned layer.
     """
-    model_pruned_indices_dict = ModelPrunedIndicesDict()
+    model_pruned_indices_dict = ModelPrunedIndicesBag()
 
     conv1 = model.layer1[0]
     num_output_channels_to_prune_conv1 = int(conv1.out_channels * dropout_rate)
@@ -371,7 +371,7 @@ def prune_cnn(
 def prune_resnet18(
     model: ResNet,
     dropout_rate: float = 0.5,
-    optional_indices_dict: Optional[ModelPrunedIndicesDict] = None,
+    optional_indices_dict: Optional[ModelPrunedIndicesBag] = None,
     scaling: bool = True,
 ):
     """
@@ -393,7 +393,7 @@ def prune_resnet18(
 
     new_model = copy.deepcopy(model)
 
-    model_pruned_indices_dict = ModelPrunedIndicesDict()
+    model_pruned_indices_dict = ModelPrunedIndicesBag()
 
     layer_key = "conv1"
     current_layer = new_model.conv1
@@ -569,7 +569,7 @@ def prune_transformer(
     """
     new_model = copy.deepcopy(model)
 
-    model_pruned_indices_dict = ModelPrunedIndicesDict()
+    model_pruned_indices_dict = ModelPrunedIndicesBag()
 
     num_heads = new_model.num_heads
     num_layers = new_model.num_layers
@@ -731,7 +731,7 @@ def prune_shallow_resnet(model: ResNet, dropout_rate=0.5):
     # Note: using static layer normlization
     new_model = copy.deepcopy(model)
 
-    pruned_indices_dicts = ModelPrunedIndicesDict()
+    pruned_indices_dicts = ModelPrunedIndicesBag()
 
     layer_key = "conv1"
     current_layer = new_model.conv1

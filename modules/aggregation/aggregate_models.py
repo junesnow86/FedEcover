@@ -6,7 +6,7 @@ import torch.nn as nn
 from torchvision.models import ResNet
 
 from modules.models import CNN, Transformer
-from modules.pruning import ModelPrunedIndicesDict
+from modules.pruning import ModelPrunedIndicesBag
 from modules.utils import measure_time
 
 from .aggregate_layers import (
@@ -42,7 +42,7 @@ def vanilla_federated_averaging(models, client_weights):
 def aggregate_cnn(
     global_model: CNN,
     local_models: List[CNN],
-    model_pruned_indices_dicts: List[ModelPrunedIndicesDict],
+    model_pruned_indices_dicts: List[ModelPrunedIndicesBag],
     client_weights: List[int],
 ):
     """
@@ -82,7 +82,7 @@ def aggregate_cnn(
 def aggregate_resnet18(
     global_model: ResNet,
     local_models: List[ResNet],
-    model_pruned_indices_dicts: List[ModelPrunedIndicesDict],
+    model_pruned_indices_dicts: List[ModelPrunedIndicesBag],
     client_weights: List[int],
 ):
     """
@@ -142,7 +142,7 @@ def aggregate_resnet18(
 def aggregate_transformer(
     global_model: Transformer,
     local_models: List[Transformer],
-    model_pruned_indices_dicts: List[ModelPrunedIndicesDict],
+    model_pruned_indices_dicts: List[ModelPrunedIndicesBag],
     client_weights: List[int],
 ):
     num_layers = global_model.num_layers

@@ -8,7 +8,7 @@ from .prune_models import (
 from .pruned_indices_dicts import (
     BlockPrunedIndicesDict,
     LayerPrunedIndicesDict,
-    ModelPrunedIndicesDict,
+    ModelPrunedIndicesBag,
 )
 
 __all__ = [
@@ -19,5 +19,5 @@ __all__ = [
     "generate_model_pruned_indices_dicts_bag_for_resnet18",
     "LayerPrunedIndicesDict",
     "BlockPrunedIndicesDict",
-    "ModelPrunedIndicesDict",
+    "ModelPrunedIndicesBag",
 ]

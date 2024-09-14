@@ -23,7 +23,7 @@ class BlockPrunedIndicesDict(dict):
         super().__setitem__(key, value)
 
 
-class ModelPrunedIndicesDict(dict):
+class ModelPrunedIndicesBag(dict):
     def __setitem__(
         self, key: str, value: Union[LayerPrunedIndicesDict, BlockPrunedIndicesDict]
     ) -> None:
