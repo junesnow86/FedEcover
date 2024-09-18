@@ -148,13 +148,6 @@ def aggregate_conv_layers(
             sample_accumulator_bias[unpruned_out_indices] += num_samples
 
     # Normalize the accumulated weights and biases by the number of samples after processing all layers
-    for out_idx_global in range(global_out_channels):
-        for in_idx_global in range(global_in_channels):
-            if sample_accumulator_weight[out_idx_global, in_idx_global] > 0:
-                global_conv_layer.weight.data[out_idx_global, in_idx_global, :, :] = (
-                    weight_accumulator[out_idx_global, in_idx_global, :, :]
-                    / sample_accumulator_weight[out_idx_global, in_idx_global]
-                )
     nonzero_indices = sample_accumulator_weight > 0
     global_conv_layer.weight.data[nonzero_indices] = (
         weight_accumulator[nonzero_indices]
