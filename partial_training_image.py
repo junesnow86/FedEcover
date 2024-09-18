@@ -34,6 +34,7 @@ from modules.pruning import (
     prune_cnn,
     prune_resnet18,
 )
+from modules.server import ServerFedRolex
 from modules.training import train
 from modules.utils import (
     calculate_model_size,
@@ -237,6 +238,18 @@ for rate in client_dropout_rates:
 print(f"Client dropout rate count: {dropout_rate_count}")
 optional_model_pruned_indices_dicts = {p: [] for p in optional_dropout_rates}
 
+if METHOD == "fedrolex":
+    server = ServerFedRolex(
+        global_model=global_model,
+        num_clients=NUM_CLIENTS,
+        client_capacities=[1.0 - p for p in client_dropout_rates],
+        model_out_dim=NUM_CLASSES,
+        model_type=MODEL_TYPE,
+        select_ratio=SELECT_RATIO,
+        rolling_step=1,
+        scaling=True,
+    )
+
 
 # <==================== Training, aggregation and evluation ====================>
 train_loss_results = []
@@ -295,6 +308,14 @@ for round in range(ROUNDS):
                 )
                 all_client_models[client_id] = client_model
                 model_pruned_indices_dicts[client_id] = model_pruned_indices_dict
+        elif METHOD == "fedrolex":
+            (
+                selected_client_ids,
+                selected_client_capacities,
+                selected_submodel_param_indices_dicts,
+                selected_client_submodels,
+            ) = server.distribute()
+            all_client_models = {client_id: model for client_id, model in zip(selected_client_ids, selected_client_submodels)}
         else:
             raise NotImplementedError
     elif MODEL_TYPE == "resnet":
@@ -380,28 +401,38 @@ for round in range(ROUNDS):
     # <-------------------- Aggregation -------------------->
     client_weights = [subset_sizes[i] for i in selected_client_ids]
     if MODEL_TYPE == "cnn":
-        if AGG_WAY == "sparse":
-            aggregate_cnn(
-                global_model=global_model,
-                local_models=[all_client_models[i] for i in selected_client_ids],
-                model_pruned_indices_dicts=[
-                    model_pruned_indices_dicts[i] for i in selected_client_ids
-                ],
+        if METHOD == "bagging-rd":
+            if AGG_WAY == "sparse":
+                aggregate_cnn(
+                    global_model=global_model,
+                    local_models=[all_client_models[i] for i in selected_client_ids],
+                    model_pruned_indices_dicts=[
+                        model_pruned_indices_dicts[i] for i in selected_client_ids
+                    ],
+                    client_weights=client_weights,
+                )
+            elif AGG_WAY == "recovery":
+                aggregated_weight = vanilla_federated_averaging(
+                    models=[
+                        recover_global_from_pruned_cnn(
+                            global_model,
+                            all_client_models[i],
+                            model_pruned_indices_dicts[i],
+                        )
+                        for i in range(num_models)
+                    ],
+                    client_weights=client_weights,
+                )
+                global_model.load_state_dict(aggregated_weight)
+        elif METHOD == "fedrolex":
+            server.aggregate(
+                local_state_dicts=[model.state_dict() for model in all_client_models.values()],
+                selected_client_ids=selected_client_ids,
+                submodel_param_indices_dicts=selected_submodel_param_indices_dicts,
                 client_weights=client_weights,
             )
-        elif AGG_WAY == "recovery":
-            aggregated_weight = vanilla_federated_averaging(
-                models=[
-                    recover_global_from_pruned_cnn(
-                        global_model,
-                        all_client_models[i],
-                        model_pruned_indices_dicts[i],
-                    )
-                    for i in range(num_models)
-                ],
-                client_weights=client_weights,
-            )
-            global_model.load_state_dict(aggregated_weight)
+        else:
+            raise NotImplementedError
     elif MODEL_TYPE == "resnet":
         if AGG_WAY == "sparse":
             aggregate_resnet18(
@@ -479,7 +510,9 @@ for round in range(ROUNDS):
         # Print local validation results
         for key, value in round_local_validation_results.items():
             if key != "Round":
-                print(f"{key}: {value:.4f} | {value - avg_local_validation_acc:.4f} (compared to average)")
+                print(
+                    f"{key}: {value:.4f} | {value - avg_local_validation_acc:.4f} (compared to average)"
+                )
 
     round_end_time = time()
     round_use_time = round_end_time - round_start_time
@@ -512,33 +545,48 @@ local_validation_results = format_results(local_validation_results)
 
 if SAVE_DIR is not None:
     with open(
-        os.path.join(SAVE_DIR, f"{METHOD}_{MODEL_TYPE}_{DATASET}_train_loss.csv"), "w"
+        os.path.join(
+            SAVE_DIR, f"{METHOD}_{MODEL_TYPE}_{DATASET}_{args.alpha}_train_loss.csv"
+        ),
+        "w",
     ) as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=train_loss_results[0].keys())
         writer.writeheader()
         writer.writerows(train_loss_results)
 
     with open(
-        os.path.join(SAVE_DIR, f"{METHOD}_{MODEL_TYPE}_{DATASET}_test_loss.csv"), "w"
+        os.path.join(
+            SAVE_DIR, f"{METHOD}_{MODEL_TYPE}_{DATASET}_{args.alpha}_test_loss.csv"
+        ),
+        "w",
     ) as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=test_loss_results[0].keys())
         writer.writeheader()
         writer.writerows(test_loss_results)
 
     with open(
-        os.path.join(SAVE_DIR, f"{METHOD}_{MODEL_TYPE}_{DATASET}_test_acc.csv"), "w"
+        os.path.join(
+            SAVE_DIR, f"{METHOD}_{MODEL_TYPE}_{DATASET}_{args.alpha}_test_acc.csv"
+        ),
+        "w",
     ) as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=test_acc_results[0].keys())
         writer.writeheader()
         writer.writerows(test_acc_results)
 
     with open(
-        os.path.join(SAVE_DIR, f"{METHOD}_{MODEL_TYPE}_{DATASET}_class_acc.pkl"), "wb"
+        os.path.join(
+            SAVE_DIR, f"{METHOD}_{MODEL_TYPE}_{DATASET}_{args.alpha}_class_acc.pkl"
+        ),
+        "wb",
     ) as f:
         pickle.dump(class_wise_results, f)
 
     with open(
-        os.path.join(SAVE_DIR, f"{METHOD}_{MODEL_TYPE}_{DATASET}_local_validation.csv"),
+        os.path.join(
+            SAVE_DIR,
+            f"{METHOD}_{MODEL_TYPE}_{DATASET}_{args.alpha}_local_validation.csv",
+        ),
         "w",
     ) as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=local_validation_results[0].keys())
