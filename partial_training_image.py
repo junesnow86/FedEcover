@@ -34,7 +34,7 @@ from modules.pruning import (
     prune_cnn,
     prune_resnet18,
 )
-from modules.server import ServerFedRolex, ServerHeteroFL, ServerRD
+from modules.server import ServerFedRolex, ServerHeteroFL, ServerRD, ServerRDBagging
 from modules.training import train
 from modules.utils import (
     calculate_model_size,
@@ -269,6 +269,17 @@ elif METHOD == "fedrd":
         select_ratio=SELECT_RATIO,
         scaling=True,
     )
+elif METHOD == "rdbagging":
+    server = ServerRDBagging(
+        global_model=global_model,
+        num_clients=NUM_CLIENTS,
+        client_capacities=[1.0 - p for p in client_dropout_rates],
+        model_out_dim=NUM_CLASSES,
+        model_type=MODEL_TYPE,
+        select_ratio=SELECT_RATIO,
+        scaling=True,
+        strategy="p-based-steady",
+    )
 
 
 # <==================== Training, aggregation and evluation ====================>
@@ -302,7 +313,7 @@ for round in range(ROUNDS):
 
     # <-------------------- Pruning -------------------->
     if MODEL_TYPE == "cnn":
-        if METHOD == "bagging-rd":
+        if METHOD == "legacy":
             for client_id in selected_client_ids:
                 if (
                     len(
@@ -328,7 +339,7 @@ for round in range(ROUNDS):
                 )
                 all_client_models[client_id] = client_model
                 model_pruned_indices_dicts[client_id] = model_pruned_indices_dict
-        elif METHOD in ["fedrolex", "heterofl", "fedrd"]:
+        elif METHOD in ["fedrolex", "heterofl", "fedrd", "rdbagging"]:
             (
                 selected_client_ids,
                 selected_client_capacities,
@@ -339,7 +350,7 @@ for round in range(ROUNDS):
         else:
             raise NotImplementedError
     elif MODEL_TYPE == "resnet":
-        if METHOD == "bagging-rd":
+        if METHOD == "legacy":
             for client_id in selected_client_ids:
                 if (
                     len(
@@ -365,7 +376,7 @@ for round in range(ROUNDS):
                 )
                 all_client_models[client_id] = client_model
                 model_pruned_indices_dicts[client_id] = model_pruned_indices_dict
-        elif METHOD in ["fedrolex", "heterofl", "fedrd"]:
+        elif METHOD in ["fedrolex", "heterofl", "fedrd", "rdbagging"]:
             (
                 selected_client_ids,
                 selected_client_capacities,
@@ -429,7 +440,7 @@ for round in range(ROUNDS):
     # <-------------------- Aggregation -------------------->
     client_weights = [subset_sizes[i] for i in selected_client_ids]
     if MODEL_TYPE == "cnn":
-        if METHOD == "bagging-rd":
+        if METHOD == "legacy":
             if AGG_WAY == "sparse":
                 aggregate_cnn(
                     global_model=global_model,
@@ -452,7 +463,7 @@ for round in range(ROUNDS):
                     client_weights=client_weights,
                 )
                 global_model.load_state_dict(aggregated_weight)
-        elif METHOD in ["fedrolex", "heterofl", "fedrd"]:
+        elif METHOD in ["fedrolex", "heterofl", "fedrd", "rdbagging"]:
             server.step(
                 local_state_dicts=[model.state_dict() for model in all_client_models.values()],
                 selected_client_ids=selected_client_ids,
@@ -462,7 +473,7 @@ for round in range(ROUNDS):
         else:
             raise NotImplementedError
     elif MODEL_TYPE == "resnet":
-        if METHOD == "bagging-rd":
+        if METHOD == "legacy":
             if AGG_WAY == "sparse":
                 aggregate_resnet18(
                     global_model=global_model,
@@ -485,7 +496,7 @@ for round in range(ROUNDS):
                     client_weights=client_weights,
                 )
                 global_model.load_state_dict(aggregated_weight)
-        elif METHOD in ["fedrolex", "heterofl", "fedrd"]:
+        elif METHOD in ["fedrolex", "heterofl", "fedrd", "rdbagging"]:
             server.step(
                 local_state_dicts=[model.state_dict() for model in all_client_models.values()],
                 selected_client_ids=selected_client_ids,

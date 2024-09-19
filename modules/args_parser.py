@@ -93,7 +93,7 @@ def get_args(print_args=True):
     parser.add_argument(
         "--method",
         type=str,
-        choices=["fedavg", "heterofl", "fedrolex", "fedrd", "bagging-rd"],
+        choices=["fedavg", "heterofl", "fedrolex", "fedrd", "rdbagging", "legacy"],
         default="bagging-rd",
         help="Federated learning method",
     )

@@ -6,6 +6,7 @@ from .prune_models import (
     prune_resnet18,
     prune_transformer,
 )
+from .prune_utils import generate_index_groups
 from .pruned_indices_dicts import (
     BlockPrunedIndicesDict,
     LayerPrunedIndicesDict,
@@ -29,4 +30,5 @@ __all__ = [
     "SubmodelBlockParamIndicesDict",
     "extract_submodel_cnn",
     "extract_submodel_resnet",
+    "generate_index_groups",
 ]
