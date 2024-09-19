@@ -20,11 +20,11 @@ def extract_sublayer_linear(
     in_features = original_layer.in_features
     out_features = original_layer.out_features
 
-    # Check in_indices and out_indices are sorted
     in_indices, out_indices = (
         layer_param_indices_dict.get("in", np.array(range(in_features))),
         layer_param_indices_dict.get("out", np.array(range(out_features))),
     )
+    # Check in_indices and out_indices are sorted
     assert np.all(in_indices == np.sort(in_indices))
     assert np.all(out_indices == np.sort(out_indices))
 
@@ -62,11 +62,11 @@ def extract_sublayer_conv2d(
     dilation = original_layer.dilation
     groups = original_layer.groups
 
-    # Check in_indices and out_indices are sorted
     in_indices, out_indices = (
         layer_param_indices_dict.get("in", np.array(range(in_channels))),
         layer_param_indices_dict.get("out", np.array(range(out_channels))),
     )
+    # Check in_indices and out_indices are sorted
     assert np.all(in_indices == np.sort(in_indices))
     assert np.all(out_indices == np.sort(out_indices))
 

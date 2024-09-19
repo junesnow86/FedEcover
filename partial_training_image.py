@@ -34,7 +34,7 @@ from modules.pruning import (
     prune_cnn,
     prune_resnet18,
 )
-from modules.server import ServerFedRolex
+from modules.server import ServerFedRolex, ServerHeteroFL, ServerRD
 from modules.training import train
 from modules.utils import (
     calculate_model_size,
@@ -246,7 +246,27 @@ if METHOD == "fedrolex":
         model_out_dim=NUM_CLASSES,
         model_type=MODEL_TYPE,
         select_ratio=SELECT_RATIO,
-        rolling_step=1,
+        scaling=True,
+        rolling_step=-1,
+    )
+elif METHOD == "heterofl":
+    server = ServerHeteroFL(
+        global_model=global_model,
+        num_clients=NUM_CLIENTS,
+        client_capacities=[1.0 - p for p in client_dropout_rates],
+        model_out_dim=NUM_CLASSES,
+        model_type=MODEL_TYPE,
+        select_ratio=SELECT_RATIO,
+        scaling=True,
+    )
+elif METHOD == "fedrd":
+    server = ServerRD(
+        global_model=global_model,
+        num_clients=NUM_CLIENTS,
+        client_capacities=[1.0 - p for p in client_dropout_rates],
+        model_out_dim=NUM_CLASSES,
+        model_type=MODEL_TYPE,
+        select_ratio=SELECT_RATIO,
         scaling=True,
     )
 
@@ -308,7 +328,7 @@ for round in range(ROUNDS):
                 )
                 all_client_models[client_id] = client_model
                 model_pruned_indices_dicts[client_id] = model_pruned_indices_dict
-        elif METHOD == "fedrolex":
+        elif METHOD in ["fedrolex", "heterofl", "fedrd"]:
             (
                 selected_client_ids,
                 selected_client_capacities,
@@ -345,6 +365,14 @@ for round in range(ROUNDS):
                 )
                 all_client_models[client_id] = client_model
                 model_pruned_indices_dicts[client_id] = model_pruned_indices_dict
+        elif METHOD in ["fedrolex", "heterofl", "fedrd"]:
+            (
+                selected_client_ids,
+                selected_client_capacities,
+                selected_submodel_param_indices_dicts,
+                selected_client_submodels,
+            ) = server.distribute()
+            all_client_models = {client_id: model for client_id, model in zip(selected_client_ids, selected_client_submodels)}
         else:
             raise NotImplementedError
     else:
@@ -424,8 +452,8 @@ for round in range(ROUNDS):
                     client_weights=client_weights,
                 )
                 global_model.load_state_dict(aggregated_weight)
-        elif METHOD == "fedrolex":
-            server.aggregate(
+        elif METHOD in ["fedrolex", "heterofl", "fedrd"]:
+            server.step(
                 local_state_dicts=[model.state_dict() for model in all_client_models.values()],
                 selected_client_ids=selected_client_ids,
                 submodel_param_indices_dicts=selected_submodel_param_indices_dicts,
@@ -434,28 +462,36 @@ for round in range(ROUNDS):
         else:
             raise NotImplementedError
     elif MODEL_TYPE == "resnet":
-        if AGG_WAY == "sparse":
-            aggregate_resnet18(
-                global_model=global_model,
-                local_models=[all_client_models[i] for i in selected_client_ids],
-                model_pruned_indices_dicts=[
-                    model_pruned_indices_dicts[i] for i in selected_client_ids
-                ],
+        if METHOD == "bagging-rd":
+            if AGG_WAY == "sparse":
+                aggregate_resnet18(
+                    global_model=global_model,
+                    local_models=[all_client_models[i] for i in selected_client_ids],
+                    model_pruned_indices_dicts=[
+                        model_pruned_indices_dicts[i] for i in selected_client_ids
+                    ],
+                    client_weights=client_weights,
+                )
+            elif AGG_WAY == "recovery":
+                aggregated_weight = vanilla_federated_averaging(
+                    models=[
+                        recover_global_from_pruned_resnet18(
+                            global_model,
+                            all_client_models[i],
+                            model_pruned_indices_dicts[i],
+                        )
+                        for i in range(num_models)
+                    ],
+                    client_weights=client_weights,
+                )
+                global_model.load_state_dict(aggregated_weight)
+        elif METHOD in ["fedrolex", "heterofl", "fedrd"]:
+            server.step(
+                local_state_dicts=[model.state_dict() for model in all_client_models.values()],
+                selected_client_ids=selected_client_ids,
+                submodel_param_indices_dicts=selected_submodel_param_indices_dicts,
                 client_weights=client_weights,
             )
-        elif AGG_WAY == "recovery":
-            aggregated_weight = vanilla_federated_averaging(
-                models=[
-                    recover_global_from_pruned_resnet18(
-                        global_model,
-                        all_client_models[i],
-                        model_pruned_indices_dicts[i],
-                    )
-                    for i in range(num_models)
-                ],
-                client_weights=client_weights,
-            )
-            global_model.load_state_dict(aggregated_weight)
     else:
         raise ValueError(f"Model type {MODEL_TYPE} not supported.")
 
