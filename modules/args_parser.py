@@ -94,7 +94,7 @@ def get_args(print_args=True):
         "--method",
         type=str,
         choices=["fedavg", "heterofl", "fedrolex", "fedrd", "rdbagging", "legacy"],
-        default="bagging-rd",
+        default="fedavg",
         help="Federated learning method",
     )
     parser.add_argument(
