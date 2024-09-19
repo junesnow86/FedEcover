@@ -1,12 +1,16 @@
+import copy
+
 import numpy as np
 import torch
 import torch.nn as nn
+from torchvision.models import ResNet
+
+from modules.models import CNN, DropoutScaling
 
 from .submodel_param_indices_dicts import (
     SubmodelBlockParamIndicesDict,
     SubmodelLayerParamIndicesDict,
 )
-from modules.models import CNN, DropoutScaling
 
 
 def extract_sublayer_linear(
@@ -109,6 +113,8 @@ def extract_submodel_cnn(
     )
     if scaling:
         sublayer_conv1 = nn.Sequential(sublayer_conv1, DropoutScaling(p=p))
+    else:
+        sublayer_conv1 = nn.Sequential(sublayer_conv1)
     submodel.layer1[0] = sublayer_conv1
 
     sublayer_conv2 = extract_sublayer_conv2d(
@@ -117,6 +123,8 @@ def extract_submodel_cnn(
     )
     if scaling:
         sublayer_conv2 = nn.Sequential(sublayer_conv2, DropoutScaling(p=p))
+    else:
+        sublayer_conv2 = nn.Sequential(sublayer_conv2)
     submodel.layer2[0] = sublayer_conv2
 
     sublayer_conv3 = extract_sublayer_conv2d(
@@ -125,7 +133,85 @@ def extract_submodel_cnn(
     )
     if scaling:
         sublayer_conv3 = nn.Sequential(sublayer_conv3, DropoutScaling(p=p))
+    else:
+        sublayer_conv3 = nn.Sequential(sublayer_conv3)
     submodel.layer3[0] = sublayer_conv3
+
+    sublayer_fc = extract_sublayer_linear(
+        original_model.fc,
+        submodel_param_indices_dict["fc"],
+    )
+    submodel.fc = sublayer_fc
+
+    return submodel
+
+
+def extract_submodel_resnet(
+    original_model: ResNet,
+    submodel_param_indices_dict: SubmodelBlockParamIndicesDict,
+    p: float,
+    scaling: bool = True,
+):
+    submodel = copy.deepcopy(original_model)
+
+    sublayer_conv1 = extract_sublayer_conv2d(
+        original_model.conv1,
+        submodel_param_indices_dict["conv1"],
+    )
+    if scaling:
+        sublayer_conv1 = nn.Sequential(sublayer_conv1, DropoutScaling(p=p))
+    else:
+        sublayer_conv1 = nn.Sequential(sublayer_conv1)
+    submodel.conv1 = sublayer_conv1
+    submodel.bn1 = nn.LayerNorm(
+        normalized_shape=[submodel.conv1[0].out_channels, 16, 16], elementwise_affine=False
+    )
+
+    layers = ["layer1", "layer2", "layer3", "layer4"]
+    layernorm_shapes = [
+        [64, 8, 8],
+        [128, 4, 4],
+        [256, 2, 2],
+        [512, 1, 1],
+    ]
+    blocks = ["0", "1"]
+    convs = ["conv1", "conv2"]
+
+    for i, layer in enumerate(layers):
+        for block in blocks:
+            for conv in convs:
+                sublayer_conv = extract_sublayer_conv2d(
+                    original_model._modules[layer][int(block)]._modules[conv],
+                    submodel_param_indices_dict[f"{layer}.{block}.{conv}"],
+                )
+                if scaling:
+                    sublayer_conv = nn.Sequential(sublayer_conv, DropoutScaling(p=p))
+                else:
+                    sublayer_conv = nn.Sequential(sublayer_conv)
+                submodel._modules[layer][int(block)]._modules[conv] = sublayer_conv
+                layernorm_shape = layernorm_shapes[i]
+                layernorm_shape[0] = sublayer_conv[0].out_channels
+                submodel._modules[layer][int(block)]._modules[f"bn{int(conv[-1])}"] = nn.LayerNorm(
+                    normalized_shape=layernorm_shape, elementwise_affine=False
+                )
+
+            if layer != "layer1" and block == "0":
+                sublayer_downsample = extract_sublayer_conv2d(
+                    original_model._modules[layer][int(block)].downsample[0],
+                    submodel_param_indices_dict[f"{layer}.{block}.downsample.0"],
+                )
+                if scaling:
+                    sublayer_downsample = nn.Sequential(
+                        sublayer_downsample, DropoutScaling(p=p)
+                    )
+                else:
+                    sublayer_downsample = nn.Sequential(sublayer_downsample)
+                submodel._modules[layer][int(block)].downsample[0] = sublayer_downsample
+                layernorm_shape = layernorm_shapes[i]
+                layernorm_shape[0] = sublayer_downsample[0].out_channels
+                submodel._modules[layer][int(block)].downsample[1] = nn.LayerNorm(
+                    normalized_shape=layernorm_shape, elementwise_affine=False
+                )
 
     sublayer_fc = extract_sublayer_linear(
         original_model.fc,
