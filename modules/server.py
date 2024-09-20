@@ -730,7 +730,6 @@ class ServerRDBagging(ServerBase):
             ]  # the index is the client id; the value type is List[SubmodelBlockParamIndicesDict]
 
     def get_client_submodel_param_indices_dict(self, client_id: int):
-        # TODO:
         client_capacity = self.client_capacities[client_id]
         if "p-based" in self.strategy:
             # Note: `submodel_param_indices_dict_queues` is a quote, so the changes will be reflected in the original object
@@ -957,6 +956,5 @@ class ServerRDBagging(ServerBase):
         selected_capacites = list(set(selected_capacites))
 
         if self.strategy == "p-based-steady":
-            print(self.submodel_param_indices_dict_queues.keys())
             for client_capacity in selected_capacites:
                 self.submodel_param_indices_dict_queues[client_capacity].pop()

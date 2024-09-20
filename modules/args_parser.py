@@ -115,6 +115,12 @@ def get_args(print_args=True):
         default=False,
         help="Plot data distribution",
     )
+    parser.add_argument(
+        "--rdbagging-strategy",
+        type=str,
+        default=None,
+        help="RDBagging strategy",
+    )
 
     args = parser.parse_args()
 

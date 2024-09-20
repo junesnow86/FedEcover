@@ -41,7 +41,7 @@ from modules.utils import (
     replace_bn_with_ln,
 )
 
-# <==================== Parse arguments ====================>
+# <======================================== Parse arguments ========================================>
 args = get_args()
 SAVE_DIR = args.save_dir
 MODEL_TYPE = args.model
@@ -77,7 +77,7 @@ torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
 
 
-# <==================== Data preparation ====================>
+# <======================================== Data preparation ========================================>
 transform = transforms.Compose(
     [
         transforms.ToTensor(),
@@ -203,10 +203,8 @@ for indices_a_subset in subset_indices_list:
         )
     )
 
-# exit()
 
-
-# <==================== Model preparation ====================>
+# <======================================== Model preparation ========================================>
 if MODEL_TYPE == "cnn":
     global_model = CNN(num_classes=NUM_CLASSES)
 elif MODEL_TYPE == "resnet":
@@ -279,16 +277,18 @@ elif METHOD == "rdbagging":
         model_type=MODEL_TYPE,
         select_ratio=SELECT_RATIO,
         scaling=True,
-        strategy="p-based-steady",
+        strategy=args.rdbagging_strategy,
     )
 
 
-# <==================== Training, aggregation and evluation ====================>
+# <======================================== Training, aggregation and evluation ========================================>
 train_loss_results = []
 test_loss_results = []
 test_acc_results = []
 class_wise_results = []
 local_validation_results = []
+
+client_evaluation_results = {}
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 criterion = nn.CrossEntropyLoss()
@@ -303,18 +303,16 @@ for round in range(ROUNDS):
     round_test_acc_results = {"Round": round + 1}
     round_class_wise_results = {"Round": round + 1}
 
-    # Radomly select a ratio of clients to participate in this round
-    selected_client_ids = np.random.choice(
-        range(NUM_CLIENTS), int(NUM_CLIENTS * SELECT_RATIO), replace=False
-    )
-    print(f"Selected {len(selected_client_ids)} client IDs: {selected_client_ids}")
-
     all_client_models = {}
     model_pruned_indices_dicts = {}
 
-    # <-------------------- Pruning -------------------->
+    # <---------------------------------------- Pruning ---------------------------------------->
     if MODEL_TYPE == "cnn":
         if METHOD == "legacy":
+            # Radomly select a ratio of clients to participate in this round
+            selected_client_ids = np.random.choice(
+                range(NUM_CLIENTS), int(NUM_CLIENTS * SELECT_RATIO), replace=False
+            )
             for client_id in selected_client_ids:
                 if (
                     len(
@@ -357,6 +355,10 @@ for round in range(ROUNDS):
             raise NotImplementedError
     elif MODEL_TYPE == "resnet":
         if METHOD == "legacy":
+            # Radomly select a ratio of clients to participate in this round
+            selected_client_ids = np.random.choice(
+                range(NUM_CLIENTS), int(NUM_CLIENTS * SELECT_RATIO), replace=False
+            )
             for client_id in selected_client_ids:
                 if (
                     len(
@@ -400,7 +402,9 @@ for round in range(ROUNDS):
     else:
         raise ValueError(f"Model type {MODEL_TYPE} not supported.")
 
-    # <-------------------- Local Training -------------------->
+    print(f"Selected {len(selected_client_ids)} client IDs: {selected_client_ids}")
+
+    # <---------------------------------------- Local Training ---------------------------------------->
     for client_id in selected_client_ids:
         # optimizer = optim.SGD(
         #     all_client_models[client_id].parameters(),
@@ -432,6 +436,12 @@ for round in range(ROUNDS):
             device=device,
             class_wise=True,
         )
+        client_global_evaluation_result = evaluate_acc(
+            model=all_client_models[client_id],
+            dataloader=global_test_loader,
+            device=device,
+            class_wise=True,
+        )
 
         local_test_loss = local_evaluation_result["loss"]
         local_test_acc = local_evaluation_result["accuracy"]
@@ -439,16 +449,23 @@ for round in range(ROUNDS):
         model_size = calculate_model_size(
             all_client_models[client_id], print_result=False, unit="MB"
         )
-        print(
-            f"Client {client_id}\tDropout Rate: {client_dropout_rates[client_id]}\tModel Size: {model_size:.2f} MB\tTrain Loss: {local_train_loss:.4f}\tTrain Acc: {local_evaluation_result_on_train_data['accuracy']:.4f}\tTest Loss: {local_test_loss:.4f}\tTest Acc: {local_test_acc:.4f}"
-        )
+
+        client_evaluation_results[client_id] = {
+            "model_size": model_size,
+            "train_loss": local_train_loss,
+            "train_acc": local_evaluation_result_on_train_data["accuracy"],
+            "local_val_loss": local_test_loss,
+            "local_val_acc": local_test_acc,
+            "global_val_loss": client_global_evaluation_result["loss"],
+            "global_val_acc": client_global_evaluation_result["accuracy"],
+        }
 
         round_train_loss_results[f"Client {client_id}"] = local_train_loss
         round_test_loss_results[f"Client {client_id}"] = local_test_loss
         round_test_acc_results[f"Client {client_id}"] = local_test_acc
         round_class_wise_results[f"Client {client_id}"] = local_class_acc
 
-    # <-------------------- Aggregation -------------------->
+    # <---------------------------------------- Aggregation ---------------------------------------->
     client_weights = [subset_sizes[i] for i in selected_client_ids]
     if MODEL_TYPE == "cnn":
         if METHOD == "legacy":
@@ -521,19 +538,66 @@ for round in range(ROUNDS):
     else:
         raise ValueError(f"Model type {MODEL_TYPE} not supported.")
 
-    # Evaluate the global model
+    # <---------------------------------------- Global Model Evaluation ---------------------------------------->
     global_evaluation_result = evaluate_acc(
         model=global_model,
         dataloader=global_test_loader,
         device=device,
         class_wise=True,
     )
+    client_evaluation_results["aggregated"] = {
+        "global_val_loss": global_evaluation_result["loss"],
+        "global_val_acc": global_evaluation_result["accuracy"],
+    }
+    # Evaluate the global model on each selected local validation set
+    for client_id in selected_client_ids:
+        aggregated_evaluation_result_on_local_validation_data = evaluate_acc(
+            model=global_model,
+            dataloader=val_loaders[client_id],
+            device=device,
+            class_wise=True,
+        )
+        client_evaluation_results["aggregated"][client_id] = {
+            "local_val_loss": aggregated_evaluation_result_on_local_validation_data[
+                "loss"
+            ],
+            "local_val_acc": aggregated_evaluation_result_on_local_validation_data[
+                "accuracy"
+            ],
+        }
+
+    # <---------------------------------------- Print Results ---------------------------------------->
+    for client_id in selected_client_ids:
+        print(
+            f"Client {client_id}\t"
+            f"Dropout Rate: {client_dropout_rates[client_id]}\t"
+            f"Model Size: {client_evaluation_results[client_id]["model_size"]:.2f} MB\t"
+            f"Train Loss: {client_evaluation_results[client_id]["train_loss"]:.4f}\t"
+            f"Train Acc: {client_evaluation_results[client_id]["train_acc"]:.4f}\t"
+            f"Local Validation  Loss: {client_evaluation_results[client_id]["local_val_loss"]:.4f}\t"
+            f"Local Validation Acc: {client_evaluation_results[client_id]["local_val_acc"]:.4f}\t"
+            f"Global Validation Loss: {client_evaluation_results[client_id]["global_val_loss"]:.4f}\t"
+            f"Global Validation Acc: {client_evaluation_results[client_id]["global_val_acc"]:.4f}"
+        )
+
     global_test_loss = global_evaluation_result["loss"]
     global_test_acc = global_evaluation_result["accuracy"]
     global_class_acc = global_evaluation_result["class_wise_accuracy"]
     print(
-        f"Aggregated Test Loss: {global_test_loss:.4f}\tAggregated Test Acc: {global_test_acc:.4f}"
+        "Aggregated\n"
+        f"Global Test Loss: {global_test_loss:.4f}\t"
+        f"Global Test Acc: {global_test_acc:.4f}"
     )
+    for client_id in selected_client_ids:
+        local_val_loss = client_evaluation_results["aggregated"][client_id]["local_val_loss"]
+        loss_gap = local_val_loss - client_evaluation_results[client_id]["local_val_loss"]
+        local_val_acc = client_evaluation_results["aggregated"][client_id]["local_val_acc"]
+        acc_gap = local_val_acc - client_evaluation_results[client_id]["local_val_acc"]
+        print(
+            f"Client {client_id}\t"
+            f"Local Validation Loss: {local_val_loss:.4f}({loss_gap:.4f})\t"
+            f"Local Validation Acc: {local_val_acc:.4f}({acc_gap:.4f})"
+        )
 
     round_test_loss_results["Aggregated"] = global_test_loss
     round_test_acc_results["Aggregated"] = global_test_acc
