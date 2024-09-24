@@ -21,7 +21,7 @@ from modules.data import create_non_iid_data
 from modules.evaluation import evaluate_acc
 from modules.models import CNN
 from modules.pruning import prune_cnn, prune_resnet18
-from modules.training import train
+from modules.training import train, scaffold_train
 from modules.utils import calculate_model_size, replace_bn_with_ln
 
 # <======================================== Parse arguments ========================================>
@@ -47,7 +47,7 @@ SELECT_RATIO = args.select_ratio
 LOCAL_VALIDATION_FREQUENCY = int(1 / args.select_ratio)
 LOCAL_TRAIN_RATIO = args.local_train_ratio
 
-assert METHOD in ["fedavg"]
+assert METHOD in ["fedavg", "scaffold"]
 
 # Set random seed for reproducibility
 seed = args.seed
@@ -206,6 +206,26 @@ print(
     f"Global Model size: {calculate_model_size(global_model, print_result=False, unit='MB'):.2f} MB"
 )
 
+# Initialize control variates for SCAFFOLD
+if METHOD == "scaffold":
+    c_global = {
+        name: torch.zeros_like(param) for name, param in global_model.named_parameters()
+    }
+    client_controls = {
+        client_id: {
+            name: torch.zeros_like(param)
+            for name, param in global_model.named_parameters()
+        }
+        for client_id in range(NUM_CLIENTS)
+    }
+    client_delta_controls = {
+        client_id: {
+            name: torch.zeros_like(param)
+            for name, param in global_model.named_parameters()
+        }
+        for client_id in range(NUM_CLIENTS)
+    }
+
 
 # <======================================== Training, aggregation and evluation ========================================>
 train_loss_results = []
@@ -245,15 +265,39 @@ for round in range(ROUNDS):
         optimizer = optim.Adam(
             all_client_models[client_id].parameters(), lr=LR, weight_decay=5e-4
         )
-        local_train_loss = train(
-            model=all_client_models[client_id],
-            optimizer=optimizer,
-            criterion=criterion,
-            dataloader=train_loaders[client_id],
-            device=device,
-            epochs=EPOCHS,
-            verbose=False,
-        )
+        if METHOD == "scaffold":
+            local_train_loss = scaffold_train(
+                model=all_client_models[client_id],
+                optimizer=optimizer,
+                criterion=criterion,
+                dataloader=train_loaders[client_id],
+                c_global=c_global,
+                c_client=client_controls[client_id],
+                device=device,
+                epochs=EPOCHS,
+                verbose=False,
+            )
+
+            # Update local control variates
+            with torch.no_grad():
+                num_steps = len(train_loaders[client_id]) * EPOCHS
+                for name, param in all_client_models[client_id].named_parameters():
+                    client_delta_controls[client_id][name] = (
+                        - c_global[name]
+                        + (global_model.state_dict()[name] - param)
+                        / (num_steps * LR)
+                    )
+                    client_controls[client_id][name] += client_delta_controls[client_id][name]
+        else:
+            local_train_loss = train(
+                model=all_client_models[client_id],
+                optimizer=optimizer,
+                criterion=criterion,
+                dataloader=train_loaders[client_id],
+                device=device,
+                epochs=EPOCHS,
+                verbose=False,
+            )
         local_evaluation_result_on_train_data = evaluate_acc(
             model=all_client_models[client_id],
             dataloader=train_loaders[client_id],
@@ -312,7 +356,24 @@ for round in range(ROUNDS):
     else:
         raise ValueError(f"Model type {MODEL_TYPE} not supported.")
 
-# <---------------------------------------- Global Model Evaluation ---------------------------------------->
+    # Update global control variates for SCAFFOLD
+    if METHOD == "scaffold":
+        with torch.no_grad():
+            for name, _ in global_model.named_parameters():
+                c_global[name] += (
+                    torch.sum(
+                        torch.stack(
+                            [
+                                client_delta_controls[client_id][name]
+                                for client_id in selected_client_ids
+                            ]
+                        ),
+                        dim=0,
+                    )
+                    / NUM_CLIENTS
+                )
+
+    # <---------------------------------------- Global Model Evaluation ---------------------------------------->
     global_evaluation_result = evaluate_acc(
         model=global_model,
         dataloader=global_test_loader,
@@ -362,9 +423,15 @@ for round in range(ROUNDS):
         f"Global Test Acc: {global_test_acc:.4f}"
     )
     for client_id in selected_client_ids:
-        local_val_loss = client_evaluation_results["aggregated"][client_id]["local_val_loss"]
-        loss_gap = local_val_loss - client_evaluation_results[client_id]["local_val_loss"]
-        local_val_acc = client_evaluation_results["aggregated"][client_id]["local_val_acc"]
+        local_val_loss = client_evaluation_results["aggregated"][client_id][
+            "local_val_loss"
+        ]
+        loss_gap = (
+            local_val_loss - client_evaluation_results[client_id]["local_val_loss"]
+        )
+        local_val_acc = client_evaluation_results["aggregated"][client_id][
+            "local_val_acc"
+        ]
         acc_gap = local_val_acc - client_evaluation_results[client_id]["local_val_acc"]
         print(
             f"Client {client_id}\t"
