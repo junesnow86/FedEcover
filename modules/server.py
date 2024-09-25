@@ -1,4 +1,4 @@
-from typing import List, OrderedDict, Tuple
+from typing import Dict, List, OrderedDict, Tuple
 
 import numpy as np
 import torch
@@ -8,6 +8,7 @@ from modules.pruning import (
     SubmodelBlockParamIndicesDict,
     SubmodelLayerParamIndicesDict,
     extract_submodel_cnn,
+    extract_submodel_control_variates,
     extract_submodel_resnet,
     generate_index_groups,
 )
@@ -23,6 +24,7 @@ class ServerBase:
         model_type: str = "cnn",
         select_ratio: float = 0.1,
         scaling: bool = True,
+        control: bool = False,
     ):
         assert len(client_capacities) == num_clients
         assert model_type in ["cnn", "resnet"]
@@ -34,6 +36,20 @@ class ServerBase:
         self.model_out_dim = model_out_dim
         self.select_ratio = select_ratio
         self.scaling = scaling
+
+        self.control = control
+        if self.control:
+            self.global_control = {
+                name: torch.zeros_like(param.data)
+                for name, param in global_model.named_parameters()
+            }
+            self.client_controls = [
+                {
+                    name: torch.zeros_like(param.data)
+                    for name, param in global_model.named_parameters()
+                }
+                for _ in range(num_clients)
+            ]
 
     def get_client_submodel_param_indices_dict(self, client_id: int):
         raise NotImplementedError(
@@ -49,13 +65,33 @@ class ServerBase:
         selected_client_ids = np.random.choice(
             self.num_clients, int(self.num_clients * self.select_ratio), replace=False
         )
+
         selected_client_capacities = [
             self.client_capacities[client_id] for client_id in selected_client_ids
         ]
+
         selected_submodel_param_indices_dicts = [
             self.get_client_submodel_param_indices_dict(client_id)
             for client_id in selected_client_ids
         ]
+
+        if self.control:
+            selected_submodel_global_control_variates = [
+                extract_submodel_control_variates(
+                    complete_control_variates=self.global_control,
+                    submodel_param_indices_dict=selected_submodel_param_indices_dicts[i],
+                )
+                for i in range(len(selected_client_ids))
+            ]
+
+            selected_submodel_control_variates = [
+                extract_submodel_control_variates(
+                    complete_control_variates=self.client_controls[client_id],
+                    submodel_param_indices_dict=selected_submodel_param_indices_dicts[i],
+                )
+                for i, client_id in enumerate(selected_client_ids)
+            ]
+
         if self.model_type == "cnn":
             selected_client_submodels = [
                 extract_submodel_cnn(
@@ -83,12 +119,22 @@ class ServerBase:
         else:
             raise ValueError("Invalid model type")
 
-        return (
-            selected_client_ids,
-            selected_client_capacities,
-            selected_submodel_param_indices_dicts,
-            selected_client_submodels,
-        )
+        if self.control:
+            return (
+                selected_client_ids,
+                selected_client_capacities,
+                selected_submodel_param_indices_dicts,
+                selected_client_submodels,
+                selected_submodel_global_control_variates,
+                selected_submodel_control_variates,
+            )
+        else:
+            return (
+                selected_client_ids,
+                selected_client_capacities,
+                selected_submodel_param_indices_dicts,
+                selected_client_submodels,
+            )
 
     def aggregate(
         self,
@@ -96,7 +142,14 @@ class ServerBase:
         selected_client_ids: List[int],
         submodel_param_indices_dicts: List[SubmodelBlockParamIndicesDict],
         client_weights: List[int],
+        local_control_variates: List[Dict[str, torch.Tensor]] = None,
     ):
+        if self.control:
+            self.old_global_params = {
+                name: param.clone().detach()
+                for name, param in self.global_model.named_parameters()
+            }
+
         for param_name, param in self.global_model.named_parameters():
             param_accumulator = torch.zeros_like(param.data)
 
@@ -186,6 +239,34 @@ class ServerBase:
                 )
             else:
                 raise ValueError(f"Invalid parameter dimension: {param.dim()}")
+
+        # if self.control:
+            # # Update selected clients' control variates
+            # for i, client_id in enumerate(selected_client_ids):
+            #     client_control_variates = local_control_variates[i]
+            #     for name, param in self.client_controls[client_id].items():
+            #         if "weight" in name:
+            #             key = name.replace(".weight", "")
+            #             in_indices, out_indices = (
+            #                 submodel_param_indices_dicts[i][key]["in"],
+            #                 submodel_param_indices_dicts[i][key]["out"],
+            #             )
+            #             self.client_controls[client_id][name][
+            #                 np.ix_(out_indices, in_indices)
+            #             ] = client_control_variates[name][
+            #                 np.ix_(range(len(out_indices)), range(len(in_indices)))
+            #             ]
+            #         elif "bias" in name:
+            #             key = name.replace(".bias", "")
+            #             out_indices = submodel_param_indices_dicts[i][key]["out"]
+            #             self.client_controls[client_id][name][out_indices] = (
+            #                 client_control_variates[name][range(len(out_indices))]
+            #             )
+
+            # # Update the global control variate
+            # with torch.no_grad():
+            #     for name, param in self.global_model.named_parameters():
+            #         self.global_control[name] = self.old_global_params[name] - param
 
     def step(self):
         raise NotImplementedError(
@@ -706,6 +787,7 @@ class ServerRDBagging(ServerBase):
         select_ratio: float = 0.1,
         scaling: bool = True,
         strategy: str = "p-based-steady",
+        control: bool = False,
     ):
         super().__init__(
             global_model,
@@ -715,6 +797,7 @@ class ServerRDBagging(ServerBase):
             model_type,
             select_ratio,
             scaling,
+            control,
         )
 
         assert strategy in ["p-based-steady", "p-based-frequent", "client-based"]
@@ -941,12 +1024,14 @@ class ServerRDBagging(ServerBase):
         selected_client_ids: List[int],
         submodel_param_indices_dicts: List[SubmodelBlockParamIndicesDict],
         client_weights: List[int],
+        local_control_variates: List[Dict[str, torch.Tensor]] = None,
     ):
         self.aggregate(
             local_state_dicts,
             selected_client_ids,
             submodel_param_indices_dicts,
             client_weights,
+            local_control_variates,
         )
 
         selected_capacites = [

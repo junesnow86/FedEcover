@@ -73,6 +73,7 @@ def scaffold_train(
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
     for name, param in model.named_parameters():
+        name = name.replace(".0.weight", ".weight").replace(".0.bias", ".bias")
         c_global[name] = c_global[name].to(device)
         c_client[name] = c_client[name].to(device)
     model.train()
@@ -89,7 +90,21 @@ def scaffold_train(
             # Apply SCAFFOLD control variates
             with torch.no_grad():
                 for name, param in model.named_parameters():
-                    param.grad += c_global[name] - c_client[name]
+                    name = name.replace(".0.weight", ".weight").replace(".0.bias", ".bias")
+                    # param.grad += c_global[name] - c_client[name]
+
+                    # Standardize the control variates
+                    grad_mean = param.grad.mean()
+                    grad_std = param.grad.std()
+
+                    c_global_scaled = (c_global[name] - c_global[name].mean()) / (
+                        c_global[name].std() + 1e-7
+                    ) * grad_std + grad_mean
+                    c_client_scaled = (c_client[name] - c_client[name].mean()) / (
+                        c_client[name].std() + 1e-7
+                    ) * grad_std + grad_mean
+
+                    param.grad += c_global_scaled - c_client_scaled
 
             optimizer.step()
             training_loss += loss.item()
@@ -119,6 +134,7 @@ def scaffold_train(
 
     model.to(original_model_device)
     for name, param in model.named_parameters():
+        name = name.replace(".0.weight", ".weight").replace(".0.bias", ".bias")
         c_global[name] = c_global[name].to(original_model_device)
         c_client[name] = c_client[name].to(original_model_device)
     return train_loss

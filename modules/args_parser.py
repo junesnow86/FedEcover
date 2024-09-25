@@ -121,12 +121,20 @@ def get_args(print_args=True):
         default=None,
         help="RDBagging strategy",
     )
+    parser.add_argument(
+        "--control",
+        type=bool,
+        default=False,
+        help="Whether use control variates",
+    )
 
     args = parser.parse_args()
 
     if print_args:
         print(f"Random seed: {args.seed}")
         print(f"Method: {args.method}")
+        print(f"Strategy: {args.rdbagging_strategy}")
+        print(f"Use control variates: {args.control}")
         print(f"Model type: {args.model}")
         print(f"Dataset: {args.dataset}")
         print(f"Data distribution: {args.distribution}")

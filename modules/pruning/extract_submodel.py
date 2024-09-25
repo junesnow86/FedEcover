@@ -1,4 +1,5 @@
 import copy
+from typing import Dict
 
 import numpy as np
 import torch
@@ -164,7 +165,8 @@ def extract_submodel_resnet(
         sublayer_conv1 = nn.Sequential(sublayer_conv1)
     submodel.conv1 = sublayer_conv1
     submodel.bn1 = nn.LayerNorm(
-        normalized_shape=[submodel.conv1[0].out_channels, 16, 16], elementwise_affine=False
+        normalized_shape=[submodel.conv1[0].out_channels, 16, 16],
+        elementwise_affine=False,
     )
 
     layers = ["layer1", "layer2", "layer3", "layer4"]
@@ -191,8 +193,10 @@ def extract_submodel_resnet(
                 submodel._modules[layer][int(block)]._modules[conv] = sublayer_conv
                 layernorm_shape = layernorm_shapes[i]
                 layernorm_shape[0] = sublayer_conv[0].out_channels
-                submodel._modules[layer][int(block)]._modules[f"bn{int(conv[-1])}"] = nn.LayerNorm(
-                    normalized_shape=layernorm_shape, elementwise_affine=False
+                submodel._modules[layer][int(block)]._modules[f"bn{int(conv[-1])}"] = (
+                    nn.LayerNorm(
+                        normalized_shape=layernorm_shape, elementwise_affine=False
+                    )
                 )
 
             if layer != "layer1" and block == "0":
@@ -220,3 +224,48 @@ def extract_submodel_resnet(
     submodel.fc = sublayer_fc
 
     return submodel
+
+
+def extract_param_control_variate(
+    name: str,
+    param_control_variate: torch.Tensor,
+    layer_param_indices_dict: SubmodelLayerParamIndicesDict,
+):
+    if "weight" in name:
+        in_features = param_control_variate.size(1)
+        in_indices = layer_param_indices_dict.get("in", np.array(range(in_features)))
+
+    out_features = param_control_variate.size(0)
+    out_indices = layer_param_indices_dict.get("out", np.array(range(out_features)))
+
+    if "weight" in name:
+        sub_param_control_variate = torch.index_select(
+            torch.index_select(param_control_variate, 0, torch.tensor(out_indices)),
+            1,
+            torch.tensor(in_indices),
+        )
+    elif "bias" in name:
+        sub_param_control_variate = torch.index_select(
+            param_control_variate, 0, torch.tensor(out_indices)
+        )
+    else:
+        raise ValueError("Invalid name")
+
+    return sub_param_control_variate
+
+
+def extract_submodel_control_variates(
+    complete_control_variates: Dict[str, torch.Tensor],
+    submodel_param_indices_dict: SubmodelBlockParamIndicesDict,
+):
+    submodel_control_variates = {}
+
+    for name, param_control_variate in complete_control_variates.items():
+        key = name.replace(".weight", "").replace(".bias", "")
+        submodel_control_variates[name] = extract_param_control_variate(
+            name,
+            param_control_variate,
+            submodel_param_indices_dict[key],
+        )
+
+    return submodel_control_variates

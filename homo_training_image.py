@@ -282,12 +282,15 @@ for round in range(ROUNDS):
             with torch.no_grad():
                 num_steps = len(train_loaders[client_id]) * EPOCHS
                 for name, param in all_client_models[client_id].named_parameters():
-                    client_delta_controls[client_id][name] = (
-                        - c_global[name]
-                        + (global_model.state_dict()[name] - param)
-                        / (num_steps * LR)
+                    # client_delta_controls[client_id][name] = (
+                    #     - c_global[name]
+                    #     + (global_model.state_dict()[name] - param)
+                    #     # / (num_steps * LR)
+                    # )
+                    # client_controls[client_id][name] += client_delta_controls[client_id][name]
+                    client_controls[client_id][name] = (
+                        global_model.state_dict()[name] - param
                     )
-                    client_controls[client_id][name] += client_delta_controls[client_id][name]
         else:
             local_train_loss = train(
                 model=all_client_models[client_id],
@@ -341,6 +344,7 @@ for round in range(ROUNDS):
 
     # <---------------------------------------- Aggregation ---------------------------------------->
     client_weights = [subset_sizes[i] for i in selected_client_ids]
+    old_global_params = {name: param.clone().detach() for name, param in global_model.named_parameters()}
     if MODEL_TYPE == "cnn":
         aggregated_weight = vanilla_federated_averaging(
             models=[model for model in all_client_models.values()],
@@ -359,19 +363,21 @@ for round in range(ROUNDS):
     # Update global control variates for SCAFFOLD
     if METHOD == "scaffold":
         with torch.no_grad():
-            for name, _ in global_model.named_parameters():
-                c_global[name] += (
-                    torch.sum(
-                        torch.stack(
-                            [
-                                client_delta_controls[client_id][name]
-                                for client_id in selected_client_ids
-                            ]
-                        ),
-                        dim=0,
-                    )
-                    / NUM_CLIENTS
-                )
+            for name, param in global_model.named_parameters():
+                # c_global[name] += (
+                #     torch.sum(
+                #         torch.stack(
+                #             [
+                #                 client_delta_controls[client_id][name]
+                #                 for client_id in selected_client_ids
+                #             ]
+                #         ),
+                #         dim=0,
+                #     )
+                #     # / NUM_CLIENTS
+                #     / len(selected_client_ids)
+                # )
+                c_global[name] = old_global_params[name] - param
 
     # <---------------------------------------- Global Model Evaluation ---------------------------------------->
     global_evaluation_result = evaluate_acc(

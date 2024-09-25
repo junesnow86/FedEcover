@@ -35,7 +35,7 @@ from modules.pruning import (
     prune_resnet18,
 )
 from modules.server import ServerFedRolex, ServerHeteroFL, ServerRD, ServerRDBagging
-from modules.training import train
+from modules.training import train, scaffold_train
 from modules.utils import (
     calculate_model_size,
     replace_bn_with_ln,
@@ -63,6 +63,7 @@ METHOD = args.method
 SELECT_RATIO = args.select_ratio
 LOCAL_VALIDATION_FREQUENCY = int(1 / args.select_ratio)
 LOCAL_TRAIN_RATIO = args.local_train_ratio
+CONTROL = args.control
 
 assert METHOD in ["heterofl", "fedrolex", "fedrd", "rdbagging", "legacy"]
 
@@ -278,6 +279,7 @@ elif METHOD == "rdbagging":
         select_ratio=SELECT_RATIO,
         scaling=True,
         strategy=args.rdbagging_strategy,
+        control=CONTROL,
     )
 
 
@@ -339,12 +341,22 @@ for round in range(ROUNDS):
                 all_client_models[client_id] = client_model
                 model_pruned_indices_dicts[client_id] = model_pruned_indices_dict
         elif METHOD in ["fedrolex", "heterofl", "fedrd", "rdbagging"]:
-            (
-                selected_client_ids,
-                selected_client_capacities,
-                selected_submodel_param_indices_dicts,
-                selected_client_submodels,
-            ) = server.distribute()
+            if CONTROL:
+                (
+                    selected_client_ids,
+                    selected_client_capacities,
+                    selected_submodel_param_indices_dicts,
+                    selected_client_submodels,
+                    selected_submodel_global_control_variates,
+                    selected_submodel_control_variates,
+                ) = server.distribute()
+            else:
+                (
+                    selected_client_ids,
+                    selected_client_capacities,
+                    selected_submodel_param_indices_dicts,
+                    selected_client_submodels,
+                ) = server.distribute()
             all_client_models = {
                 client_id: model
                 for client_id, model in zip(
@@ -385,12 +397,22 @@ for round in range(ROUNDS):
                 all_client_models[client_id] = client_model
                 model_pruned_indices_dicts[client_id] = model_pruned_indices_dict
         elif METHOD in ["fedrolex", "heterofl", "fedrd", "rdbagging"]:
-            (
-                selected_client_ids,
-                selected_client_capacities,
-                selected_submodel_param_indices_dicts,
-                selected_client_submodels,
-            ) = server.distribute()
+            if CONTROL:
+                (
+                    selected_client_ids,
+                    selected_client_capacities,
+                    selected_submodel_param_indices_dicts,
+                    selected_client_submodels,
+                    selected_submodel_global_control_variates,
+                    selected_submodel_control_variates,
+                ) = server.distribute()
+            else:
+                (
+                    selected_client_ids,
+                    selected_client_capacities,
+                    selected_submodel_param_indices_dicts,
+                    selected_client_submodels,
+                ) = server.distribute()
             all_client_models = {
                 client_id: model
                 for client_id, model in zip(
@@ -405,7 +427,7 @@ for round in range(ROUNDS):
     print(f"Selected {len(selected_client_ids)} client IDs: {selected_client_ids}")
 
     # <---------------------------------------- Local Training ---------------------------------------->
-    for client_id in selected_client_ids:
+    for i, client_id in enumerate(selected_client_ids):
         # optimizer = optim.SGD(
         #     all_client_models[client_id].parameters(),
         #     lr=LR,
@@ -415,15 +437,46 @@ for round in range(ROUNDS):
         optimizer = optim.Adam(
             all_client_models[client_id].parameters(), lr=LR, weight_decay=5e-4
         )
-        local_train_loss = train(
-            model=all_client_models[client_id],
-            optimizer=optimizer,
-            criterion=criterion,
-            dataloader=train_loaders[client_id],
-            device=device,
-            epochs=EPOCHS,
-            verbose=False,
-        )
+
+        if CONTROL:
+            old_params = {
+                name.replace(".0.weight", ".weight").replace(
+                    ".0.bias", ".bias"
+                ): param.clone().detach()
+                for name, param in all_client_models[client_id].named_parameters()
+            }
+
+            local_train_loss = scaffold_train(
+                model=all_client_models[client_id],
+                optimizer=optimizer,
+                criterion=criterion,
+                dataloader=train_loaders[client_id],
+                c_global=selected_submodel_global_control_variates[i],
+                c_client=selected_submodel_control_variates[i],
+                device=device,
+                epochs=EPOCHS,
+                verbose=False,
+            )
+
+            # Update local control variates
+            with torch.no_grad():
+                for name, param in all_client_models[client_id].named_parameters():
+                    name = name.replace(".0.weight", ".weight").replace(
+                        ".0.bias", ".bias"
+                    )
+                    selected_submodel_control_variates[i][name] = (
+                        old_params[name] - param
+                    )
+        else:
+            local_train_loss = train(
+                model=all_client_models[client_id],
+                optimizer=optimizer,
+                criterion=criterion,
+                dataloader=train_loaders[client_id],
+                device=device,
+                epochs=EPOCHS,
+                verbose=False,
+            )
         local_evaluation_result_on_train_data = evaluate_acc(
             model=all_client_models[client_id],
             dataloader=train_loaders[client_id],
@@ -499,6 +552,7 @@ for round in range(ROUNDS):
                 selected_client_ids=selected_client_ids,
                 submodel_param_indices_dicts=selected_submodel_param_indices_dicts,
                 client_weights=client_weights,
+                # local_control_variates=selected_submodel_control_variates if CONTROL else None,
             )
         else:
             raise NotImplementedError
@@ -589,9 +643,15 @@ for round in range(ROUNDS):
         f"Global Test Acc: {global_test_acc:.4f}"
     )
     for client_id in selected_client_ids:
-        local_val_loss = client_evaluation_results["aggregated"][client_id]["local_val_loss"]
-        loss_gap = local_val_loss - client_evaluation_results[client_id]["local_val_loss"]
-        local_val_acc = client_evaluation_results["aggregated"][client_id]["local_val_acc"]
+        local_val_loss = client_evaluation_results["aggregated"][client_id][
+            "local_val_loss"
+        ]
+        loss_gap = (
+            local_val_loss - client_evaluation_results[client_id]["local_val_loss"]
+        )
+        local_val_acc = client_evaluation_results["aggregated"][client_id][
+            "local_val_acc"
+        ]
         acc_gap = local_val_acc - client_evaluation_results[client_id]["local_val_acc"]
         print(
             f"Client {client_id}\t"
