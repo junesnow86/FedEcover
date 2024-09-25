@@ -2057,3 +2057,165 @@ Round 76 use time: 9.10 min, ETA: 18.81 hours
 ================================================================================
 Round 77
 Selected 10 client IDs: [42 80 57 40  3 55 84 66 68  6]
+Client 42	Dropout Rate: 0.5	Model Size: 0.43 MB	Train Loss: 0.0039	Train Acc: 1.0000	Local Validation  Loss: 2.0780	Local Validation Acc: 0.5200	Global Validation Loss: 2.1083	Global Validation Acc: 0.5866
+Client 80	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 1.1723	Train Acc: 0.5825	Local Validation  Loss: 2.3791	Local Validation Acc: 0.3100	Global Validation Loss: 2.4033	Global Validation Acc: 0.2971
+Client 57	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 1.0633	Train Acc: 0.6475	Local Validation  Loss: 2.5054	Local Validation Acc: 0.2900	Global Validation Loss: 2.5127	Global Validation Acc: 0.2793
+Client 40	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 0.8454	Train Acc: 0.6800	Local Validation  Loss: 3.0093	Local Validation Acc: 0.2300	Global Validation Loss: 2.7416	Global Validation Acc: 0.2865
+Client 3	Dropout Rate: 0.5	Model Size: 0.43 MB	Train Loss: 0.0069	Train Acc: 1.0000	Local Validation  Loss: 2.8159	Local Validation Acc: 0.5400	Global Validation Loss: 2.0916	Global Validation Acc: 0.5808
+Client 55	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 0.8036	Train Acc: 0.7200	Local Validation  Loss: 2.8564	Local Validation Acc: 0.3100	Global Validation Loss: 2.8410	Global Validation Acc: 0.2969
+Client 84	Dropout Rate: 0.75	Model Size: 0.13 MB	Train Loss: 0.0274	Train Acc: 0.9975	Local Validation  Loss: 2.4996	Local Validation Acc: 0.5700	Global Validation Loss: 2.5064	Global Validation Acc: 0.5042
+Client 66	Dropout Rate: 0.5	Model Size: 0.43 MB	Train Loss: 0.0043	Train Acc: 1.0000	Local Validation  Loss: 1.9175	Local Validation Acc: 0.6100	Global Validation Loss: 2.1300	Global Validation Acc: 0.5877
+Client 68	Dropout Rate: 0.75	Model Size: 0.13 MB	Train Loss: 0.0134	Train Acc: 1.0000	Local Validation  Loss: 2.5269	Local Validation Acc: 0.5100	Global Validation Loss: 2.4187	Global Validation Acc: 0.5284
+Client 6	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 0.8917	Train Acc: 0.6500	Local Validation  Loss: 2.4288	Local Validation Acc: 0.3000	Global Validation Loss: 2.6058	Global Validation Acc: 0.3069
+Aggregated
+Global Test Loss: 1.4666	Global Test Acc: 0.6234
+Client 42	Local Validation Loss: 1.6620(-0.4160)	Local Validation Acc: 0.6200(0.1000)
+Client 80	Local Validation Loss: 1.4259(-0.9531)	Local Validation Acc: 0.6400(0.3300)
+Client 57	Local Validation Loss: 1.7520(-0.7534)	Local Validation Acc: 0.5700(0.2800)
+Client 40	Local Validation Loss: 1.5649(-1.4444)	Local Validation Acc: 0.6600(0.4300)
+Client 3	Local Validation Loss: 1.9862(-0.8297)	Local Validation Acc: 0.5000(-0.0400)
+Client 55	Local Validation Loss: 2.0184(-0.8380)	Local Validation Acc: 0.5100(0.2000)
+Client 84	Local Validation Loss: 1.3990(-1.1007)	Local Validation Acc: 0.5900(0.0200)
+Client 66	Local Validation Loss: 1.3045(-0.6130)	Local Validation Acc: 0.6200(0.0100)
+Client 68	Local Validation Loss: 1.5030(-1.0239)	Local Validation Acc: 0.6100(0.1000)
+Client 6	Local Validation Loss: 1.2023(-1.2265)	Local Validation Acc: 0.7100(0.4100)
+Round 77 use time: 8.93 min, ETA: 18.31 hours
+================================================================================
+Round 78
+Selected 10 client IDs: [33 60 88 78  8 62 81 30  6 51]
+Client 33	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 1.3087	Train Acc: 0.5625	Local Validation  Loss: 2.6236	Local Validation Acc: 0.2300	Global Validation Loss: 2.4702	Global Validation Acc: 0.2740
+Client 60	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 1.5831	Train Acc: 0.3775	Local Validation  Loss: 2.1532	Local Validation Acc: 0.2800	Global Validation Loss: 2.3230	Global Validation Acc: 0.2355
+Client 88	Dropout Rate: 0.25	Model Size: 0.91 MB	Train Loss: 0.0018	Train Acc: 1.0000	Local Validation  Loss: 2.1640	Local Validation Acc: 0.5400	Global Validation Loss: 2.1173	Global Validation Acc: 0.5762
+Client 78	Dropout Rate: 0.5	Model Size: 0.43 MB	Train Loss: 0.0069	Train Acc: 1.0000	Local Validation  Loss: 2.6137	Local Validation Acc: 0.5400	Global Validation Loss: 1.9558	Global Validation Acc: 0.5955
+Client 8	Dropout Rate: 0.75	Model Size: 0.13 MB	Train Loss: 0.0231	Train Acc: 1.0000	Local Validation  Loss: 3.6746	Local Validation Acc: 0.4800	Global Validation Loss: 2.9276	Global Validation Acc: 0.5149
+Client 62	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 1.3097	Train Acc: 0.5350	Local Validation  Loss: 2.3350	Local Validation Acc: 0.2200	Global Validation Loss: 2.4955	Global Validation Acc: 0.2591
+Client 81	Dropout Rate: 0.5	Model Size: 0.43 MB	Train Loss: 0.0149	Train Acc: 1.0000	Local Validation  Loss: 2.2774	Local Validation Acc: 0.5700	Global Validation Loss: 1.8566	Global Validation Acc: 0.5864
+Client 30	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 1.5338	Train Acc: 0.5175	Local Validation  Loss: 2.2843	Local Validation Acc: 0.2300	Global Validation Loss: 2.3605	Global Validation Acc: 0.2609
+Client 6	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 1.2901	Train Acc: 0.5525	Local Validation  Loss: 2.1653	Local Validation Acc: 0.2400	Global Validation Loss: 2.3856	Global Validation Acc: 0.2820
+Client 51	Dropout Rate: 0.5	Model Size: 0.43 MB	Train Loss: 0.0114	Train Acc: 1.0000	Local Validation  Loss: 1.9940	Local Validation Acc: 0.5200	Global Validation Loss: 1.8926	Global Validation Acc: 0.5815
+Aggregated
+Global Test Loss: 1.4856	Global Test Acc: 0.6158
+Client 33	Local Validation Loss: 1.8574(-0.7662)	Local Validation Acc: 0.5000(0.2700)
+Client 60	Local Validation Loss: 1.0898(-1.0634)	Local Validation Acc: 0.6800(0.4000)
+Client 88	Local Validation Loss: 1.5327(-0.6313)	Local Validation Acc: 0.6300(0.0900)
+Client 78	Local Validation Loss: 1.8945(-0.7193)	Local Validation Acc: 0.6100(0.0700)
+Client 8	Local Validation Loss: 2.1388(-1.5358)	Local Validation Acc: 0.5400(0.0600)
+Client 62	Local Validation Loss: 1.2309(-1.1042)	Local Validation Acc: 0.6100(0.3900)
+Client 81	Local Validation Loss: 1.8858(-0.3916)	Local Validation Acc: 0.5700(0.0000)
+Client 30	Local Validation Loss: 1.2955(-0.9888)	Local Validation Acc: 0.7100(0.4800)
+Client 6	Local Validation Loss: 1.1110(-1.0543)	Local Validation Acc: 0.7400(0.5000)
+Client 51	Local Validation Loss: 1.4554(-0.5386)	Local Validation Acc: 0.6000(0.0800)
+Round 78 use time: 9.00 min, ETA: 18.30 hours
+================================================================================
+Round 79
+Selected 10 client IDs: [86 63 29 94  0 73 49 93 26 42]
+Client 86	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 1.3910	Train Acc: 0.5000	Local Validation  Loss: 2.3822	Local Validation Acc: 0.2300	Global Validation Loss: 2.4789	Global Validation Acc: 0.2455
+Client 63	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 1.0301	Train Acc: 0.6225	Local Validation  Loss: 2.4776	Local Validation Acc: 0.2600	Global Validation Loss: 2.5264	Global Validation Acc: 0.2914
+Client 29	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 0.9628	Train Acc: 0.6500	Local Validation  Loss: 1.9294	Local Validation Acc: 0.3700	Global Validation Loss: 2.4519	Global Validation Acc: 0.3028
+Client 94	Dropout Rate: 0.25	Model Size: 0.91 MB	Train Loss: 0.0048	Train Acc: 1.0000	Local Validation  Loss: 2.0453	Local Validation Acc: 0.6000	Global Validation Loss: 1.9656	Global Validation Acc: 0.5956
+Client 0	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 0.9623	Train Acc: 0.6425	Local Validation  Loss: 3.0788	Local Validation Acc: 0.1800	Global Validation Loss: 2.5485	Global Validation Acc: 0.2701
+Client 73	Dropout Rate: 0.75	Model Size: 0.13 MB	Train Loss: 0.0246	Train Acc: 1.0000	Local Validation  Loss: 2.5914	Local Validation Acc: 0.5400	Global Validation Loss: 2.6107	Global Validation Acc: 0.5153
+Client 49	Dropout Rate: 0.75	Model Size: 0.13 MB	Train Loss: 0.0233	Train Acc: 0.9975	Local Validation  Loss: 1.9856	Local Validation Acc: 0.6000	Global Validation Loss: 2.5835	Global Validation Acc: 0.5116
+Client 93	Dropout Rate: 0.75	Model Size: 0.13 MB	Train Loss: 0.0449	Train Acc: 0.9950	Local Validation  Loss: 2.7656	Local Validation Acc: 0.5100	Global Validation Loss: 2.4487	Global Validation Acc: 0.5081
+Client 26	Dropout Rate: 0.25	Model Size: 0.91 MB	Train Loss: 0.0030	Train Acc: 1.0000	Local Validation  Loss: 2.3084	Local Validation Acc: 0.5000	Global Validation Loss: 2.0823	Global Validation Acc: 0.5832
+Client 42	Dropout Rate: 0.5	Model Size: 0.43 MB	Train Loss: 0.0049	Train Acc: 1.0000	Local Validation  Loss: 2.3535	Local Validation Acc: 0.5800	Global Validation Loss: 2.0848	Global Validation Acc: 0.5817
+Aggregated
+Global Test Loss: 1.4643	Global Test Acc: 0.6173
+Client 86	Local Validation Loss: 1.3350(-1.0472)	Local Validation Acc: 0.6400(0.4100)
+Client 63	Local Validation Loss: 2.0918(-0.3858)	Local Validation Acc: 0.4400(0.1800)
+Client 29	Local Validation Loss: 1.2418(-0.6876)	Local Validation Acc: 0.7000(0.3300)
+Client 94	Local Validation Loss: 1.5471(-0.4982)	Local Validation Acc: 0.5900(-0.0100)
+Client 0	Local Validation Loss: 1.8013(-1.2775)	Local Validation Acc: 0.5500(0.3700)
+Client 73	Local Validation Loss: 1.5067(-1.0847)	Local Validation Acc: 0.6000(0.0600)
+Client 49	Local Validation Loss: 1.3788(-0.6068)	Local Validation Acc: 0.6300(0.0300)
+Client 93	Local Validation Loss: 1.4473(-1.3183)	Local Validation Acc: 0.5700(0.0600)
+Client 26	Local Validation Loss: 1.7013(-0.6071)	Local Validation Acc: 0.5800(0.0800)
+Client 42	Local Validation Loss: 1.5849(-0.7686)	Local Validation Acc: 0.6300(0.0500)
+Round 79 use time: 9.15 min, ETA: 18.45 hours
+================================================================================
+Round 80
+Selected 10 client IDs: [82 39 50 61 62 73 31  3 49 23]
+Client 82	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 1.8426	Train Acc: 0.3250	Local Validation  Loss: 3.0477	Local Validation Acc: 0.1400	Global Validation Loss: 2.4981	Global Validation Acc: 0.1957
+Client 39	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 1.5854	Train Acc: 0.3925	Local Validation  Loss: 2.3788	Local Validation Acc: 0.2300	Global Validation Loss: 2.3136	Global Validation Acc: 0.2359
+Client 50	Dropout Rate: 0.75	Model Size: 0.13 MB	Train Loss: 0.0204	Train Acc: 1.0000	Local Validation  Loss: 2.1181	Local Validation Acc: 0.5500	Global Validation Loss: 2.6263	Global Validation Acc: 0.5286
+Client 61	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 1.9225	Train Acc: 0.3225	Local Validation  Loss: 2.2724	Local Validation Acc: 0.2200	Global Validation Loss: 2.3669	Global Validation Acc: 0.2032
+Client 62	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 1.7876	Train Acc: 0.4000	Local Validation  Loss: 2.1766	Local Validation Acc: 0.2000	Global Validation Loss: 2.2571	Global Validation Acc: 0.2230
+Client 73	Dropout Rate: 0.75	Model Size: 0.13 MB	Train Loss: 0.0141	Train Acc: 1.0000	Local Validation  Loss: 2.9606	Local Validation Acc: 0.5600	Global Validation Loss: 2.8361	Global Validation Acc: 0.5151
+Client 31	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 1.7983	Train Acc: 0.3300	Local Validation  Loss: 2.3105	Local Validation Acc: 0.2300	Global Validation Loss: 2.4790	Global Validation Acc: 0.2103
+Client 3	Dropout Rate: 0.5	Model Size: 0.43 MB	Train Loss: 0.0036	Train Acc: 1.0000	Local Validation  Loss: 2.6731	Local Validation Acc: 0.5500	Global Validation Loss: 2.1639	Global Validation Acc: 0.5866
+Client 49	Dropout Rate: 0.75	Model Size: 0.13 MB	Train Loss: 0.0256	Train Acc: 1.0000	Local Validation  Loss: 2.0322	Local Validation Acc: 0.5500	Global Validation Loss: 2.7887	Global Validation Acc: 0.5083
+Client 23	Dropout Rate: 0.5	Model Size: 0.43 MB	Train Loss: 0.0060	Train Acc: 1.0000	Local Validation  Loss: 2.2276	Local Validation Acc: 0.5100	Global Validation Loss: 1.9976	Global Validation Acc: 0.5897
+Aggregated
+Global Test Loss: 1.5007	Global Test Acc: 0.6062
+Client 82	Local Validation Loss: 1.5327(-1.5150)	Local Validation Acc: 0.5900(0.4500)
+Client 39	Local Validation Loss: 1.5176(-0.8613)	Local Validation Acc: 0.6300(0.4000)
+Client 50	Local Validation Loss: 1.2843(-0.8339)	Local Validation Acc: 0.6300(0.0800)
+Client 61	Local Validation Loss: 1.5026(-0.7698)	Local Validation Acc: 0.5800(0.3600)
+Client 62	Local Validation Loss: 1.3480(-0.8286)	Local Validation Acc: 0.6200(0.4200)
+Client 73	Local Validation Loss: 1.5262(-1.4343)	Local Validation Acc: 0.6000(0.0400)
+Client 31	Local Validation Loss: 1.4081(-0.9024)	Local Validation Acc: 0.6400(0.4100)
+Client 3	Local Validation Loss: 2.0053(-0.6679)	Local Validation Acc: 0.5800(0.0300)
+Client 49	Local Validation Loss: 1.3822(-0.6500)	Local Validation Acc: 0.6200(0.0700)
+Client 23	Local Validation Loss: 1.7265(-0.5011)	Local Validation Acc: 0.5300(0.0200)
+Average: 0.6078 | 0.0000 (compared to average)
+Drpout Rate 0.1: 0.6157 | 0.0079 (compared to average)
+Drpout Rate 0.25: 0.6075 | -0.0003 (compared to average)
+Drpout Rate 0.5: 0.5976 | -0.0102 (compared to average)
+Drpout Rate 0.75: 0.6071 | -0.0007 (compared to average)
+Drpout Rate 0.9: 0.6112 | 0.0034 (compared to average)
+Round 80 use time: 9.89 min, ETA: 19.78 hours
+================================================================================
+Round 81
+Selected 10 client IDs: [ 3 49 52 27 89 56 78  7 99 71]
+Client 3	Dropout Rate: 0.5	Model Size: 0.43 MB	Train Loss: 0.0018	Train Acc: 1.0000	Local Validation  Loss: 3.2864	Local Validation Acc: 0.5200	Global Validation Loss: 2.5145	Global Validation Acc: 0.5822
+Client 49	Dropout Rate: 0.75	Model Size: 0.13 MB	Train Loss: 0.0126	Train Acc: 1.0000	Local Validation  Loss: 1.9117	Local Validation Acc: 0.5700	Global Validation Loss: 2.8172	Global Validation Acc: 0.5255
+Client 52	Dropout Rate: 0.5	Model Size: 0.43 MB	Train Loss: 0.0063	Train Acc: 1.0000	Local Validation  Loss: 2.4676	Local Validation Acc: 0.5300	Global Validation Loss: 1.9713	Global Validation Acc: 0.5818
+Client 27	Dropout Rate: 0.25	Model Size: 0.91 MB	Train Loss: 0.0010	Train Acc: 1.0000	Local Validation  Loss: 2.1175	Local Validation Acc: 0.5900	Global Validation Loss: 2.2080	Global Validation Acc: 0.5888
+Client 89	Dropout Rate: 0.1	Model Size: 1.28 MB	Train Loss: 0.0022	Train Acc: 1.0000	Local Validation  Loss: 1.7804	Local Validation Acc: 0.6300	Global Validation Loss: 2.1327	Global Validation Acc: 0.5932
+Client 56	Dropout Rate: 0.5	Model Size: 0.43 MB	Train Loss: 0.0063	Train Acc: 1.0000	Local Validation  Loss: 1.9175	Local Validation Acc: 0.6100	Global Validation Loss: 1.9899	Global Validation Acc: 0.5883
+Client 78	Dropout Rate: 0.5	Model Size: 0.43 MB	Train Loss: 0.0062	Train Acc: 1.0000	Local Validation  Loss: 2.6644	Local Validation Acc: 0.5300	Global Validation Loss: 1.9906	Global Validation Acc: 0.5937
+Client 7	Dropout Rate: 0.25	Model Size: 0.91 MB	Train Loss: 0.0065	Train Acc: 1.0000	Local Validation  Loss: 2.0031	Local Validation Acc: 0.5500	Global Validation Loss: 1.8653	Global Validation Acc: 0.5884
+Client 99	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 1.2025	Train Acc: 0.6075	Local Validation  Loss: 2.5059	Local Validation Acc: 0.3000	Global Validation Loss: 2.6077	Global Validation Acc: 0.2933
+Client 71	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 1.1165	Train Acc: 0.5725	Local Validation  Loss: 2.5600	Local Validation Acc: 0.3100	Global Validation Loss: 2.6527	Global Validation Acc: 0.2704
+Aggregated
+Global Test Loss: 1.5097	Global Test Acc: 0.6266
+Client 3	Local Validation Loss: 1.9915(-1.2949)	Local Validation Acc: 0.5400(0.0200)
+Client 49	Local Validation Loss: 1.3219(-0.5897)	Local Validation Acc: 0.6400(0.0700)
+Client 52	Local Validation Loss: 1.4676(-1.0000)	Local Validation Acc: 0.6300(0.1000)
+Client 27	Local Validation Loss: 1.7340(-0.3834)	Local Validation Acc: 0.5700(-0.0200)
+Client 89	Local Validation Loss: 1.2613(-0.5191)	Local Validation Acc: 0.6400(0.0100)
+Client 56	Local Validation Loss: 1.4269(-0.4906)	Local Validation Acc: 0.6400(0.0300)
+Client 78	Local Validation Loss: 1.9268(-0.7376)	Local Validation Acc: 0.6200(0.0900)
+Client 7	Local Validation Loss: 1.7591(-0.2439)	Local Validation Acc: 0.5800(0.0300)
+Client 99	Local Validation Loss: 1.7962(-0.7098)	Local Validation Acc: 0.6000(0.3000)
+Client 71	Local Validation Loss: 1.6149(-0.9450)	Local Validation Acc: 0.6400(0.3300)
+Round 81 use time: 9.49 min, ETA: 18.82 hours
+================================================================================
+Round 82
+Selected 10 client IDs: [38 62 25 60 79 94 18 28 13 16]
+Client 38	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 1.6857	Train Acc: 0.4050	Local Validation  Loss: 2.7459	Local Validation Acc: 0.2900	Global Validation Loss: 2.4282	Global Validation Acc: 0.2426
+Client 62	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 1.6541	Train Acc: 0.4000	Local Validation  Loss: 2.3902	Local Validation Acc: 0.2000	Global Validation Loss: 2.5387	Global Validation Acc: 0.2182
+Client 25	Dropout Rate: 0.75	Model Size: 0.13 MB	Train Loss: 0.0554	Train Acc: 0.9975	Local Validation  Loss: 1.8632	Local Validation Acc: 0.5200	Global Validation Loss: 2.4305	Global Validation Acc: 0.5034
+Client 60	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 1.6527	Train Acc: 0.3675	Local Validation  Loss: 2.3822	Local Validation Acc: 0.1900	Global Validation Loss: 2.3969	Global Validation Acc: 0.2186
+Client 79	Dropout Rate: 0.5	Model Size: 0.43 MB	Train Loss: 0.0022	Train Acc: 1.0000	Local Validation  Loss: 2.2635	Local Validation Acc: 0.6000	Global Validation Loss: 2.1791	Global Validation Acc: 0.5955
+Client 94	Dropout Rate: 0.25	Model Size: 0.91 MB	Train Loss: 0.0049	Train Acc: 1.0000	Local Validation  Loss: 2.2203	Local Validation Acc: 0.5800	Global Validation Loss: 2.1103	Global Validation Acc: 0.5853
+Client 18	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 1.4114	Train Acc: 0.4875	Local Validation  Loss: 2.4439	Local Validation Acc: 0.3300	Global Validation Loss: 2.4847	Global Validation Acc: 0.2536
+Client 28	Dropout Rate: 0.9	Model Size: 0.03 MB	Train Loss: 1.4211	Train Acc: 0.4875	Local Validation  Loss: 2.3936	Local Validation Acc: 0.2200	Global Validation Loss: 2.3829	Global Validation Acc: 0.2643
+Client 13	Dropout Rate: 0.5	Model Size: 0.43 MB	Train Loss: 0.0096	Train Acc: 1.0000	Local Validation  Loss: 1.9400	Local Validation Acc: 0.5500	Global Validation Loss: 2.0021	Global Validation Acc: 0.5672
+Client 16	Dropout Rate: 0.5	Model Size: 0.43 MB	Train Loss: 0.0088	Train Acc: 1.0000	Local Validation  Loss: 2.3361	Local Validation Acc: 0.6300	Global Validation Loss: 1.9535	Global Validation Acc: 0.5915
+Aggregated
+Global Test Loss: 1.5121	Global Test Acc: 0.6190
+Client 38	Local Validation Loss: 1.5368(-1.2091)	Local Validation Acc: 0.6400(0.3500)
+Client 62	Local Validation Loss: 1.2653(-1.1249)	Local Validation Acc: 0.6400(0.4400)
+Client 25	Local Validation Loss: 1.2491(-0.6141)	Local Validation Acc: 0.6600(0.1400)
+Client 60	Local Validation Loss: 1.3400(-1.0421)	Local Validation Acc: 0.6300(0.4400)
+Client 79	Local Validation Loss: 1.4895(-0.7740)	Local Validation Acc: 0.5500(-0.0500)
+Client 94	Local Validation Loss: 1.5748(-0.6455)	Local Validation Acc: 0.5800(0.0000)
+Client 18	Local Validation Loss: 1.4647(-0.9792)	Local Validation Acc: 0.6700(0.3400)
+Client 28	Local Validation Loss: 1.3201(-1.0734)	Local Validation Acc: 0.5500(0.3300)
+Client 13	Local Validation Loss: 1.4108(-0.5293)	Local Validation Acc: 0.5900(0.0400)
+Client 16	Local Validation Loss: 1.5094(-0.8267)	Local Validation Acc: 0.6400(0.0100)
+Round 82 use time: 9.11 min, ETA: 17.91 hours
+================================================================================
+Round 83
+Selected 10 client IDs: [ 2 58 54 25 77 34 50 32 53  8]

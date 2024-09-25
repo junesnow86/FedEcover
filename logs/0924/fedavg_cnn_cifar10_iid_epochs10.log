@@ -3332,3 +3332,193 @@ Round 122 use time: 7.22 min, ETA: 9.39 hours
 ================================================================================
 Round 123
 Selected 10 client IDs: [20 50 59 15 86 45 88  0 26 99]
+Keys aggregated: {'layer1.0.weight', 'layer2.0.weight', 'layer3.0.weight', 'layer2.0.bias', 'fc.bias', 'layer3.0.bias', 'layer1.0.bias', 'fc.weight'}
+Client 20	Model Size: 0.03 MB	Train Loss: 0.5901	Train Acc: 0.8325	Local Validation  Loss: 1.2068	Local Validation Acc: 0.5700	Global Validation Loss: 1.3220	Global Validation Acc: 0.5653
+Client 50	Model Size: 0.03 MB	Train Loss: 0.5548	Train Acc: 0.8550	Local Validation  Loss: 1.3455	Local Validation Acc: 0.5700	Global Validation Loss: 1.3732	Global Validation Acc: 0.5537
+Client 59	Model Size: 0.03 MB	Train Loss: 0.6877	Train Acc: 0.8225	Local Validation  Loss: 1.6214	Local Validation Acc: 0.4800	Global Validation Loss: 1.3387	Global Validation Acc: 0.5680
+Client 15	Model Size: 0.03 MB	Train Loss: 0.5490	Train Acc: 0.8625	Local Validation  Loss: 1.2059	Local Validation Acc: 0.6100	Global Validation Loss: 1.3241	Global Validation Acc: 0.5733
+Client 86	Model Size: 0.03 MB	Train Loss: 0.6877	Train Acc: 0.8375	Local Validation  Loss: 1.3014	Local Validation Acc: 0.5900	Global Validation Loss: 1.3097	Global Validation Acc: 0.5709
+Client 45	Model Size: 0.03 MB	Train Loss: 0.4966	Train Acc: 0.8475	Local Validation  Loss: 1.4253	Local Validation Acc: 0.5500	Global Validation Loss: 1.4344	Global Validation Acc: 0.5554
+Client 88	Model Size: 0.03 MB	Train Loss: 0.6640	Train Acc: 0.7575	Local Validation  Loss: 1.4419	Local Validation Acc: 0.5200	Global Validation Loss: 1.2533	Global Validation Acc: 0.5702
+Client 0	Model Size: 0.03 MB	Train Loss: 0.5728	Train Acc: 0.8050	Local Validation  Loss: 1.4907	Local Validation Acc: 0.5600	Global Validation Loss: 1.2730	Global Validation Acc: 0.5716
+Client 26	Model Size: 0.03 MB	Train Loss: 0.6228	Train Acc: 0.8225	Local Validation  Loss: 1.4855	Local Validation Acc: 0.5100	Global Validation Loss: 1.2600	Global Validation Acc: 0.5765
+Client 99	Model Size: 0.03 MB	Train Loss: 0.5943	Train Acc: 0.8125	Local Validation  Loss: 1.3185	Local Validation Acc: 0.5800	Global Validation Loss: 1.3004	Global Validation Acc: 0.5742
+Aggregated
+Global Test Loss: 1.1549	Global Test Acc: 0.6059
+Client 20	Local Validation Loss: 1.0532(-0.1536)	Local Validation Acc: 0.6100(0.0400)
+Client 50	Local Validation Loss: 1.0475(-0.2980)	Local Validation Acc: 0.6600(0.0900)
+Client 59	Local Validation Loss: 1.3195(-0.3019)	Local Validation Acc: 0.5500(0.0700)
+Client 15	Local Validation Loss: 1.1336(-0.0723)	Local Validation Acc: 0.7100(0.1000)
+Client 86	Local Validation Loss: 1.1652(-0.1362)	Local Validation Acc: 0.6400(0.0500)
+Client 45	Local Validation Loss: 1.1269(-0.2984)	Local Validation Acc: 0.6400(0.0900)
+Client 88	Local Validation Loss: 1.2443(-0.1976)	Local Validation Acc: 0.5500(0.0300)
+Client 0	Local Validation Loss: 1.3663(-0.1244)	Local Validation Acc: 0.5200(-0.0400)
+Client 26	Local Validation Loss: 1.4445(-0.0409)	Local Validation Acc: 0.5500(0.0400)
+Client 99	Local Validation Loss: 1.1612(-0.1573)	Local Validation Acc: 0.6300(0.0500)
+Round 123 use time: 7.33 min, ETA: 9.40 hours
+================================================================================
+Round 124
+Selected 10 client IDs: [58 83 32  9 69 37 99 24 20 67]
+Keys aggregated: {'layer1.0.weight', 'layer2.0.weight', 'layer3.0.weight', 'layer2.0.bias', 'fc.bias', 'layer3.0.bias', 'layer1.0.bias', 'fc.weight'}
+Client 58	Model Size: 0.03 MB	Train Loss: 0.4848	Train Acc: 0.8525	Local Validation  Loss: 1.2701	Local Validation Acc: 0.5900	Global Validation Loss: 1.3156	Global Validation Acc: 0.5702
+Client 83	Model Size: 0.03 MB	Train Loss: 0.4930	Train Acc: 0.8450	Local Validation  Loss: 1.3567	Local Validation Acc: 0.5100	Global Validation Loss: 1.2982	Global Validation Acc: 0.5784
+Client 32	Model Size: 0.03 MB	Train Loss: 0.5490	Train Acc: 0.8100	Local Validation  Loss: 1.3141	Local Validation Acc: 0.5100	Global Validation Loss: 1.2705	Global Validation Acc: 0.5726
+Client 9	Model Size: 0.03 MB	Train Loss: 0.5151	Train Acc: 0.8600	Local Validation  Loss: 1.5403	Local Validation Acc: 0.5100	Global Validation Loss: 1.3263	Global Validation Acc: 0.5682
+Client 69	Model Size: 0.03 MB	Train Loss: 0.6081	Train Acc: 0.8200	Local Validation  Loss: 1.1958	Local Validation Acc: 0.6000	Global Validation Loss: 1.3077	Global Validation Acc: 0.5665
+Client 37	Model Size: 0.03 MB	Train Loss: 0.6267	Train Acc: 0.8075	Local Validation  Loss: 1.2263	Local Validation Acc: 0.6400	Global Validation Loss: 1.2664	Global Validation Acc: 0.5764
+Client 99	Model Size: 0.03 MB	Train Loss: 0.6403	Train Acc: 0.8200	Local Validation  Loss: 1.2915	Local Validation Acc: 0.5900	Global Validation Loss: 1.2900	Global Validation Acc: 0.5769
+Client 24	Model Size: 0.03 MB	Train Loss: 0.5151	Train Acc: 0.8475	Local Validation  Loss: 1.1737	Local Validation Acc: 0.6000	Global Validation Loss: 1.3166	Global Validation Acc: 0.5714
+Client 20	Model Size: 0.03 MB	Train Loss: 0.6002	Train Acc: 0.8575	Local Validation  Loss: 1.2541	Local Validation Acc: 0.5700	Global Validation Loss: 1.3594	Global Validation Acc: 0.5531
+Client 67	Model Size: 0.03 MB	Train Loss: 0.4343	Train Acc: 0.8700	Local Validation  Loss: 1.5524	Local Validation Acc: 0.5400	Global Validation Loss: 1.3338	Global Validation Acc: 0.5724
+Aggregated
+Global Test Loss: 1.1515	Global Test Acc: 0.6101
+Client 58	Local Validation Loss: 1.0290(-0.2411)	Local Validation Acc: 0.7000(0.1100)
+Client 83	Local Validation Loss: 1.2286(-0.1281)	Local Validation Acc: 0.6000(0.0900)
+Client 32	Local Validation Loss: 1.2548(-0.0593)	Local Validation Acc: 0.5100(0.0000)
+Client 9	Local Validation Loss: 1.2000(-0.3403)	Local Validation Acc: 0.5800(0.0700)
+Client 69	Local Validation Loss: 1.0956(-0.1002)	Local Validation Acc: 0.6600(0.0600)
+Client 37	Local Validation Loss: 1.1570(-0.0693)	Local Validation Acc: 0.6600(0.0200)
+Client 99	Local Validation Loss: 1.1317(-0.1598)	Local Validation Acc: 0.6300(0.0400)
+Client 24	Local Validation Loss: 0.8819(-0.2918)	Local Validation Acc: 0.7100(0.1100)
+Client 20	Local Validation Loss: 1.0077(-0.2464)	Local Validation Acc: 0.6300(0.0600)
+Client 67	Local Validation Loss: 1.2283(-0.3241)	Local Validation Acc: 0.5400(0.0000)
+Round 124 use time: 7.18 min, ETA: 9.09 hours
+================================================================================
+Round 125
+Selected 10 client IDs: [57 14 48 98 26 39 18 16 69 99]
+Keys aggregated: {'layer1.0.weight', 'layer2.0.weight', 'layer3.0.weight', 'layer2.0.bias', 'fc.bias', 'layer3.0.bias', 'layer1.0.bias', 'fc.weight'}
+Client 57	Model Size: 0.03 MB	Train Loss: 0.5709	Train Acc: 0.8175	Local Validation  Loss: 1.4706	Local Validation Acc: 0.5200	Global Validation Loss: 1.2999	Global Validation Acc: 0.5703
+Client 14	Model Size: 0.03 MB	Train Loss: 0.6221	Train Acc: 0.8025	Local Validation  Loss: 1.2545	Local Validation Acc: 0.5900	Global Validation Loss: 1.2883	Global Validation Acc: 0.5678
+Client 48	Model Size: 0.03 MB	Train Loss: 0.5390	Train Acc: 0.8175	Local Validation  Loss: 1.5320	Local Validation Acc: 0.5200	Global Validation Loss: 1.3711	Global Validation Acc: 0.5588
+Client 98	Model Size: 0.03 MB	Train Loss: 0.5812	Train Acc: 0.8775	Local Validation  Loss: 1.0920	Local Validation Acc: 0.6300	Global Validation Loss: 1.2770	Global Validation Acc: 0.5801
+Client 26	Model Size: 0.03 MB	Train Loss: 0.5457	Train Acc: 0.8400	Local Validation  Loss: 1.5807	Local Validation Acc: 0.5200	Global Validation Loss: 1.2932	Global Validation Acc: 0.5709
+Client 39	Model Size: 0.03 MB	Train Loss: 0.6535	Train Acc: 0.8225	Local Validation  Loss: 1.7601	Local Validation Acc: 0.4100	Global Validation Loss: 1.3597	Global Validation Acc: 0.5605
+Client 18	Model Size: 0.03 MB	Train Loss: 0.4859	Train Acc: 0.8550	Local Validation  Loss: 1.2672	Local Validation Acc: 0.6500	Global Validation Loss: 1.3033	Global Validation Acc: 0.5846
+Client 16	Model Size: 0.03 MB	Train Loss: 0.5784	Train Acc: 0.8100	Local Validation  Loss: 1.2438	Local Validation Acc: 0.6100	Global Validation Loss: 1.3027	Global Validation Acc: 0.5775
+Client 69	Model Size: 0.03 MB	Train Loss: 0.4922	Train Acc: 0.8475	Local Validation  Loss: 1.2076	Local Validation Acc: 0.5900	Global Validation Loss: 1.3228	Global Validation Acc: 0.5680
+Client 99	Model Size: 0.03 MB	Train Loss: 0.5946	Train Acc: 0.8400	Local Validation  Loss: 1.3237	Local Validation Acc: 0.5800	Global Validation Loss: 1.3372	Global Validation Acc: 0.5724
+Aggregated
+Global Test Loss: 1.1598	Global Test Acc: 0.6072
+Client 57	Local Validation Loss: 1.3026(-0.1681)	Local Validation Acc: 0.5800(0.0600)
+Client 14	Local Validation Loss: 1.0922(-0.1622)	Local Validation Acc: 0.6700(0.0800)
+Client 48	Local Validation Loss: 1.3617(-0.1703)	Local Validation Acc: 0.5500(0.0300)
+Client 98	Local Validation Loss: 1.1040(0.0120)	Local Validation Acc: 0.6800(0.0500)
+Client 26	Local Validation Loss: 1.4372(-0.1435)	Local Validation Acc: 0.5300(0.0100)
+Client 39	Local Validation Loss: 1.4032(-0.3569)	Local Validation Acc: 0.5900(0.1800)
+Client 18	Local Validation Loss: 1.0823(-0.1849)	Local Validation Acc: 0.6700(0.0200)
+Client 16	Local Validation Loss: 1.0783(-0.1654)	Local Validation Acc: 0.6300(0.0200)
+Client 69	Local Validation Loss: 1.0833(-0.1243)	Local Validation Acc: 0.6700(0.0800)
+Client 99	Local Validation Loss: 1.1254(-0.1983)	Local Validation Acc: 0.6500(0.0700)
+Round 125 use time: 7.35 min, ETA: 9.18 hours
+================================================================================
+Round 126
+Selected 10 client IDs: [11 76 14 92 48 37 45 40  7 33]
+Keys aggregated: {'layer1.0.weight', 'layer2.0.weight', 'layer3.0.weight', 'layer2.0.bias', 'fc.bias', 'layer3.0.bias', 'layer1.0.bias', 'fc.weight'}
+Client 11	Model Size: 0.03 MB	Train Loss: 0.6048	Train Acc: 0.8425	Local Validation  Loss: 1.6299	Local Validation Acc: 0.4500	Global Validation Loss: 1.3247	Global Validation Acc: 0.5604
+Client 76	Model Size: 0.03 MB	Train Loss: 0.4500	Train Acc: 0.8800	Local Validation  Loss: 1.2479	Local Validation Acc: 0.5600	Global Validation Loss: 1.2808	Global Validation Acc: 0.5806
+Client 14	Model Size: 0.03 MB	Train Loss: 0.5759	Train Acc: 0.8200	Local Validation  Loss: 1.2219	Local Validation Acc: 0.6200	Global Validation Loss: 1.2679	Global Validation Acc: 0.5741
+Client 92	Model Size: 0.03 MB	Train Loss: 0.5716	Train Acc: 0.8175	Local Validation  Loss: 1.5767	Local Validation Acc: 0.5700	Global Validation Loss: 1.3153	Global Validation Acc: 0.5712
+Client 48	Model Size: 0.03 MB	Train Loss: 0.4647	Train Acc: 0.8625	Local Validation  Loss: 1.5469	Local Validation Acc: 0.5100	Global Validation Loss: 1.3491	Global Validation Acc: 0.5703
+Client 37	Model Size: 0.03 MB	Train Loss: 0.6483	Train Acc: 0.8050	Local Validation  Loss: 1.2482	Local Validation Acc: 0.6000	Global Validation Loss: 1.3076	Global Validation Acc: 0.5641
+Client 45	Model Size: 0.03 MB	Train Loss: 0.5452	Train Acc: 0.8575	Local Validation  Loss: 1.2722	Local Validation Acc: 0.5700	Global Validation Loss: 1.3875	Global Validation Acc: 0.5560
+Client 40	Model Size: 0.03 MB	Train Loss: 0.6297	Train Acc: 0.7925	Local Validation  Loss: 1.5170	Local Validation Acc: 0.5500	Global Validation Loss: 1.3078	Global Validation Acc: 0.5726
+Client 7	Model Size: 0.03 MB	Train Loss: 0.6174	Train Acc: 0.8275	Local Validation  Loss: 1.2586	Local Validation Acc: 0.6200	Global Validation Loss: 1.2987	Global Validation Acc: 0.5593
+Client 33	Model Size: 0.03 MB	Train Loss: 0.5776	Train Acc: 0.8025	Local Validation  Loss: 1.4921	Local Validation Acc: 0.5000	Global Validation Loss: 1.2950	Global Validation Acc: 0.5657
+Aggregated
+Global Test Loss: 1.1501	Global Test Acc: 0.6073
+Client 11	Local Validation Loss: 1.4828(-0.1471)	Local Validation Acc: 0.4700(0.0200)
+Client 76	Local Validation Loss: 1.1977(-0.0502)	Local Validation Acc: 0.5800(0.0200)
+Client 14	Local Validation Loss: 1.0783(-0.1437)	Local Validation Acc: 0.6800(0.0600)
+Client 92	Local Validation Loss: 1.3137(-0.2630)	Local Validation Acc: 0.5700(0.0000)
+Client 48	Local Validation Loss: 1.3140(-0.2328)	Local Validation Acc: 0.5200(0.0100)
+Client 37	Local Validation Loss: 1.1173(-0.1309)	Local Validation Acc: 0.6600(0.0600)
+Client 45	Local Validation Loss: 1.1218(-0.1504)	Local Validation Acc: 0.6400(0.0700)
+Client 40	Local Validation Loss: 1.1832(-0.3338)	Local Validation Acc: 0.6200(0.0700)
+Client 7	Local Validation Loss: 1.1341(-0.1244)	Local Validation Acc: 0.6400(0.0200)
+Client 33	Local Validation Loss: 1.3671(-0.1251)	Local Validation Acc: 0.5300(0.0300)
+Round 126 use time: 7.24 min, ETA: 8.93 hours
+================================================================================
+Round 127
+Selected 10 client IDs: [32 80 13 29  8 25 59 61  7 98]
+Keys aggregated: {'layer1.0.weight', 'layer2.0.weight', 'layer3.0.weight', 'layer2.0.bias', 'fc.bias', 'layer3.0.bias', 'layer1.0.bias', 'fc.weight'}
+Client 32	Model Size: 0.03 MB	Train Loss: 0.5830	Train Acc: 0.7950	Local Validation  Loss: 1.4366	Local Validation Acc: 0.4700	Global Validation Loss: 1.3227	Global Validation Acc: 0.5639
+Client 80	Model Size: 0.03 MB	Train Loss: 0.4725	Train Acc: 0.8450	Local Validation  Loss: 1.1115	Local Validation Acc: 0.6400	Global Validation Loss: 1.3029	Global Validation Acc: 0.5725
+Client 13	Model Size: 0.03 MB	Train Loss: 0.6224	Train Acc: 0.7975	Local Validation  Loss: 1.4104	Local Validation Acc: 0.5400	Global Validation Loss: 1.2740	Global Validation Acc: 0.5720
+Client 29	Model Size: 0.03 MB	Train Loss: 0.5745	Train Acc: 0.8275	Local Validation  Loss: 1.1337	Local Validation Acc: 0.6700	Global Validation Loss: 1.3234	Global Validation Acc: 0.5612
+Client 8	Model Size: 0.03 MB	Train Loss: 0.4964	Train Acc: 0.8450	Local Validation  Loss: 1.4934	Local Validation Acc: 0.4800	Global Validation Loss: 1.2912	Global Validation Acc: 0.5786
+Client 25	Model Size: 0.03 MB	Train Loss: 0.5750	Train Acc: 0.8275	Local Validation  Loss: 1.0960	Local Validation Acc: 0.5700	Global Validation Loss: 1.3277	Global Validation Acc: 0.5615
+Client 59	Model Size: 0.03 MB	Train Loss: 0.5283	Train Acc: 0.8275	Local Validation  Loss: 1.6566	Local Validation Acc: 0.4700	Global Validation Loss: 1.3772	Global Validation Acc: 0.5564
+Client 61	Model Size: 0.03 MB	Train Loss: 0.4871	Train Acc: 0.8425	Local Validation  Loss: 1.0749	Local Validation Acc: 0.6400	Global Validation Loss: 1.3374	Global Validation Acc: 0.5666
+Client 7	Model Size: 0.03 MB	Train Loss: 0.5816	Train Acc: 0.8450	Local Validation  Loss: 1.2539	Local Validation Acc: 0.6000	Global Validation Loss: 1.2798	Global Validation Acc: 0.5675
+Client 98	Model Size: 0.03 MB	Train Loss: 0.4798	Train Acc: 0.8575	Local Validation  Loss: 1.1812	Local Validation Acc: 0.6600	Global Validation Loss: 1.3242	Global Validation Acc: 0.5759
+Aggregated
+Global Test Loss: 1.1469	Global Test Acc: 0.6104
+Client 32	Local Validation Loss: 1.2263(-0.2104)	Local Validation Acc: 0.5000(0.0300)
+Client 80	Local Validation Loss: 0.9720(-0.1395)	Local Validation Acc: 0.6800(0.0400)
+Client 13	Local Validation Loss: 1.2830(-0.1274)	Local Validation Acc: 0.5900(0.0500)
+Client 29	Local Validation Loss: 0.9867(-0.1470)	Local Validation Acc: 0.6400(-0.0300)
+Client 8	Local Validation Loss: 1.3731(-0.1203)	Local Validation Acc: 0.4900(0.0100)
+Client 25	Local Validation Loss: 0.8898(-0.2062)	Local Validation Acc: 0.6800(0.1100)
+Client 59	Local Validation Loss: 1.3315(-0.3251)	Local Validation Acc: 0.5700(0.1000)
+Client 61	Local Validation Loss: 1.0443(-0.0306)	Local Validation Acc: 0.6500(0.0100)
+Client 7	Local Validation Loss: 1.0984(-0.1555)	Local Validation Acc: 0.6700(0.0700)
+Client 98	Local Validation Loss: 1.0914(-0.0897)	Local Validation Acc: 0.7000(0.0400)
+Round 127 use time: 7.37 min, ETA: 8.96 hours
+================================================================================
+Round 128
+Selected 10 client IDs: [ 8 45 54 77 75 63 19 82 73  0]
+Keys aggregated: {'layer1.0.weight', 'layer2.0.weight', 'layer3.0.weight', 'layer2.0.bias', 'fc.bias', 'layer3.0.bias', 'layer1.0.bias', 'fc.weight'}
+Client 8	Model Size: 0.03 MB	Train Loss: 0.4653	Train Acc: 0.8300	Local Validation  Loss: 1.4132	Local Validation Acc: 0.5000	Global Validation Loss: 1.2648	Global Validation Acc: 0.5835
+Client 45	Model Size: 0.03 MB	Train Loss: 0.4896	Train Acc: 0.8575	Local Validation  Loss: 1.3164	Local Validation Acc: 0.5800	Global Validation Loss: 1.3387	Global Validation Acc: 0.5693
+Client 54	Model Size: 0.03 MB	Train Loss: 0.5749	Train Acc: 0.8400	Local Validation  Loss: 1.2544	Local Validation Acc: 0.5800	Global Validation Loss: 1.2545	Global Validation Acc: 0.5849
+Client 77	Model Size: 0.03 MB	Train Loss: 0.6519	Train Acc: 0.8050	Local Validation  Loss: 1.1893	Local Validation Acc: 0.6100	Global Validation Loss: 1.2829	Global Validation Acc: 0.5702
+Client 75	Model Size: 0.03 MB	Train Loss: 0.5707	Train Acc: 0.8125	Local Validation  Loss: 1.2658	Local Validation Acc: 0.6500	Global Validation Loss: 1.3258	Global Validation Acc: 0.5583
+Client 63	Model Size: 0.03 MB	Train Loss: 0.6181	Train Acc: 0.8375	Local Validation  Loss: 1.5074	Local Validation Acc: 0.4500	Global Validation Loss: 1.2919	Global Validation Acc: 0.5657
+Client 19	Model Size: 0.03 MB	Train Loss: 0.6089	Train Acc: 0.8225	Local Validation  Loss: 1.4289	Local Validation Acc: 0.5600	Global Validation Loss: 1.2759	Global Validation Acc: 0.5712
+Client 82	Model Size: 0.03 MB	Train Loss: 0.5237	Train Acc: 0.8175	Local Validation  Loss: 1.4248	Local Validation Acc: 0.5000	Global Validation Loss: 1.3226	Global Validation Acc: 0.5737
+Client 73	Model Size: 0.03 MB	Train Loss: 0.6014	Train Acc: 0.8150	Local Validation  Loss: 1.2092	Local Validation Acc: 0.6300	Global Validation Loss: 1.2893	Global Validation Acc: 0.5743
+Client 0	Model Size: 0.03 MB	Train Loss: 0.5338	Train Acc: 0.8025	Local Validation  Loss: 1.6051	Local Validation Acc: 0.5600	Global Validation Loss: 1.3402	Global Validation Acc: 0.5612
+Aggregated
+Global Test Loss: 1.1454	Global Test Acc: 0.6119
+Client 8	Local Validation Loss: 1.3534(-0.0598)	Local Validation Acc: 0.5400(0.0400)
+Client 45	Local Validation Loss: 1.1049(-0.2115)	Local Validation Acc: 0.6800(0.1000)
+Client 54	Local Validation Loss: 1.0597(-0.1947)	Local Validation Acc: 0.5700(-0.0100)
+Client 77	Local Validation Loss: 1.1058(-0.0835)	Local Validation Acc: 0.5800(-0.0300)
+Client 75	Local Validation Loss: 1.2766(0.0107)	Local Validation Acc: 0.6300(-0.0200)
+Client 63	Local Validation Loss: 1.3780(-0.1294)	Local Validation Acc: 0.4900(0.0400)
+Client 19	Local Validation Loss: 1.3061(-0.1228)	Local Validation Acc: 0.6100(0.0500)
+Client 82	Local Validation Loss: 1.2191(-0.2056)	Local Validation Acc: 0.5800(0.0800)
+Client 73	Local Validation Loss: 1.1045(-0.1047)	Local Validation Acc: 0.6500(0.0200)
+Client 0	Local Validation Loss: 1.4131(-0.1921)	Local Validation Acc: 0.5100(-0.0500)
+Round 128 use time: 7.27 min, ETA: 8.73 hours
+================================================================================
+Round 129
+Selected 10 client IDs: [56  2 45 14 39 88 34 10 28  6]
+Keys aggregated: {'layer1.0.weight', 'layer2.0.weight', 'layer3.0.weight', 'layer2.0.bias', 'fc.bias', 'layer3.0.bias', 'layer1.0.bias', 'fc.weight'}
+Client 56	Model Size: 0.03 MB	Train Loss: 0.5553	Train Acc: 0.8250	Local Validation  Loss: 1.3907	Local Validation Acc: 0.5800	Global Validation Loss: 1.3240	Global Validation Acc: 0.5656
+Client 2	Model Size: 0.03 MB	Train Loss: 0.4856	Train Acc: 0.8325	Local Validation  Loss: 1.2729	Local Validation Acc: 0.5600	Global Validation Loss: 1.3170	Global Validation Acc: 0.5697
+Client 45	Model Size: 0.03 MB	Train Loss: 0.5198	Train Acc: 0.8625	Local Validation  Loss: 1.4307	Local Validation Acc: 0.6000	Global Validation Loss: 1.4325	Global Validation Acc: 0.5488
+Client 14	Model Size: 0.03 MB	Train Loss: 0.6171	Train Acc: 0.8450	Local Validation  Loss: 1.2490	Local Validation Acc: 0.6100	Global Validation Loss: 1.2498	Global Validation Acc: 0.5772
+Client 39	Model Size: 0.03 MB	Train Loss: 0.5643	Train Acc: 0.8450	Local Validation  Loss: 1.6408	Local Validation Acc: 0.5200	Global Validation Loss: 1.3082	Global Validation Acc: 0.5693
+Client 88	Model Size: 0.03 MB	Train Loss: 0.6115	Train Acc: 0.8000	Local Validation  Loss: 1.4224	Local Validation Acc: 0.5700	Global Validation Loss: 1.2995	Global Validation Acc: 0.5673
+Client 34	Model Size: 0.03 MB	Train Loss: 0.5656	Train Acc: 0.8375	Local Validation  Loss: 1.2316	Local Validation Acc: 0.5500	Global Validation Loss: 1.3117	Global Validation Acc: 0.5689
+Client 10	Model Size: 0.03 MB	Train Loss: 0.5899	Train Acc: 0.8325	Local Validation  Loss: 1.4204	Local Validation Acc: 0.5500	Global Validation Loss: 1.3269	Global Validation Acc: 0.5704
+Client 28	Model Size: 0.03 MB	Train Loss: 0.4596	Train Acc: 0.8475	Local Validation  Loss: 1.3145	Local Validation Acc: 0.5500	Global Validation Loss: 1.3371	Global Validation Acc: 0.5696
+Client 6	Model Size: 0.03 MB	Train Loss: 0.6734	Train Acc: 0.8075	Local Validation  Loss: 1.1964	Local Validation Acc: 0.5800	Global Validation Loss: 1.2916	Global Validation Acc: 0.5757
+Aggregated
+Global Test Loss: 1.1511	Global Test Acc: 0.6062
+Client 56	Local Validation Loss: 1.2894(-0.1013)	Local Validation Acc: 0.5900(0.0100)
+Client 2	Local Validation Loss: 1.1419(-0.1311)	Local Validation Acc: 0.5900(0.0300)
+Client 45	Local Validation Loss: 1.0979(-0.3328)	Local Validation Acc: 0.6100(0.0100)
+Client 14	Local Validation Loss: 1.1349(-0.1141)	Local Validation Acc: 0.6500(0.0400)
+Client 39	Local Validation Loss: 1.4243(-0.2166)	Local Validation Acc: 0.5700(0.0500)
+Client 88	Local Validation Loss: 1.3474(-0.0750)	Local Validation Acc: 0.5300(-0.0400)
+Client 34	Local Validation Loss: 1.1855(-0.0461)	Local Validation Acc: 0.5800(0.0300)
+Client 10	Local Validation Loss: 1.1984(-0.2220)	Local Validation Acc: 0.5500(0.0000)
+Client 28	Local Validation Loss: 1.1717(-0.1428)	Local Validation Acc: 0.6000(0.0500)
+Client 6	Local Validation Loss: 1.1498(-0.0466)	Local Validation Acc: 0.6800(0.1000)
+Round 129 use time: 7.21 min, ETA: 8.53 hours
+================================================================================
+Round 130
+Selected 10 client IDs: [19 58  4 26 96 69 13 20 41 65]
+Keys aggregated: {'layer1.0.weight', 'layer2.0.weight', 'layer3.0.weight', 'layer2.0.bias', 'fc.bias', 'layer3.0.bias', 'layer1.0.bias', 'fc.weight'}
