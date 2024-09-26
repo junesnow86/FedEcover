@@ -1,8 +1,6 @@
 import torch
 from tqdm import tqdm
 
-from modules.evaluation import evaluate_acc
-
 
 def train(
     model,
@@ -90,7 +88,9 @@ def scaffold_train(
             # Apply SCAFFOLD control variates
             with torch.no_grad():
                 for name, param in model.named_parameters():
-                    name = name.replace(".0.weight", ".weight").replace(".0.bias", ".bias")
+                    name = name.replace(".0.weight", ".weight").replace(
+                        ".0.bias", ".bias"
+                    )
                     # param.grad += c_global[name] - c_client[name]
 
                     # Standardize the control variates
@@ -138,41 +138,3 @@ def scaffold_train(
         c_global[name] = c_global[name].to(original_model_device)
         c_client[name] = c_client[name].to(original_model_device)
     return train_loss
-
-
-def train_and_validate(
-    model, dataloader, val_loader, optimizer, criterion, epochs=30, device="cuda"
-):
-    original_device = next(model.parameters()).device
-    model.to(device)
-    model.train()
-
-    train_acc_list = []
-    val_acc_list = []
-
-    for epoch in range(epochs):
-        total_loss = 0.0
-        correct = 0
-        for data, target in dataloader:
-            data, target = data.to(device), target.to(device)
-            optimizer.zero_grad()
-            output = model(data)
-            loss = criterion(output, target)
-            loss.backward()
-            optimizer.step()
-            total_loss += loss.item()
-            pred = output.argmax(dim=1, keepdim=True)
-            correct += pred.eq(target.view_as(pred)).sum().item()
-
-        train_acc = correct / len(dataloader.dataset)
-        # val_loss, val_acc, _ = test(model, device, val_loader, criterion)
-        val_result = evaluate_acc(model, val_loader, device=device)
-        print(
-            f"Epoch {epoch + 1}/{epochs}, Traing Loss: {total_loss:.6f}, Training Accuracy: {correct}/{len(dataloader.dataset)} ({100. * correct / len(dataloader.dataset):.2f}%)\tValidation Loss: {val_result["loss"]:.6f}, Validation Accuracy: {val_result["accuracy"]:.4f}"
-        )
-
-        train_acc_list.append(train_acc)
-        val_acc_list.append(val_result["accuracy"])
-
-    model.to(original_device)
-    return train_acc_list, val_acc_list

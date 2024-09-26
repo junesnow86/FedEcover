@@ -411,13 +411,13 @@ for round in range(ROUNDS):
     for client_id in selected_client_ids:
         print(
             f"Client {client_id}\t"
-            f"Model Size: {client_evaluation_results[client_id]["model_size"]:.2f} MB\t"
-            f"Train Loss: {client_evaluation_results[client_id]["train_loss"]:.4f}\t"
-            f"Train Acc: {client_evaluation_results[client_id]["train_acc"]:.4f}\t"
-            f"Local Validation  Loss: {client_evaluation_results[client_id]["local_val_loss"]:.4f}\t"
-            f"Local Validation Acc: {client_evaluation_results[client_id]["local_val_acc"]:.4f}\t"
-            f"Global Validation Loss: {client_evaluation_results[client_id]["global_val_loss"]:.4f}\t"
-            f"Global Validation Acc: {client_evaluation_results[client_id]["global_val_acc"]:.4f}"
+            f"Model Size: {client_evaluation_results[client_id]['model_size']:.2f} MB\t"
+            f"Train Loss: {client_evaluation_results[client_id]['train_loss']:.4f}\t"
+            f"Train Acc: {client_evaluation_results[client_id]['train_acc']:.4f}\t"
+            f"Local Validation  Loss: {client_evaluation_results[client_id]['local_val_loss']:.4f}\t"
+            f"Local Validation Acc: {client_evaluation_results[client_id]['local_val_acc']:.4f}\t"
+            f"Global Validation Loss: {client_evaluation_results[client_id]['global_val_loss']:.4f}\t"
+            f"Global Validation Acc: {client_evaluation_results[client_id]['global_val_acc']:.4f}"
         )
 
     global_test_loss = global_evaluation_result["loss"]

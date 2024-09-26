@@ -1,5 +1,7 @@
 sleep 60
-sh /home/notebook/code/personal/S9056161/init.sh
+/home/notebook/code/personal/S9056161/miniconda3/bin/conda init bash
+/home/notebook/code/personal/S9056161/miniconda3/bin/conda init zsh
 source ~/.bashrc
-conda activate rd
-python partial_training_image.py --method heterofl --model resnet --distribution non-iid --alpha 0.5 --epochs 20 --save-dir results/0919 >> logs/0919/heterofl_resnet_cifar10_alpha0.5_epochs20.log
+source ~/.zshrc
+conda activate rd-pruning
+python partial_training_image.py --method $1 --model $2 --dataset $3 --distribution $4 --alpha $5 --rounds $6 --epochs $7 >> $8
