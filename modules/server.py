@@ -25,6 +25,9 @@ class ServerBase:
         select_ratio: float = 0.1,
         scaling: bool = True,
         control: bool = False,
+        estimate_global_update: bool = False,
+        momentum: float = 0.9,
+        velocity_normalization: bool = False,
     ):
         assert len(client_capacities) == num_clients
         assert model_type in ["cnn", "resnet"]
@@ -50,6 +53,19 @@ class ServerBase:
                 }
                 for _ in range(num_clients)
             ]
+
+        self.estimate_global_update = estimate_global_update
+        self.momentum = momentum
+        self.velocity_normalization = velocity_normalization
+        if self.estimate_global_update:
+            self.global_update_direction = {
+                name: torch.zeros_like(param.data)
+                for name, param in global_model.named_parameters()
+            }
+            self.velocity = {
+                name: torch.zeros_like(param.data)
+                for name, param in global_model.named_parameters()
+            }
 
     def get_client_submodel_param_indices_dict(self, client_id: int):
         raise NotImplementedError(
@@ -79,7 +95,9 @@ class ServerBase:
             selected_submodel_global_control_variates = [
                 extract_submodel_control_variates(
                     complete_control_variates=self.global_control,
-                    submodel_param_indices_dict=selected_submodel_param_indices_dicts[i],
+                    submodel_param_indices_dict=selected_submodel_param_indices_dicts[
+                        i
+                    ],
                 )
                 for i in range(len(selected_client_ids))
             ]
@@ -87,7 +105,9 @@ class ServerBase:
             selected_submodel_control_variates = [
                 extract_submodel_control_variates(
                     complete_control_variates=self.client_controls[client_id],
-                    submodel_param_indices_dict=selected_submodel_param_indices_dicts[i],
+                    submodel_param_indices_dict=selected_submodel_param_indices_dicts[
+                        i
+                    ],
                 )
                 for i, client_id in enumerate(selected_client_ids)
             ]
@@ -144,7 +164,7 @@ class ServerBase:
         client_weights: List[int],
         local_control_variates: List[Dict[str, torch.Tensor]] = None,
     ):
-        if self.control:
+        if self.control or self.estimate_global_update:
             self.old_global_params = {
                 name: param.clone().detach()
                 for name, param in self.global_model.named_parameters()
@@ -240,33 +260,47 @@ class ServerBase:
             else:
                 raise ValueError(f"Invalid parameter dimension: {param.dim()}")
 
-        # if self.control:
-            # # Update selected clients' control variates
-            # for i, client_id in enumerate(selected_client_ids):
-            #     client_control_variates = local_control_variates[i]
-            #     for name, param in self.client_controls[client_id].items():
-            #         if "weight" in name:
-            #             key = name.replace(".weight", "")
-            #             in_indices, out_indices = (
-            #                 submodel_param_indices_dicts[i][key]["in"],
-            #                 submodel_param_indices_dicts[i][key]["out"],
-            #             )
-            #             self.client_controls[client_id][name][
-            #                 np.ix_(out_indices, in_indices)
-            #             ] = client_control_variates[name][
-            #                 np.ix_(range(len(out_indices)), range(len(in_indices)))
-            #             ]
-            #         elif "bias" in name:
-            #             key = name.replace(".bias", "")
-            #             out_indices = submodel_param_indices_dicts[i][key]["out"]
-            #             self.client_controls[client_id][name][out_indices] = (
-            #                 client_control_variates[name][range(len(out_indices))]
-            #             )
+        if self.estimate_global_update:
+            with torch.no_grad():
+                for name, param in self.global_model.named_parameters():
+                    self.velocity[name] = self.momentum * self.velocity[name] + (
+                        param - self.old_global_params[name]
+                    )
 
-            # # Update the global control variate
-            # with torch.no_grad():
-            #     for name, param in self.global_model.named_parameters():
-            #         self.global_control[name] = self.old_global_params[name] - param
+                    if self.velocity_normalization:
+                        norm = torch.norm(self.velocity[name])
+                        if norm > 0:
+                            self.velocity[name] /= norm
+
+                    self.global_update_direction[name] = self.velocity[name]
+
+        # if self.control:
+        # # Update selected clients' control variates
+        # for i, client_id in enumerate(selected_client_ids):
+        #     client_control_variates = local_control_variates[i]
+        #     for name, param in self.client_controls[client_id].items():
+        #         if "weight" in name:
+        #             key = name.replace(".weight", "")
+        #             in_indices, out_indices = (
+        #                 submodel_param_indices_dicts[i][key]["in"],
+        #                 submodel_param_indices_dicts[i][key]["out"],
+        #             )
+        #             self.client_controls[client_id][name][
+        #                 np.ix_(out_indices, in_indices)
+        #             ] = client_control_variates[name][
+        #                 np.ix_(range(len(out_indices)), range(len(in_indices)))
+        #             ]
+        #         elif "bias" in name:
+        #             key = name.replace(".bias", "")
+        #             out_indices = submodel_param_indices_dicts[i][key]["out"]
+        #             self.client_controls[client_id][name][out_indices] = (
+        #                 client_control_variates[name][range(len(out_indices))]
+        #             )
+
+        # # Update the global control variate
+        # with torch.no_grad():
+        #     for name, param in self.global_model.named_parameters():
+        #         self.global_control[name] = self.old_global_params[name] - param
 
     def step(self):
         raise NotImplementedError(
@@ -1043,3 +1077,226 @@ class ServerRDBagging(ServerBase):
         if self.strategy == "p-based-steady":
             for client_capacity in selected_capacites:
                 self.submodel_param_indices_dict_queues[client_capacity].pop()
+
+
+class ServerFedRAME(ServerBase):
+    def __init__(
+        self,
+        global_model: nn.Module,
+        num_clients: int,
+        client_capacities: List[float],
+        model_out_dim: int,
+        model_type: str = "cnn",
+        select_ratio: float = 0.1,
+        scaling: bool = True,
+        control: bool = False,
+        estimate_global_update: bool = False,
+        momentum: float = 0.9,
+        velocity_normalization: bool = False,
+    ):
+        super().__init__(
+            global_model,
+            num_clients,
+            client_capacities,
+            model_out_dim,
+            model_type,
+            select_ratio,
+            scaling,
+            control,
+            estimate_global_update,
+            momentum,
+            velocity_normalization,
+        )
+
+        self.initialize_unused_param_indices_for_layers()
+
+    def initialize_unused_param_indices_for_layers(self):
+        self.unused_param_indices_for_layers = {}
+
+        # `pivot_layers` is the layers where the output channels/features can be selected independently
+        if self.model_type == "cnn":
+            pivot_layers = ["layer1.0", "layer2.0", "layer3.0"]
+            out_channel_numbers = [64, 128, 256]
+            for i, pivot_layer in enumerate(pivot_layers):
+                self.unused_param_indices_for_layers[pivot_layer] = np.arange(
+                    out_channel_numbers[i]
+                )
+        elif self.model_type == "resnet":
+            # Pivot layers of ResNet18 include the first conv layer before blocks and the first conv layer of each block
+            layers = ["layer1", "layer2", "layer3", "layer4"]
+            out_channel_numbers = [64, 128, 256, 512]
+            blocks = ["0", "1"]
+
+            self.unused_param_indices_for_layers["conv1"] = np.arange(64)
+            for i, layer in enumerate(layers):
+                for block in blocks:
+                    self.unused_param_indices_for_layers[f"{layer}.{block}.conv1"] = (
+                        np.arange(out_channel_numbers[i])
+                    )
+
+                    if layer != "layer1" and block == "0":
+                        has_downsample = True
+                    else:
+                        has_downsample = False
+
+                    if has_downsample:
+                        self.unused_param_indices_for_layers[f"{layer}.{block}.conv2"] = (
+                            np.arange(out_channel_numbers[i])
+                        )
+        else:
+            raise ValueError("Invalid model type")
+
+    def random_choose_indices(self, layer: str, out_channels: int, sample_num: int):
+        if sample_num > self.unused_param_indices_for_layers[layer].size:
+            current_layer_indices = self.unused_param_indices_for_layers[layer].copy()
+            remaining_sample_num = sample_num - current_layer_indices.size
+            self.unused_param_indices_for_layers[layer] = np.arange(
+                out_channels
+            )  # Reload
+            additional_indices = np.random.choice(
+                self.unused_param_indices_for_layers[layer],
+                remaining_sample_num,
+                replace=False,
+            )
+            self.unused_param_indices_for_layers[layer] = np.setdiff1d(
+                self.unused_param_indices_for_layers[layer], additional_indices
+            )
+            current_layer_indices = np.sort(
+                np.concatenate((current_layer_indices, additional_indices))
+            )
+        else:
+            current_layer_indices = np.sort(
+                np.random.choice(
+                    self.unused_param_indices_for_layers[layer],
+                    sample_num,
+                    replace=False,
+                )
+            )
+            self.unused_param_indices_for_layers[layer] = np.setdiff1d(
+                self.unused_param_indices_for_layers[layer], current_layer_indices
+            )
+        return current_layer_indices  # The returned indices are sorted
+
+    def get_client_submodel_param_indices_dict(self, client_id: int):
+        client_capacity = self.client_capacities[client_id]
+
+        # Construct a submodel param indices dict for the client
+        submodel_param_indices_dict = SubmodelBlockParamIndicesDict()
+        if self.model_type == "cnn":
+            layers = ["layer1.0", "layer2.0", "layer3.0"]
+            out_channel_numbers = [64, 128, 256]
+            previous_layer_indices = np.arange(3)
+            for layer, out_channels in zip(layers, out_channel_numbers):
+                sample_num = int(client_capacity * out_channels)
+                current_layer_indices = self.random_choose_indices(
+                    layer, out_channels, sample_num
+                )
+                submodel_param_indices_dict[layer] = SubmodelLayerParamIndicesDict(
+                    {"in": previous_layer_indices, "out": current_layer_indices}
+                )
+                previous_layer_indices = current_layer_indices
+
+            # The last fc layer
+            H, W = 4, 4
+            flatten_previous_layer_indices = []
+            for out_channnel_idx in previous_layer_indices:
+                start_idx = out_channnel_idx * H * W
+                end_idx = (out_channnel_idx + 1) * H * W
+                flatten_previous_layer_indices.extend(list(range(start_idx, end_idx)))
+            flatten_previous_layer_indices = np.sort(flatten_previous_layer_indices)
+            submodel_param_indices_dict["fc"] = SubmodelLayerParamIndicesDict(
+                {
+                    "in": flatten_previous_layer_indices,
+                    "out": np.arange(self.model_out_dim),
+                }
+            )
+        elif self.model_type == "resnet":
+            previous_layer_indices = np.arange(3)
+            current_layer_indices = self.random_choose_indices(
+                "conv1", 64, int(client_capacity * 64)
+            )
+            submodel_param_indices_dict["conv1"] = SubmodelLayerParamIndicesDict(
+                {"in": previous_layer_indices, "out": current_layer_indices}
+            )
+            previous_layer_indices = current_layer_indices
+
+            layers = ["layer1", "layer2", "layer3", "layer4"]
+            layer_out_channels = [64, 128, 256, 512]
+            blocks = ["0", "1"]
+
+            for layer_idx, layer in enumerate(layers):
+                out_channels = layer_out_channels[layer_idx]
+                sample_num = int(client_capacity * out_channels)
+                for block in blocks:
+                    if layer != "layer1" and block == "0":
+                        has_downsample = True
+                    else:
+                        has_downsample = False
+
+                    for conv in ["conv1", "conv2"]:
+                        key = f"{layer}.{block}.{conv}"
+                        if not has_downsample and conv == "conv2":
+                            # There is no downsample layer, the conv2 out indices should stay the same as conv1(of the same block) in indices
+                            # due to the residual connection
+                            current_layer_indices = submodel_param_indices_dict[
+                                f"{layer}.{block}.conv1"
+                            ]["in"]
+                        else:
+                            current_layer_indices = self.random_choose_indices(
+                                key, out_channels, sample_num
+                            )
+
+                        submodel_param_indices_dict[key] = SubmodelLayerParamIndicesDict(
+                            {"in": previous_layer_indices, "out": current_layer_indices}
+                        )
+                        previous_layer_indices = current_layer_indices
+
+                    if has_downsample:
+                        key = f"{layer}.{block}.downsample.0"
+                        submodel_param_indices_dict[key] = (
+                            SubmodelLayerParamIndicesDict(
+                                {
+                                    "in": submodel_param_indices_dict[
+                                        f"{layer}.{block}.conv1"
+                                    ]["in"],
+                                    "out": submodel_param_indices_dict[
+                                        f"{layer}.{block}.conv2"
+                                    ]["out"],
+                                }
+                            )
+                        )
+
+            # The last fc layer
+            H, W = 1, 1
+            flatten_previous_layer_indices = []
+            for out_channnel_idx in previous_layer_indices:
+                start_idx = out_channnel_idx * H * W
+                end_idx = (out_channnel_idx + 1) * H * W
+                flatten_previous_layer_indices.extend(list(range(start_idx, end_idx)))
+            flatten_previous_layer_indices = np.sort(flatten_previous_layer_indices)
+            submodel_param_indices_dict["fc"] = SubmodelLayerParamIndicesDict(
+                {
+                    "in": flatten_previous_layer_indices,
+                    "out": np.arange(self.model_out_dim),
+                }
+            )
+        else:
+            raise ValueError("Invalid model type")
+
+        return submodel_param_indices_dict
+
+    def step(
+        self,
+        local_state_dicts: List[OrderedDict],
+        selected_client_ids: List[int],
+        submodel_param_indices_dicts: List[SubmodelBlockParamIndicesDict],
+        client_weights: List[int],
+        local_control_variates: List[Dict[str, torch.Tensor]] = None,
+    ):
+        self.aggregate(
+            local_state_dicts,
+            selected_client_ids,
+            submodel_param_indices_dicts,
+            client_weights,
+            local_control_variates,
+        )

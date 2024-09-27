@@ -29,7 +29,7 @@ def get_args(print_args=True):
     parser.add_argument(
         "--model",
         type=str,
-        choices=["cnn", "resnet", "shallow_resnet"],
+        choices=["cnn", "resnet"],
         default="cnn",
         help="Model to use for training",
     )
@@ -93,7 +93,7 @@ def get_args(print_args=True):
     parser.add_argument(
         "--method",
         type=str,
-        choices=["fedavg", "scaffold", "heterofl", "fedrolex", "fedrd", "rdbagging", "legacy"],
+        choices=["fedavg", "scaffold", "heterofl", "fedrolex", "fedrd", "rdbagging", "legacy", "fedrame"],
         default="fedavg",
         help="Federated learning method",
     )

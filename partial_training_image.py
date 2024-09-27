@@ -34,7 +34,7 @@ from modules.pruning import (
     prune_cnn,
     prune_resnet18,
 )
-from modules.server import ServerFedRolex, ServerHeteroFL, ServerRD, ServerRDBagging
+from modules.server import ServerFedRolex, ServerHeteroFL, ServerRD, ServerRDBagging, ServerFedRAME
 from modules.training import train, scaffold_train
 from modules.utils import (
     calculate_model_size,
@@ -64,8 +64,6 @@ SELECT_RATIO = args.select_ratio
 LOCAL_VALIDATION_FREQUENCY = int(1 / args.select_ratio)
 LOCAL_TRAIN_RATIO = args.local_train_ratio
 CONTROL = args.control
-
-assert METHOD in ["heterofl", "fedrolex", "fedrd", "rdbagging", "legacy"]
 
 # Set random seed for reproducibility
 seed = args.seed
@@ -281,6 +279,16 @@ elif METHOD == "rdbagging":
         strategy=args.rdbagging_strategy,
         control=CONTROL,
     )
+elif METHOD == "fedrame":
+    server = ServerFedRAME(
+        global_model=global_model,
+        num_clients=NUM_CLIENTS,
+        client_capacities=[1.0 - p for p in client_dropout_rates],
+        model_out_dim=NUM_CLASSES,
+        model_type=MODEL_TYPE,
+        select_ratio=SELECT_RATIO,
+        scaling=True,
+    )
 
 
 # <======================================== Training, aggregation and evluation ========================================>
@@ -340,7 +348,7 @@ for round in range(ROUNDS):
                 )
                 all_client_models[client_id] = client_model
                 model_pruned_indices_dicts[client_id] = model_pruned_indices_dict
-        elif METHOD in ["fedrolex", "heterofl", "fedrd", "rdbagging"]:
+        elif METHOD in ["fedrolex", "heterofl", "fedrd", "rdbagging", "fedrame"]:
             if CONTROL:
                 (
                     selected_client_ids,
@@ -396,7 +404,7 @@ for round in range(ROUNDS):
                 )
                 all_client_models[client_id] = client_model
                 model_pruned_indices_dicts[client_id] = model_pruned_indices_dict
-        elif METHOD in ["fedrolex", "heterofl", "fedrd", "rdbagging"]:
+        elif METHOD in ["fedrolex", "heterofl", "fedrd", "rdbagging", "fedrame"]:
             if CONTROL:
                 (
                     selected_client_ids,
@@ -544,7 +552,7 @@ for round in range(ROUNDS):
                     client_weights=client_weights,
                 )
                 global_model.load_state_dict(aggregated_weight)
-        elif METHOD in ["fedrolex", "heterofl", "fedrd", "rdbagging"]:
+        elif METHOD in ["fedrolex", "heterofl", "fedrd", "rdbagging", "fedrame"]:
             server.step(
                 local_state_dicts=[
                     model.state_dict() for model in all_client_models.values()
@@ -580,7 +588,7 @@ for round in range(ROUNDS):
                     client_weights=client_weights,
                 )
                 global_model.load_state_dict(aggregated_weight)
-        elif METHOD in ["fedrolex", "heterofl", "fedrd", "rdbagging"]:
+        elif METHOD in ["fedrolex", "heterofl", "fedrd", "rdbagging", "fedrame"]:
             server.step(
                 local_state_dicts=[
                     model.state_dict() for model in all_client_models.values()
