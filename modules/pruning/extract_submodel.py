@@ -226,6 +226,43 @@ def extract_submodel_resnet(
     return submodel
 
 
+def extract_submodel_update_direction(
+    global_update_direction: Dict[str, torch.Tensor],
+    submodel_param_indices_dict: SubmodelBlockParamIndicesDict,
+):
+    submodel_update_direction = {}
+
+    for name, update_direction in global_update_direction.items():
+        layer_name = name.replace(".weight", "").replace(".bias", "")
+
+        in_indices, out_indices = (
+            submodel_param_indices_dict[layer_name].get("in", None),
+            submodel_param_indices_dict[layer_name].get("out", None),
+        )
+        # Check in_indices and out_indices are sorted
+        if in_indices is not None:
+            assert np.all(in_indices == np.sort(in_indices))
+        if out_indices is not None:
+            assert np.all(out_indices == np.sort(out_indices))
+
+        if "weight" in name:
+            sub_update_direction = torch.index_select(
+                torch.index_select(update_direction, 0, torch.tensor(out_indices)),
+                1,
+                torch.tensor(in_indices),
+            )
+        elif "bias" in name:
+            sub_update_direction = torch.index_select(
+                update_direction, 0, torch.tensor(out_indices)
+            )
+        else:
+            raise ValueError("Invalid name")
+
+        submodel_update_direction[name] = sub_update_direction
+
+    return submodel_update_direction
+
+
 def extract_param_control_variate(
     name: str,
     param_control_variate: torch.Tensor,

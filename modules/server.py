@@ -11,6 +11,7 @@ from modules.pruning import (
     extract_submodel_control_variates,
     extract_submodel_resnet,
     generate_index_groups,
+    extract_submodel_update_direction,
 )
 
 
@@ -28,6 +29,7 @@ class ServerBase:
         estimate_global_update: bool = False,
         momentum: float = 0.9,
         velocity_normalization: bool = False,
+        global_model_momentum: float = 0.0,
     ):
         assert len(client_capacities) == num_clients
         assert model_type in ["cnn", "resnet"]
@@ -67,6 +69,8 @@ class ServerBase:
                 for name, param in global_model.named_parameters()
             }
 
+        self.global_model_momentum = global_model_momentum
+
     def get_client_submodel_param_indices_dict(self, client_id: int):
         raise NotImplementedError(
             "This method should be implemented in the child class"
@@ -90,27 +94,6 @@ class ServerBase:
             self.get_client_submodel_param_indices_dict(client_id)
             for client_id in selected_client_ids
         ]
-
-        if self.control:
-            selected_submodel_global_control_variates = [
-                extract_submodel_control_variates(
-                    complete_control_variates=self.global_control,
-                    submodel_param_indices_dict=selected_submodel_param_indices_dicts[
-                        i
-                    ],
-                )
-                for i in range(len(selected_client_ids))
-            ]
-
-            selected_submodel_control_variates = [
-                extract_submodel_control_variates(
-                    complete_control_variates=self.client_controls[client_id],
-                    submodel_param_indices_dict=selected_submodel_param_indices_dicts[
-                        i
-                    ],
-                )
-                for i, client_id in enumerate(selected_client_ids)
-            ]
 
         if self.model_type == "cnn":
             selected_client_submodels = [
@@ -139,22 +122,52 @@ class ServerBase:
         else:
             raise ValueError("Invalid model type")
 
+        returns = {
+            "client_ids": selected_client_ids,
+            "client_capacities": selected_client_capacities,
+            "submodel_param_indices_dicts": selected_submodel_param_indices_dicts,
+            "client_submodels": selected_client_submodels,
+        }
+
         if self.control:
-            return (
-                selected_client_ids,
-                selected_client_capacities,
-                selected_submodel_param_indices_dicts,
-                selected_client_submodels,
-                selected_submodel_global_control_variates,
-                selected_submodel_control_variates,
+            selected_submodel_global_control_variates = [
+                extract_submodel_control_variates(
+                    complete_control_variates=self.global_control,
+                    submodel_param_indices_dict=selected_submodel_param_indices_dicts[
+                        i
+                    ],
+                )
+                for i in range(len(selected_client_ids))
+            ]
+
+            selected_submodel_control_variates = [
+                extract_submodel_control_variates(
+                    complete_control_variates=self.client_controls[client_id],
+                    submodel_param_indices_dict=selected_submodel_param_indices_dicts[
+                        i
+                    ],
+                )
+                for i, client_id in enumerate(selected_client_ids)
+            ]
+
+            returns["global_control_variates"] = (
+                selected_submodel_global_control_variates
             )
-        else:
-            return (
-                selected_client_ids,
-                selected_client_capacities,
-                selected_submodel_param_indices_dicts,
-                selected_client_submodels,
-            )
+            returns["control_variates"] = selected_submodel_control_variates
+
+        if self.estimate_global_update:
+            selected_submodel_update_directions = [
+                extract_submodel_update_direction(
+                    global_update_direction=self.global_update_direction,
+                    submodel_param_indices_dict=selected_submodel_param_indices_dicts[
+                        i
+                    ],
+                )
+                for i in range(len(selected_client_ids))
+            ]
+            returns["submodel_update_directions"] = selected_submodel_update_directions
+
+        return returns
 
     def aggregate(
         self,
@@ -164,11 +177,10 @@ class ServerBase:
         client_weights: List[int],
         local_control_variates: List[Dict[str, torch.Tensor]] = None,
     ):
-        if self.control or self.estimate_global_update:
-            self.old_global_params = {
-                name: param.clone().detach()
-                for name, param in self.global_model.named_parameters()
-            }
+        self.old_global_params = {
+            name: param.clone().detach()
+            for name, param in self.global_model.named_parameters()
+        }
 
         for param_name, param in self.global_model.named_parameters():
             param_accumulator = torch.zeros_like(param.data)
@@ -267,12 +279,21 @@ class ServerBase:
                         param - self.old_global_params[name]
                     )
 
+                    # print(f"Param: {name}, velocity Norm: {self.velocity[name].norm().item()}")
                     if self.velocity_normalization:
                         norm = torch.norm(self.velocity[name])
                         if norm > 0:
                             self.velocity[name] /= norm
 
                     self.global_update_direction[name] = self.velocity[name]
+                    # print(f"Param: {name}, Update Direction Norm: {self.global_update_direction[name].norm().item()}")
+
+        # Weighted averaing using old global params and updated global params
+        for name, param in self.global_model.named_parameters():
+            param.data = (
+                self.global_model_momentum * self.old_global_params[name]
+                + (1 - self.global_model_momentum) * param.data
+            )
 
         # if self.control:
         # # Update selected clients' control variates
@@ -834,10 +855,10 @@ class ServerRDBagging(ServerBase):
             control,
         )
 
-        assert strategy in ["p-based-steady", "p-based-frequent", "client-based"]
+        assert strategy in ["steady", "frequent", "client"]
         self.strategy = strategy
         self.capacity_set = set(client_capacities)
-        if "p-based" in strategy:
+        if strategy == "steady" or strategy == "frequent":
             self.submodel_param_indices_dict_queues = {}  # the key type is str, a p value in string format; the value type is List[SubmodelBlockParamIndicesDict]
             for client_capacity in self.capacity_set:
                 self.submodel_param_indices_dict_queues[f"{client_capacity:.2f}"] = []
@@ -848,7 +869,7 @@ class ServerRDBagging(ServerBase):
 
     def get_client_submodel_param_indices_dict(self, client_id: int):
         client_capacity = self.client_capacities[client_id]
-        if "p-based" in self.strategy:
+        if self.strategy == "steady" or self.strategy == "frequent":
             # Note: `submodel_param_indices_dict_queues` is a quote, so the changes will be reflected in the original object
             submodel_param_indices_dict_queue = self.submodel_param_indices_dict_queues[
                 f"{client_capacity:.2f}"
@@ -1047,7 +1068,7 @@ class ServerRDBagging(ServerBase):
             else:
                 raise ValueError("Invalid model type")
 
-        if self.strategy == "p-based-steady":
+        if self.strategy == "steady":
             return submodel_param_indices_dict_queue[-1]
         else:
             return submodel_param_indices_dict_queue.pop()
@@ -1074,7 +1095,7 @@ class ServerRDBagging(ServerBase):
         ]
         selected_capacites = list(set(selected_capacites))
 
-        if self.strategy == "p-based-steady":
+        if self.strategy == "steady":
             for client_capacity in selected_capacites:
                 self.submodel_param_indices_dict_queues[client_capacity].pop()
 
@@ -1093,6 +1114,7 @@ class ServerFedRAME(ServerBase):
         estimate_global_update: bool = False,
         momentum: float = 0.9,
         velocity_normalization: bool = False,
+        global_model_momentum: float = 0.0,
     ):
         super().__init__(
             global_model,
@@ -1106,6 +1128,7 @@ class ServerFedRAME(ServerBase):
             estimate_global_update,
             momentum,
             velocity_normalization,
+            global_model_momentum,
         )
 
         self.initialize_unused_param_indices_for_layers()
@@ -1140,9 +1163,9 @@ class ServerFedRAME(ServerBase):
                         has_downsample = False
 
                     if has_downsample:
-                        self.unused_param_indices_for_layers[f"{layer}.{block}.conv2"] = (
-                            np.arange(out_channel_numbers[i])
-                        )
+                        self.unused_param_indices_for_layers[
+                            f"{layer}.{block}.conv2"
+                        ] = np.arange(out_channel_numbers[i])
         else:
             raise ValueError("Invalid model type")
 
@@ -1246,8 +1269,13 @@ class ServerFedRAME(ServerBase):
                                 key, out_channels, sample_num
                             )
 
-                        submodel_param_indices_dict[key] = SubmodelLayerParamIndicesDict(
-                            {"in": previous_layer_indices, "out": current_layer_indices}
+                        submodel_param_indices_dict[key] = (
+                            SubmodelLayerParamIndicesDict(
+                                {
+                                    "in": previous_layer_indices,
+                                    "out": current_layer_indices,
+                                }
+                            )
                         )
                         previous_layer_indices = current_layer_indices
 

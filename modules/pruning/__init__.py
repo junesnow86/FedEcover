@@ -2,6 +2,7 @@ from .extract_submodel import (
     extract_submodel_cnn,
     extract_submodel_control_variates,
     extract_submodel_resnet,
+    extract_submodel_update_direction,
 )
 from .prune_models import (
     generate_model_pruned_indices_dicts_bag_for_cnn,
@@ -36,4 +37,5 @@ __all__ = [
     "extract_submodel_resnet",
     "generate_index_groups",
     "extract_submodel_control_variates",
+    "extract_submodel_update_direction",
 ]

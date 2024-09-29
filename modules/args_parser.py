@@ -86,14 +86,25 @@ def get_args(print_args=True):
     )
     parser.add_argument(
         "--debugging",
-        type=bool,
-        default=False,
+        type=str,
+        default="False",
         help="Debugging mode",
     )
     parser.add_argument(
         "--method",
         type=str,
-        choices=["fedavg", "scaffold", "heterofl", "fedrolex", "fedrd", "rdbagging", "legacy", "fedrame"],
+        choices=[
+            "fedavg",
+            "scaffold",
+            "heterofl",
+            "fedrolex",
+            "fedrd",
+            "rdbagging-frequent",
+            "rdbagging-steady",
+            "rdbagging-client",
+            "legacy",
+            "fedrame",
+        ],
         default="fedavg",
         help="Federated learning method",
     )
@@ -111,30 +122,64 @@ def get_args(print_args=True):
     )
     parser.add_argument(
         "--plot-data-distribution",
-        type=bool,
-        default=False,
+        type=str,
+        default="False",
         help="Plot data distribution",
     )
     parser.add_argument(
-        "--rdbagging-strategy",
+        "--control",
         type=str,
-        default=None,
-        help="RDBagging strategy",
+        default="False",
+        help="Whether use control variates",
     )
     parser.add_argument(
-        "--control",
-        type=bool,
-        default=False,
-        help="Whether use control variates",
+        "--local-training-correction",
+        type=str,
+        default="False",
+        help="Whether use local training correction",
+    )
+    parser.add_argument(
+        "--correction-coefficient",
+        type=float,
+        default=1.0,
+        help="Correction coefficient for local training correction",
+    )
+    parser.add_argument(
+        "--global-model-momentum",
+        type=float,
+        default=0.0,
+        help="Momentum for global model",
     )
 
     args = parser.parse_args()
 
     if print_args:
+        if args.local_training_correction == "True":
+            args.local_training_correction = True
+        else:
+            args.local_training_correction = False
+
+        if args.control == "True":
+            args.control = True
+        else:
+            args.control = False
+
+        if args.debugging == "True":
+            args.debugging = True
+        else:
+            args.debugging = False
+
+        if args.plot_data_distribution == "True":
+            args.plot_data_distribution = True
+        else:
+            args.plot_data_distribution = False
+
         print(f"Random seed: {args.seed}")
         print(f"Method: {args.method}")
-        print(f"Strategy: {args.rdbagging_strategy}")
         print(f"Use control variates: {args.control}")
+        print(f"Use local training correction: {args.local_training_correction}")
+        print(f"Correction coefficient: {args.correction_coefficient}")
+        print(f"Global model momentum: {args.global_model_momentum}")
         print(f"Model type: {args.model}")
         print(f"Dataset: {args.dataset}")
         print(f"Data distribution: {args.distribution}")

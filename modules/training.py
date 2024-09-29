@@ -10,6 +10,9 @@ def train(
     device="cuda",
     epochs=10,
     verbose=False,
+    local_training_correction=False,
+    update_directions=None,
+    correction_coefficient=1.0,
 ):
     original_model_device = next(model.parameters()).device
     if device == "cuda":
@@ -25,6 +28,23 @@ def train(
             output = model(data)
             loss = criterion(output, target)
             loss.backward()
+
+            if local_training_correction and update_directions is not None:
+                with torch.no_grad():
+                    for name, param in model.named_parameters():
+                        name = name.replace(".0.weight", ".weight").replace(
+                            ".0.bias", ".bias"
+                        )
+                        # if epoch == epochs - 1:
+                        #     grad_norm = param.grad.norm().item()
+                        #     update_direction_norm = update_directions[name].norm().item()
+                        #     print(f"Param: {name}, Grad Norm: {grad_norm}, Update Direction Norm: {update_direction_norm}")
+                        # param.grad -= update_directions[name].to(device) * correction_coefficient
+                        # Scale update_directions to the same magnitude as the gradient
+                        scaling_factor = param.grad.norm() / (update_directions[name].norm() + 1e-7)
+                        scaled_update_direction = update_directions[name].to(device) * scaling_factor
+                        param.grad = param.grad * (1 - correction_coefficient) - scaled_update_direction * correction_coefficient
+
             optimizer.step()
             training_loss += loss.item()
         training_loss /= len(dataloader)
