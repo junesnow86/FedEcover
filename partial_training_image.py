@@ -25,7 +25,6 @@ from modules.aggregation.aggregate_models import (
 from modules.args_parser import get_args
 from modules.constants import NORMALIZATION_STATS
 from modules.data import create_non_iid_data
-from modules.debugging import replace_bn_with_identity
 from modules.evaluation import evaluate_acc
 from modules.models import CNN
 from modules.pruning import (
@@ -41,7 +40,7 @@ from modules.server import (
     ServerRDBagging,
     ServerFedRAME,
 )
-from modules.training import train, scaffold_train
+from modules.training import train
 from modules.utils import (
     calculate_model_size,
     replace_bn_with_ln,
@@ -49,7 +48,6 @@ from modules.utils import (
 
 # <======================================== Parse arguments ========================================>
 args = get_args()
-SAVE_DIR = args.save_dir
 MODEL_TYPE = args.model
 DATASET = args.dataset
 if DATASET == "cifar10":
@@ -58,20 +56,17 @@ elif DATASET == "cifar100":
     NUM_CLASSES = 100
 else:
     raise ValueError(f"Dataset {DATASET} not supported.")
-ROUNDS = args.rounds
-EPOCHS = args.epochs
-LR = args.lr
-BATCH_SIZE = args.batch_size
-NUM_CLIENTS = args.num_clients
-AGG_WAY = args.aggregation
-DEBUGGING = args.debugging
 METHOD = args.method
+NUM_CLIENTS = args.num_clients
 SELECT_RATIO = args.select_ratio
 LOCAL_VALIDATION_FREQUENCY = int(1 / args.select_ratio)
 LOCAL_TRAIN_RATIO = args.local_train_ratio
-CONTROL = args.control
-LOCAL_TRAINING_CORRECTION = args.local_training_correction
-CORRECTION_COEFFICIENT = args.correction_coefficient
+ROUNDS = args.rounds
+EPOCHS = args.epochs
+BATCH_SIZE = args.batch_size
+LR = args.lr
+AGG_WAY = args.aggregation
+SAVE_DIR = args.save_dir
 
 # Set random seed for reproducibility
 seed = args.seed
@@ -217,8 +212,6 @@ if MODEL_TYPE == "cnn":
 elif MODEL_TYPE == "resnet":
     global_model = resnet18(weights=None, num_classes=NUM_CLASSES)
     replace_bn_with_ln(global_model)
-    if DEBUGGING:
-        replace_bn_with_identity(global_model)
 else:
     raise ValueError(f"Model type {MODEL_TYPE} not supported.")
 print(f"[Model Architecture]\n{global_model}")
@@ -285,7 +278,6 @@ elif METHOD == "rdbagging":
         select_ratio=SELECT_RATIO,
         scaling=True,
         strategy=METHOD.split("-")[1],
-        control=CONTROL,
     )
 elif METHOD == "fedrame":
     server = ServerFedRAME(
@@ -296,9 +288,7 @@ elif METHOD == "fedrame":
         model_type=MODEL_TYPE,
         select_ratio=SELECT_RATIO,
         scaling=True,
-        estimate_global_update=LOCAL_TRAINING_CORRECTION,
-        # velocity_normalization=True,
-        global_model_momentum=args.global_model_momentum,
+        aggregation_momentum=args.aggregation_momentum,
     )
 
 
@@ -373,9 +363,6 @@ for round in range(ROUNDS):
                     selected_client_ids, selected_client_submodels
                 )
             }
-
-            if LOCAL_TRAINING_CORRECTION:
-                selected_submodel_update_directions = distributed["submodel_update_directions"]
         else:
             raise NotImplementedError
     elif MODEL_TYPE == "resnet":
@@ -423,9 +410,6 @@ for round in range(ROUNDS):
                     selected_client_ids, selected_client_submodels
                 )
             }
-
-            if LOCAL_TRAINING_CORRECTION:
-                selected_submodel_update_directions = distributed["submodel_update_directions"]
         else:
             raise NotImplementedError
     else:
@@ -445,49 +429,15 @@ for round in range(ROUNDS):
             all_client_models[client_id].parameters(), lr=LR, weight_decay=5e-4
         )
 
-        if CONTROL:
-            old_params = {
-                name.replace(".0.weight", ".weight").replace(
-                    ".0.bias", ".bias"
-                ): param.clone().detach()
-                for name, param in all_client_models[client_id].named_parameters()
-            }
-
-            local_train_loss = scaffold_train(
-                model=all_client_models[client_id],
-                optimizer=optimizer,
-                criterion=criterion,
-                dataloader=train_loaders[client_id],
-                c_global=None,
-                c_client=None,
-                device=device,
-                epochs=EPOCHS,
-                verbose=False,
-            )
-
-            # # Update local control variates
-            # with torch.no_grad():
-            #     for name, param in all_client_models[client_id].named_parameters():
-            #         name = name.replace(".0.weight", ".weight").replace(
-            #             ".0.bias", ".bias"
-            #         )
-            #         selected_submodel_control_variates[i][name] = (
-            #             old_params[name] - param
-            #         )
-        else:
-            # print(f"---------------------Client {client_id} training---------------------")
-            local_train_loss = train(
-                model=all_client_models[client_id],
-                optimizer=optimizer,
-                criterion=criterion,
-                dataloader=train_loaders[client_id],
-                device=device,
-                epochs=EPOCHS,
-                verbose=False,
-                local_training_correction=LOCAL_TRAINING_CORRECTION,
-                update_directions=selected_submodel_update_directions[i] if LOCAL_TRAINING_CORRECTION else None,
-                correction_coefficient=CORRECTION_COEFFICIENT,
-            )
+        local_train_loss = train(
+            model=all_client_models[client_id],
+            optimizer=optimizer,
+            criterion=criterion,
+            dataloader=train_loaders[client_id],
+            device=device,
+            epochs=EPOCHS,
+            verbose=False,
+        )
         local_evaluation_result_on_train_data = evaluate_acc(
             model=all_client_models[client_id],
             dataloader=train_loaders[client_id],

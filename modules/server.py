@@ -8,10 +8,8 @@ from modules.pruning import (
     SubmodelBlockParamIndicesDict,
     SubmodelLayerParamIndicesDict,
     extract_submodel_cnn,
-    extract_submodel_control_variates,
     extract_submodel_resnet,
     generate_index_groups,
-    extract_submodel_update_direction,
 )
 
 
@@ -25,11 +23,7 @@ class ServerBase:
         model_type: str = "cnn",
         select_ratio: float = 0.1,
         scaling: bool = True,
-        control: bool = False,
-        estimate_global_update: bool = False,
-        momentum: float = 0.9,
-        velocity_normalization: bool = False,
-        global_model_momentum: float = 0.0,
+        aggregation_momentum: float = 0.0,
     ):
         assert len(client_capacities) == num_clients
         assert model_type in ["cnn", "resnet"]
@@ -42,34 +36,7 @@ class ServerBase:
         self.select_ratio = select_ratio
         self.scaling = scaling
 
-        self.control = control
-        if self.control:
-            self.global_control = {
-                name: torch.zeros_like(param.data)
-                for name, param in global_model.named_parameters()
-            }
-            self.client_controls = [
-                {
-                    name: torch.zeros_like(param.data)
-                    for name, param in global_model.named_parameters()
-                }
-                for _ in range(num_clients)
-            ]
-
-        self.estimate_global_update = estimate_global_update
-        self.momentum = momentum
-        self.velocity_normalization = velocity_normalization
-        if self.estimate_global_update:
-            self.global_update_direction = {
-                name: torch.zeros_like(param.data)
-                for name, param in global_model.named_parameters()
-            }
-            self.velocity = {
-                name: torch.zeros_like(param.data)
-                for name, param in global_model.named_parameters()
-            }
-
-        self.global_model_momentum = global_model_momentum
+        self.aggregation_momentum = aggregation_momentum
 
     def get_client_submodel_param_indices_dict(self, client_id: int):
         raise NotImplementedError(
@@ -129,44 +96,6 @@ class ServerBase:
             "client_submodels": selected_client_submodels,
         }
 
-        if self.control:
-            selected_submodel_global_control_variates = [
-                extract_submodel_control_variates(
-                    complete_control_variates=self.global_control,
-                    submodel_param_indices_dict=selected_submodel_param_indices_dicts[
-                        i
-                    ],
-                )
-                for i in range(len(selected_client_ids))
-            ]
-
-            selected_submodel_control_variates = [
-                extract_submodel_control_variates(
-                    complete_control_variates=self.client_controls[client_id],
-                    submodel_param_indices_dict=selected_submodel_param_indices_dicts[
-                        i
-                    ],
-                )
-                for i, client_id in enumerate(selected_client_ids)
-            ]
-
-            returns["global_control_variates"] = (
-                selected_submodel_global_control_variates
-            )
-            returns["control_variates"] = selected_submodel_control_variates
-
-        if self.estimate_global_update:
-            selected_submodel_update_directions = [
-                extract_submodel_update_direction(
-                    global_update_direction=self.global_update_direction,
-                    submodel_param_indices_dict=selected_submodel_param_indices_dicts[
-                        i
-                    ],
-                )
-                for i in range(len(selected_client_ids))
-            ]
-            returns["submodel_update_directions"] = selected_submodel_update_directions
-
         return returns
 
     def aggregate(
@@ -175,7 +104,6 @@ class ServerBase:
         selected_client_ids: List[int],
         submodel_param_indices_dicts: List[SubmodelBlockParamIndicesDict],
         client_weights: List[int],
-        local_control_variates: List[Dict[str, torch.Tensor]] = None,
     ):
         self.old_global_params = {
             name: param.clone().detach()
@@ -272,56 +200,12 @@ class ServerBase:
             else:
                 raise ValueError(f"Invalid parameter dimension: {param.dim()}")
 
-        if self.estimate_global_update:
-            with torch.no_grad():
-                for name, param in self.global_model.named_parameters():
-                    self.velocity[name] = self.momentum * self.velocity[name] + (
-                        param - self.old_global_params[name]
-                    )
-
-                    # print(f"Param: {name}, velocity Norm: {self.velocity[name].norm().item()}")
-                    if self.velocity_normalization:
-                        norm = torch.norm(self.velocity[name])
-                        if norm > 0:
-                            self.velocity[name] /= norm
-
-                    self.global_update_direction[name] = self.velocity[name]
-                    # print(f"Param: {name}, Update Direction Norm: {self.global_update_direction[name].norm().item()}")
-
         # Weighted averaing using old global params and updated global params
         for name, param in self.global_model.named_parameters():
             param.data = (
-                self.global_model_momentum * self.old_global_params[name]
-                + (1 - self.global_model_momentum) * param.data
+                self.aggregation_momentum * self.old_global_params[name]
+                + (1 - self.aggregation_momentum) * param.data
             )
-
-        # if self.control:
-        # # Update selected clients' control variates
-        # for i, client_id in enumerate(selected_client_ids):
-        #     client_control_variates = local_control_variates[i]
-        #     for name, param in self.client_controls[client_id].items():
-        #         if "weight" in name:
-        #             key = name.replace(".weight", "")
-        #             in_indices, out_indices = (
-        #                 submodel_param_indices_dicts[i][key]["in"],
-        #                 submodel_param_indices_dicts[i][key]["out"],
-        #             )
-        #             self.client_controls[client_id][name][
-        #                 np.ix_(out_indices, in_indices)
-        #             ] = client_control_variates[name][
-        #                 np.ix_(range(len(out_indices)), range(len(in_indices)))
-        #             ]
-        #         elif "bias" in name:
-        #             key = name.replace(".bias", "")
-        #             out_indices = submodel_param_indices_dicts[i][key]["out"]
-        #             self.client_controls[client_id][name][out_indices] = (
-        #                 client_control_variates[name][range(len(out_indices))]
-        #             )
-
-        # # Update the global control variate
-        # with torch.no_grad():
-        #     for name, param in self.global_model.named_parameters():
-        #         self.global_control[name] = self.old_global_params[name] - param
 
     def step(self):
         raise NotImplementedError(
@@ -842,7 +726,6 @@ class ServerRDBagging(ServerBase):
         select_ratio: float = 0.1,
         scaling: bool = True,
         strategy: str = "p-based-steady",
-        control: bool = False,
     ):
         super().__init__(
             global_model,
@@ -852,7 +735,6 @@ class ServerRDBagging(ServerBase):
             model_type,
             select_ratio,
             scaling,
-            control,
         )
 
         assert strategy in ["steady", "frequent", "client"]
@@ -1110,11 +992,7 @@ class ServerFedRAME(ServerBase):
         model_type: str = "cnn",
         select_ratio: float = 0.1,
         scaling: bool = True,
-        control: bool = False,
-        estimate_global_update: bool = False,
-        momentum: float = 0.9,
-        velocity_normalization: bool = False,
-        global_model_momentum: float = 0.0,
+        aggregation_momentum: float = 0.0,
     ):
         super().__init__(
             global_model,
@@ -1124,11 +1002,7 @@ class ServerFedRAME(ServerBase):
             model_type,
             select_ratio,
             scaling,
-            control,
-            estimate_global_update,
-            momentum,
-            velocity_normalization,
-            global_model_momentum,
+            aggregation_momentum,
         )
 
         self.initialize_unused_param_indices_for_layers()
