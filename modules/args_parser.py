@@ -96,10 +96,16 @@ def get_args(print_args=True):
         help="Learning rate for local training",
     )
     parser.add_argument(
-        "--aggregation-momentum",
+        "--dynamic-eta_g",
+        type=str,
+        default="False",
+        help="Dynamic Eta_g for aggregation",
+    )
+    parser.add_argument(
+        "--eta_g",
         type=float,
-        default=0.0,
-        help="Momentum for global model",
+        default=1.0,
+        help="Eta_g for aggregation",
     )
     parser.add_argument(
         "--aggregation",
@@ -134,6 +140,11 @@ def get_args(print_args=True):
     else:
         args.plot_data_distribution = False
 
+    if args.dynamic_eta_g == "True":
+        args.dynamic_eta_g = True
+    else:
+        args.dynamic_eta_g = False
+
     if print_args:
         print(f"Model: {args.model}")
         print(f"Dataset: {args.dataset}")
@@ -141,6 +152,8 @@ def get_args(print_args=True):
         if args.distribution == "non-iid":
             print(f"Alpha: {args.alpha}")
         print(f"Method: {args.method}")
+        print(f"Dynamic Global learning rate: {args.dynamic_eta_g}")
+        print(f"Global learning rate: {args.eta_g}")
         print(f"Number of clients: {args.num_clients}")
         print(f"Client selection ratio: {args.select_ratio}")
         print(f"Local training data ratio: {args.local_train_ratio}")
@@ -148,7 +161,6 @@ def get_args(print_args=True):
         print(f"Number of local epochs: {args.epochs}")
         print(f"Batch size: {args.batch_size}")
         print(f"Learning rate: {args.lr}")
-        print(f"Aggregation momentum: {args.aggregation_momentum}")
         print(f"Aggregation method: {args.aggregation}")
         print(f"Random seed: {args.seed}")
         if args.save_dir is None:

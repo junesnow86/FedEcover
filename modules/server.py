@@ -1,4 +1,4 @@
-from typing import Dict, List, OrderedDict, Tuple
+from typing import List, OrderedDict, Tuple
 
 import numpy as np
 import torch
@@ -23,7 +23,8 @@ class ServerBase:
         model_type: str = "cnn",
         select_ratio: float = 0.1,
         scaling: bool = True,
-        aggregation_momentum: float = 0.0,
+        eta_g: float = 1.0,
+        dynamic_eta_g: bool = False,
     ):
         assert len(client_capacities) == num_clients
         assert model_type in ["cnn", "resnet"]
@@ -36,7 +37,8 @@ class ServerBase:
         self.select_ratio = select_ratio
         self.scaling = scaling
 
-        self.aggregation_momentum = aggregation_momentum
+        self.eta_g = eta_g
+        self.dynamic_eta_g = dynamic_eta_g
 
     def get_client_submodel_param_indices_dict(self, client_id: int):
         raise NotImplementedError(
@@ -103,12 +105,17 @@ class ServerBase:
         local_state_dicts: List[OrderedDict],
         selected_client_ids: List[int],
         submodel_param_indices_dicts: List[SubmodelBlockParamIndicesDict],
-        client_weights: List[int],
+        client_weights: List[int] = None,
     ):
         self.old_global_params = {
             name: param.clone().detach()
             for name, param in self.global_model.named_parameters()
         }
+
+        if client_weights is None:
+            client_weights = [1] * len(selected_client_ids)
+
+        sparsities = []
 
         for param_name, param in self.global_model.named_parameters():
             param_accumulator = torch.zeros_like(param.data)
@@ -200,11 +207,21 @@ class ServerBase:
             else:
                 raise ValueError(f"Invalid parameter dimension: {param.dim()}")
 
+            non_zero_values = averaging_weight_accumulator[averaging_weight_accumulator > 0]
+            sparsities.append(non_zero_values.mean().item() / len(selected_client_ids))
+
+        sparsity = sum(sparsities) / len(sparsities)
+
         # Weighted averaing using old global params and updated global params
+        if self.dynamic_eta_g:
+            self.eta_g = sparsity
+
+        print(f"Sparsity: {sparsity:.4f}, eta_g: {self.eta_g:.4f}")
+
         for name, param in self.global_model.named_parameters():
             param.data = (
-                self.aggregation_momentum * self.old_global_params[name]
-                + (1 - self.aggregation_momentum) * param.data
+                (1 - self.eta_g) * self.old_global_params[name]
+                + self.eta_g * param.data
             )
 
     def step(self):
@@ -383,7 +400,7 @@ class ServerFedRolex(ServerBase):
         local_state_dicts: List[OrderedDict],
         selected_client_ids: List[int],
         submodel_param_indices_dicts: List[SubmodelBlockParamIndicesDict],
-        client_weights: List[int],
+        client_weights: List[int] = None,
     ):
         self.aggregate(
             local_state_dicts,
@@ -546,7 +563,7 @@ class ServerHeteroFL(ServerBase):
         local_state_dicts: List[OrderedDict],
         selected_client_ids: List[int],
         submodel_param_indices_dicts: List[SubmodelBlockParamIndicesDict],
-        client_weights: List[int],
+        client_weights: List[int] = None,
     ):
         self.aggregate(
             local_state_dicts,
@@ -705,7 +722,7 @@ class ServerRD(ServerBase):
         local_state_dicts: List[OrderedDict],
         selected_client_ids: List[int],
         submodel_param_indices_dicts: List[SubmodelBlockParamIndicesDict],
-        client_weights: List[int],
+        client_weights: List[int] = None,
     ):
         self.aggregate(
             local_state_dicts,
@@ -961,14 +978,12 @@ class ServerRDBagging(ServerBase):
         selected_client_ids: List[int],
         submodel_param_indices_dicts: List[SubmodelBlockParamIndicesDict],
         client_weights: List[int],
-        local_control_variates: List[Dict[str, torch.Tensor]] = None,
     ):
         self.aggregate(
             local_state_dicts,
             selected_client_ids,
             submodel_param_indices_dicts,
             client_weights,
-            local_control_variates,
         )
 
         selected_capacites = [
@@ -992,7 +1007,8 @@ class ServerFedRAME(ServerBase):
         model_type: str = "cnn",
         select_ratio: float = 0.1,
         scaling: bool = True,
-        aggregation_momentum: float = 0.0,
+        eta_g: float = 1.0,
+        dynamic_eta_g: bool = False,
     ):
         super().__init__(
             global_model,
@@ -1002,7 +1018,8 @@ class ServerFedRAME(ServerBase):
             model_type,
             select_ratio,
             scaling,
-            aggregation_momentum,
+            eta_g,
+            dynamic_eta_g,
         )
 
         self.initialize_unused_param_indices_for_layers()
@@ -1192,13 +1209,11 @@ class ServerFedRAME(ServerBase):
         local_state_dicts: List[OrderedDict],
         selected_client_ids: List[int],
         submodel_param_indices_dicts: List[SubmodelBlockParamIndicesDict],
-        client_weights: List[int],
-        local_control_variates: List[Dict[str, torch.Tensor]] = None,
+        client_weights: List[int] = None,
     ):
         self.aggregate(
             local_state_dicts,
             selected_client_ids,
             submodel_param_indices_dicts,
             client_weights,
-            local_control_variates,
         )

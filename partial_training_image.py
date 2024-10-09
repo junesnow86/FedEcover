@@ -219,7 +219,7 @@ print(
     f"Global Model size: {calculate_model_size(global_model, print_result=False, unit='MB'):.2f} MB"
 )
 
-optional_dropout_rates = [0.1, 0.25, 0.5, 0.75, 0.9]
+optional_dropout_rates = [0.0, 0.25, 0.5, 0.75, 0.9]
 weights = [0.05, 0.1, 0.15, 0.2, 0.5]
 # optional_dropout_rates = [0.2, 0.5, 0.8]
 # weights = [0.2, 0.3, 0.5]
@@ -288,7 +288,8 @@ elif METHOD == "fedrame":
         model_type=MODEL_TYPE,
         select_ratio=SELECT_RATIO,
         scaling=True,
-        aggregation_momentum=args.aggregation_momentum,
+        eta_g=args.eta_g,
+        dynamic_eta_g=args.dynamic_eta_g,
     )
 
 
@@ -512,8 +513,7 @@ for round in range(ROUNDS):
                 ],
                 selected_client_ids=selected_client_ids,
                 submodel_param_indices_dicts=selected_submodel_param_indices_dicts,
-                client_weights=client_weights,
-                # local_control_variates=selected_submodel_control_variates if CONTROL else None,
+                # client_weights=client_weights,
             )
         else:
             raise NotImplementedError
