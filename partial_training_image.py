@@ -45,6 +45,7 @@ from modules.utils import (
     calculate_model_size,
     replace_bn_with_ln,
 )
+from modules.data import TinyImageNet
 
 # <======================================== Parse arguments ========================================>
 args = get_args()
@@ -54,6 +55,8 @@ if DATASET == "cifar10":
     NUM_CLASSES = 10
 elif DATASET == "cifar100":
     NUM_CLASSES = 100
+elif DATASET == "tiny-imagenet":
+    NUM_CLASSES = 200
 else:
     raise ValueError(f"Dataset {DATASET} not supported.")
 METHOD = args.method
@@ -104,6 +107,14 @@ elif DATASET == "cifar100":
 
     global_test_dataset = datasets.CIFAR100(
         root="./data", train=False, download=False, transform=transform
+    )
+elif DATASET == "tiny-imagenet":
+    global_train_dataset = TinyImageNet(
+        root_dir="./data/tiny-imagenet-200", split="train", transform=transform
+    )
+
+    global_test_dataset = TinyImageNet(
+        root_dir="./data/tiny-imagenet-200", split="val", transform=transform
     )
 else:
     raise ValueError(f"Dataset {DATASET} not supported.")
@@ -189,7 +200,6 @@ for indices_a_subset in subset_indices_list:
     np.random.shuffle(indices_a_subset)
     train_indices = indices_a_subset[:split_point]
     val_indices = indices_a_subset[split_point:]
-    # print(len(train_indices), len(val_indices))
     train_loaders.append(
         DataLoader(
             Subset(global_train_dataset, train_indices),
@@ -211,7 +221,7 @@ if MODEL_TYPE == "cnn":
     global_model = CNN(num_classes=NUM_CLASSES)
 elif MODEL_TYPE == "resnet":
     global_model = resnet18(weights=None, num_classes=NUM_CLASSES)
-    replace_bn_with_ln(global_model)
+    replace_bn_with_ln(global_model, dataset=DATASET)
 else:
     raise ValueError(f"Model type {MODEL_TYPE} not supported.")
 print(f"[Model Architecture]\n{global_model}")
@@ -227,19 +237,20 @@ client_dropout_rates = [
     random.choices(optional_dropout_rates, weights=weights)[0]
     for _ in range(NUM_CLIENTS)
 ]
-print(f"Client dropout rates: {client_dropout_rates}")
 dropout_rate_count = {}
 for rate in client_dropout_rates:
     if rate in dropout_rate_count:
         dropout_rate_count[rate] += 1
     else:
         dropout_rate_count[rate] = 1
+print(f"Client dropout rates: {client_dropout_rates}")
 print(f"Client dropout rate count: {dropout_rate_count}")
 optional_model_pruned_indices_dicts = {p: [] for p in optional_dropout_rates}
 
 if METHOD == "fedrolex":
     server = ServerFedRolex(
         global_model=global_model,
+        dataset=DATASET,
         num_clients=NUM_CLIENTS,
         client_capacities=[1.0 - p for p in client_dropout_rates],
         model_out_dim=NUM_CLASSES,
@@ -251,6 +262,7 @@ if METHOD == "fedrolex":
 elif METHOD == "heterofl":
     server = ServerHeteroFL(
         global_model=global_model,
+        dataset=DATASET,
         num_clients=NUM_CLIENTS,
         client_capacities=[1.0 - p for p in client_dropout_rates],
         model_out_dim=NUM_CLASSES,
@@ -261,6 +273,7 @@ elif METHOD == "heterofl":
 elif METHOD == "fedrd":
     server = ServerRD(
         global_model=global_model,
+        dataset=DATASET,
         num_clients=NUM_CLIENTS,
         client_capacities=[1.0 - p for p in client_dropout_rates],
         model_out_dim=NUM_CLASSES,
@@ -282,6 +295,7 @@ elif METHOD == "rdbagging":
 elif METHOD == "fedrame":
     server = ServerFedRAME(
         global_model=global_model,
+        dataset=DATASET,
         num_clients=NUM_CLIENTS,
         client_capacities=[1.0 - p for p in client_dropout_rates],
         model_out_dim=NUM_CLASSES,
@@ -548,7 +562,7 @@ for round in range(ROUNDS):
                 ],
                 selected_client_ids=selected_client_ids,
                 submodel_param_indices_dicts=selected_submodel_param_indices_dicts,
-                client_weights=client_weights,
+                # client_weights=client_weights,
             )
     else:
         raise ValueError(f"Model type {MODEL_TYPE} not supported.")

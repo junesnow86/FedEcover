@@ -17,6 +17,7 @@ class ServerBase:
     def __init__(
         self,
         global_model: nn.Module,
+        dataset: str,
         num_clients: int,
         client_capacities: List[float],
         model_out_dim: int,
@@ -30,6 +31,7 @@ class ServerBase:
         assert model_type in ["cnn", "resnet"]
 
         self.global_model = global_model
+        self.dataset = dataset
         self.model_type = model_type
         self.num_clients = num_clients
         self.client_capacities = client_capacities
@@ -85,6 +87,7 @@ class ServerBase:
                     ],
                     p=1 - selected_client_capacities[i],
                     scaling=True,
+                    dataset=self.dataset,
                 )
                 for i in range(len(selected_client_ids))
             ]
@@ -234,6 +237,7 @@ class ServerFedRolex(ServerBase):
     def __init__(
         self,
         global_model: nn.Module,
+        dataset: str,
         num_clients: int,
         client_capacities: List[float],
         model_out_dim: int,
@@ -244,6 +248,7 @@ class ServerFedRolex(ServerBase):
     ):
         super().__init__(
             global_model=global_model,
+            dataset=dataset,
             num_clients=num_clients,
             client_capacities=client_capacities,
             model_out_dim=model_out_dim,
@@ -416,6 +421,7 @@ class ServerHeteroFL(ServerBase):
     def __init__(
         self,
         global_model: nn.Module,
+        dataset: str,
         num_clients: int,
         client_capacities: List[float],
         model_out_dim: int,
@@ -425,6 +431,7 @@ class ServerHeteroFL(ServerBase):
     ):
         super().__init__(
             global_model=global_model,
+            dataset=dataset,
             num_clients=num_clients,
             client_capacities=client_capacities,
             model_out_dim=model_out_dim,
@@ -577,6 +584,7 @@ class ServerRD(ServerBase):
     def __init__(
         self,
         global_model: nn.Module,
+        dataset: str,
         num_clients: int,
         client_capacities: List[float],
         model_out_dim: int,
@@ -586,6 +594,7 @@ class ServerRD(ServerBase):
     ):
         super().__init__(
             global_model,
+            dataset,
             num_clients,
             client_capacities,
             model_out_dim,
@@ -1001,6 +1010,7 @@ class ServerFedRAME(ServerBase):
     def __init__(
         self,
         global_model: nn.Module,
+        dataset: str,
         num_clients: int,
         client_capacities: List[float],
         model_out_dim: int,
@@ -1012,6 +1022,7 @@ class ServerFedRAME(ServerBase):
     ):
         super().__init__(
             global_model,
+            dataset,
             num_clients,
             client_capacities,
             model_out_dim,

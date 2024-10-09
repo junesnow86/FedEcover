@@ -1,7 +1,69 @@
-import torch
-from torch.utils.data import Dataset
-from datasets.arrow_dataset import Dataset as HFDataset
+import os
 
+import torch
+from datasets.arrow_dataset import Dataset as HFDataset
+from PIL import Image
+from torch.utils.data import Dataset
+
+
+class TinyImageNet(Dataset):
+    def __init__(self, root_dir: str, split="train", transform=None):
+        self.root_dir = root_dir
+        self.split = split
+        self.transform = transform
+        self.data = []
+        self.targets = []
+        self.label_to_idx = {}
+
+        self._load_label_to_idx()
+
+        if self.split == "train":
+            self._load_train_data()
+        elif self.split == "val":
+            self._load_val_data()
+        else:
+            raise ValueError("Invalid split")
+
+    def _load_label_to_idx(self):
+        train_dir = os.path.join(self.root_dir, "train")
+        classes = sorted(os.listdir(train_dir))
+        for idx, cls in enumerate(classes):
+            self.label_to_idx[cls] = idx
+
+    def _load_train_data(self):
+        train_dir = os.path.join(self.root_dir, "train")
+        classes = sorted(os.listdir(train_dir))
+
+        for _, cls in enumerate(classes):
+            cls_dir = os.path.join(train_dir, cls, "images")
+            images = os.listdir(cls_dir)
+            for img in images:
+                img_path = os.path.join(cls_dir, img)
+                self.data.append((img_path, cls))
+                self.targets.append(self.label_to_idx[cls])
+
+    def _load_val_data(self):
+        val_dir = os.path.join(self.root_dir, "val")
+        with open(os.path.join(val_dir, "val_annotations.txt"), "r") as f:
+            for line in f:
+                img, cls = line.strip().split("\t")[:2]
+                img_path = os.path.join(val_dir, "images", img)
+                self.data.append((img_path, cls))
+                self.targets.append(self.label_to_idx[cls])
+
+    def __len__(self):
+        return len(self.data)
+    
+    def __getitem__(self, idx):
+        img_path, cls = self.data[idx]
+        image = Image.open(img_path).convert("RGB")
+
+        if self.transform:
+            image = self.transform(image)
+
+        label_idx = self.label_to_idx[cls]
+
+        return image, label_idx
 
 # Create input-output pairs for next word prediction
 class NextWordPredictionDataset(Dataset):

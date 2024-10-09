@@ -18,8 +18,9 @@ def train(
     model.train()
 
     for epoch in tqdm(range(epochs), leave=False, desc="Training Epochs"):
+    # for epoch in range(epochs):
         training_loss = 0
-        for _, (data, target) in enumerate(dataloader):
+        for _, (data, target) in tqdm(enumerate(dataloader), leave=False, total=len(dataloader), desc="Training Batches"):
             data, target = data.to(device), target.to(device)
             optimizer.zero_grad()
             output = model(data)
@@ -32,7 +33,7 @@ def train(
         if verbose:
             correct = 0
             with torch.no_grad():
-                for data, target in dataloader:
+                for data, target in tqdm(dataloader, leave=False, total=len(dataloader), desc="Calculating Accuracy on Training Data"):
                     data, target = data.to(device), target.to(device)
                     output = model(data)
                     pred = output.argmax(dim=1, keepdim=True)

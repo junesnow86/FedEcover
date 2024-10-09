@@ -152,6 +152,7 @@ def extract_submodel_resnet(
     submodel_param_indices_dict: SubmodelBlockParamIndicesDict,
     p: float,
     scaling: bool = True,
+    dataset: str = "cifar10",
 ):
     submodel = copy.deepcopy(original_model)
 
@@ -164,18 +165,32 @@ def extract_submodel_resnet(
     else:
         sublayer_conv1 = nn.Sequential(sublayer_conv1)
     submodel.conv1 = sublayer_conv1
-    submodel.bn1 = nn.LayerNorm(
-        normalized_shape=[submodel.conv1[0].out_channels, 16, 16],
-        elementwise_affine=False,
-    )
+    if dataset == "cifar10" or dataset == "cifar100":
+        submodel.bn1 = nn.LayerNorm(
+            normalized_shape=[submodel.conv1[0].out_channels, 16, 16],
+            elementwise_affine=False,
+        )
+    elif dataset == "tiny-imagenet":
+        submodel.bn1 = nn.LayerNorm(
+            normalized_shape=[submodel.conv1[0].out_channels, 32, 32],
+            elementwise_affine=False,
+        )
 
     layers = ["layer1", "layer2", "layer3", "layer4"]
-    layernorm_shapes = [
-        [64, 8, 8],
-        [128, 4, 4],
-        [256, 2, 2],
-        [512, 1, 1],
-    ]
+    if dataset == "cifar10" or dataset == "cifar100":
+        layernorm_shapes = [
+            [64, 8, 8],
+            [128, 4, 4],
+            [256, 2, 2],
+            [512, 1, 1],
+        ]
+    elif dataset == "tiny-imagenet":
+        layernorm_shapes = [
+            [64, 16, 16],
+            [128, 8, 8],
+            [256, 4, 4],
+            [512, 2, 2],
+        ]
     blocks = ["0", "1"]
     convs = ["conv1", "conv2"]
 
