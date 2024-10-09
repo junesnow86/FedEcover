@@ -33,8 +33,6 @@ def vanilla_federated_averaging(models, client_weights):
         layer_weights_avg = sum(layer_weights) / sum(client_weights)
         avg_weights[key] = layer_weights_avg
 
-    print(f"Keys aggregated: {set(keys)}")
-
     return avg_weights
 
 

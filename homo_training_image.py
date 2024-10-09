@@ -41,7 +41,6 @@ LR = args.lr
 BATCH_SIZE = args.batch_size
 NUM_CLIENTS = args.num_clients
 AGG_WAY = args.aggregation
-DEBUGGING = args.debugging
 METHOD = args.method
 SELECT_RATIO = args.select_ratio
 LOCAL_VALIDATION_FREQUENCY = int(1 / args.select_ratio)
