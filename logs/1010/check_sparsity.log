@@ -1,0 +1,1369 @@
+Model: resnet
+Dataset: tiny-imagenet
+Data distribution: iid
+Method: fedrame
+Dynamic Global learning rate: False
+Global learning rate: 1.0
+Number of clients: 100
+Client selection ratio: 0.1
+Local training data ratio: 0.8
+Number of rounds: 200
+Number of local epochs: 1
+Batch size: 128
+Learning rate: 0.001
+Aggregation method: sparse
+Random seed: 42
+Results will not be saved.
+Using Tiny ImageNet layernorm shapes
+[Model Architecture]
+ResNet(
+  (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+  (bn1): LayerNorm((64, 32, 32), eps=1e-05, elementwise_affine=False)
+  (relu): ReLU(inplace=True)
+  (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  (layer1): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): LayerNorm((64, 16, 16), eps=1e-05, elementwise_affine=False)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): LayerNorm((64, 16, 16), eps=1e-05, elementwise_affine=False)
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): LayerNorm((64, 16, 16), eps=1e-05, elementwise_affine=False)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): LayerNorm((64, 16, 16), eps=1e-05, elementwise_affine=False)
+    )
+  )
+  (layer2): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): LayerNorm((128, 8, 8), eps=1e-05, elementwise_affine=False)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): LayerNorm((128, 8, 8), eps=1e-05, elementwise_affine=False)
+      (downsample): Sequential(
+        (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): LayerNorm((128, 8, 8), eps=1e-05, elementwise_affine=False)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): LayerNorm((128, 8, 8), eps=1e-05, elementwise_affine=False)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): LayerNorm((128, 8, 8), eps=1e-05, elementwise_affine=False)
+    )
+  )
+  (layer3): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): LayerNorm((256, 4, 4), eps=1e-05, elementwise_affine=False)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): LayerNorm((256, 4, 4), eps=1e-05, elementwise_affine=False)
+      (downsample): Sequential(
+        (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): LayerNorm((256, 4, 4), eps=1e-05, elementwise_affine=False)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): LayerNorm((256, 4, 4), eps=1e-05, elementwise_affine=False)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): LayerNorm((256, 4, 4), eps=1e-05, elementwise_affine=False)
+    )
+  )
+  (layer4): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): LayerNorm((512, 2, 2), eps=1e-05, elementwise_affine=False)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): LayerNorm((512, 2, 2), eps=1e-05, elementwise_affine=False)
+      (downsample): Sequential(
+        (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): LayerNorm((512, 2, 2), eps=1e-05, elementwise_affine=False)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): LayerNorm((512, 2, 2), eps=1e-05, elementwise_affine=False)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): LayerNorm((512, 2, 2), eps=1e-05, elementwise_affine=False)
+    )
+  )
+  (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+  (fc): Linear(in_features=512, out_features=200, bias=True)
+)
+Global Model size: 42.99 MB
+Client dropout rates: [0.9, 0.0, 0.5, 0.5, 0.9, 0.9, 0.9, 0.25, 0.75, 0.0, 0.5, 0.9, 0.0, 0.5, 0.9, 0.9, 0.5, 0.9, 0.9, 0.0, 0.9, 0.9, 0.75, 0.5, 0.9, 0.75, 0.25, 0.25, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.75, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.0, 0.5, 0.5, 0.25, 0.5, 0.25, 0.5, 0.9, 0.75, 0.75, 0.5, 0.5, 0.9, 0.9, 0.9, 0.5, 0.9, 0.5, 0.75, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.5, 0.0, 0.75, 0.5, 0.5, 0.9, 0.9, 0.75, 0.9, 0.75, 0.9, 0.75, 0.5, 0.5, 0.9, 0.5, 0.9, 0.9, 0.75, 0.5, 0.9, 0.9, 0.25, 0.0, 0.25, 0.9, 0.9, 0.75, 0.25, 0.75, 0.9, 0.9, 0.9, 0.9]
+Client dropout rate count: {0.9: 50, 0.0: 7, 0.5: 21, 0.25: 8, 0.75: 14}
+Round 1
+Selected 10 client IDs: [ 9 30 44 57 38 37 39 84 31 53]
+Parameter: conv1.weight, Sparsity: 0.2656, Original Sparsity: 0.2656, Coverage: 1.0000
+Parameter: layer1.0.conv1.weight, Sparsity: 0.1687, Original Sparsity: 0.1687, Coverage: 1.0000
+Parameter: layer1.0.conv2.weight, Sparsity: 0.1687, Original Sparsity: 0.1687, Coverage: 1.0000
+Parameter: layer1.1.conv1.weight, Sparsity: 0.1687, Original Sparsity: 0.1687, Coverage: 1.0000
+Parameter: layer1.1.conv2.weight, Sparsity: 0.1687, Original Sparsity: 0.1687, Coverage: 1.0000
+Parameter: layer2.0.conv1.weight, Sparsity: 0.1685, Original Sparsity: 0.1685, Coverage: 1.0000
+Parameter: layer2.0.conv2.weight, Sparsity: 0.1685, Original Sparsity: 0.1685, Coverage: 1.0000
+Parameter: layer2.0.downsample.0.weight, Sparsity: 0.1687, Original Sparsity: 0.1687, Coverage: 1.0000
+Parameter: layer2.1.conv1.weight, Sparsity: 0.1687, Original Sparsity: 0.1687, Coverage: 1.0000
+Parameter: layer2.1.conv2.weight, Sparsity: 0.1687, Original Sparsity: 0.1687, Coverage: 1.0000
+Parameter: layer3.0.conv1.weight, Sparsity: 0.1689, Original Sparsity: 0.1689, Coverage: 1.0000
+Parameter: layer3.0.conv2.weight, Sparsity: 0.1691, Original Sparsity: 0.1691, Coverage: 1.0000
+Parameter: layer3.0.downsample.0.weight, Sparsity: 0.1689, Original Sparsity: 0.1689, Coverage: 1.0000
+Parameter: layer3.1.conv1.weight, Sparsity: 0.1691, Original Sparsity: 0.1691, Coverage: 1.0000
+Parameter: layer3.1.conv2.weight, Sparsity: 0.1691, Original Sparsity: 0.1691, Coverage: 1.0000
+Parameter: layer4.0.conv1.weight, Sparsity: 0.1693, Original Sparsity: 0.1693, Coverage: 1.0000
+Parameter: layer4.0.conv2.weight, Sparsity: 0.1694, Original Sparsity: 0.1694, Coverage: 1.0000
+Parameter: layer4.0.downsample.0.weight, Sparsity: 0.1693, Original Sparsity: 0.1693, Coverage: 1.0000
+Parameter: layer4.1.conv1.weight, Sparsity: 0.1694, Original Sparsity: 0.1694, Coverage: 1.0000
+Parameter: layer4.1.conv2.weight, Sparsity: 0.1694, Original Sparsity: 0.1694, Coverage: 1.0000
+Parameter: fc.weight, Sparsity: 0.2695, Original Sparsity: 0.2695, Coverage: 1.0000
+Parameter: fc.bias, Sparsity: 1.0000, Original Sparsity: 1.0000, Coverage: 1.0000
+Sparsity: 0.2157, Original Sparsity: 0.2157, Coverage: 1.0000
+Sparsity: 0.2157, eta_g: 1.0000
+Client 9	Dropout Rate: 0.0	Model Size: 42.99 MB	Train Loss: 5.2618	Train Acc: 0.0125	Local Validation  Loss: 5.6006	Local Validation Acc: 0.0050	Global Validation Loss: 5.5617	Global Validation Acc: 0.0050
+Client 30	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2401	Train Acc: 0.0063	Local Validation  Loss: 5.3199	Local Validation Acc: 0.0000	Global Validation Loss: 5.3190	Global Validation Acc: 0.0050
+Client 44	Dropout Rate: 0.25	Model Size: 24.26 MB	Train Loss: 5.2019	Train Acc: 0.0138	Local Validation  Loss: 5.5401	Local Validation Acc: 0.0050	Global Validation Loss: 5.5136	Global Validation Acc: 0.0050
+Client 57	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2575	Train Acc: 0.0100	Local Validation  Loss: 5.3280	Local Validation Acc: 0.0000	Global Validation Loss: 5.3200	Global Validation Acc: 0.0043
+Client 38	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2623	Train Acc: 0.0125	Local Validation  Loss: 5.3363	Local Validation Acc: 0.0050	Global Validation Loss: 5.3171	Global Validation Acc: 0.0050
+Client 37	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2387	Train Acc: 0.0100	Local Validation  Loss: 5.3179	Local Validation Acc: 0.0000	Global Validation Loss: 5.3201	Global Validation Acc: 0.0052
+Client 39	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2512	Train Acc: 0.0063	Local Validation  Loss: 5.3103	Local Validation Acc: 0.0050	Global Validation Loss: 5.3287	Global Validation Acc: 0.0050
+Client 84	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.1960	Train Acc: 0.0213	Local Validation  Loss: 5.3578	Local Validation Acc: 0.0100	Global Validation Loss: 5.3687	Global Validation Acc: 0.0073
+Client 31	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2514	Train Acc: 0.0088	Local Validation  Loss: 5.3306	Local Validation Acc: 0.0050	Global Validation Loss: 5.3225	Global Validation Acc: 0.0058
+Client 53	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2547	Train Acc: 0.0125	Local Validation  Loss: 5.3368	Local Validation Acc: 0.0000	Global Validation Loss: 5.3245	Global Validation Acc: 0.0050
+Aggregated
+Global Test Loss: 5.4520	Global Test Acc: 0.0057
+Client 9	Local Validation Loss: 5.4618(-0.1388)	Local Validation Acc: 0.0000(-0.0050)
+Client 30	Local Validation Loss: 5.4184(0.0986)	Local Validation Acc: 0.0000(0.0000)
+Client 44	Local Validation Loss: 5.5141(-0.0260)	Local Validation Acc: 0.0050(0.0000)
+Client 57	Local Validation Loss: 5.4568(0.1289)	Local Validation Acc: 0.0050(0.0050)
+Client 38	Local Validation Loss: 5.5256(0.1894)	Local Validation Acc: 0.0050(0.0000)
+Client 37	Local Validation Loss: 5.3392(0.0213)	Local Validation Acc: 0.0000(0.0000)
+Client 39	Local Validation Loss: 5.4312(0.1209)	Local Validation Acc: 0.0050(0.0000)
+Client 84	Local Validation Loss: 5.4327(0.0749)	Local Validation Acc: 0.0100(0.0000)
+Client 31	Local Validation Loss: 5.3863(0.0557)	Local Validation Acc: 0.0000(-0.0050)
+Client 53	Local Validation Loss: 5.4988(0.1620)	Local Validation Acc: 0.0000(0.0000)
+Round 1 use time: 4.45 min, ETA: 14.75 hours
+================================================================================
+Round 2
+Selected 10 client IDs: [18 75 64 93 51  2 95 14 78 35]
+Parameter: conv1.weight, Sparsity: 0.2531, Original Sparsity: 0.2531, Coverage: 1.0000
+Parameter: layer1.0.conv1.weight, Sparsity: 0.1295, Original Sparsity: 0.0884, Coverage: 0.6829
+Parameter: layer1.0.conv2.weight, Sparsity: 0.1295, Original Sparsity: 0.0884, Coverage: 0.6829
+Parameter: layer1.1.conv1.weight, Sparsity: 0.1275, Original Sparsity: 0.0862, Coverage: 0.6763
+Parameter: layer1.1.conv2.weight, Sparsity: 0.1275, Original Sparsity: 0.0862, Coverage: 0.6763
+Parameter: layer2.0.conv1.weight, Sparsity: 0.1279, Original Sparsity: 0.0866, Coverage: 0.6770
+Parameter: layer2.0.conv2.weight, Sparsity: 0.1282, Original Sparsity: 0.0866, Coverage: 0.6754
+Parameter: layer2.0.downsample.0.weight, Sparsity: 0.1288, Original Sparsity: 0.0884, Coverage: 0.6859
+Parameter: layer2.1.conv1.weight, Sparsity: 0.1295, Original Sparsity: 0.0880, Coverage: 0.6792
+Parameter: layer2.1.conv2.weight, Sparsity: 0.1295, Original Sparsity: 0.0880, Coverage: 0.6792
+Parameter: layer3.0.conv1.weight, Sparsity: 0.1284, Original Sparsity: 0.0884, Coverage: 0.6883
+Parameter: layer3.0.conv2.weight, Sparsity: 0.1292, Original Sparsity: 0.0891, Coverage: 0.6893
+Parameter: layer3.0.downsample.0.weight, Sparsity: 0.1288, Original Sparsity: 0.0890, Coverage: 0.6906
+Parameter: layer3.1.conv1.weight, Sparsity: 0.1295, Original Sparsity: 0.0883, Coverage: 0.6813
+Parameter: layer3.1.conv2.weight, Sparsity: 0.1295, Original Sparsity: 0.0883, Coverage: 0.6813
+Parameter: layer4.0.conv1.weight, Sparsity: 0.1296, Original Sparsity: 0.0886, Coverage: 0.6838
+Parameter: layer4.0.conv2.weight, Sparsity: 0.1303, Original Sparsity: 0.0885, Coverage: 0.6789
+Parameter: layer4.0.downsample.0.weight, Sparsity: 0.1305, Original Sparsity: 0.0896, Coverage: 0.6863
+Parameter: layer4.1.conv1.weight, Sparsity: 0.1309, Original Sparsity: 0.0883, Coverage: 0.6748
+Parameter: layer4.1.conv2.weight, Sparsity: 0.1309, Original Sparsity: 0.0883, Coverage: 0.6748
+Parameter: fc.weight, Sparsity: 0.2555, Original Sparsity: 0.2555, Coverage: 1.0000
+Parameter: fc.bias, Sparsity: 1.0000, Original Sparsity: 1.0000, Coverage: 1.0000
+Sparsity: 0.1802, Original Sparsity: 0.1446, Coverage: 0.7247
+Sparsity: 0.1802, eta_g: 1.0000
+Client 18	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2638	Train Acc: 0.0138	Local Validation  Loss: 5.3269	Local Validation Acc: 0.0050	Global Validation Loss: 5.3138	Global Validation Acc: 0.0050
+Client 75	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2152	Train Acc: 0.0112	Local Validation  Loss: 5.3974	Local Validation Acc: 0.0050	Global Validation Loss: 5.3546	Global Validation Acc: 0.0050
+Client 64	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2510	Train Acc: 0.0100	Local Validation  Loss: 5.3374	Local Validation Acc: 0.0000	Global Validation Loss: 5.3195	Global Validation Acc: 0.0050
+Client 93	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.1953	Train Acc: 0.0125	Local Validation  Loss: 5.3610	Local Validation Acc: 0.0050	Global Validation Loss: 5.3572	Global Validation Acc: 0.0050
+Client 51	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2042	Train Acc: 0.0112	Local Validation  Loss: 5.4434	Local Validation Acc: 0.0100	Global Validation Loss: 5.4073	Global Validation Acc: 0.0050
+Client 2	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2053	Train Acc: 0.0100	Local Validation  Loss: 5.3860	Local Validation Acc: 0.0100	Global Validation Loss: 5.4184	Global Validation Acc: 0.0050
+Client 95	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2093	Train Acc: 0.0088	Local Validation  Loss: 5.3401	Local Validation Acc: 0.0050	Global Validation Loss: 5.3558	Global Validation Acc: 0.0050
+Client 14	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2477	Train Acc: 0.0088	Local Validation  Loss: 5.3426	Local Validation Acc: 0.0050	Global Validation Loss: 5.3129	Global Validation Acc: 0.0050
+Client 78	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2406	Train Acc: 0.0088	Local Validation  Loss: 5.4103	Local Validation Acc: 0.0100	Global Validation Loss: 5.3778	Global Validation Acc: 0.0050
+Client 35	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2526	Train Acc: 0.0112	Local Validation  Loss: 5.3089	Local Validation Acc: 0.0100	Global Validation Loss: 5.3161	Global Validation Acc: 0.0061
+Aggregated
+Global Test Loss: 5.3982	Global Test Acc: 0.0050
+Client 18	Local Validation Loss: 5.4168(0.0899)	Local Validation Acc: 0.0100(0.0050)
+Client 75	Local Validation Loss: 5.4739(0.0764)	Local Validation Acc: 0.0000(-0.0050)
+Client 64	Local Validation Loss: 5.3858(0.0484)	Local Validation Acc: 0.0100(0.0100)
+Client 93	Local Validation Loss: 5.4180(0.0570)	Local Validation Acc: 0.0050(0.0000)
+Client 51	Local Validation Loss: 5.4262(-0.0172)	Local Validation Acc: 0.0000(-0.0100)
+Client 2	Local Validation Loss: 5.4039(0.0179)	Local Validation Acc: 0.0050(-0.0050)
+Client 95	Local Validation Loss: 5.3628(0.0227)	Local Validation Acc: 0.0000(-0.0050)
+Client 14	Local Validation Loss: 5.3802(0.0376)	Local Validation Acc: 0.0050(0.0000)
+Client 78	Local Validation Loss: 5.3821(-0.0282)	Local Validation Acc: 0.0000(-0.0100)
+Client 35	Local Validation Loss: 5.3856(0.0767)	Local Validation Acc: 0.0000(-0.0100)
+Round 2 use time: 4.47 min, ETA: 14.75 hours
+================================================================================
+Round 3
+Selected 10 client IDs: [41 50 86 48 21 64  5 32 17 37]
+Parameter: conv1.weight, Sparsity: 0.1812, Original Sparsity: 0.1812, Coverage: 1.0000
+Parameter: layer1.0.conv1.weight, Sparsity: 0.1100, Original Sparsity: 0.0793, Coverage: 0.7212
+Parameter: layer1.0.conv2.weight, Sparsity: 0.1100, Original Sparsity: 0.0793, Coverage: 0.7212
+Parameter: layer1.1.conv1.weight, Sparsity: 0.1109, Original Sparsity: 0.0806, Coverage: 0.7266
+Parameter: layer1.1.conv2.weight, Sparsity: 0.1109, Original Sparsity: 0.0806, Coverage: 0.7266
+Parameter: layer2.0.conv1.weight, Sparsity: 0.1105, Original Sparsity: 0.0768, Coverage: 0.6947
+Parameter: layer2.0.conv2.weight, Sparsity: 0.1113, Original Sparsity: 0.0761, Coverage: 0.6843
+Parameter: layer2.0.downsample.0.weight, Sparsity: 0.1109, Original Sparsity: 0.0787, Coverage: 0.7096
+Parameter: layer2.1.conv1.weight, Sparsity: 0.1107, Original Sparsity: 0.0761, Coverage: 0.6880
+Parameter: layer2.1.conv2.weight, Sparsity: 0.1107, Original Sparsity: 0.0761, Coverage: 0.6880
+Parameter: layer3.0.conv1.weight, Sparsity: 0.1108, Original Sparsity: 0.0758, Coverage: 0.6844
+Parameter: layer3.0.conv2.weight, Sparsity: 0.1103, Original Sparsity: 0.0734, Coverage: 0.6651
+Parameter: layer3.0.downsample.0.weight, Sparsity: 0.1111, Original Sparsity: 0.0755, Coverage: 0.6789
+Parameter: layer3.1.conv1.weight, Sparsity: 0.1104, Original Sparsity: 0.0748, Coverage: 0.6779
+Parameter: layer3.1.conv2.weight, Sparsity: 0.1104, Original Sparsity: 0.0748, Coverage: 0.6779
+Parameter: layer4.0.conv1.weight, Sparsity: 0.1100, Original Sparsity: 0.0727, Coverage: 0.6613
+Parameter: layer4.0.conv2.weight, Sparsity: 0.1101, Original Sparsity: 0.0735, Coverage: 0.6679
+Parameter: layer4.0.downsample.0.weight, Sparsity: 0.1107, Original Sparsity: 0.0738, Coverage: 0.6667
+Parameter: layer4.1.conv1.weight, Sparsity: 0.1103, Original Sparsity: 0.0740, Coverage: 0.6707
+Parameter: layer4.1.conv2.weight, Sparsity: 0.1103, Original Sparsity: 0.0740, Coverage: 0.6707
+Parameter: fc.weight, Sparsity: 0.1824, Original Sparsity: 0.1824, Coverage: 1.0000
+Parameter: fc.bias, Sparsity: 1.0000, Original Sparsity: 1.0000, Coverage: 1.0000
+Sparsity: 0.1574, Original Sparsity: 0.1277, Coverage: 0.7310
+Sparsity: 0.1574, eta_g: 1.0000
+Client 41	Dropout Rate: 0.0	Model Size: 42.99 MB	Train Loss: 5.2419	Train Acc: 0.0138	Local Validation  Loss: 5.4522	Local Validation Acc: 0.0050	Global Validation Loss: 5.4821	Global Validation Acc: 0.0050
+Client 50	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2371	Train Acc: 0.0112	Local Validation  Loss: 5.3265	Local Validation Acc: 0.0000	Global Validation Loss: 5.3378	Global Validation Acc: 0.0050
+Client 86	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2503	Train Acc: 0.0150	Local Validation  Loss: 5.3115	Local Validation Acc: 0.0050	Global Validation Loss: 5.3166	Global Validation Acc: 0.0050
+Client 48	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2504	Train Acc: 0.0163	Local Validation  Loss: 5.3316	Local Validation Acc: 0.0000	Global Validation Loss: 5.3261	Global Validation Acc: 0.0055
+Client 21	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2451	Train Acc: 0.0150	Local Validation  Loss: 5.3212	Local Validation Acc: 0.0000	Global Validation Loss: 5.3257	Global Validation Acc: 0.0051
+Client 64	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2546	Train Acc: 0.0063	Local Validation  Loss: 5.3455	Local Validation Acc: 0.0000	Global Validation Loss: 5.3180	Global Validation Acc: 0.0052
+Client 5	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2613	Train Acc: 0.0112	Local Validation  Loss: 5.3124	Local Validation Acc: 0.0100	Global Validation Loss: 5.3107	Global Validation Acc: 0.0048
+Client 32	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2419	Train Acc: 0.0088	Local Validation  Loss: 5.3270	Local Validation Acc: 0.0050	Global Validation Loss: 5.3187	Global Validation Acc: 0.0050
+Client 17	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2392	Train Acc: 0.0088	Local Validation  Loss: 5.3246	Local Validation Acc: 0.0000	Global Validation Loss: 5.3284	Global Validation Acc: 0.0050
+Client 37	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2523	Train Acc: 0.0088	Local Validation  Loss: 5.3126	Local Validation Acc: 0.0000	Global Validation Loss: 5.3186	Global Validation Acc: 0.0048
+Aggregated
+Global Test Loss: 5.4094	Global Test Acc: 0.0053
+Client 41	Local Validation Loss: 5.4048(-0.0474)	Local Validation Acc: 0.0050(0.0000)
+Client 50	Local Validation Loss: 5.4078(0.0813)	Local Validation Acc: 0.0000(0.0000)
+Client 86	Local Validation Loss: 5.4143(0.1028)	Local Validation Acc: 0.0100(0.0050)
+Client 48	Local Validation Loss: 5.4355(0.1040)	Local Validation Acc: 0.0000(0.0000)
+Client 21	Local Validation Loss: 5.4054(0.0842)	Local Validation Acc: 0.0050(0.0050)
+Client 64	Local Validation Loss: 5.4005(0.0550)	Local Validation Acc: 0.0000(0.0000)
+Client 5	Local Validation Loss: 5.4177(0.1053)	Local Validation Acc: 0.0050(-0.0050)
+Client 32	Local Validation Loss: 5.4179(0.0909)	Local Validation Acc: 0.0000(-0.0050)
+Client 17	Local Validation Loss: 5.3644(0.0398)	Local Validation Acc: 0.0000(0.0000)
+Client 37	Local Validation Loss: 5.4100(0.0974)	Local Validation Acc: 0.0000(0.0000)
+Round 3 use time: 4.49 min, ETA: 14.73 hours
+================================================================================
+Round 4
+Selected 10 client IDs: [64 18 85 49 73  9 29 71 75  6]
+Parameter: conv1.weight, Sparsity: 0.2406, Original Sparsity: 0.2406, Coverage: 1.0000
+Parameter: layer1.0.conv1.weight, Sparsity: 0.1307, Original Sparsity: 0.1019, Coverage: 0.7793
+Parameter: layer1.0.conv2.weight, Sparsity: 0.1307, Original Sparsity: 0.1019, Coverage: 0.7793
+Parameter: layer1.1.conv1.weight, Sparsity: 0.1320, Original Sparsity: 0.1019, Coverage: 0.7715
+Parameter: layer1.1.conv2.weight, Sparsity: 0.1320, Original Sparsity: 0.1019, Coverage: 0.7715
+Parameter: layer2.0.conv1.weight, Sparsity: 0.1293, Original Sparsity: 0.0961, Coverage: 0.7429
+Parameter: layer2.0.conv2.weight, Sparsity: 0.1307, Original Sparsity: 0.1027, Coverage: 0.7857
+Parameter: layer2.0.downsample.0.weight, Sparsity: 0.1301, Original Sparsity: 0.1019, Coverage: 0.7827
+Parameter: layer2.1.conv1.weight, Sparsity: 0.1323, Original Sparsity: 0.1061, Coverage: 0.8024
+Parameter: layer2.1.conv2.weight, Sparsity: 0.1323, Original Sparsity: 0.1061, Coverage: 0.8024
+Parameter: layer3.0.conv1.weight, Sparsity: 0.1318, Original Sparsity: 0.1052, Coverage: 0.7984
+Parameter: layer3.0.conv2.weight, Sparsity: 0.1310, Original Sparsity: 0.1042, Coverage: 0.7958
+Parameter: layer3.0.downsample.0.weight, Sparsity: 0.1321, Original Sparsity: 0.1081, Coverage: 0.8181
+Parameter: layer3.1.conv1.weight, Sparsity: 0.1320, Original Sparsity: 0.1075, Coverage: 0.8141
+Parameter: layer3.1.conv2.weight, Sparsity: 0.1320, Original Sparsity: 0.1075, Coverage: 0.8141
+Parameter: layer4.0.conv1.weight, Sparsity: 0.1302, Original Sparsity: 0.1048, Coverage: 0.8054
+Parameter: layer4.0.conv2.weight, Sparsity: 0.1300, Original Sparsity: 0.1029, Coverage: 0.7913
+Parameter: layer4.0.downsample.0.weight, Sparsity: 0.1314, Original Sparsity: 0.1051, Coverage: 0.7997
+Parameter: layer4.1.conv1.weight, Sparsity: 0.1303, Original Sparsity: 0.1024, Coverage: 0.7858
+Parameter: layer4.1.conv2.weight, Sparsity: 0.1303, Original Sparsity: 0.1024, Coverage: 0.7858
+Parameter: fc.weight, Sparsity: 0.2469, Original Sparsity: 0.2469, Coverage: 1.0000
+Parameter: fc.bias, Sparsity: 1.0000, Original Sparsity: 1.0000, Coverage: 1.0000
+Sparsity: 0.1809, Original Sparsity: 0.1572, Coverage: 0.8194
+Sparsity: 0.1809, eta_g: 1.0000
+Client 64	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2585	Train Acc: 0.0088	Local Validation  Loss: 5.3409	Local Validation Acc: 0.0000	Global Validation Loss: 5.3167	Global Validation Acc: 0.0050
+Client 18	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2627	Train Acc: 0.0138	Local Validation  Loss: 5.3215	Local Validation Acc: 0.0050	Global Validation Loss: 5.3140	Global Validation Acc: 0.0050
+Client 85	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2139	Train Acc: 0.0100	Local Validation  Loss: 5.3803	Local Validation Acc: 0.0050	Global Validation Loss: 5.3801	Global Validation Acc: 0.0050
+Client 49	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2188	Train Acc: 0.0112	Local Validation  Loss: 5.3313	Local Validation Acc: 0.0050	Global Validation Loss: 5.3424	Global Validation Acc: 0.0050
+Client 73	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2288	Train Acc: 0.0100	Local Validation  Loss: 5.3817	Local Validation Acc: 0.0000	Global Validation Loss: 5.3399	Global Validation Acc: 0.0050
+Client 9	Dropout Rate: 0.0	Model Size: 42.99 MB	Train Loss: 5.2090	Train Acc: 0.0138	Local Validation  Loss: 5.4971	Local Validation Acc: 0.0050	Global Validation Loss: 5.4824	Global Validation Acc: 0.0050
+Client 29	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2467	Train Acc: 0.0063	Local Validation  Loss: 5.3114	Local Validation Acc: 0.0050	Global Validation Loss: 5.3207	Global Validation Acc: 0.0050
+Client 71	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2568	Train Acc: 0.0088	Local Validation  Loss: 5.3489	Local Validation Acc: 0.0150	Global Validation Loss: 5.3213	Global Validation Acc: 0.0050
+Client 75	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2208	Train Acc: 0.0100	Local Validation  Loss: 5.3899	Local Validation Acc: 0.0000	Global Validation Loss: 5.3482	Global Validation Acc: 0.0050
+Client 6	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2554	Train Acc: 0.0088	Local Validation  Loss: 5.3168	Local Validation Acc: 0.0100	Global Validation Loss: 5.3168	Global Validation Acc: 0.0050
+Aggregated
+Global Test Loss: 5.3565	Global Test Acc: 0.0050
+Client 64	Local Validation Loss: 5.3810(0.0401)	Local Validation Acc: 0.0050(0.0050)
+Client 18	Local Validation Loss: 5.3788(0.0573)	Local Validation Acc: 0.0000(-0.0050)
+Client 85	Local Validation Loss: 5.3742(-0.0061)	Local Validation Acc: 0.0050(0.0000)
+Client 49	Local Validation Loss: 5.3854(0.0541)	Local Validation Acc: 0.0100(0.0050)
+Client 73	Local Validation Loss: 5.3371(-0.0446)	Local Validation Acc: 0.0050(0.0050)
+Client 9	Local Validation Loss: 5.3827(-0.1144)	Local Validation Acc: 0.0050(0.0000)
+Client 29	Local Validation Loss: 5.3653(0.0539)	Local Validation Acc: 0.0100(0.0050)
+Client 71	Local Validation Loss: 5.3904(0.0415)	Local Validation Acc: 0.0050(-0.0100)
+Client 75	Local Validation Loss: 5.3773(-0.0125)	Local Validation Acc: 0.0050(0.0050)
+Client 6	Local Validation Loss: 5.2991(-0.0177)	Local Validation Acc: 0.0100(0.0000)
+Round 4 use time: 4.46 min, ETA: 14.58 hours
+================================================================================
+Round 5
+Selected 10 client IDs: [ 2 20 80 74 28 85 46 55 48 66]
+Parameter: conv1.weight, Sparsity: 0.2734, Original Sparsity: 0.2734, Coverage: 1.0000
+Parameter: layer1.0.conv1.weight, Sparsity: 0.1457, Original Sparsity: 0.1219, Coverage: 0.8367
+Parameter: layer1.0.conv2.weight, Sparsity: 0.1457, Original Sparsity: 0.1219, Coverage: 0.8367
+Parameter: layer1.1.conv1.weight, Sparsity: 0.1457, Original Sparsity: 0.1223, Coverage: 0.8394
+Parameter: layer1.1.conv2.weight, Sparsity: 0.1457, Original Sparsity: 0.1223, Coverage: 0.8394
+Parameter: layer2.0.conv1.weight, Sparsity: 0.1459, Original Sparsity: 0.1230, Coverage: 0.8434
+Parameter: layer2.0.conv2.weight, Sparsity: 0.1477, Original Sparsity: 0.1209, Coverage: 0.8190
+Parameter: layer2.0.downsample.0.weight, Sparsity: 0.1456, Original Sparsity: 0.1245, Coverage: 0.8551
+Parameter: layer2.1.conv1.weight, Sparsity: 0.1468, Original Sparsity: 0.1211, Coverage: 0.8253
+Parameter: layer2.1.conv2.weight, Sparsity: 0.1468, Original Sparsity: 0.1211, Coverage: 0.8253
+Parameter: layer3.0.conv1.weight, Sparsity: 0.1456, Original Sparsity: 0.1203, Coverage: 0.8264
+Parameter: layer3.0.conv2.weight, Sparsity: 0.1443, Original Sparsity: 0.1186, Coverage: 0.8215
+Parameter: layer3.0.downsample.0.weight, Sparsity: 0.1453, Original Sparsity: 0.1204, Coverage: 0.8283
+Parameter: layer3.1.conv1.weight, Sparsity: 0.1438, Original Sparsity: 0.1179, Coverage: 0.8196
+Parameter: layer3.1.conv2.weight, Sparsity: 0.1438, Original Sparsity: 0.1179, Coverage: 0.8196
+Parameter: layer4.0.conv1.weight, Sparsity: 0.1437, Original Sparsity: 0.1180, Coverage: 0.8211
+Parameter: layer4.0.conv2.weight, Sparsity: 0.1437, Original Sparsity: 0.1180, Coverage: 0.8214
+Parameter: layer4.0.downsample.0.weight, Sparsity: 0.1438, Original Sparsity: 0.1187, Coverage: 0.8253
+Parameter: layer4.1.conv1.weight, Sparsity: 0.1435, Original Sparsity: 0.1179, Coverage: 0.8219
+Parameter: layer4.1.conv2.weight, Sparsity: 0.1435, Original Sparsity: 0.1179, Coverage: 0.8219
+Parameter: fc.weight, Sparsity: 0.2709, Original Sparsity: 0.2709, Coverage: 1.0000
+Parameter: fc.bias, Sparsity: 1.0000, Original Sparsity: 1.0000, Coverage: 1.0000
+Sparsity: 0.1955, Original Sparsity: 0.1740, Coverage: 0.8521
+Sparsity: 0.1955, eta_g: 1.0000
+Client 2	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.1937	Train Acc: 0.0100	Local Validation  Loss: 5.3845	Local Validation Acc: 0.0050	Global Validation Loss: 5.3900	Global Validation Acc: 0.0050
+Client 20	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2614	Train Acc: 0.0125	Local Validation  Loss: 5.3224	Local Validation Acc: 0.0050	Global Validation Loss: 5.3195	Global Validation Acc: 0.0055
+Client 80	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2495	Train Acc: 0.0125	Local Validation  Loss: 5.3180	Local Validation Acc: 0.0100	Global Validation Loss: 5.3145	Global Validation Acc: 0.0060
+Client 74	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2489	Train Acc: 0.0100	Local Validation  Loss: 5.3063	Local Validation Acc: 0.0100	Global Validation Loss: 5.3160	Global Validation Acc: 0.0050
+Client 28	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2600	Train Acc: 0.0100	Local Validation  Loss: 5.2703	Local Validation Acc: 0.0050	Global Validation Loss: 5.3176	Global Validation Acc: 0.0053
+Client 85	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2119	Train Acc: 0.0100	Local Validation  Loss: 5.4042	Local Validation Acc: 0.0050	Global Validation Loss: 5.3831	Global Validation Acc: 0.0049
+Client 46	Dropout Rate: 0.25	Model Size: 24.26 MB	Train Loss: 5.2109	Train Acc: 0.0100	Local Validation  Loss: 5.4246	Local Validation Acc: 0.0000	Global Validation Loss: 5.3912	Global Validation Acc: 0.0051
+Client 55	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2465	Train Acc: 0.0063	Local Validation  Loss: 5.2999	Local Validation Acc: 0.0000	Global Validation Loss: 5.3178	Global Validation Acc: 0.0050
+Client 48	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2374	Train Acc: 0.0088	Local Validation  Loss: 5.3203	Local Validation Acc: 0.0050	Global Validation Loss: 5.3209	Global Validation Acc: 0.0050
+Client 66	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.1964	Train Acc: 0.0112	Local Validation  Loss: 5.3565	Local Validation Acc: 0.0050	Global Validation Loss: 5.3803	Global Validation Acc: 0.0060
+Aggregated
+Global Test Loss: 5.3444	Global Test Acc: 0.0056
+Client 2	Local Validation Loss: 5.3796(-0.0049)	Local Validation Acc: 0.0000(-0.0050)
+Client 20	Local Validation Loss: 5.3329(0.0105)	Local Validation Acc: 0.0050(0.0000)
+Client 80	Local Validation Loss: 5.3554(0.0374)	Local Validation Acc: 0.0050(-0.0050)
+Client 74	Local Validation Loss: 5.2882(-0.0181)	Local Validation Acc: 0.0000(-0.0100)
+Client 28	Local Validation Loss: 5.3586(0.0883)	Local Validation Acc: 0.0150(0.0100)
+Client 85	Local Validation Loss: 5.3414(-0.0628)	Local Validation Acc: 0.0200(0.0150)
+Client 46	Local Validation Loss: 5.3713(-0.0533)	Local Validation Acc: 0.0100(0.0100)
+Client 55	Local Validation Loss: 5.3416(0.0417)	Local Validation Acc: 0.0000(0.0000)
+Client 48	Local Validation Loss: 5.3351(0.0148)	Local Validation Acc: 0.0000(-0.0050)
+Client 66	Local Validation Loss: 5.3263(-0.0302)	Local Validation Acc: 0.0050(0.0000)
+Round 5 use time: 4.34 min, ETA: 14.11 hours
+================================================================================
+Round 6
+Selected 10 client IDs: [36 85 57 83 80 47  9 45 17 23]
+Parameter: conv1.weight, Sparsity: 0.3063, Original Sparsity: 0.3063, Coverage: 1.0000
+Parameter: layer1.0.conv1.weight, Sparsity: 0.1673, Original Sparsity: 0.1553, Coverage: 0.9282
+Parameter: layer1.0.conv2.weight, Sparsity: 0.1673, Original Sparsity: 0.1553, Coverage: 0.9282
+Parameter: layer1.1.conv1.weight, Sparsity: 0.1682, Original Sparsity: 0.1552, Coverage: 0.9229
+Parameter: layer1.1.conv2.weight, Sparsity: 0.1682, Original Sparsity: 0.1552, Coverage: 0.9229
+Parameter: layer2.0.conv1.weight, Sparsity: 0.1659, Original Sparsity: 0.1543, Coverage: 0.9303
+Parameter: layer2.0.conv2.weight, Sparsity: 0.1684, Original Sparsity: 0.1574, Coverage: 0.9352
+Parameter: layer2.0.downsample.0.weight, Sparsity: 0.1665, Original Sparsity: 0.1543, Coverage: 0.9265
+Parameter: layer2.1.conv1.weight, Sparsity: 0.1705, Original Sparsity: 0.1605, Coverage: 0.9412
+Parameter: layer2.1.conv2.weight, Sparsity: 0.1705, Original Sparsity: 0.1605, Coverage: 0.9412
+Parameter: layer3.0.conv1.weight, Sparsity: 0.1689, Original Sparsity: 0.1576, Coverage: 0.9331
+Parameter: layer3.0.conv2.weight, Sparsity: 0.1705, Original Sparsity: 0.1587, Coverage: 0.9307
+Parameter: layer3.0.downsample.0.weight, Sparsity: 0.1700, Original Sparsity: 0.1583, Coverage: 0.9312
+Parameter: layer3.1.conv1.weight, Sparsity: 0.1717, Original Sparsity: 0.1603, Coverage: 0.9339
+Parameter: layer3.1.conv2.weight, Sparsity: 0.1717, Original Sparsity: 0.1603, Coverage: 0.9339
+Parameter: layer4.0.conv1.weight, Sparsity: 0.1712, Original Sparsity: 0.1596, Coverage: 0.9325
+Parameter: layer4.0.conv2.weight, Sparsity: 0.1713, Original Sparsity: 0.1601, Coverage: 0.9347
+Parameter: layer4.0.downsample.0.weight, Sparsity: 0.1710, Original Sparsity: 0.1596, Coverage: 0.9332
+Parameter: layer4.1.conv1.weight, Sparsity: 0.1694, Original Sparsity: 0.1570, Coverage: 0.9268
+Parameter: layer4.1.conv2.weight, Sparsity: 0.1694, Original Sparsity: 0.1570, Coverage: 0.9268
+Parameter: fc.weight, Sparsity: 0.3215, Original Sparsity: 0.3215, Coverage: 1.0000
+Parameter: fc.bias, Sparsity: 1.0000, Original Sparsity: 1.0000, Coverage: 1.0000
+Sparsity: 0.2203, Original Sparsity: 0.2102, Coverage: 0.9406
+Sparsity: 0.2203, eta_g: 1.0000
+Client 36	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2542	Train Acc: 0.0163	Local Validation  Loss: 5.3098	Local Validation Acc: 0.0000	Global Validation Loss: 5.3140	Global Validation Acc: 0.0055
+Client 85	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.1972	Train Acc: 0.0112	Local Validation  Loss: 5.3732	Local Validation Acc: 0.0050	Global Validation Loss: 5.3832	Global Validation Acc: 0.0050
+Client 57	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2679	Train Acc: 0.0075	Local Validation  Loss: 5.3130	Local Validation Acc: 0.0000	Global Validation Loss: 5.3076	Global Validation Acc: 0.0050
+Client 83	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2467	Train Acc: 0.0100	Local Validation  Loss: 5.3194	Local Validation Acc: 0.0050	Global Validation Loss: 5.3166	Global Validation Acc: 0.0050
+Client 80	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2450	Train Acc: 0.0112	Local Validation  Loss: 5.3368	Local Validation Acc: 0.0000	Global Validation Loss: 5.3191	Global Validation Acc: 0.0052
+Client 47	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2133	Train Acc: 0.0100	Local Validation  Loss: 5.3582	Local Validation Acc: 0.0100	Global Validation Loss: 5.3773	Global Validation Acc: 0.0047
+Client 9	Dropout Rate: 0.0	Model Size: 42.99 MB	Train Loss: 5.1710	Train Acc: 0.0125	Local Validation  Loss: 5.5178	Local Validation Acc: 0.0050	Global Validation Loss: 5.4623	Global Validation Acc: 0.0050
+Client 45	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2060	Train Acc: 0.0088	Local Validation  Loss: 5.3730	Local Validation Acc: 0.0100	Global Validation Loss: 5.3748	Global Validation Acc: 0.0050
+Client 17	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2552	Train Acc: 0.0138	Local Validation  Loss: 5.3010	Local Validation Acc: 0.0100	Global Validation Loss: 5.3127	Global Validation Acc: 0.0050
+Client 23	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2294	Train Acc: 0.0112	Local Validation  Loss: 5.3814	Local Validation Acc: 0.0050	Global Validation Loss: 5.3575	Global Validation Acc: 0.0050
+Aggregated
+Global Test Loss: 5.3408	Global Test Acc: 0.0053
+Client 36	Local Validation Loss: 5.3243(0.0145)	Local Validation Acc: 0.0100(0.0100)
+Client 85	Local Validation Loss: 5.3471(-0.0260)	Local Validation Acc: 0.0000(-0.0050)
+Client 57	Local Validation Loss: 5.3473(0.0344)	Local Validation Acc: 0.0050(0.0050)
+Client 83	Local Validation Loss: 5.3381(0.0186)	Local Validation Acc: 0.0100(0.0050)
+Client 80	Local Validation Loss: 5.3693(0.0325)	Local Validation Acc: 0.0000(0.0000)
+Client 47	Local Validation Loss: 5.3343(-0.0239)	Local Validation Acc: 0.0050(-0.0050)
+Client 9	Local Validation Loss: 5.3616(-0.1563)	Local Validation Acc: 0.0100(0.0050)
+Client 45	Local Validation Loss: 5.3309(-0.0421)	Local Validation Acc: 0.0100(0.0000)
+Client 17	Local Validation Loss: 5.4012(0.1002)	Local Validation Acc: 0.0000(-0.0100)
+Client 23	Local Validation Loss: 5.3677(-0.0137)	Local Validation Acc: 0.0050(0.0000)
+Round 6 use time: 4.55 min, ETA: 14.73 hours
+================================================================================
+Round 7
+Selected 10 client IDs: [40 56  2 72 60 24 95 52 92 93]
+Parameter: conv1.weight, Sparsity: 0.2437, Original Sparsity: 0.2437, Coverage: 1.0000
+Parameter: layer1.0.conv1.weight, Sparsity: 0.1341, Original Sparsity: 0.0881, Coverage: 0.6567
+Parameter: layer1.0.conv2.weight, Sparsity: 0.1341, Original Sparsity: 0.0881, Coverage: 0.6567
+Parameter: layer1.1.conv1.weight, Sparsity: 0.1296, Original Sparsity: 0.0865, Coverage: 0.6677
+Parameter: layer1.1.conv2.weight, Sparsity: 0.1296, Original Sparsity: 0.0865, Coverage: 0.6677
+Parameter: layer2.0.conv1.weight, Sparsity: 0.1303, Original Sparsity: 0.0862, Coverage: 0.6613
+Parameter: layer2.0.conv2.weight, Sparsity: 0.1320, Original Sparsity: 0.0844, Coverage: 0.6397
+Parameter: layer2.0.downsample.0.weight, Sparsity: 0.1314, Original Sparsity: 0.0869, Coverage: 0.6617
+Parameter: layer2.1.conv1.weight, Sparsity: 0.1304, Original Sparsity: 0.0837, Coverage: 0.6417
+Parameter: layer2.1.conv2.weight, Sparsity: 0.1304, Original Sparsity: 0.0837, Coverage: 0.6417
+Parameter: layer3.0.conv1.weight, Sparsity: 0.1325, Original Sparsity: 0.0882, Coverage: 0.6654
+Parameter: layer3.0.conv2.weight, Sparsity: 0.1349, Original Sparsity: 0.0915, Coverage: 0.6782
+Parameter: layer3.0.downsample.0.weight, Sparsity: 0.1334, Original Sparsity: 0.0882, Coverage: 0.6610
+Parameter: layer3.1.conv1.weight, Sparsity: 0.1363, Original Sparsity: 0.0913, Coverage: 0.6697
+Parameter: layer3.1.conv2.weight, Sparsity: 0.1363, Original Sparsity: 0.0913, Coverage: 0.6697
+Parameter: layer4.0.conv1.weight, Sparsity: 0.1341, Original Sparsity: 0.0905, Coverage: 0.6747
+Parameter: layer4.0.conv2.weight, Sparsity: 0.1330, Original Sparsity: 0.0884, Coverage: 0.6651
+Parameter: layer4.0.downsample.0.weight, Sparsity: 0.1337, Original Sparsity: 0.0894, Coverage: 0.6685
+Parameter: layer4.1.conv1.weight, Sparsity: 0.1327, Original Sparsity: 0.0880, Coverage: 0.6636
+Parameter: layer4.1.conv2.weight, Sparsity: 0.1327, Original Sparsity: 0.0880, Coverage: 0.6636
+Parameter: fc.weight, Sparsity: 0.2436, Original Sparsity: 0.2436, Coverage: 1.0000
+Parameter: fc.bias, Sparsity: 1.0000, Original Sparsity: 1.0000, Coverage: 1.0000
+Sparsity: 0.1822, Original Sparsity: 0.1435, Coverage: 0.7079
+Sparsity: 0.1822, eta_g: 1.0000
+Client 40	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2666	Train Acc: 0.0112	Local Validation  Loss: 5.3205	Local Validation Acc: 0.0100	Global Validation Loss: 5.3097	Global Validation Acc: 0.0050
+Client 56	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2224	Train Acc: 0.0100	Local Validation  Loss: 5.4260	Local Validation Acc: 0.0000	Global Validation Loss: 5.3600	Global Validation Acc: 0.0050
+Client 2	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2098	Train Acc: 0.0100	Local Validation  Loss: 5.3824	Local Validation Acc: 0.0050	Global Validation Loss: 5.3711	Global Validation Acc: 0.0050
+Client 72	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2650	Train Acc: 0.0112	Local Validation  Loss: 5.3105	Local Validation Acc: 0.0100	Global Validation Loss: 5.3098	Global Validation Acc: 0.0051
+Client 60	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2670	Train Acc: 0.0100	Local Validation  Loss: 5.3115	Local Validation Acc: 0.0000	Global Validation Loss: 5.3082	Global Validation Acc: 0.0050
+Client 24	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2572	Train Acc: 0.0088	Local Validation  Loss: 5.3161	Local Validation Acc: 0.0150	Global Validation Loss: 5.3155	Global Validation Acc: 0.0050
+Client 95	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2182	Train Acc: 0.0125	Local Validation  Loss: 5.3582	Local Validation Acc: 0.0000	Global Validation Loss: 5.3360	Global Validation Acc: 0.0050
+Client 52	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2205	Train Acc: 0.0150	Local Validation  Loss: 5.3799	Local Validation Acc: 0.0100	Global Validation Loss: 5.3586	Global Validation Acc: 0.0050
+Client 92	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2611	Train Acc: 0.0125	Local Validation  Loss: 5.3276	Local Validation Acc: 0.0050	Global Validation Loss: 5.3130	Global Validation Acc: 0.0050
+Client 93	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2090	Train Acc: 0.0125	Local Validation  Loss: 5.3366	Local Validation Acc: 0.0100	Global Validation Loss: 5.3373	Global Validation Acc: 0.0050
+Aggregated
+Global Test Loss: 5.3428	Global Test Acc: 0.0050
+Client 40	Local Validation Loss: 5.3416(0.0211)	Local Validation Acc: 0.0000(-0.0100)
+Client 56	Local Validation Loss: 5.3367(-0.0893)	Local Validation Acc: 0.0050(0.0050)
+Client 2	Local Validation Loss: 5.3755(-0.0069)	Local Validation Acc: 0.0000(-0.0050)
+Client 72	Local Validation Loss: 5.3047(-0.0059)	Local Validation Acc: 0.0100(0.0000)
+Client 60	Local Validation Loss: 5.2820(-0.0295)	Local Validation Acc: 0.0150(0.0150)
+Client 24	Local Validation Loss: 5.3513(0.0352)	Local Validation Acc: 0.0100(-0.0050)
+Client 95	Local Validation Loss: 5.3778(0.0196)	Local Validation Acc: 0.0000(0.0000)
+Client 52	Local Validation Loss: 5.3329(-0.0470)	Local Validation Acc: 0.0100(0.0000)
+Client 92	Local Validation Loss: 5.3269(-0.0007)	Local Validation Acc: 0.0000(-0.0050)
+Client 93	Local Validation Loss: 5.3750(0.0384)	Local Validation Acc: 0.0050(-0.0050)
+Round 7 use time: 4.32 min, ETA: 13.89 hours
+================================================================================
+Round 8
+Selected 10 client IDs: [47 39 32 43 45 79 87 34 41 52]
+Parameter: conv1.weight, Sparsity: 0.3766, Original Sparsity: 0.3766, Coverage: 1.0000
+Parameter: layer1.0.conv1.weight, Sparsity: 0.2023, Original Sparsity: 0.1950, Coverage: 0.9641
+Parameter: layer1.0.conv2.weight, Sparsity: 0.2023, Original Sparsity: 0.1950, Coverage: 0.9641
+Parameter: layer1.1.conv1.weight, Sparsity: 0.1990, Original Sparsity: 0.1878, Coverage: 0.9438
+Parameter: layer1.1.conv2.weight, Sparsity: 0.1990, Original Sparsity: 0.1878, Coverage: 0.9438
+Parameter: layer2.0.conv1.weight, Sparsity: 0.2006, Original Sparsity: 0.1908, Coverage: 0.9513
+Parameter: layer2.0.conv2.weight, Sparsity: 0.2006, Original Sparsity: 0.1907, Coverage: 0.9506
+Parameter: layer2.0.downsample.0.weight, Sparsity: 0.2015, Original Sparsity: 0.1924, Coverage: 0.9546
+Parameter: layer2.1.conv1.weight, Sparsity: 0.2002, Original Sparsity: 0.1892, Coverage: 0.9448
+Parameter: layer2.1.conv2.weight, Sparsity: 0.2002, Original Sparsity: 0.1892, Coverage: 0.9448
+Parameter: layer3.0.conv1.weight, Sparsity: 0.1945, Original Sparsity: 0.1843, Coverage: 0.9476
+Parameter: layer3.0.conv2.weight, Sparsity: 0.1890, Original Sparsity: 0.1773, Coverage: 0.9383
+Parameter: layer3.0.downsample.0.weight, Sparsity: 0.1945, Original Sparsity: 0.1844, Coverage: 0.9482
+Parameter: layer3.1.conv1.weight, Sparsity: 0.1896, Original Sparsity: 0.1786, Coverage: 0.9420
+Parameter: layer3.1.conv2.weight, Sparsity: 0.1896, Original Sparsity: 0.1786, Coverage: 0.9420
+Parameter: layer4.0.conv1.weight, Sparsity: 0.1874, Original Sparsity: 0.1764, Coverage: 0.9413
+Parameter: layer4.0.conv2.weight, Sparsity: 0.1866, Original Sparsity: 0.1761, Coverage: 0.9433
+Parameter: layer4.0.downsample.0.weight, Sparsity: 0.1879, Original Sparsity: 0.1769, Coverage: 0.9415
+Parameter: layer4.1.conv1.weight, Sparsity: 0.1886, Original Sparsity: 0.1786, Coverage: 0.9471
+Parameter: layer4.1.conv2.weight, Sparsity: 0.1886, Original Sparsity: 0.1786, Coverage: 0.9471
+Parameter: fc.weight, Sparsity: 0.3662, Original Sparsity: 0.3662, Coverage: 1.0000
+Parameter: fc.bias, Sparsity: 1.0000, Original Sparsity: 1.0000, Coverage: 1.0000
+Sparsity: 0.2475, Original Sparsity: 0.2387, Coverage: 0.9546
+Sparsity: 0.2475, eta_g: 1.0000
+Client 47	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2086	Train Acc: 0.0112	Local Validation  Loss: 5.3424	Local Validation Acc: 0.0000	Global Validation Loss: 5.3752	Global Validation Acc: 0.0050
+Client 39	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2606	Train Acc: 0.0075	Local Validation  Loss: 5.2919	Local Validation Acc: 0.0050	Global Validation Loss: 5.3107	Global Validation Acc: 0.0050
+Client 32	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2463	Train Acc: 0.0150	Local Validation  Loss: 5.3013	Local Validation Acc: 0.0050	Global Validation Loss: 5.3132	Global Validation Acc: 0.0051
+Client 43	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2084	Train Acc: 0.0100	Local Validation  Loss: 5.3480	Local Validation Acc: 0.0000	Global Validation Loss: 5.3540	Global Validation Acc: 0.0050
+Client 45	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2089	Train Acc: 0.0138	Local Validation  Loss: 5.3731	Local Validation Acc: 0.0000	Global Validation Loss: 5.3736	Global Validation Acc: 0.0056
+Client 79	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.1829	Train Acc: 0.0112	Local Validation  Loss: 5.4176	Local Validation Acc: 0.0100	Global Validation Loss: 5.3674	Global Validation Acc: 0.0050
+Client 87	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2472	Train Acc: 0.0100	Local Validation  Loss: 5.3016	Local Validation Acc: 0.0000	Global Validation Loss: 5.3131	Global Validation Acc: 0.0050
+Client 34	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2357	Train Acc: 0.0150	Local Validation  Loss: 5.3045	Local Validation Acc: 0.0050	Global Validation Loss: 5.3238	Global Validation Acc: 0.0050
+Client 41	Dropout Rate: 0.0	Model Size: 42.99 MB	Train Loss: 5.2100	Train Acc: 0.0138	Local Validation  Loss: 5.4051	Local Validation Acc: 0.0050	Global Validation Loss: 5.4176	Global Validation Acc: 0.0050
+Client 52	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2150	Train Acc: 0.0150	Local Validation  Loss: 5.3814	Local Validation Acc: 0.0100	Global Validation Loss: 5.3621	Global Validation Acc: 0.0050
+Aggregated
+Global Test Loss: 5.3282	Global Test Acc: 0.0054
+Client 47	Local Validation Loss: 5.3094(-0.0330)	Local Validation Acc: 0.0050(0.0050)
+Client 39	Local Validation Loss: 5.3451(0.0531)	Local Validation Acc: 0.0050(0.0000)
+Client 32	Local Validation Loss: 5.3246(0.0233)	Local Validation Acc: 0.0200(0.0150)
+Client 43	Local Validation Loss: 5.3406(-0.0074)	Local Validation Acc: 0.0000(0.0000)
+Client 45	Local Validation Loss: 5.3359(-0.0371)	Local Validation Acc: 0.0000(0.0000)
+Client 79	Local Validation Loss: 5.3312(-0.0864)	Local Validation Acc: 0.0100(0.0000)
+Client 87	Local Validation Loss: 5.3419(0.0403)	Local Validation Acc: 0.0100(0.0100)
+Client 34	Local Validation Loss: 5.3013(-0.0031)	Local Validation Acc: 0.0100(0.0050)
+Client 41	Local Validation Loss: 5.3172(-0.0878)	Local Validation Acc: 0.0000(-0.0050)
+Client 52	Local Validation Loss: 5.3364(-0.0450)	Local Validation Acc: 0.0100(0.0000)
+Round 8 use time: 4.47 min, ETA: 14.31 hours
+================================================================================
+Round 9
+Selected 10 client IDs: [89 92 73 56 47 42 10 43 68 91]
+Parameter: conv1.weight, Sparsity: 0.3875, Original Sparsity: 0.3875, Coverage: 1.0000
+Parameter: layer1.0.conv1.weight, Sparsity: 0.2065, Original Sparsity: 0.1968, Coverage: 0.9534
+Parameter: layer1.0.conv2.weight, Sparsity: 0.2065, Original Sparsity: 0.1968, Coverage: 0.9534
+Parameter: layer1.1.conv1.weight, Sparsity: 0.2082, Original Sparsity: 0.1991, Coverage: 0.9561
+Parameter: layer1.1.conv2.weight, Sparsity: 0.2082, Original Sparsity: 0.1991, Coverage: 0.9561
+Parameter: layer2.0.conv1.weight, Sparsity: 0.2050, Original Sparsity: 0.1948, Coverage: 0.9502
+Parameter: layer2.0.conv2.weight, Sparsity: 0.2061, Original Sparsity: 0.1961, Coverage: 0.9517
+Parameter: layer2.0.downsample.0.weight, Sparsity: 0.2055, Original Sparsity: 0.1962, Coverage: 0.9545
+Parameter: layer2.1.conv1.weight, Sparsity: 0.2053, Original Sparsity: 0.1961, Coverage: 0.9554
+Parameter: layer2.1.conv2.weight, Sparsity: 0.2053, Original Sparsity: 0.1961, Coverage: 0.9554
+Parameter: layer3.0.conv1.weight, Sparsity: 0.2130, Original Sparsity: 0.2073, Coverage: 0.9735
+Parameter: layer3.0.conv2.weight, Sparsity: 0.2209, Original Sparsity: 0.2176, Coverage: 0.9852
+Parameter: layer3.0.downsample.0.weight, Sparsity: 0.2121, Original Sparsity: 0.2062, Coverage: 0.9722
+Parameter: layer3.1.conv1.weight, Sparsity: 0.2207, Original Sparsity: 0.2179, Coverage: 0.9873
+Parameter: layer3.1.conv2.weight, Sparsity: 0.2207, Original Sparsity: 0.2179, Coverage: 0.9873
+Parameter: layer4.0.conv1.weight, Sparsity: 0.2225, Original Sparsity: 0.2197, Coverage: 0.9872
+Parameter: layer4.0.conv2.weight, Sparsity: 0.2260, Original Sparsity: 0.2236, Coverage: 0.9893
+Parameter: layer4.0.downsample.0.weight, Sparsity: 0.2229, Original Sparsity: 0.2203, Coverage: 0.9888
+Parameter: layer4.1.conv1.weight, Sparsity: 0.2267, Original Sparsity: 0.2244, Coverage: 0.9900
+Parameter: layer4.1.conv2.weight, Sparsity: 0.2267, Original Sparsity: 0.2244, Coverage: 0.9900
+Parameter: fc.weight, Sparsity: 0.4070, Original Sparsity: 0.4070, Coverage: 1.0000
+Parameter: fc.bias, Sparsity: 1.0000, Original Sparsity: 1.0000, Coverage: 1.0000
+Sparsity: 0.2665, Original Sparsity: 0.2611, Coverage: 0.9744
+Sparsity: 0.2665, eta_g: 1.0000
+Client 89	Dropout Rate: 0.0	Model Size: 42.99 MB	Train Loss: 5.1889	Train Acc: 0.0100	Local Validation  Loss: 5.4571	Local Validation Acc: 0.0100	Global Validation Loss: 5.4078	Global Validation Acc: 0.0050
+Client 92	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2631	Train Acc: 0.0125	Local Validation  Loss: 5.3175	Local Validation Acc: 0.0050	Global Validation Loss: 5.3093	Global Validation Acc: 0.0051
+Client 73	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2368	Train Acc: 0.0100	Local Validation  Loss: 5.3552	Local Validation Acc: 0.0000	Global Validation Loss: 5.3275	Global Validation Acc: 0.0050
+Client 56	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2036	Train Acc: 0.0112	Local Validation  Loss: 5.4122	Local Validation Acc: 0.0050	Global Validation Loss: 5.3664	Global Validation Acc: 0.0050
+Client 47	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.1980	Train Acc: 0.0112	Local Validation  Loss: 5.3716	Local Validation Acc: 0.0000	Global Validation Loss: 5.3707	Global Validation Acc: 0.0050
+Client 42	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2056	Train Acc: 0.0112	Local Validation  Loss: 5.3448	Local Validation Acc: 0.0050	Global Validation Loss: 5.3616	Global Validation Acc: 0.0050
+Client 10	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2154	Train Acc: 0.0125	Local Validation  Loss: 5.3989	Local Validation Acc: 0.0050	Global Validation Loss: 5.3607	Global Validation Acc: 0.0050
+Client 43	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.1940	Train Acc: 0.0100	Local Validation  Loss: 5.3454	Local Validation Acc: 0.0000	Global Validation Loss: 5.3687	Global Validation Acc: 0.0050
+Client 68	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2134	Train Acc: 0.0088	Local Validation  Loss: 5.3310	Local Validation Acc: 0.0100	Global Validation Loss: 5.3393	Global Validation Acc: 0.0050
+Client 91	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2636	Train Acc: 0.0100	Local Validation  Loss: 5.3211	Local Validation Acc: 0.0050	Global Validation Loss: 5.3136	Global Validation Acc: 0.0050
+Aggregated
+Global Test Loss: 5.3266	Global Test Acc: 0.0050
+Client 89	Local Validation Loss: 5.3578(-0.0994)	Local Validation Acc: 0.0100(0.0000)
+Client 92	Local Validation Loss: 5.3238(0.0063)	Local Validation Acc: 0.0000(-0.0050)
+Client 73	Local Validation Loss: 5.3534(-0.0017)	Local Validation Acc: 0.0000(0.0000)
+Client 56	Local Validation Loss: 5.3063(-0.1059)	Local Validation Acc: 0.0050(0.0000)
+Client 47	Local Validation Loss: 5.2889(-0.0826)	Local Validation Acc: 0.0050(0.0050)
+Client 42	Local Validation Loss: 5.3187(-0.0261)	Local Validation Acc: 0.0000(-0.0050)
+Client 10	Local Validation Loss: 5.3530(-0.0459)	Local Validation Acc: 0.0050(0.0000)
+Client 43	Local Validation Loss: 5.3417(-0.0037)	Local Validation Acc: 0.0000(0.0000)
+Client 68	Local Validation Loss: 5.3049(-0.0262)	Local Validation Acc: 0.0250(0.0150)
+Client 91	Local Validation Loss: 5.3224(0.0013)	Local Validation Acc: 0.0050(0.0000)
+Round 9 use time: 4.51 min, ETA: 14.37 hours
+================================================================================
+Round 10
+Selected 10 client IDs: [27 82 13 10 17 45 25  6 38 95]
+Parameter: conv1.weight, Sparsity: 0.3000, Original Sparsity: 0.3000, Coverage: 1.0000
+Parameter: layer1.0.conv1.weight, Sparsity: 0.1527, Original Sparsity: 0.1309, Coverage: 0.8572
+Parameter: layer1.0.conv2.weight, Sparsity: 0.1527, Original Sparsity: 0.1309, Coverage: 0.8572
+Parameter: layer1.1.conv1.weight, Sparsity: 0.1546, Original Sparsity: 0.1360, Coverage: 0.8796
+Parameter: layer1.1.conv2.weight, Sparsity: 0.1546, Original Sparsity: 0.1360, Coverage: 0.8796
+Parameter: layer2.0.conv1.weight, Sparsity: 0.1551, Original Sparsity: 0.1349, Coverage: 0.8698
+Parameter: layer2.0.conv2.weight, Sparsity: 0.1555, Original Sparsity: 0.1354, Coverage: 0.8710
+Parameter: layer2.0.downsample.0.weight, Sparsity: 0.1547, Original Sparsity: 0.1358, Coverage: 0.8781
+Parameter: layer2.1.conv1.weight, Sparsity: 0.1551, Original Sparsity: 0.1352, Coverage: 0.8719
+Parameter: layer2.1.conv2.weight, Sparsity: 0.1551, Original Sparsity: 0.1352, Coverage: 0.8719
+Parameter: layer3.0.conv1.weight, Sparsity: 0.1607, Original Sparsity: 0.1414, Coverage: 0.8799
+Parameter: layer3.0.conv2.weight, Sparsity: 0.1693, Original Sparsity: 0.1471, Coverage: 0.8691
+Parameter: layer3.0.downsample.0.weight, Sparsity: 0.1603, Original Sparsity: 0.1417, Coverage: 0.8842
+Parameter: layer3.1.conv1.weight, Sparsity: 0.1697, Original Sparsity: 0.1471, Coverage: 0.8672
+Parameter: layer3.1.conv2.weight, Sparsity: 0.1697, Original Sparsity: 0.1471, Coverage: 0.8672
+Parameter: layer4.0.conv1.weight, Sparsity: 0.1671, Original Sparsity: 0.1452, Coverage: 0.8692
+Parameter: layer4.0.conv2.weight, Sparsity: 0.1664, Original Sparsity: 0.1435, Coverage: 0.8622
+Parameter: layer4.0.downsample.0.weight, Sparsity: 0.1677, Original Sparsity: 0.1456, Coverage: 0.8685
+Parameter: layer4.1.conv1.weight, Sparsity: 0.1668, Original Sparsity: 0.1443, Coverage: 0.8653
+Parameter: layer4.1.conv2.weight, Sparsity: 0.1668, Original Sparsity: 0.1443, Coverage: 0.8653
+Parameter: fc.weight, Sparsity: 0.3105, Original Sparsity: 0.3105, Coverage: 1.0000
+Parameter: fc.bias, Sparsity: 1.0000, Original Sparsity: 1.0000, Coverage: 1.0000
+Sparsity: 0.2121, Original Sparsity: 0.1940, Coverage: 0.8879
+Sparsity: 0.2121, eta_g: 1.0000
+Client 27	Dropout Rate: 0.25	Model Size: 24.26 MB	Train Loss: 5.2114	Train Acc: 0.0112	Local Validation  Loss: 5.4485	Local Validation Acc: 0.0050	Global Validation Loss: 5.3792	Global Validation Acc: 0.0052
+Client 82	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2701	Train Acc: 0.0100	Local Validation  Loss: 5.2998	Local Validation Acc: 0.0050	Global Validation Loss: 5.3066	Global Validation Acc: 0.0050
+Client 13	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2072	Train Acc: 0.0088	Local Validation  Loss: 5.3293	Local Validation Acc: 0.0150	Global Validation Loss: 5.3535	Global Validation Acc: 0.0050
+Client 10	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2098	Train Acc: 0.0125	Local Validation  Loss: 5.3740	Local Validation Acc: 0.0050	Global Validation Loss: 5.3464	Global Validation Acc: 0.0050
+Client 17	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2554	Train Acc: 0.0150	Local Validation  Loss: 5.3107	Local Validation Acc: 0.0050	Global Validation Loss: 5.3085	Global Validation Acc: 0.0051
+Client 45	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2173	Train Acc: 0.0112	Local Validation  Loss: 5.3505	Local Validation Acc: 0.0100	Global Validation Loss: 5.3488	Global Validation Acc: 0.0050
+Client 25	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2322	Train Acc: 0.0138	Local Validation  Loss: 5.3231	Local Validation Acc: 0.0200	Global Validation Loss: 5.3301	Global Validation Acc: 0.0050
+Client 6	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2514	Train Acc: 0.0088	Local Validation  Loss: 5.3315	Local Validation Acc: 0.0100	Global Validation Loss: 5.3166	Global Validation Acc: 0.0050
+Client 38	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2669	Train Acc: 0.0075	Local Validation  Loss: 5.3074	Local Validation Acc: 0.0100	Global Validation Loss: 5.3103	Global Validation Acc: 0.0050
+Client 95	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2379	Train Acc: 0.0125	Local Validation  Loss: 5.3301	Local Validation Acc: 0.0050	Global Validation Loss: 5.3306	Global Validation Acc: 0.0050
+Aggregated
+Global Test Loss: 5.3301	Global Test Acc: 0.0050
+Client 27	Local Validation Loss: 5.3635(-0.0850)	Local Validation Acc: 0.0050(0.0000)
+Client 82	Local Validation Loss: 5.3325(0.0327)	Local Validation Acc: 0.0150(0.0100)
+Client 13	Local Validation Loss: 5.3445(0.0152)	Local Validation Acc: 0.0050(-0.0100)
+Client 10	Local Validation Loss: 5.3521(-0.0219)	Local Validation Acc: 0.0000(-0.0050)
+Client 17	Local Validation Loss: 5.3377(0.0270)	Local Validation Acc: 0.0100(0.0050)
+Client 45	Local Validation Loss: 5.3268(-0.0236)	Local Validation Acc: 0.0050(-0.0050)
+Client 25	Local Validation Loss: 5.3574(0.0343)	Local Validation Acc: 0.0000(-0.0200)
+Client 6	Local Validation Loss: 5.3260(-0.0055)	Local Validation Acc: 0.0050(-0.0050)
+Client 38	Local Validation Loss: 5.3233(0.0159)	Local Validation Acc: 0.0000(-0.0100)
+Client 95	Local Validation Loss: 5.3232(-0.0069)	Local Validation Acc: 0.0050(0.0000)
+Average: 0.0051 | 0.0000 (compared to average)
+Drpout Rate 0.0: 0.0029 | -0.0022 (compared to average)
+Drpout Rate 0.25: 0.0069 | 0.0018 (compared to average)
+Drpout Rate 0.5: 0.0045 | -0.0005 (compared to average)
+Drpout Rate 0.75: 0.0050 | -0.0001 (compared to average)
+Drpout Rate 0.9: 0.0053 | 0.0002 (compared to average)
+Round 10 use time: 5.97 min, ETA: 18.89 hours
+================================================================================
+Round 11
+Selected 10 client IDs: [78 58 30 52 34 81 91  9 27 48]
+Parameter: conv1.weight, Sparsity: 0.3797, Original Sparsity: 0.3797, Coverage: 1.0000
+Parameter: layer1.0.conv1.weight, Sparsity: 0.2047, Original Sparsity: 0.1945, Coverage: 0.9504
+Parameter: layer1.0.conv2.weight, Sparsity: 0.2047, Original Sparsity: 0.1945, Coverage: 0.9504
+Parameter: layer1.1.conv1.weight, Sparsity: 0.2107, Original Sparsity: 0.2037, Coverage: 0.9666
+Parameter: layer1.1.conv2.weight, Sparsity: 0.2107, Original Sparsity: 0.2037, Coverage: 0.9666
+Parameter: layer2.0.conv1.weight, Sparsity: 0.2020, Original Sparsity: 0.1930, Coverage: 0.9556
+Parameter: layer2.0.conv2.weight, Sparsity: 0.2008, Original Sparsity: 0.1924, Coverage: 0.9582
+Parameter: layer2.0.downsample.0.weight, Sparsity: 0.2010, Original Sparsity: 0.1926, Coverage: 0.9581
+Parameter: layer2.1.conv1.weight, Sparsity: 0.1994, Original Sparsity: 0.1919, Coverage: 0.9625
+Parameter: layer2.1.conv2.weight, Sparsity: 0.1994, Original Sparsity: 0.1919, Coverage: 0.9625
+Parameter: layer3.0.conv1.weight, Sparsity: 0.2055, Original Sparsity: 0.1994, Coverage: 0.9703
+Parameter: layer3.0.conv2.weight, Sparsity: 0.2142, Original Sparsity: 0.2085, Coverage: 0.9735
+Parameter: layer3.0.downsample.0.weight, Sparsity: 0.2064, Original Sparsity: 0.2000, Coverage: 0.9688
+Parameter: layer3.1.conv1.weight, Sparsity: 0.2120, Original Sparsity: 0.2052, Coverage: 0.9681
+Parameter: layer3.1.conv2.weight, Sparsity: 0.2120, Original Sparsity: 0.2052, Coverage: 0.9681
+Parameter: layer4.0.conv1.weight, Sparsity: 0.2204, Original Sparsity: 0.2147, Coverage: 0.9740
+Parameter: layer4.0.conv2.weight, Sparsity: 0.2258, Original Sparsity: 0.2206, Coverage: 0.9770
+Parameter: layer4.0.downsample.0.weight, Sparsity: 0.2203, Original Sparsity: 0.2148, Coverage: 0.9750
+Parameter: layer4.1.conv1.weight, Sparsity: 0.2255, Original Sparsity: 0.2198, Coverage: 0.9747
+Parameter: layer4.1.conv2.weight, Sparsity: 0.2255, Original Sparsity: 0.2198, Coverage: 0.9747
+Parameter: fc.weight, Sparsity: 0.4006, Original Sparsity: 0.4006, Coverage: 1.0000
+Parameter: fc.bias, Sparsity: 1.0000, Original Sparsity: 1.0000, Coverage: 1.0000
+Sparsity: 0.2628, Original Sparsity: 0.2567, Coverage: 0.9707
+Sparsity: 0.2628, eta_g: 1.0000
+Client 78	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2237	Train Acc: 0.0112	Local Validation  Loss: 5.3740	Local Validation Acc: 0.0000	Global Validation Loss: 5.3417	Global Validation Acc: 0.0040
+Client 58	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2116	Train Acc: 0.0138	Local Validation  Loss: 5.3693	Local Validation Acc: 0.0000	Global Validation Loss: 5.3459	Global Validation Acc: 0.0050
+Client 30	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2544	Train Acc: 0.0075	Local Validation  Loss: 5.3210	Local Validation Acc: 0.0050	Global Validation Loss: 5.3106	Global Validation Acc: 0.0049
+Client 52	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2232	Train Acc: 0.0150	Local Validation  Loss: 5.3730	Local Validation Acc: 0.0100	Global Validation Loss: 5.3447	Global Validation Acc: 0.0050
+Client 34	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2382	Train Acc: 0.0125	Local Validation  Loss: 5.3223	Local Validation Acc: 0.0050	Global Validation Loss: 5.3232	Global Validation Acc: 0.0052
+Client 81	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.1981	Train Acc: 0.0112	Local Validation  Loss: 5.3488	Local Validation Acc: 0.0000	Global Validation Loss: 5.3512	Global Validation Acc: 0.0050
+Client 91	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2803	Train Acc: 0.0050	Local Validation  Loss: 5.3029	Local Validation Acc: 0.0000	Global Validation Loss: 5.3044	Global Validation Acc: 0.0050
+Client 9	Dropout Rate: 0.0	Model Size: 42.99 MB	Train Loss: 5.2016	Train Acc: 0.0125	Local Validation  Loss: 5.4423	Local Validation Acc: 0.0050	Global Validation Loss: 5.4056	Global Validation Acc: 0.0050
+Client 27	Dropout Rate: 0.25	Model Size: 24.26 MB	Train Loss: 5.2068	Train Acc: 0.0112	Local Validation  Loss: 5.4446	Local Validation Acc: 0.0000	Global Validation Loss: 5.3829	Global Validation Acc: 0.0050
+Client 48	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2506	Train Acc: 0.0100	Local Validation  Loss: 5.3186	Local Validation Acc: 0.0000	Global Validation Loss: 5.3118	Global Validation Acc: 0.0050
+Aggregated
+Global Test Loss: 5.3241	Global Test Acc: 0.0050
+Client 78	Local Validation Loss: 5.3576(-0.0164)	Local Validation Acc: 0.0000(0.0000)
+Client 58	Local Validation Loss: 5.3095(-0.0598)	Local Validation Acc: 0.0100(0.0100)
+Client 30	Local Validation Loss: 5.3152(-0.0058)	Local Validation Acc: 0.0050(0.0000)
+Client 52	Local Validation Loss: 5.3253(-0.0477)	Local Validation Acc: 0.0000(-0.0100)
+Client 34	Local Validation Loss: 5.2976(-0.0247)	Local Validation Acc: 0.0000(-0.0050)
+Client 81	Local Validation Loss: 5.3524(0.0035)	Local Validation Acc: 0.0000(0.0000)
+Client 91	Local Validation Loss: 5.3209(0.0180)	Local Validation Acc: 0.0100(0.0100)
+Client 9	Local Validation Loss: 5.3303(-0.1120)	Local Validation Acc: 0.0050(0.0000)
+Client 27	Local Validation Loss: 5.3578(-0.0868)	Local Validation Acc: 0.0000(0.0000)
+Client 48	Local Validation Loss: 5.3258(0.0072)	Local Validation Acc: 0.0000(0.0000)
+Round 11 use time: 4.60 min, ETA: 14.50 hours
+================================================================================
+Round 12
+Selected 10 client IDs: [41 25 61 26 71 62 17 43 24  1]
+Parameter: conv1.weight, Sparsity: 0.3219, Original Sparsity: 0.3219, Coverage: 1.0000
+Parameter: layer1.0.conv1.weight, Sparsity: 0.1898, Original Sparsity: 0.1795, Coverage: 0.9458
+Parameter: layer1.0.conv2.weight, Sparsity: 0.1898, Original Sparsity: 0.1795, Coverage: 0.9458
+Parameter: layer1.1.conv1.weight, Sparsity: 0.1900, Original Sparsity: 0.1796, Coverage: 0.9453
+Parameter: layer1.1.conv2.weight, Sparsity: 0.1900, Original Sparsity: 0.1796, Coverage: 0.9453
+Parameter: layer2.0.conv1.weight, Sparsity: 0.1900, Original Sparsity: 0.1797, Coverage: 0.9453
+Parameter: layer2.0.conv2.weight, Sparsity: 0.1951, Original Sparsity: 0.1858, Coverage: 0.9520
+Parameter: layer2.0.downsample.0.weight, Sparsity: 0.1924, Original Sparsity: 0.1813, Coverage: 0.9424
+Parameter: layer2.1.conv1.weight, Sparsity: 0.1962, Original Sparsity: 0.1862, Coverage: 0.9493
+Parameter: layer2.1.conv2.weight, Sparsity: 0.1962, Original Sparsity: 0.1862, Coverage: 0.9493
+Parameter: layer3.0.conv1.weight, Sparsity: 0.2025, Original Sparsity: 0.1927, Coverage: 0.9515
+Parameter: layer3.0.conv2.weight, Sparsity: 0.2063, Original Sparsity: 0.1978, Coverage: 0.9589
+Parameter: layer3.0.downsample.0.weight, Sparsity: 0.2006, Original Sparsity: 0.1916, Coverage: 0.9550
+Parameter: layer3.1.conv1.weight, Sparsity: 0.2075, Original Sparsity: 0.1985, Coverage: 0.9568
+Parameter: layer3.1.conv2.weight, Sparsity: 0.2075, Original Sparsity: 0.1985, Coverage: 0.9568
+Parameter: layer4.0.conv1.weight, Sparsity: 0.2135, Original Sparsity: 0.2055, Coverage: 0.9629
+Parameter: layer4.0.conv2.weight, Sparsity: 0.2212, Original Sparsity: 0.2132, Coverage: 0.9639
+Parameter: layer4.0.downsample.0.weight, Sparsity: 0.2118, Original Sparsity: 0.2042, Coverage: 0.9638
+Parameter: layer4.1.conv1.weight, Sparsity: 0.2199, Original Sparsity: 0.2125, Coverage: 0.9666
+Parameter: layer4.1.conv2.weight, Sparsity: 0.2199, Original Sparsity: 0.2125, Coverage: 0.9666
+Parameter: fc.weight, Sparsity: 0.3543, Original Sparsity: 0.3543, Coverage: 1.0000
+Parameter: fc.bias, Sparsity: 1.0000, Original Sparsity: 1.0000, Coverage: 1.0000
+Sparsity: 0.2507, Original Sparsity: 0.2428, Coverage: 0.9602
+Sparsity: 0.2507, eta_g: 1.0000
+Client 41	Dropout Rate: 0.0	Model Size: 42.99 MB	Train Loss: 5.2090	Train Acc: 0.0138	Local Validation  Loss: 5.3800	Local Validation Acc: 0.0050	Global Validation Loss: 5.3878	Global Validation Acc: 0.0050
+Client 25	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2348	Train Acc: 0.0138	Local Validation  Loss: 5.3191	Local Validation Acc: 0.0200	Global Validation Loss: 5.3219	Global Validation Acc: 0.0050
+Client 61	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2660	Train Acc: 0.0063	Local Validation  Loss: 5.3106	Local Validation Acc: 0.0050	Global Validation Loss: 5.3072	Global Validation Acc: 0.0054
+Client 26	Dropout Rate: 0.25	Model Size: 24.26 MB	Train Loss: 5.2027	Train Acc: 0.0125	Local Validation  Loss: 5.3806	Local Validation Acc: 0.0050	Global Validation Loss: 5.3672	Global Validation Acc: 0.0051
+Client 71	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2667	Train Acc: 0.0100	Local Validation  Loss: 5.3313	Local Validation Acc: 0.0000	Global Validation Loss: 5.3091	Global Validation Acc: 0.0050
+Client 62	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2607	Train Acc: 0.0100	Local Validation  Loss: 5.3130	Local Validation Acc: 0.0150	Global Validation Loss: 5.3117	Global Validation Acc: 0.0050
+Client 17	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2592	Train Acc: 0.0112	Local Validation  Loss: 5.3081	Local Validation Acc: 0.0150	Global Validation Loss: 5.3082	Global Validation Acc: 0.0041
+Client 43	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.1940	Train Acc: 0.0100	Local Validation  Loss: 5.3563	Local Validation Acc: 0.0150	Global Validation Loss: 5.3514	Global Validation Acc: 0.0050
+Client 24	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2480	Train Acc: 0.0088	Local Validation  Loss: 5.3239	Local Validation Acc: 0.0000	Global Validation Loss: 5.3156	Global Validation Acc: 0.0050
+Client 1	Dropout Rate: 0.0	Model Size: 42.99 MB	Train Loss: 5.1883	Train Acc: 0.0125	Local Validation  Loss: 5.3518	Local Validation Acc: 0.0000	Global Validation Loss: 5.3975	Global Validation Acc: 0.0050
+Aggregated
+Global Test Loss: 5.3212	Global Test Acc: 0.0050
+Client 41	Local Validation Loss: 5.3293(-0.0507)	Local Validation Acc: 0.0100(0.0050)
+Client 25	Local Validation Loss: 5.3468(0.0277)	Local Validation Acc: 0.0000(-0.0200)
+Client 61	Local Validation Loss: 5.3185(0.0079)	Local Validation Acc: 0.0150(0.0100)
+Client 26	Local Validation Loss: 5.3396(-0.0410)	Local Validation Acc: 0.0000(-0.0050)
+Client 71	Local Validation Loss: 5.3328(0.0015)	Local Validation Acc: 0.0150(0.0150)
+Client 62	Local Validation Loss: 5.3217(0.0087)	Local Validation Acc: 0.0000(-0.0150)
+Client 17	Local Validation Loss: 5.3215(0.0134)	Local Validation Acc: 0.0050(-0.0100)
+Client 43	Local Validation Loss: 5.3510(-0.0052)	Local Validation Acc: 0.0100(-0.0050)
+Client 24	Local Validation Loss: 5.3235(-0.0004)	Local Validation Acc: 0.0000(0.0000)
+Client 1	Local Validation Loss: 5.3077(-0.0441)	Local Validation Acc: 0.0050(0.0050)
+Round 12 use time: 4.64 min, ETA: 14.53 hours
+================================================================================
+Round 13
+Selected 10 client IDs: [54 85 79 43  8 95  5 93 24 10]
+Parameter: conv1.weight, Sparsity: 0.2953, Original Sparsity: 0.2953, Coverage: 1.0000
+Parameter: layer1.0.conv1.weight, Sparsity: 0.1498, Original Sparsity: 0.1142, Coverage: 0.7622
+Parameter: layer1.0.conv2.weight, Sparsity: 0.1498, Original Sparsity: 0.1142, Coverage: 0.7622
+Parameter: layer1.1.conv1.weight, Sparsity: 0.1467, Original Sparsity: 0.1141, Coverage: 0.7781
+Parameter: layer1.1.conv2.weight, Sparsity: 0.1467, Original Sparsity: 0.1141, Coverage: 0.7781
+Parameter: layer2.0.conv1.weight, Sparsity: 0.1464, Original Sparsity: 0.1138, Coverage: 0.7775
+Parameter: layer2.0.conv2.weight, Sparsity: 0.1471, Original Sparsity: 0.1123, Coverage: 0.7636
+Parameter: layer2.0.downsample.0.weight, Sparsity: 0.1473, Original Sparsity: 0.1122, Coverage: 0.7615
+Parameter: layer2.1.conv1.weight, Sparsity: 0.1487, Original Sparsity: 0.1135, Coverage: 0.7629
+Parameter: layer2.1.conv2.weight, Sparsity: 0.1487, Original Sparsity: 0.1135, Coverage: 0.7629
+Parameter: layer3.0.conv1.weight, Sparsity: 0.1439, Original Sparsity: 0.1092, Coverage: 0.7587
+Parameter: layer3.0.conv2.weight, Sparsity: 0.1447, Original Sparsity: 0.1099, Coverage: 0.7592
+Parameter: layer3.0.downsample.0.weight, Sparsity: 0.1443, Original Sparsity: 0.1100, Coverage: 0.7621
+Parameter: layer3.1.conv1.weight, Sparsity: 0.1457, Original Sparsity: 0.1113, Coverage: 0.7642
+Parameter: layer3.1.conv2.weight, Sparsity: 0.1457, Original Sparsity: 0.1113, Coverage: 0.7642
+Parameter: layer4.0.conv1.weight, Sparsity: 0.1434, Original Sparsity: 0.1103, Coverage: 0.7688
+Parameter: layer4.0.conv2.weight, Sparsity: 0.1432, Original Sparsity: 0.1100, Coverage: 0.7683
+Parameter: layer4.0.downsample.0.weight, Sparsity: 0.1437, Original Sparsity: 0.1103, Coverage: 0.7675
+Parameter: layer4.1.conv1.weight, Sparsity: 0.1431, Original Sparsity: 0.1100, Coverage: 0.7687
+Parameter: layer4.1.conv2.weight, Sparsity: 0.1431, Original Sparsity: 0.1100, Coverage: 0.7687
+Parameter: fc.weight, Sparsity: 0.2918, Original Sparsity: 0.2918, Coverage: 1.0000
+Parameter: fc.bias, Sparsity: 1.0000, Original Sparsity: 1.0000, Coverage: 1.0000
+Sparsity: 0.1981, Original Sparsity: 0.1687, Coverage: 0.7982
+Sparsity: 0.1981, eta_g: 1.0000
+Client 54	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2723	Train Acc: 0.0050	Local Validation  Loss: 5.2999	Local Validation Acc: 0.0000	Global Validation Loss: 5.3048	Global Validation Acc: 0.0048
+Client 85	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2254	Train Acc: 0.0112	Local Validation  Loss: 5.3264	Local Validation Acc: 0.0000	Global Validation Loss: 5.3369	Global Validation Acc: 0.0050
+Client 79	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.1988	Train Acc: 0.0088	Local Validation  Loss: 5.3753	Local Validation Acc: 0.0050	Global Validation Loss: 5.3474	Global Validation Acc: 0.0050
+Client 43	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.1977	Train Acc: 0.0100	Local Validation  Loss: 5.3734	Local Validation Acc: 0.0000	Global Validation Loss: 5.3547	Global Validation Acc: 0.0050
+Client 8	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2429	Train Acc: 0.0125	Local Validation  Loss: 5.3100	Local Validation Acc: 0.0050	Global Validation Loss: 5.3211	Global Validation Acc: 0.0050
+Client 95	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2475	Train Acc: 0.0075	Local Validation  Loss: 5.3124	Local Validation Acc: 0.0000	Global Validation Loss: 5.3187	Global Validation Acc: 0.0058
+Client 5	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2654	Train Acc: 0.0063	Local Validation  Loss: 5.3102	Local Validation Acc: 0.0150	Global Validation Loss: 5.3070	Global Validation Acc: 0.0050
+Client 93	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2135	Train Acc: 0.0100	Local Validation  Loss: 5.3431	Local Validation Acc: 0.0000	Global Validation Loss: 5.3293	Global Validation Acc: 0.0050
+Client 24	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2596	Train Acc: 0.0100	Local Validation  Loss: 5.3114	Local Validation Acc: 0.0000	Global Validation Loss: 5.3075	Global Validation Acc: 0.0050
+Client 10	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2195	Train Acc: 0.0125	Local Validation  Loss: 5.3741	Local Validation Acc: 0.0100	Global Validation Loss: 5.3373	Global Validation Acc: 0.0053
+Aggregated
+Global Test Loss: 5.3286	Global Test Acc: 0.0050
+Client 54	Local Validation Loss: 5.3280(0.0281)	Local Validation Acc: 0.0050(0.0050)
+Client 85	Local Validation Loss: 5.3167(-0.0097)	Local Validation Acc: 0.0000(0.0000)
+Client 79	Local Validation Loss: 5.3482(-0.0271)	Local Validation Acc: 0.0000(-0.0050)
+Client 43	Local Validation Loss: 5.3484(-0.0251)	Local Validation Acc: 0.0050(0.0050)
+Client 8	Local Validation Loss: 5.3266(0.0165)	Local Validation Acc: 0.0050(0.0000)
+Client 95	Local Validation Loss: 5.3390(0.0266)	Local Validation Acc: 0.0050(0.0050)
+Client 5	Local Validation Loss: 5.3362(0.0260)	Local Validation Acc: 0.0050(-0.0100)
+Client 93	Local Validation Loss: 5.3594(0.0163)	Local Validation Acc: 0.0000(0.0000)
+Client 24	Local Validation Loss: 5.3229(0.0115)	Local Validation Acc: 0.0200(0.0200)
+Client 10	Local Validation Loss: 5.3735(-0.0007)	Local Validation Acc: 0.0100(0.0000)
+Round 13 use time: 4.33 min, ETA: 13.50 hours
+================================================================================
+Round 14
+Selected 10 client IDs: [42 73  2 68 82 75 17 77 24 21]
+Parameter: conv1.weight, Sparsity: 0.2328, Original Sparsity: 0.2328, Coverage: 1.0000
+Parameter: layer1.0.conv1.weight, Sparsity: 0.1243, Original Sparsity: 0.0770, Coverage: 0.6199
+Parameter: layer1.0.conv2.weight, Sparsity: 0.1243, Original Sparsity: 0.0770, Coverage: 0.6199
+Parameter: layer1.1.conv1.weight, Sparsity: 0.1273, Original Sparsity: 0.0773, Coverage: 0.6077
+Parameter: layer1.1.conv2.weight, Sparsity: 0.1273, Original Sparsity: 0.0773, Coverage: 0.6077
+Parameter: layer2.0.conv1.weight, Sparsity: 0.1257, Original Sparsity: 0.0771, Coverage: 0.6139
+Parameter: layer2.0.conv2.weight, Sparsity: 0.1257, Original Sparsity: 0.0777, Coverage: 0.6184
+Parameter: layer2.0.downsample.0.weight, Sparsity: 0.1255, Original Sparsity: 0.0768, Coverage: 0.6122
+Parameter: layer2.1.conv1.weight, Sparsity: 0.1264, Original Sparsity: 0.0776, Coverage: 0.6138
+Parameter: layer2.1.conv2.weight, Sparsity: 0.1264, Original Sparsity: 0.0776, Coverage: 0.6138
+Parameter: layer3.0.conv1.weight, Sparsity: 0.1230, Original Sparsity: 0.0759, Coverage: 0.6172
+Parameter: layer3.0.conv2.weight, Sparsity: 0.1228, Original Sparsity: 0.0743, Coverage: 0.6054
+Parameter: layer3.0.downsample.0.weight, Sparsity: 0.1224, Original Sparsity: 0.0755, Coverage: 0.6170
+Parameter: layer3.1.conv1.weight, Sparsity: 0.1230, Original Sparsity: 0.0734, Coverage: 0.5966
+Parameter: layer3.1.conv2.weight, Sparsity: 0.1230, Original Sparsity: 0.0734, Coverage: 0.5966
+Parameter: layer4.0.conv1.weight, Sparsity: 0.1213, Original Sparsity: 0.0738, Coverage: 0.6088
+Parameter: layer4.0.conv2.weight, Sparsity: 0.1217, Original Sparsity: 0.0741, Coverage: 0.6086
+Parameter: layer4.0.downsample.0.weight, Sparsity: 0.1216, Original Sparsity: 0.0742, Coverage: 0.6102
+Parameter: layer4.1.conv1.weight, Sparsity: 0.1216, Original Sparsity: 0.0732, Coverage: 0.6022
+Parameter: layer4.1.conv2.weight, Sparsity: 0.1216, Original Sparsity: 0.0732, Coverage: 0.6022
+Parameter: fc.weight, Sparsity: 0.2346, Original Sparsity: 0.2346, Coverage: 1.0000
+Parameter: fc.bias, Sparsity: 1.0000, Original Sparsity: 1.0000, Coverage: 1.0000
+Sparsity: 0.1737, Original Sparsity: 0.1320, Coverage: 0.6633
+Sparsity: 0.1737, eta_g: 1.0000
+Client 42	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2161	Train Acc: 0.0125	Local Validation  Loss: 5.3176	Local Validation Acc: 0.0150	Global Validation Loss: 5.3470	Global Validation Acc: 0.0050
+Client 73	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2327	Train Acc: 0.0125	Local Validation  Loss: 5.3475	Local Validation Acc: 0.0000	Global Validation Loss: 5.3226	Global Validation Acc: 0.0051
+Client 2	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2231	Train Acc: 0.0100	Local Validation  Loss: 5.3279	Local Validation Acc: 0.0000	Global Validation Loss: 5.3411	Global Validation Acc: 0.0050
+Client 68	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2422	Train Acc: 0.0112	Local Validation  Loss: 5.3294	Local Validation Acc: 0.0000	Global Validation Loss: 5.3152	Global Validation Acc: 0.0050
+Client 82	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2661	Train Acc: 0.0075	Local Validation  Loss: 5.3128	Local Validation Acc: 0.0150	Global Validation Loss: 5.3078	Global Validation Acc: 0.0050
+Client 75	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2374	Train Acc: 0.0138	Local Validation  Loss: 5.3457	Local Validation Acc: 0.0100	Global Validation Loss: 5.3239	Global Validation Acc: 0.0055
+Client 17	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2666	Train Acc: 0.0063	Local Validation  Loss: 5.3183	Local Validation Acc: 0.0100	Global Validation Loss: 5.3070	Global Validation Acc: 0.0048
+Client 77	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2256	Train Acc: 0.0088	Local Validation  Loss: 5.3167	Local Validation Acc: 0.0100	Global Validation Loss: 5.3230	Global Validation Acc: 0.0050
+Client 24	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2601	Train Acc: 0.0075	Local Validation  Loss: 5.3128	Local Validation Acc: 0.0050	Global Validation Loss: 5.3072	Global Validation Acc: 0.0050
+Client 21	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2636	Train Acc: 0.0088	Local Validation  Loss: 5.3075	Local Validation Acc: 0.0000	Global Validation Loss: 5.3174	Global Validation Acc: 0.0060
+Aggregated
+Global Test Loss: 5.3286	Global Test Acc: 0.0050
+Client 42	Local Validation Loss: 5.3068(-0.0108)	Local Validation Acc: 0.0200(0.0050)
+Client 73	Local Validation Loss: 5.3514(0.0039)	Local Validation Acc: 0.0000(0.0000)
+Client 2	Local Validation Loss: 5.3040(-0.0239)	Local Validation Acc: 0.0000(0.0000)
+Client 68	Local Validation Loss: 5.3649(0.0354)	Local Validation Acc: 0.0100(0.0100)
+Client 82	Local Validation Loss: 5.3120(-0.0008)	Local Validation Acc: 0.0100(-0.0050)
+Client 75	Local Validation Loss: 5.3416(-0.0040)	Local Validation Acc: 0.0000(-0.0100)
+Client 17	Local Validation Loss: 5.3245(0.0062)	Local Validation Acc: 0.0100(0.0000)
+Client 77	Local Validation Loss: 5.3314(0.0147)	Local Validation Acc: 0.0000(-0.0100)
+Client 24	Local Validation Loss: 5.3151(0.0023)	Local Validation Acc: 0.0200(0.0150)
+Client 21	Local Validation Loss: 5.3642(0.0567)	Local Validation Acc: 0.0050(0.0050)
+Round 14 use time: 4.33 min, ETA: 13.42 hours
+================================================================================
+Round 15
+Selected 10 client IDs: [52 16 39 72  6  8 86 32 82 18]
+Parameter: conv1.weight, Sparsity: 0.1844, Original Sparsity: 0.1844, Coverage: 1.0000
+Parameter: layer1.0.conv1.weight, Sparsity: 0.1125, Original Sparsity: 0.0586, Coverage: 0.5210
+Parameter: layer1.0.conv2.weight, Sparsity: 0.1125, Original Sparsity: 0.0586, Coverage: 0.5210
+Parameter: layer1.1.conv1.weight, Sparsity: 0.1123, Original Sparsity: 0.0545, Coverage: 0.4851
+Parameter: layer1.1.conv2.weight, Sparsity: 0.1123, Original Sparsity: 0.0545, Coverage: 0.4851
+Parameter: layer2.0.conv1.weight, Sparsity: 0.1124, Original Sparsity: 0.0568, Coverage: 0.5052
+Parameter: layer2.0.conv2.weight, Sparsity: 0.1117, Original Sparsity: 0.0561, Coverage: 0.5024
+Parameter: layer2.0.downsample.0.weight, Sparsity: 0.1116, Original Sparsity: 0.0559, Coverage: 0.5006
+Parameter: layer2.1.conv1.weight, Sparsity: 0.1116, Original Sparsity: 0.0568, Coverage: 0.5087
+Parameter: layer2.1.conv2.weight, Sparsity: 0.1116, Original Sparsity: 0.0568, Coverage: 0.5087
+Parameter: layer3.0.conv1.weight, Sparsity: 0.1092, Original Sparsity: 0.0588, Coverage: 0.5381
+Parameter: layer3.0.conv2.weight, Sparsity: 0.1115, Original Sparsity: 0.0629, Coverage: 0.5645
+Parameter: layer3.0.downsample.0.weight, Sparsity: 0.1089, Original Sparsity: 0.0588, Coverage: 0.5393
+Parameter: layer3.1.conv1.weight, Sparsity: 0.1116, Original Sparsity: 0.0629, Coverage: 0.5639
+Parameter: layer3.1.conv2.weight, Sparsity: 0.1116, Original Sparsity: 0.0629, Coverage: 0.5639
+Parameter: layer4.0.conv1.weight, Sparsity: 0.1103, Original Sparsity: 0.0603, Coverage: 0.5462
+Parameter: layer4.0.conv2.weight, Sparsity: 0.1106, Original Sparsity: 0.0578, Coverage: 0.5221
+Parameter: layer4.0.downsample.0.weight, Sparsity: 0.1102, Original Sparsity: 0.0601, Coverage: 0.5454
+Parameter: layer4.1.conv1.weight, Sparsity: 0.1107, Original Sparsity: 0.0583, Coverage: 0.5271
+Parameter: layer4.1.conv2.weight, Sparsity: 0.1107, Original Sparsity: 0.0583, Coverage: 0.5271
+Parameter: fc.weight, Sparsity: 0.1885, Original Sparsity: 0.1885, Coverage: 1.0000
+Parameter: fc.bias, Sparsity: 1.0000, Original Sparsity: 1.0000, Coverage: 1.0000
+Sparsity: 0.1585, Original Sparsity: 0.1128, Coverage: 0.5898
+Sparsity: 0.1585, eta_g: 1.0000
+Client 52	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2114	Train Acc: 0.0150	Local Validation  Loss: 5.3673	Local Validation Acc: 0.0100	Global Validation Loss: 5.3451	Global Validation Acc: 0.0050
+Client 16	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2334	Train Acc: 0.0150	Local Validation  Loss: 5.3328	Local Validation Acc: 0.0150	Global Validation Loss: 5.3325	Global Validation Acc: 0.0050
+Client 39	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2788	Train Acc: 0.0112	Local Validation  Loss: 5.3078	Local Validation Acc: 0.0000	Global Validation Loss: 5.3054	Global Validation Acc: 0.0050
+Client 72	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2700	Train Acc: 0.0075	Local Validation  Loss: 5.3205	Local Validation Acc: 0.0150	Global Validation Loss: 5.3080	Global Validation Acc: 0.0050
+Client 6	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2706	Train Acc: 0.0088	Local Validation  Loss: 5.3031	Local Validation Acc: 0.0050	Global Validation Loss: 5.3069	Global Validation Acc: 0.0053
+Client 8	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2216	Train Acc: 0.0150	Local Validation  Loss: 5.3231	Local Validation Acc: 0.0000	Global Validation Loss: 5.3248	Global Validation Acc: 0.0041
+Client 86	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2696	Train Acc: 0.0063	Local Validation  Loss: 5.3026	Local Validation Acc: 0.0000	Global Validation Loss: 5.3051	Global Validation Acc: 0.0050
+Client 32	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2623	Train Acc: 0.0088	Local Validation  Loss: 5.3012	Local Validation Acc: 0.0050	Global Validation Loss: 5.3079	Global Validation Acc: 0.0050
+Client 82	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2719	Train Acc: 0.0075	Local Validation  Loss: 5.3180	Local Validation Acc: 0.0150	Global Validation Loss: 5.3045	Global Validation Acc: 0.0050
+Client 18	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2637	Train Acc: 0.0063	Local Validation  Loss: 5.3111	Local Validation Acc: 0.0100	Global Validation Loss: 5.3061	Global Validation Acc: 0.0053
+Aggregated
+Global Test Loss: 5.3335	Global Test Acc: 0.0050
+Client 52	Local Validation Loss: 5.3412(-0.0262)	Local Validation Acc: 0.0050(-0.0050)
+Client 16	Local Validation Loss: 5.3430(0.0102)	Local Validation Acc: 0.0100(-0.0050)
+Client 39	Local Validation Loss: 5.3393(0.0316)	Local Validation Acc: 0.0000(0.0000)
+Client 72	Local Validation Loss: 5.3731(0.0525)	Local Validation Acc: 0.0000(-0.0150)
+Client 6	Local Validation Loss: 5.3288(0.0257)	Local Validation Acc: 0.0050(0.0000)
+Client 8	Local Validation Loss: 5.3194(-0.0037)	Local Validation Acc: 0.0000(0.0000)
+Client 86	Local Validation Loss: 5.3266(0.0240)	Local Validation Acc: 0.0000(0.0000)
+Client 32	Local Validation Loss: 5.3318(0.0307)	Local Validation Acc: 0.0000(-0.0050)
+Client 82	Local Validation Loss: 5.3457(0.0277)	Local Validation Acc: 0.0000(-0.0150)
+Client 18	Local Validation Loss: 5.3215(0.0104)	Local Validation Acc: 0.0050(-0.0050)
+Round 15 use time: 4.35 min, ETA: 13.42 hours
+================================================================================
+Round 16
+Selected 10 client IDs: [37 46 12 52 17 28 83 25 59 95]
+Parameter: conv1.weight, Sparsity: 0.2953, Original Sparsity: 0.2953, Coverage: 1.0000
+Parameter: layer1.0.conv1.weight, Sparsity: 0.1548, Original Sparsity: 0.1436, Coverage: 0.9275
+Parameter: layer1.0.conv2.weight, Sparsity: 0.1548, Original Sparsity: 0.1436, Coverage: 0.9275
+Parameter: layer1.1.conv1.weight, Sparsity: 0.1533, Original Sparsity: 0.1391, Coverage: 0.9070
+Parameter: layer1.1.conv2.weight, Sparsity: 0.1533, Original Sparsity: 0.1391, Coverage: 0.9070
+Parameter: layer2.0.conv1.weight, Sparsity: 0.1522, Original Sparsity: 0.1384, Coverage: 0.9092
+Parameter: layer2.0.conv2.weight, Sparsity: 0.1517, Original Sparsity: 0.1398, Coverage: 0.9213
+Parameter: layer2.0.downsample.0.weight, Sparsity: 0.1522, Original Sparsity: 0.1377, Coverage: 0.9050
+Parameter: layer2.1.conv1.weight, Sparsity: 0.1522, Original Sparsity: 0.1398, Coverage: 0.9182
+Parameter: layer2.1.conv2.weight, Sparsity: 0.1522, Original Sparsity: 0.1398, Coverage: 0.9182
+Parameter: layer3.0.conv1.weight, Sparsity: 0.1590, Original Sparsity: 0.1499, Coverage: 0.9427
+Parameter: layer3.0.conv2.weight, Sparsity: 0.1713, Original Sparsity: 0.1649, Coverage: 0.9625
+Parameter: layer3.0.downsample.0.weight, Sparsity: 0.1593, Original Sparsity: 0.1512, Coverage: 0.9495
+Parameter: layer3.1.conv1.weight, Sparsity: 0.1719, Original Sparsity: 0.1651, Coverage: 0.9603
+Parameter: layer3.1.conv2.weight, Sparsity: 0.1719, Original Sparsity: 0.1651, Coverage: 0.9603
+Parameter: layer4.0.conv1.weight, Sparsity: 0.1813, Original Sparsity: 0.1759, Coverage: 0.9705
+Parameter: layer4.0.conv2.weight, Sparsity: 0.1909, Original Sparsity: 0.1863, Coverage: 0.9759
+Parameter: layer4.0.downsample.0.weight, Sparsity: 0.1811, Original Sparsity: 0.1758, Coverage: 0.9707
+Parameter: layer4.1.conv1.weight, Sparsity: 0.1906, Original Sparsity: 0.1865, Coverage: 0.9787
+Parameter: layer4.1.conv2.weight, Sparsity: 0.1906, Original Sparsity: 0.1865, Coverage: 0.9787
+Parameter: fc.weight, Sparsity: 0.3281, Original Sparsity: 0.3281, Coverage: 1.0000
+Parameter: fc.bias, Sparsity: 1.0000, Original Sparsity: 1.0000, Coverage: 1.0000
+Sparsity: 0.2167, Original Sparsity: 0.2087, Coverage: 0.9496
+Sparsity: 0.2167, eta_g: 1.0000
+Client 37	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2565	Train Acc: 0.0125	Local Validation  Loss: 5.3086	Local Validation Acc: 0.0100	Global Validation Loss: 5.3135	Global Validation Acc: 0.0050
+Client 46	Dropout Rate: 0.25	Model Size: 24.26 MB	Train Loss: 5.2181	Train Acc: 0.0112	Local Validation  Loss: 5.3890	Local Validation Acc: 0.0150	Global Validation Loss: 5.3548	Global Validation Acc: 0.0050
+Client 12	Dropout Rate: 0.0	Model Size: 42.99 MB	Train Loss: 5.1796	Train Acc: 0.0125	Local Validation  Loss: 5.3931	Local Validation Acc: 0.0050	Global Validation Loss: 5.3935	Global Validation Acc: 0.0050
+Client 52	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2222	Train Acc: 0.0150	Local Validation  Loss: 5.3735	Local Validation Acc: 0.0100	Global Validation Loss: 5.3479	Global Validation Acc: 0.0050
+Client 17	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2578	Train Acc: 0.0200	Local Validation  Loss: 5.3041	Local Validation Acc: 0.0050	Global Validation Loss: 5.3112	Global Validation Acc: 0.0068
+Client 28	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2687	Train Acc: 0.0063	Local Validation  Loss: 5.2900	Local Validation Acc: 0.0000	Global Validation Loss: 5.3060	Global Validation Acc: 0.0050
+Client 83	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2586	Train Acc: 0.0138	Local Validation  Loss: 5.2977	Local Validation Acc: 0.0050	Global Validation Loss: 5.3095	Global Validation Acc: 0.0050
+Client 25	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2474	Train Acc: 0.0100	Local Validation  Loss: 5.3171	Local Validation Acc: 0.0000	Global Validation Loss: 5.3138	Global Validation Acc: 0.0043
+Client 59	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2386	Train Acc: 0.0138	Local Validation  Loss: 5.3228	Local Validation Acc: 0.0000	Global Validation Loss: 5.3174	Global Validation Acc: 0.0050
+Client 95	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2526	Train Acc: 0.0088	Local Validation  Loss: 5.3278	Local Validation Acc: 0.0050	Global Validation Loss: 5.3193	Global Validation Acc: 0.0050
+Aggregated
+Global Test Loss: 5.3253	Global Test Acc: 0.0050
+Client 37	Local Validation Loss: 5.3405(0.0318)	Local Validation Acc: 0.0000(-0.0100)
+Client 46	Local Validation Loss: 5.3436(-0.0454)	Local Validation Acc: 0.0000(-0.0150)
+Client 12	Local Validation Loss: 5.3202(-0.0729)	Local Validation Acc: 0.0100(0.0050)
+Client 52	Local Validation Loss: 5.3406(-0.0329)	Local Validation Acc: 0.0000(-0.0100)
+Client 17	Local Validation Loss: 5.3315(0.0275)	Local Validation Acc: 0.0050(0.0000)
+Client 28	Local Validation Loss: 5.3527(0.0627)	Local Validation Acc: 0.0000(0.0000)
+Client 83	Local Validation Loss: 5.3546(0.0568)	Local Validation Acc: 0.0000(-0.0050)
+Client 25	Local Validation Loss: 5.3572(0.0401)	Local Validation Acc: 0.0050(0.0050)
+Client 59	Local Validation Loss: 5.3220(-0.0008)	Local Validation Acc: 0.0100(0.0100)
+Client 95	Local Validation Loss: 5.3672(0.0394)	Local Validation Acc: 0.0000(-0.0050)
+Round 16 use time: 4.54 min, ETA: 13.91 hours
+================================================================================
+Round 17
+Selected 10 client IDs: [73 81 64 52 85 24  8 78  9 54]
+Parameter: conv1.weight, Sparsity: 0.3469, Original Sparsity: 0.3469, Coverage: 1.0000
+Parameter: layer1.0.conv1.weight, Sparsity: 0.1836, Original Sparsity: 0.1679, Coverage: 0.9146
+Parameter: layer1.0.conv2.weight, Sparsity: 0.1836, Original Sparsity: 0.1679, Coverage: 0.9146
+Parameter: layer1.1.conv1.weight, Sparsity: 0.1824, Original Sparsity: 0.1631, Coverage: 0.8940
+Parameter: layer1.1.conv2.weight, Sparsity: 0.1824, Original Sparsity: 0.1631, Coverage: 0.8940
+Parameter: layer2.0.conv1.weight, Sparsity: 0.1879, Original Sparsity: 0.1733, Coverage: 0.9226
+Parameter: layer2.0.conv2.weight, Sparsity: 0.1913, Original Sparsity: 0.1789, Coverage: 0.9348
+Parameter: layer2.0.downsample.0.weight, Sparsity: 0.1870, Original Sparsity: 0.1705, Coverage: 0.9115
+Parameter: layer2.1.conv1.weight, Sparsity: 0.1889, Original Sparsity: 0.1734, Coverage: 0.9178
+Parameter: layer2.1.conv2.weight, Sparsity: 0.1889, Original Sparsity: 0.1734, Coverage: 0.9178
+Parameter: layer3.0.conv1.weight, Sparsity: 0.1949, Original Sparsity: 0.1869, Coverage: 0.9588
+Parameter: layer3.0.conv2.weight, Sparsity: 0.2023, Original Sparsity: 0.2009, Coverage: 0.9934
+Parameter: layer3.0.downsample.0.weight, Sparsity: 0.1942, Original Sparsity: 0.1863, Coverage: 0.9595
+Parameter: layer3.1.conv1.weight, Sparsity: 0.2033, Original Sparsity: 0.2021, Coverage: 0.9940
+Parameter: layer3.1.conv2.weight, Sparsity: 0.2033, Original Sparsity: 0.2021, Coverage: 0.9940
+Parameter: layer4.0.conv1.weight, Sparsity: 0.1898, Original Sparsity: 0.1848, Coverage: 0.9740
+Parameter: layer4.0.conv2.weight, Sparsity: 0.1817, Original Sparsity: 0.1722, Coverage: 0.9479
+Parameter: layer4.0.downsample.0.weight, Sparsity: 0.1904, Original Sparsity: 0.1859, Coverage: 0.9764
+Parameter: layer4.1.conv1.weight, Sparsity: 0.1819, Original Sparsity: 0.1732, Coverage: 0.9525
+Parameter: layer4.1.conv2.weight, Sparsity: 0.1819, Original Sparsity: 0.1732, Coverage: 0.9525
+Parameter: fc.weight, Sparsity: 0.3494, Original Sparsity: 0.3494, Coverage: 1.0000
+Parameter: fc.bias, Sparsity: 1.0000, Original Sparsity: 1.0000, Coverage: 1.0000
+Sparsity: 0.2407, Original Sparsity: 0.2316, Coverage: 0.9511
+Sparsity: 0.2407, eta_g: 1.0000
+Client 73	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2319	Train Acc: 0.0088	Local Validation  Loss: 5.3479	Local Validation Acc: 0.0000	Global Validation Loss: 5.3199	Global Validation Acc: 0.0050
+Client 81	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2156	Train Acc: 0.0112	Local Validation  Loss: 5.3496	Local Validation Acc: 0.0000	Global Validation Loss: 5.3388	Global Validation Acc: 0.0050
+Client 64	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2530	Train Acc: 0.0088	Local Validation  Loss: 5.3123	Local Validation Acc: 0.0000	Global Validation Loss: 5.3095	Global Validation Acc: 0.0050
+Client 52	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2027	Train Acc: 0.0100	Local Validation  Loss: 5.3835	Local Validation Acc: 0.0100	Global Validation Loss: 5.3533	Global Validation Acc: 0.0050
+Client 85	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2210	Train Acc: 0.0150	Local Validation  Loss: 5.3377	Local Validation Acc: 0.0000	Global Validation Loss: 5.3412	Global Validation Acc: 0.0048
+Client 24	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2537	Train Acc: 0.0075	Local Validation  Loss: 5.3157	Local Validation Acc: 0.0050	Global Validation Loss: 5.3149	Global Validation Acc: 0.0050
+Client 8	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2241	Train Acc: 0.0125	Local Validation  Loss: 5.3095	Local Validation Acc: 0.0050	Global Validation Loss: 5.3255	Global Validation Acc: 0.0050
+Client 78	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2400	Train Acc: 0.0088	Local Validation  Loss: 5.3651	Local Validation Acc: 0.0050	Global Validation Loss: 5.3326	Global Validation Acc: 0.0050
+Client 9	Dropout Rate: 0.0	Model Size: 42.99 MB	Train Loss: 5.2032	Train Acc: 0.0100	Local Validation  Loss: 5.4169	Local Validation Acc: 0.0050	Global Validation Loss: 5.3747	Global Validation Acc: 0.0050
+Client 54	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2733	Train Acc: 0.0063	Local Validation  Loss: 5.3071	Local Validation Acc: 0.0100	Global Validation Loss: 5.3059	Global Validation Acc: 0.0050
+Aggregated
+Global Test Loss: 5.3183	Global Test Acc: 0.0050
+Client 73	Local Validation Loss: 5.3113(-0.0366)	Local Validation Acc: 0.0050(0.0050)
+Client 81	Local Validation Loss: 5.3562(0.0066)	Local Validation Acc: 0.0000(0.0000)
+Client 64	Local Validation Loss: 5.3369(0.0246)	Local Validation Acc: 0.0050(0.0050)
+Client 52	Local Validation Loss: 5.3245(-0.0589)	Local Validation Acc: 0.0200(0.0100)
+Client 85	Local Validation Loss: 5.3331(-0.0045)	Local Validation Acc: 0.0000(0.0000)
+Client 24	Local Validation Loss: 5.3280(0.0124)	Local Validation Acc: 0.0000(-0.0050)
+Client 8	Local Validation Loss: 5.2946(-0.0150)	Local Validation Acc: 0.0050(0.0000)
+Client 78	Local Validation Loss: 5.3535(-0.0117)	Local Validation Acc: 0.0000(-0.0050)
+Client 9	Local Validation Loss: 5.3184(-0.0985)	Local Validation Acc: 0.0050(0.0000)
+Client 54	Local Validation Loss: 5.3121(0.0051)	Local Validation Acc: 0.0000(-0.0100)
+Round 17 use time: 4.56 min, ETA: 13.91 hours
+================================================================================
+Round 18
+Selected 10 client IDs: [80 39 72 81 32 26 66 77 40 58]
+Parameter: conv1.weight, Sparsity: 0.2781, Original Sparsity: 0.2781, Coverage: 1.0000
+Parameter: layer1.0.conv1.weight, Sparsity: 0.1446, Original Sparsity: 0.1232, Coverage: 0.8521
+Parameter: layer1.0.conv2.weight, Sparsity: 0.1446, Original Sparsity: 0.1232, Coverage: 0.8521
+Parameter: layer1.1.conv1.weight, Sparsity: 0.1464, Original Sparsity: 0.1223, Coverage: 0.8354
+Parameter: layer1.1.conv2.weight, Sparsity: 0.1464, Original Sparsity: 0.1223, Coverage: 0.8354
+Parameter: layer2.0.conv1.weight, Sparsity: 0.1455, Original Sparsity: 0.1185, Coverage: 0.8145
+Parameter: layer2.0.conv2.weight, Sparsity: 0.1469, Original Sparsity: 0.1214, Coverage: 0.8264
+Parameter: layer2.0.downsample.0.weight, Sparsity: 0.1454, Original Sparsity: 0.1212, Coverage: 0.8335
+Parameter: layer2.1.conv1.weight, Sparsity: 0.1474, Original Sparsity: 0.1236, Coverage: 0.8386
+Parameter: layer2.1.conv2.weight, Sparsity: 0.1474, Original Sparsity: 0.1236, Coverage: 0.8386
+Parameter: layer3.0.conv1.weight, Sparsity: 0.1498, Original Sparsity: 0.1272, Coverage: 0.8492
+Parameter: layer3.0.conv2.weight, Sparsity: 0.1529, Original Sparsity: 0.1324, Coverage: 0.8663
+Parameter: layer3.0.downsample.0.weight, Sparsity: 0.1500, Original Sparsity: 0.1274, Coverage: 0.8495
+Parameter: layer3.1.conv1.weight, Sparsity: 0.1524, Original Sparsity: 0.1328, Coverage: 0.8714
+Parameter: layer3.1.conv2.weight, Sparsity: 0.1524, Original Sparsity: 0.1328, Coverage: 0.8714
+Parameter: layer4.0.conv1.weight, Sparsity: 0.1514, Original Sparsity: 0.1313, Coverage: 0.8673
+Parameter: layer4.0.conv2.weight, Sparsity: 0.1535, Original Sparsity: 0.1304, Coverage: 0.8490
+Parameter: layer4.0.downsample.0.weight, Sparsity: 0.1512, Original Sparsity: 0.1315, Coverage: 0.8698
+Parameter: layer4.1.conv1.weight, Sparsity: 0.1538, Original Sparsity: 0.1312, Coverage: 0.8532
+Parameter: layer4.1.conv2.weight, Sparsity: 0.1538, Original Sparsity: 0.1312, Coverage: 0.8532
+Parameter: fc.weight, Sparsity: 0.2873, Original Sparsity: 0.2873, Coverage: 1.0000
+Parameter: fc.bias, Sparsity: 1.0000, Original Sparsity: 1.0000, Coverage: 1.0000
+Sparsity: 0.2001, Original Sparsity: 0.1806, Coverage: 0.8694
+Sparsity: 0.2001, eta_g: 1.0000
+Client 80	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2660	Train Acc: 0.0100	Local Validation  Loss: 5.3244	Local Validation Acc: 0.0050	Global Validation Loss: 5.3077	Global Validation Acc: 0.0050
+Client 39	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2717	Train Acc: 0.0100	Local Validation  Loss: 5.2943	Local Validation Acc: 0.0000	Global Validation Loss: 5.3056	Global Validation Acc: 0.0050
+Client 72	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2676	Train Acc: 0.0088	Local Validation  Loss: 5.2937	Local Validation Acc: 0.0100	Global Validation Loss: 5.3065	Global Validation Acc: 0.0049
+Client 81	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2172	Train Acc: 0.0112	Local Validation  Loss: 5.3499	Local Validation Acc: 0.0000	Global Validation Loss: 5.3426	Global Validation Acc: 0.0050
+Client 32	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2631	Train Acc: 0.0100	Local Validation  Loss: 5.3183	Local Validation Acc: 0.0000	Global Validation Loss: 5.3053	Global Validation Acc: 0.0050
+Client 26	Dropout Rate: 0.25	Model Size: 24.26 MB	Train Loss: 5.2125	Train Acc: 0.0088	Local Validation  Loss: 5.3697	Local Validation Acc: 0.0000	Global Validation Loss: 5.3507	Global Validation Acc: 0.0050
+Client 66	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2089	Train Acc: 0.0112	Local Validation  Loss: 5.3381	Local Validation Acc: 0.0000	Global Validation Loss: 5.3412	Global Validation Acc: 0.0051
+Client 77	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2227	Train Acc: 0.0112	Local Validation  Loss: 5.3298	Local Validation Acc: 0.0050	Global Validation Loss: 5.3233	Global Validation Acc: 0.0050
+Client 40	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2647	Train Acc: 0.0100	Local Validation  Loss: 5.3118	Local Validation Acc: 0.0000	Global Validation Loss: 5.3092	Global Validation Acc: 0.0050
+Client 58	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2257	Train Acc: 0.0125	Local Validation  Loss: 5.3536	Local Validation Acc: 0.0000	Global Validation Loss: 5.3358	Global Validation Acc: 0.0050
+Aggregated
+Global Test Loss: 5.3249	Global Test Acc: 0.0050
+Client 80	Local Validation Loss: 5.3279(0.0035)	Local Validation Acc: 0.0000(-0.0050)
+Client 39	Local Validation Loss: 5.3150(0.0207)	Local Validation Acc: 0.0050(0.0050)
+Client 72	Local Validation Loss: 5.3209(0.0272)	Local Validation Acc: 0.0100(0.0000)
+Client 81	Local Validation Loss: 5.3429(-0.0070)	Local Validation Acc: 0.0000(0.0000)
+Client 32	Local Validation Loss: 5.3711(0.0528)	Local Validation Acc: 0.0050(0.0050)
+Client 26	Local Validation Loss: 5.3189(-0.0509)	Local Validation Acc: 0.0100(0.0100)
+Client 66	Local Validation Loss: 5.3363(-0.0018)	Local Validation Acc: 0.0000(0.0000)
+Client 77	Local Validation Loss: 5.3166(-0.0132)	Local Validation Acc: 0.0050(0.0000)
+Client 40	Local Validation Loss: 5.3376(0.0258)	Local Validation Acc: 0.0050(0.0050)
+Client 58	Local Validation Loss: 5.3325(-0.0211)	Local Validation Acc: 0.0050(0.0050)
+Round 18 use time: 4.40 min, ETA: 13.33 hours
+================================================================================
+Round 19
+Selected 10 client IDs: [52 74 91 30 21 15 82 95 32 25]
+Parameter: conv1.weight, Sparsity: 0.1562, Original Sparsity: 0.1562, Coverage: 1.0000
+Parameter: layer1.0.conv1.weight, Sparsity: 0.1065, Original Sparsity: 0.0370, Coverage: 0.3477
+Parameter: layer1.0.conv2.weight, Sparsity: 0.1065, Original Sparsity: 0.0370, Coverage: 0.3477
+Parameter: layer1.1.conv1.weight, Sparsity: 0.1080, Original Sparsity: 0.0360, Coverage: 0.3333
+Parameter: layer1.1.conv2.weight, Sparsity: 0.1080, Original Sparsity: 0.0360, Coverage: 0.3333
+Parameter: layer2.0.conv1.weight, Sparsity: 0.1077, Original Sparsity: 0.0368, Coverage: 0.3420
+Parameter: layer2.0.conv2.weight, Sparsity: 0.1081, Original Sparsity: 0.0360, Coverage: 0.3332
+Parameter: layer2.0.downsample.0.weight, Sparsity: 0.1074, Original Sparsity: 0.0355, Coverage: 0.3303
+Parameter: layer2.1.conv1.weight, Sparsity: 0.1087, Original Sparsity: 0.0371, Coverage: 0.3416
+Parameter: layer2.1.conv2.weight, Sparsity: 0.1087, Original Sparsity: 0.0371, Coverage: 0.3416
+Parameter: layer3.0.conv1.weight, Sparsity: 0.1076, Original Sparsity: 0.0390, Coverage: 0.3626
+Parameter: layer3.0.conv2.weight, Sparsity: 0.1102, Original Sparsity: 0.0442, Coverage: 0.4010
+Parameter: layer3.0.downsample.0.weight, Sparsity: 0.1072, Original Sparsity: 0.0390, Coverage: 0.3640
+Parameter: layer3.1.conv1.weight, Sparsity: 0.1102, Original Sparsity: 0.0442, Coverage: 0.4009
+Parameter: layer3.1.conv2.weight, Sparsity: 0.1102, Original Sparsity: 0.0442, Coverage: 0.4009
+Parameter: layer4.0.conv1.weight, Sparsity: 0.1096, Original Sparsity: 0.0443, Coverage: 0.4039
+Parameter: layer4.0.conv2.weight, Sparsity: 0.1116, Original Sparsity: 0.0444, Coverage: 0.3981
+Parameter: layer4.0.downsample.0.weight, Sparsity: 0.1100, Original Sparsity: 0.0443, Coverage: 0.4027
+Parameter: layer4.1.conv1.weight, Sparsity: 0.1118, Original Sparsity: 0.0444, Coverage: 0.3976
+Parameter: layer4.1.conv2.weight, Sparsity: 0.1118, Original Sparsity: 0.0444, Coverage: 0.3976
+Parameter: fc.weight, Sparsity: 0.1721, Original Sparsity: 0.1697, Coverage: 0.9863
+Parameter: fc.bias, Sparsity: 1.0000, Original Sparsity: 1.0000, Coverage: 1.0000
+Sparsity: 0.1545, Original Sparsity: 0.0949, Coverage: 0.4530
+Sparsity: 0.1545, eta_g: 1.0000
+Client 52	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2162	Train Acc: 0.0150	Local Validation  Loss: 5.3754	Local Validation Acc: 0.0100	Global Validation Loss: 5.3418	Global Validation Acc: 0.0050
+Client 74	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2692	Train Acc: 0.0075	Local Validation  Loss: 5.3049	Local Validation Acc: 0.0000	Global Validation Loss: 5.3069	Global Validation Acc: 0.0046
+Client 91	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2700	Train Acc: 0.0037	Local Validation  Loss: 5.3039	Local Validation Acc: 0.0100	Global Validation Loss: 5.3064	Global Validation Acc: 0.0052
+Client 30	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2584	Train Acc: 0.0100	Local Validation  Loss: 5.2960	Local Validation Acc: 0.0050	Global Validation Loss: 5.3059	Global Validation Acc: 0.0051
+Client 21	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2624	Train Acc: 0.0100	Local Validation  Loss: 5.3042	Local Validation Acc: 0.0100	Global Validation Loss: 5.3063	Global Validation Acc: 0.0050
+Client 15	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2603	Train Acc: 0.0088	Local Validation  Loss: 5.2914	Local Validation Acc: 0.0100	Global Validation Loss: 5.3111	Global Validation Acc: 0.0051
+Client 82	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2719	Train Acc: 0.0112	Local Validation  Loss: 5.3152	Local Validation Acc: 0.0100	Global Validation Loss: 5.3042	Global Validation Acc: 0.0053
+Client 95	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2380	Train Acc: 0.0088	Local Validation  Loss: 5.3257	Local Validation Acc: 0.0000	Global Validation Loss: 5.3196	Global Validation Acc: 0.0050
+Client 32	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2576	Train Acc: 0.0088	Local Validation  Loss: 5.3187	Local Validation Acc: 0.0050	Global Validation Loss: 5.3076	Global Validation Acc: 0.0046
+Client 25	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2402	Train Acc: 0.0112	Local Validation  Loss: 5.3056	Local Validation Acc: 0.0000	Global Validation Loss: 5.3191	Global Validation Acc: 0.0050
+Aggregated
+Global Test Loss: 5.3286	Global Test Acc: 0.0050
+Client 52	Local Validation Loss: 5.3634(-0.0120)	Local Validation Acc: 0.0000(-0.0100)
+Client 74	Local Validation Loss: 5.3448(0.0399)	Local Validation Acc: 0.0050(0.0050)
+Client 91	Local Validation Loss: 5.3382(0.0342)	Local Validation Acc: 0.0000(-0.0100)
+Client 30	Local Validation Loss: 5.2984(0.0024)	Local Validation Acc: 0.0100(0.0050)
+Client 21	Local Validation Loss: 5.3742(0.0700)	Local Validation Acc: 0.0000(-0.0100)
+Client 15	Local Validation Loss: 5.3149(0.0235)	Local Validation Acc: 0.0100(0.0000)
+Client 82	Local Validation Loss: 5.3509(0.0357)	Local Validation Acc: 0.0000(-0.0100)
+Client 95	Local Validation Loss: 5.3371(0.0113)	Local Validation Acc: 0.0000(0.0000)
+Client 32	Local Validation Loss: 5.3765(0.0578)	Local Validation Acc: 0.0050(0.0000)
+Client 25	Local Validation Loss: 5.3104(0.0048)	Local Validation Acc: 0.0000(0.0000)
+Round 19 use time: 4.33 min, ETA: 13.05 hours
+================================================================================
+Round 20
+Selected 10 client IDs: [ 4 45 75 88 11 97  2 27 25 84]
+Parameter: conv1.weight, Sparsity: 0.3391, Original Sparsity: 0.3391, Coverage: 1.0000
+Parameter: layer1.0.conv1.weight, Sparsity: 0.1793, Original Sparsity: 0.1637, Coverage: 0.9126
+Parameter: layer1.0.conv2.weight, Sparsity: 0.1793, Original Sparsity: 0.1637, Coverage: 0.9126
+Parameter: layer1.1.conv1.weight, Sparsity: 0.1791, Original Sparsity: 0.1627, Coverage: 0.9084
+Parameter: layer1.1.conv2.weight, Sparsity: 0.1791, Original Sparsity: 0.1627, Coverage: 0.9084
+Parameter: layer2.0.conv1.weight, Sparsity: 0.1807, Original Sparsity: 0.1635, Coverage: 0.9045
+Parameter: layer2.0.conv2.weight, Sparsity: 0.1783, Original Sparsity: 0.1606, Coverage: 0.9005
+Parameter: layer2.0.downsample.0.weight, Sparsity: 0.1787, Original Sparsity: 0.1619, Coverage: 0.9059
+Parameter: layer2.1.conv1.weight, Sparsity: 0.1770, Original Sparsity: 0.1603, Coverage: 0.9059
+Parameter: layer2.1.conv2.weight, Sparsity: 0.1770, Original Sparsity: 0.1603, Coverage: 0.9059
+Parameter: layer3.0.conv1.weight, Sparsity: 0.1718, Original Sparsity: 0.1570, Coverage: 0.9137
+Parameter: layer3.0.conv2.weight, Sparsity: 0.1712, Original Sparsity: 0.1568, Coverage: 0.9156
+Parameter: layer3.0.downsample.0.weight, Sparsity: 0.1710, Original Sparsity: 0.1555, Coverage: 0.9092
+Parameter: layer3.1.conv1.weight, Sparsity: 0.1733, Original Sparsity: 0.1582, Coverage: 0.9131
+Parameter: layer3.1.conv2.weight, Sparsity: 0.1733, Original Sparsity: 0.1582, Coverage: 0.9131
+Parameter: layer4.0.conv1.weight, Sparsity: 0.1725, Original Sparsity: 0.1602, Coverage: 0.9286
+Parameter: layer4.0.conv2.weight, Sparsity: 0.1767, Original Sparsity: 0.1649, Coverage: 0.9332
+Parameter: layer4.0.downsample.0.weight, Sparsity: 0.1721, Original Sparsity: 0.1596, Coverage: 0.9273
+Parameter: layer4.1.conv1.weight, Sparsity: 0.1755, Original Sparsity: 0.1632, Coverage: 0.9297
+Parameter: layer4.1.conv2.weight, Sparsity: 0.1755, Original Sparsity: 0.1632, Coverage: 0.9297
+Parameter: fc.weight, Sparsity: 0.3387, Original Sparsity: 0.3387, Coverage: 1.0000
+Parameter: fc.bias, Sparsity: 1.0000, Original Sparsity: 1.0000, Coverage: 1.0000
+Sparsity: 0.2281, Original Sparsity: 0.2152, Coverage: 0.9263
+Sparsity: 0.2281, eta_g: 1.0000
+Client 4	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2620	Train Acc: 0.0125	Local Validation  Loss: 5.3192	Local Validation Acc: 0.0050	Global Validation Loss: 5.3098	Global Validation Acc: 0.0050
+Client 45	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2232	Train Acc: 0.0138	Local Validation  Loss: 5.3253	Local Validation Acc: 0.0000	Global Validation Loss: 5.3326	Global Validation Acc: 0.0050
+Client 75	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2461	Train Acc: 0.0100	Local Validation  Loss: 5.3561	Local Validation Acc: 0.0000	Global Validation Loss: 5.3173	Global Validation Acc: 0.0050
+Client 88	Dropout Rate: 0.25	Model Size: 24.26 MB	Train Loss: 5.2216	Train Acc: 0.0125	Local Validation  Loss: 5.3362	Local Validation Acc: 0.0000	Global Validation Loss: 5.3453	Global Validation Acc: 0.0050
+Client 11	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2596	Train Acc: 0.0112	Local Validation  Loss: 5.3202	Local Validation Acc: 0.0000	Global Validation Loss: 5.3107	Global Validation Acc: 0.0050
+Client 97	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2476	Train Acc: 0.0138	Local Validation  Loss: 5.3252	Local Validation Acc: 0.0100	Global Validation Loss: 5.3169	Global Validation Acc: 0.0050
+Client 2	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2286	Train Acc: 0.0112	Local Validation  Loss: 5.3450	Local Validation Acc: 0.0000	Global Validation Loss: 5.3453	Global Validation Acc: 0.0049
+Client 27	Dropout Rate: 0.25	Model Size: 24.26 MB	Train Loss: 5.2084	Train Acc: 0.0125	Local Validation  Loss: 5.4027	Local Validation Acc: 0.0050	Global Validation Loss: 5.3616	Global Validation Acc: 0.0050
+Client 25	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2359	Train Acc: 0.0112	Local Validation  Loss: 5.3225	Local Validation Acc: 0.0050	Global Validation Loss: 5.3210	Global Validation Acc: 0.0050
+Client 84	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2449	Train Acc: 0.0088	Local Validation  Loss: 5.3298	Local Validation Acc: 0.0000	Global Validation Loss: 5.3181	Global Validation Acc: 0.0050
+Aggregated
+Global Test Loss: 5.3227	Global Test Acc: 0.0050
+Client 4	Local Validation Loss: 5.3276(0.0085)	Local Validation Acc: 0.0100(0.0050)
+Client 45	Local Validation Loss: 5.3264(0.0011)	Local Validation Acc: 0.0000(0.0000)
+Client 75	Local Validation Loss: 5.3362(-0.0199)	Local Validation Acc: 0.0000(0.0000)
+Client 88	Local Validation Loss: 5.3240(-0.0122)	Local Validation Acc: 0.0100(0.0100)
+Client 11	Local Validation Loss: 5.3465(0.0263)	Local Validation Acc: 0.0050(0.0050)
+Client 97	Local Validation Loss: 5.2747(-0.0505)	Local Validation Acc: 0.0150(0.0050)
+Client 2	Local Validation Loss: 5.3238(-0.0212)	Local Validation Acc: 0.0050(0.0050)
+Client 27	Local Validation Loss: 5.3409(-0.0618)	Local Validation Acc: 0.0050(0.0000)
+Client 25	Local Validation Loss: 5.3352(0.0127)	Local Validation Acc: 0.0050(0.0000)
+Client 84	Local Validation Loss: 5.3276(-0.0022)	Local Validation Acc: 0.0100(0.0100)
+Average: 0.0049 | 0.0000 (compared to average)
+Drpout Rate 0.0: 0.0050 | 0.0001 (compared to average)
+Drpout Rate 0.25: 0.0063 | 0.0013 (compared to average)
+Drpout Rate 0.5: 0.0060 | 0.0011 (compared to average)
+Drpout Rate 0.75: 0.0036 | -0.0013 (compared to average)
+Drpout Rate 0.9: 0.0046 | -0.0003 (compared to average)
+Round 20 use time: 6.12 min, ETA: 18.35 hours
+================================================================================
+Round 21
+Selected 10 client IDs: [18 25 24 46 96  9 35 15 14 54]
+Parameter: conv1.weight, Sparsity: 0.2328, Original Sparsity: 0.2328, Coverage: 1.0000
+Parameter: layer1.0.conv1.weight, Sparsity: 0.1368, Original Sparsity: 0.1156, Coverage: 0.8450
+Parameter: layer1.0.conv2.weight, Sparsity: 0.1368, Original Sparsity: 0.1156, Coverage: 0.8450
+Parameter: layer1.1.conv1.weight, Sparsity: 0.1379, Original Sparsity: 0.1214, Coverage: 0.8806
+Parameter: layer1.1.conv2.weight, Sparsity: 0.1379, Original Sparsity: 0.1214, Coverage: 0.8806
+Parameter: layer2.0.conv1.weight, Sparsity: 0.1383, Original Sparsity: 0.1207, Coverage: 0.8726
+Parameter: layer2.0.conv2.weight, Sparsity: 0.1381, Original Sparsity: 0.1214, Coverage: 0.8787
+Parameter: layer2.0.downsample.0.weight, Sparsity: 0.1387, Original Sparsity: 0.1195, Coverage: 0.8619
+Parameter: layer2.1.conv1.weight, Sparsity: 0.1386, Original Sparsity: 0.1227, Coverage: 0.8853
+Parameter: layer2.1.conv2.weight, Sparsity: 0.1386, Original Sparsity: 0.1227, Coverage: 0.8853
+Parameter: layer3.0.conv1.weight, Sparsity: 0.1343, Original Sparsity: 0.1139, Coverage: 0.8481
+Parameter: layer3.0.conv2.weight, Sparsity: 0.1316, Original Sparsity: 0.1103, Coverage: 0.8379
+Parameter: layer3.0.downsample.0.weight, Sparsity: 0.1346, Original Sparsity: 0.1164, Coverage: 0.8649
+Parameter: layer3.1.conv1.weight, Sparsity: 0.1326, Original Sparsity: 0.1133, Coverage: 0.8542
+Parameter: layer3.1.conv2.weight, Sparsity: 0.1326, Original Sparsity: 0.1133, Coverage: 0.8542
+Parameter: layer4.0.conv1.weight, Sparsity: 0.1394, Original Sparsity: 0.1244, Coverage: 0.8925
+Parameter: layer4.0.conv2.weight, Sparsity: 0.1502, Original Sparsity: 0.1376, Coverage: 0.9161
+Parameter: layer4.0.downsample.0.weight, Sparsity: 0.1406, Original Sparsity: 0.1245, Coverage: 0.8854
+Parameter: layer4.1.conv1.weight, Sparsity: 0.1507, Original Sparsity: 0.1373, Coverage: 0.9112
+Parameter: layer4.1.conv2.weight, Sparsity: 0.1507, Original Sparsity: 0.1373, Coverage: 0.9112
+Parameter: fc.weight, Sparsity: 0.2520, Original Sparsity: 0.2520, Coverage: 1.0000
+Parameter: fc.bias, Sparsity: 1.0000, Original Sparsity: 1.0000, Coverage: 1.0000
+Sparsity: 0.1874, Original Sparsity: 0.1725, Coverage: 0.8914
+Sparsity: 0.1874, eta_g: 1.0000
+Client 18	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2685	Train Acc: 0.0138	Local Validation  Loss: 5.3035	Local Validation Acc: 0.0050	Global Validation Loss: 5.3052	Global Validation Acc: 0.0050
+Client 25	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2433	Train Acc: 0.0088	Local Validation  Loss: 5.3053	Local Validation Acc: 0.0050	Global Validation Loss: 5.3176	Global Validation Acc: 0.0050
+Client 24	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2500	Train Acc: 0.0138	Local Validation  Loss: 5.3104	Local Validation Acc: 0.0100	Global Validation Loss: 5.3174	Global Validation Acc: 0.0050
+Client 46	Dropout Rate: 0.25	Model Size: 24.26 MB	Train Loss: 5.2301	Train Acc: 0.0175	Local Validation  Loss: 5.3714	Local Validation Acc: 0.0100	Global Validation Loss: 5.3498	Global Validation Acc: 0.0072
+Client 96	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2659	Train Acc: 0.0112	Local Validation  Loss: 5.2905	Local Validation Acc: 0.0100	Global Validation Loss: 5.3045	Global Validation Acc: 0.0051
+Client 9	Dropout Rate: 0.0	Model Size: 42.99 MB	Train Loss: 5.2019	Train Acc: 0.0125	Local Validation  Loss: 5.4051	Local Validation Acc: 0.0050	Global Validation Loss: 5.3688	Global Validation Acc: 0.0050
+Client 35	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2760	Train Acc: 0.0063	Local Validation  Loss: 5.3099	Local Validation Acc: 0.0000	Global Validation Loss: 5.3031	Global Validation Acc: 0.0052
+Client 15	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2603	Train Acc: 0.0088	Local Validation  Loss: 5.3069	Local Validation Acc: 0.0100	Global Validation Loss: 5.3082	Global Validation Acc: 0.0050
+Client 14	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2548	Train Acc: 0.0088	Local Validation  Loss: 5.3447	Local Validation Acc: 0.0100	Global Validation Loss: 5.3144	Global Validation Acc: 0.0050
+Client 54	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2680	Train Acc: 0.0100	Local Validation  Loss: 5.3042	Local Validation Acc: 0.0000	Global Validation Loss: 5.3060	Global Validation Acc: 0.0043
+Aggregated
+Global Test Loss: 5.3234	Global Test Acc: 0.0050
+Client 18	Local Validation Loss: 5.3380(0.0345)	Local Validation Acc: 0.0000(-0.0050)
+Client 25	Local Validation Loss: 5.3421(0.0368)	Local Validation Acc: 0.0100(0.0050)
+Client 24	Local Validation Loss: 5.3455(0.0351)	Local Validation Acc: 0.0000(-0.0100)
+Client 46	Local Validation Loss: 5.3270(-0.0444)	Local Validation Acc: 0.0000(-0.0100)
+Client 96	Local Validation Loss: 5.3472(0.0567)	Local Validation Acc: 0.0050(-0.0050)
+Client 9	Local Validation Loss: 5.3282(-0.0769)	Local Validation Acc: 0.0000(-0.0050)
+Client 35	Local Validation Loss: 5.3313(0.0214)	Local Validation Acc: 0.0000(0.0000)
+Client 15	Local Validation Loss: 5.2958(-0.0111)	Local Validation Acc: 0.0150(0.0050)
+Client 14	Local Validation Loss: 5.3397(-0.0049)	Local Validation Acc: 0.0050(-0.0050)
+Client 54	Local Validation Loss: 5.3229(0.0187)	Local Validation Acc: 0.0150(0.0150)
+Round 21 use time: 4.51 min, ETA: 13.46 hours
+================================================================================
+Round 22
+Selected 10 client IDs: [96 93 77 26 45  1 22 39 15 74]
+Parameter: conv1.weight, Sparsity: 0.3125, Original Sparsity: 0.3125, Coverage: 1.0000
+Parameter: layer1.0.conv1.weight, Sparsity: 0.1752, Original Sparsity: 0.1617, Coverage: 0.9231
+Parameter: layer1.0.conv2.weight, Sparsity: 0.1752, Original Sparsity: 0.1617, Coverage: 0.9231
+Parameter: layer1.1.conv1.weight, Sparsity: 0.1768, Original Sparsity: 0.1625, Coverage: 0.9192
+Parameter: layer1.1.conv2.weight, Sparsity: 0.1768, Original Sparsity: 0.1625, Coverage: 0.9192
+Parameter: layer2.0.conv1.weight, Sparsity: 0.1712, Original Sparsity: 0.1570, Coverage: 0.9170
+Parameter: layer2.0.conv2.weight, Sparsity: 0.1684, Original Sparsity: 0.1549, Coverage: 0.9201
+Parameter: layer2.0.downsample.0.weight, Sparsity: 0.1716, Original Sparsity: 0.1576, Coverage: 0.9183
+Parameter: layer2.1.conv1.weight, Sparsity: 0.1695, Original Sparsity: 0.1570, Coverage: 0.9264
+Parameter: layer2.1.conv2.weight, Sparsity: 0.1695, Original Sparsity: 0.1570, Coverage: 0.9264
+Parameter: layer3.0.conv1.weight, Sparsity: 0.1646, Original Sparsity: 0.1565, Coverage: 0.9513
+Parameter: layer3.0.conv2.weight, Sparsity: 0.1702, Original Sparsity: 0.1617, Coverage: 0.9503
+Parameter: layer3.0.downsample.0.weight, Sparsity: 0.1648, Original Sparsity: 0.1560, Coverage: 0.9468
+Parameter: layer3.1.conv1.weight, Sparsity: 0.1700, Original Sparsity: 0.1617, Coverage: 0.9507
+Parameter: layer3.1.conv2.weight, Sparsity: 0.1700, Original Sparsity: 0.1617, Coverage: 0.9507
+Parameter: layer4.0.conv1.weight, Sparsity: 0.1741, Original Sparsity: 0.1689, Coverage: 0.9706
+Parameter: layer4.0.conv2.weight, Sparsity: 0.1789, Original Sparsity: 0.1766, Coverage: 0.9872
+Parameter: layer4.0.downsample.0.weight, Sparsity: 0.1730, Original Sparsity: 0.1675, Coverage: 0.9682
+Parameter: layer4.1.conv1.weight, Sparsity: 0.1779, Original Sparsity: 0.1750, Coverage: 0.9836
+Parameter: layer4.1.conv2.weight, Sparsity: 0.1779, Original Sparsity: 0.1750, Coverage: 0.9836
+Parameter: fc.weight, Sparsity: 0.3203, Original Sparsity: 0.3203, Coverage: 1.0000
+Parameter: fc.bias, Sparsity: 1.0000, Original Sparsity: 1.0000, Coverage: 1.0000
+Sparsity: 0.2231, Original Sparsity: 0.2148, Coverage: 0.9516
+Sparsity: 0.2231, eta_g: 1.0000
+Client 96	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2771	Train Acc: 0.0112	Local Validation  Loss: 5.3059	Local Validation Acc: 0.0000	Global Validation Loss: 5.3025	Global Validation Acc: 0.0041
+Client 93	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2197	Train Acc: 0.0125	Local Validation  Loss: 5.3254	Local Validation Acc: 0.0000	Global Validation Loss: 5.3206	Global Validation Acc: 0.0051
+Client 77	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2197	Train Acc: 0.0112	Local Validation  Loss: 5.3220	Local Validation Acc: 0.0000	Global Validation Loss: 5.3287	Global Validation Acc: 0.0050
+Client 26	Dropout Rate: 0.25	Model Size: 24.26 MB	Train Loss: 5.2137	Train Acc: 0.0112	Local Validation  Loss: 5.3719	Local Validation Acc: 0.0100	Global Validation Loss: 5.3460	Global Validation Acc: 0.0050
+Client 45	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2162	Train Acc: 0.0088	Local Validation  Loss: 5.3195	Local Validation Acc: 0.0000	Global Validation Loss: 5.3298	Global Validation Acc: 0.0050
+Client 1	Dropout Rate: 0.0	Model Size: 42.99 MB	Train Loss: 5.1982	Train Acc: 0.0125	Local Validation  Loss: 5.3365	Local Validation Acc: 0.0100	Global Validation Loss: 5.3620	Global Validation Acc: 0.0054
+Client 22	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2444	Train Acc: 0.0075	Local Validation  Loss: 5.3014	Local Validation Acc: 0.0050	Global Validation Loss: 5.3165	Global Validation Acc: 0.0050
+Client 39	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2661	Train Acc: 0.0112	Local Validation  Loss: 5.3190	Local Validation Acc: 0.0050	Global Validation Loss: 5.3126	Global Validation Acc: 0.0050
+Client 15	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2648	Train Acc: 0.0075	Local Validation  Loss: 5.2823	Local Validation Acc: 0.0150	Global Validation Loss: 5.3156	Global Validation Acc: 0.0050
+Client 74	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2692	Train Acc: 0.0075	Local Validation  Loss: 5.3063	Local Validation Acc: 0.0000	Global Validation Loss: 5.3110	Global Validation Acc: 0.0050
+Aggregated
+Global Test Loss: 5.3155	Global Test Acc: 0.0050
+Client 96	Local Validation Loss: 5.3168(0.0109)	Local Validation Acc: 0.0050(0.0050)
+Client 93	Local Validation Loss: 5.3195(-0.0058)	Local Validation Acc: 0.0000(0.0000)
+Client 77	Local Validation Loss: 5.3205(-0.0015)	Local Validation Acc: 0.0050(0.0050)
+Client 26	Local Validation Loss: 5.3351(-0.0369)	Local Validation Acc: 0.0000(-0.0100)
+Client 45	Local Validation Loss: 5.3179(-0.0017)	Local Validation Acc: 0.0050(0.0050)
+Client 1	Local Validation Loss: 5.3073(-0.0293)	Local Validation Acc: 0.0000(-0.0100)
+Client 22	Local Validation Loss: 5.3238(0.0224)	Local Validation Acc: 0.0050(0.0000)
+Client 39	Local Validation Loss: 5.3146(-0.0044)	Local Validation Acc: 0.0100(0.0050)
+Client 15	Local Validation Loss: 5.3215(0.0392)	Local Validation Acc: 0.0000(-0.0150)
+Client 74	Local Validation Loss: 5.2804(-0.0260)	Local Validation Acc: 0.0050(0.0050)
+Round 22 use time: 4.54 min, ETA: 13.47 hours
+================================================================================
+Round 23
+Selected 10 client IDs: [55 70 84 57 34 25 33 52 69 81]
+Parameter: conv1.weight, Sparsity: 0.2969, Original Sparsity: 0.2969, Coverage: 1.0000
+Parameter: layer1.0.conv1.weight, Sparsity: 0.1488, Original Sparsity: 0.1161, Coverage: 0.7800
+Parameter: layer1.0.conv2.weight, Sparsity: 0.1488, Original Sparsity: 0.1161, Coverage: 0.7800
+Parameter: layer1.1.conv1.weight, Sparsity: 0.1496, Original Sparsity: 0.1161, Coverage: 0.7759
+Parameter: layer1.1.conv2.weight, Sparsity: 0.1496, Original Sparsity: 0.1161, Coverage: 0.7759
+Parameter: layer2.0.conv1.weight, Sparsity: 0.1489, Original Sparsity: 0.1170, Coverage: 0.7859
+Parameter: layer2.0.conv2.weight, Sparsity: 0.1497, Original Sparsity: 0.1183, Coverage: 0.7904
+Parameter: layer2.0.downsample.0.weight, Sparsity: 0.1493, Original Sparsity: 0.1174, Coverage: 0.7859
+Parameter: layer2.1.conv1.weight, Sparsity: 0.1489, Original Sparsity: 0.1179, Coverage: 0.7921
+Parameter: layer2.1.conv2.weight, Sparsity: 0.1489, Original Sparsity: 0.1179, Coverage: 0.7921
+Parameter: layer3.0.conv1.weight, Sparsity: 0.1441, Original Sparsity: 0.1178, Coverage: 0.8177
+Parameter: layer3.0.conv2.weight, Sparsity: 0.1517, Original Sparsity: 0.1172, Coverage: 0.7729
+Parameter: layer3.0.downsample.0.weight, Sparsity: 0.1440, Original Sparsity: 0.1180, Coverage: 0.8195
+Parameter: layer3.1.conv1.weight, Sparsity: 0.1516, Original Sparsity: 0.1170, Coverage: 0.7720
+Parameter: layer3.1.conv2.weight, Sparsity: 0.1516, Original Sparsity: 0.1170, Coverage: 0.7720
+Parameter: layer4.0.conv1.weight, Sparsity: 0.1467, Original Sparsity: 0.1124, Coverage: 0.7660
+Parameter: layer4.0.conv2.weight, Sparsity: 0.1453, Original Sparsity: 0.1095, Coverage: 0.7532
+Parameter: layer4.0.downsample.0.weight, Sparsity: 0.1474, Original Sparsity: 0.1136, Coverage: 0.7708
+Parameter: layer4.1.conv1.weight, Sparsity: 0.1456, Original Sparsity: 0.1101, Coverage: 0.7558
+Parameter: layer4.1.conv2.weight, Sparsity: 0.1456, Original Sparsity: 0.1101, Coverage: 0.7558
+Parameter: fc.weight, Sparsity: 0.2928, Original Sparsity: 0.2928, Coverage: 1.0000
+Parameter: fc.bias, Sparsity: 1.0000, Original Sparsity: 1.0000, Coverage: 1.0000
+Sparsity: 0.2003, Original Sparsity: 0.1721, Coverage: 0.8097
+Sparsity: 0.2003, eta_g: 1.0000
+Client 55	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2597	Train Acc: 0.0075	Local Validation  Loss: 5.2940	Local Validation Acc: 0.0050	Global Validation Loss: 5.3094	Global Validation Acc: 0.0051
+Client 70	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2114	Train Acc: 0.0138	Local Validation  Loss: 5.3535	Local Validation Acc: 0.0000	Global Validation Loss: 5.3361	Global Validation Acc: 0.0050
+Client 84	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2453	Train Acc: 0.0112	Local Validation  Loss: 5.3257	Local Validation Acc: 0.0050	Global Validation Loss: 5.3149	Global Validation Acc: 0.0050
+Client 57	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2707	Train Acc: 0.0100	Local Validation  Loss: 5.3143	Local Validation Acc: 0.0100	Global Validation Loss: 5.3047	Global Validation Acc: 0.0051
+Client 34	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2543	Train Acc: 0.0088	Local Validation  Loss: 5.3193	Local Validation Acc: 0.0050	Global Validation Loss: 5.3118	Global Validation Acc: 0.0050
+Client 25	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2475	Train Acc: 0.0112	Local Validation  Loss: 5.3175	Local Validation Acc: 0.0000	Global Validation Loss: 5.3159	Global Validation Acc: 0.0050
+Client 33	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2743	Train Acc: 0.0100	Local Validation  Loss: 5.2987	Local Validation Acc: 0.0050	Global Validation Loss: 5.3058	Global Validation Acc: 0.0050
+Client 52	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2207	Train Acc: 0.0100	Local Validation  Loss: 5.3630	Local Validation Acc: 0.0100	Global Validation Loss: 5.3479	Global Validation Acc: 0.0050
+Client 69	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2278	Train Acc: 0.0175	Local Validation  Loss: 5.3032	Local Validation Acc: 0.0100	Global Validation Loss: 5.3259	Global Validation Acc: 0.0073
+Client 81	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2135	Train Acc: 0.0112	Local Validation  Loss: 5.3327	Local Validation Acc: 0.0000	Global Validation Loss: 5.3379	Global Validation Acc: 0.0050
+Aggregated
+Global Test Loss: 5.3151	Global Test Acc: 0.0051
+Client 55	Local Validation Loss: 5.3265(0.0325)	Local Validation Acc: 0.0000(-0.0050)
+Client 70	Local Validation Loss: 5.2959(-0.0576)	Local Validation Acc: 0.0000(0.0000)
+Client 84	Local Validation Loss: 5.3363(0.0105)	Local Validation Acc: 0.0100(0.0050)
+Client 57	Local Validation Loss: 5.3125(-0.0017)	Local Validation Acc: 0.0000(-0.0100)
+Client 34	Local Validation Loss: 5.2970(-0.0222)	Local Validation Acc: 0.0050(0.0000)
+Client 25	Local Validation Loss: 5.3146(-0.0028)	Local Validation Acc: 0.0050(0.0050)
+Client 33	Local Validation Loss: 5.3307(0.0320)	Local Validation Acc: 0.0050(0.0000)
+Client 52	Local Validation Loss: 5.2952(-0.0678)	Local Validation Acc: 0.0050(-0.0050)
+Client 69	Local Validation Loss: 5.3196(0.0165)	Local Validation Acc: 0.0050(-0.0050)
+Client 81	Local Validation Loss: 5.3258(-0.0069)	Local Validation Acc: 0.0100(0.0100)
+Round 23 use time: 4.39 min, ETA: 12.95 hours
+================================================================================
+Round 24
+Selected 10 client IDs: [13 29  0 12 60 65 78 89 85 11]
+Parameter: conv1.weight, Sparsity: 0.3531, Original Sparsity: 0.3531, Coverage: 1.0000
+Parameter: layer1.0.conv1.weight, Sparsity: 0.2050, Original Sparsity: 0.2017, Coverage: 0.9839
+Parameter: layer1.0.conv2.weight, Sparsity: 0.2050, Original Sparsity: 0.2017, Coverage: 0.9839
+Parameter: layer1.1.conv1.weight, Sparsity: 0.2050, Original Sparsity: 0.1991, Coverage: 0.9714
+Parameter: layer1.1.conv2.weight, Sparsity: 0.2050, Original Sparsity: 0.1991, Coverage: 0.9714
+Parameter: layer2.0.conv1.weight, Sparsity: 0.2038, Original Sparsity: 0.1996, Coverage: 0.9790
+Parameter: layer2.0.conv2.weight, Sparsity: 0.2010, Original Sparsity: 0.1945, Coverage: 0.9677
+Parameter: layer2.0.downsample.0.weight, Sparsity: 0.2025, Original Sparsity: 0.1973, Coverage: 0.9740
+Parameter: layer2.1.conv1.weight, Sparsity: 0.2033, Original Sparsity: 0.1968, Coverage: 0.9678
+Parameter: layer2.1.conv2.weight, Sparsity: 0.2033, Original Sparsity: 0.1968, Coverage: 0.9678
+Parameter: layer3.0.conv1.weight, Sparsity: 0.2110, Original Sparsity: 0.2064, Coverage: 0.9780
+Parameter: layer3.0.conv2.weight, Sparsity: 0.2281, Original Sparsity: 0.2249, Coverage: 0.9859
+Parameter: layer3.0.downsample.0.weight, Sparsity: 0.2129, Original Sparsity: 0.2080, Coverage: 0.9772
+Parameter: layer3.1.conv1.weight, Sparsity: 0.2290, Original Sparsity: 0.2265, Coverage: 0.9888
+Parameter: layer3.1.conv2.weight, Sparsity: 0.2290, Original Sparsity: 0.2265, Coverage: 0.9888
+Parameter: layer4.0.conv1.weight, Sparsity: 0.2258, Original Sparsity: 0.2233, Coverage: 0.9889
+Parameter: layer4.0.conv2.weight, Sparsity: 0.2233, Original Sparsity: 0.2217, Coverage: 0.9929
+Parameter: layer4.0.downsample.0.weight, Sparsity: 0.2250, Original Sparsity: 0.2224, Coverage: 0.9886
+Parameter: layer4.1.conv1.weight, Sparsity: 0.2246, Original Sparsity: 0.2231, Coverage: 0.9936
+Parameter: layer4.1.conv2.weight, Sparsity: 0.2246, Original Sparsity: 0.2231, Coverage: 0.9936
+Parameter: fc.weight, Sparsity: 0.3631, Original Sparsity: 0.3631, Coverage: 1.0000
+Parameter: fc.bias, Sparsity: 1.0000, Original Sparsity: 1.0000, Coverage: 1.0000
+Sparsity: 0.2629, Original Sparsity: 0.2595, Coverage: 0.9838
+Sparsity: 0.2629, eta_g: 1.0000
+Client 13	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2285	Train Acc: 0.0100	Local Validation  Loss: 5.2857	Local Validation Acc: 0.0050	Global Validation Loss: 5.3267	Global Validation Acc: 0.0050
+Client 29	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2637	Train Acc: 0.0112	Local Validation  Loss: 5.3082	Local Validation Acc: 0.0050	Global Validation Loss: 5.3077	Global Validation Acc: 0.0050
+Client 0	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2630	Train Acc: 0.0112	Local Validation  Loss: 5.3039	Local Validation Acc: 0.0000	Global Validation Loss: 5.3084	Global Validation Acc: 0.0048
+Client 12	Dropout Rate: 0.0	Model Size: 42.99 MB	Train Loss: 5.1932	Train Acc: 0.0125	Local Validation  Loss: 5.3568	Local Validation Acc: 0.0050	Global Validation Loss: 5.3789	Global Validation Acc: 0.0050
+Client 60	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2670	Train Acc: 0.0075	Local Validation  Loss: 5.3028	Local Validation Acc: 0.0050	Global Validation Loss: 5.3067	Global Validation Acc: 0.0050
+Client 65	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2564	Train Acc: 0.0138	Local Validation  Loss: 5.2849	Local Validation Acc: 0.0050	Global Validation Loss: 5.3068	Global Validation Acc: 0.0050
+Client 78	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2391	Train Acc: 0.0138	Local Validation  Loss: 5.3449	Local Validation Acc: 0.0050	Global Validation Loss: 5.3250	Global Validation Acc: 0.0052
+Client 89	Dropout Rate: 0.0	Model Size: 42.99 MB	Train Loss: 5.1783	Train Acc: 0.0150	Local Validation  Loss: 5.4019	Local Validation Acc: 0.0100	Global Validation Loss: 5.3679	Global Validation Acc: 0.0050
+Client 85	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2334	Train Acc: 0.0138	Local Validation  Loss: 5.3388	Local Validation Acc: 0.0000	Global Validation Loss: 5.3272	Global Validation Acc: 0.0065
+Client 11	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2592	Train Acc: 0.0088	Local Validation  Loss: 5.3109	Local Validation Acc: 0.0000	Global Validation Loss: 5.3143	Global Validation Acc: 0.0051
+Aggregated
+Global Test Loss: 5.3156	Global Test Acc: 0.0047
+Client 13	Local Validation Loss: 5.3434(0.0576)	Local Validation Acc: 0.0000(-0.0050)
+Client 29	Local Validation Loss: 5.3322(0.0240)	Local Validation Acc: 0.0000(-0.0050)
+Client 0	Local Validation Loss: 5.3097(0.0058)	Local Validation Acc: 0.0050(0.0050)
+Client 12	Local Validation Loss: 5.3108(-0.0460)	Local Validation Acc: 0.0050(0.0000)
+Client 60	Local Validation Loss: 5.3417(0.0389)	Local Validation Acc: 0.0000(-0.0050)
+Client 65	Local Validation Loss: 5.3163(0.0313)	Local Validation Acc: 0.0100(0.0050)
+Client 78	Local Validation Loss: 5.3279(-0.0170)	Local Validation Acc: 0.0050(0.0000)
+Client 89	Local Validation Loss: 5.3377(-0.0642)	Local Validation Acc: 0.0000(-0.0100)
+Client 85	Local Validation Loss: 5.3172(-0.0216)	Local Validation Acc: 0.0000(0.0000)
+Client 11	Local Validation Loss: 5.3325(0.0217)	Local Validation Acc: 0.0000(0.0000)
+Round 24 use time: 4.69 min, ETA: 13.76 hours
+================================================================================
+Round 25
+Selected 10 client IDs: [53 77 32 96 65 52  7 40 83 37]
+Parameter: conv1.weight, Sparsity: 0.2125, Original Sparsity: 0.2125, Coverage: 1.0000
+Parameter: layer1.0.conv1.weight, Sparsity: 0.1188, Original Sparsity: 0.0884, Coverage: 0.7446
+Parameter: layer1.0.conv2.weight, Sparsity: 0.1188, Original Sparsity: 0.0884, Coverage: 0.7446
+Parameter: layer1.1.conv1.weight, Sparsity: 0.1191, Original Sparsity: 0.0899, Coverage: 0.7546
+Parameter: layer1.1.conv2.weight, Sparsity: 0.1191, Original Sparsity: 0.0899, Coverage: 0.7546
+Parameter: layer2.0.conv1.weight, Sparsity: 0.1193, Original Sparsity: 0.0895, Coverage: 0.7504
+Parameter: layer2.0.conv2.weight, Sparsity: 0.1198, Original Sparsity: 0.0881, Coverage: 0.7359
+Parameter: layer2.0.downsample.0.weight, Sparsity: 0.1190, Original Sparsity: 0.0892, Coverage: 0.7495
+Parameter: layer2.1.conv1.weight, Sparsity: 0.1195, Original Sparsity: 0.0860, Coverage: 0.7198
+Parameter: layer2.1.conv2.weight, Sparsity: 0.1195, Original Sparsity: 0.0860, Coverage: 0.7198
+Parameter: layer3.0.conv1.weight, Sparsity: 0.1157, Original Sparsity: 0.0811, Coverage: 0.7013
+Parameter: layer3.0.conv2.weight, Sparsity: 0.1149, Original Sparsity: 0.0767, Coverage: 0.6678
+Parameter: layer3.0.downsample.0.weight, Sparsity: 0.1151, Original Sparsity: 0.0814, Coverage: 0.7070
+Parameter: layer3.1.conv1.weight, Sparsity: 0.1146, Original Sparsity: 0.0770, Coverage: 0.6713
+Parameter: layer3.1.conv2.weight, Sparsity: 0.1146, Original Sparsity: 0.0770, Coverage: 0.6713
+Parameter: layer4.0.conv1.weight, Sparsity: 0.1171, Original Sparsity: 0.0779, Coverage: 0.6654
+Parameter: layer4.0.conv2.weight, Sparsity: 0.1229, Original Sparsity: 0.0801, Coverage: 0.6513
+Parameter: layer4.0.downsample.0.weight, Sparsity: 0.1176, Original Sparsity: 0.0790, Coverage: 0.6718
+Parameter: layer4.1.conv1.weight, Sparsity: 0.1224, Original Sparsity: 0.0804, Coverage: 0.6574
+Parameter: layer4.1.conv2.weight, Sparsity: 0.1224, Original Sparsity: 0.0804, Coverage: 0.6574
+Parameter: fc.weight, Sparsity: 0.2104, Original Sparsity: 0.2104, Coverage: 1.0000
+Parameter: fc.bias, Sparsity: 1.0000, Original Sparsity: 1.0000, Coverage: 1.0000
+Sparsity: 0.1669, Original Sparsity: 0.1368, Coverage: 0.7453
+Sparsity: 0.1669, eta_g: 1.0000
+Client 53	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2690	Train Acc: 0.0112	Local Validation  Loss: 5.3087	Local Validation Acc: 0.0100	Global Validation Loss: 5.3048	Global Validation Acc: 0.0050
+Client 77	Dropout Rate: 0.75	Model Size: 2.77 MB	Train Loss: 5.2360	Train Acc: 0.0125	Local Validation  Loss: 5.3188	Local Validation Acc: 0.0100	Global Validation Loss: 5.3201	Global Validation Acc: 0.0050
+Client 32	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2495	Train Acc: 0.0112	Local Validation  Loss: 5.3188	Local Validation Acc: 0.0050	Global Validation Loss: 5.3130	Global Validation Acc: 0.0050
+Client 96	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2654	Train Acc: 0.0138	Local Validation  Loss: 5.3004	Local Validation Acc: 0.0050	Global Validation Loss: 5.3078	Global Validation Acc: 0.0050
+Client 65	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2568	Train Acc: 0.0138	Local Validation  Loss: 5.3044	Local Validation Acc: 0.0050	Global Validation Loss: 5.3145	Global Validation Acc: 0.0050
+Client 52	Dropout Rate: 0.5	Model Size: 10.85 MB	Train Loss: 5.2295	Train Acc: 0.0112	Local Validation  Loss: 5.3507	Local Validation Acc: 0.0100	Global Validation Loss: 5.3295	Global Validation Acc: 0.0050
+Client 7	Dropout Rate: 0.25	Model Size: 24.26 MB	Train Loss: 5.2270	Train Acc: 0.0138	Local Validation  Loss: 5.3248	Local Validation Acc: 0.0150	Global Validation Loss: 5.3420	Global Validation Acc: 0.0050
+Client 40	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2723	Train Acc: 0.0088	Local Validation  Loss: 5.3213	Local Validation Acc: 0.0000	Global Validation Loss: 5.3080	Global Validation Acc: 0.0050
+Client 83	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2721	Train Acc: 0.0088	Local Validation  Loss: 5.2987	Local Validation Acc: 0.0050	Global Validation Loss: 5.3034	Global Validation Acc: 0.0053
+Client 37	Dropout Rate: 0.9	Model Size: 0.46 MB	Train Loss: 5.2667	Train Acc: 0.0075	Local Validation  Loss: 5.2995	Local Validation Acc: 0.0050	Global Validation Loss: 5.3127	Global Validation Acc: 0.0050
+Aggregated
+Global Test Loss: 5.3205	Global Test Acc: 0.0050
+Client 53	Local Validation Loss: 5.3256(0.0169)	Local Validation Acc: 0.0000(-0.0100)
+Client 77	Local Validation Loss: 5.3402(0.0214)	Local Validation Acc: 0.0100(0.0000)
+Client 32	Local Validation Loss: 5.3229(0.0041)	Local Validation Acc: 0.0050(0.0000)
+Client 96	Local Validation Loss: 5.3190(0.0186)	Local Validation Acc: 0.0000(-0.0050)
+Client 65	Local Validation Loss: 5.3135(0.0091)	Local Validation Acc: 0.0000(-0.0050)
+Client 52	Local Validation Loss: 5.3163(-0.0344)	Local Validation Acc: 0.0000(-0.0100)
+Client 7	Local Validation Loss: 5.3039(-0.0209)	Local Validation Acc: 0.0050(-0.0100)
+Client 40	Local Validation Loss: 5.3400(0.0186)	Local Validation Acc: 0.0050(0.0050)
+Client 83	Local Validation Loss: 5.3202(0.0215)	Local Validation Acc: 0.0100(0.0050)
+Client 37	Local Validation Loss: 5.3247(0.0252)	Local Validation Acc: 0.0050(0.0000)
+Round 25 use time: 4.35 min, ETA: 12.70 hours
+================================================================================
+Round 26
+Selected 10 client IDs: [12 61 28 76 92 56 43 47 35  3]

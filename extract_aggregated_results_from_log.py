@@ -1,31 +1,22 @@
 import re
 import csv
 
-# Step 1: Read the log file
-# methods = ["fedavg", "heterofl", "fedrolex", "fedrd", "rdbagging_frequent", "fedrame"]
-# models = ["cnn", "resnet"]
-# datasets = ["cifar10", "cifar100"]
-# distributions = ["iid", "alpha0.5"]
 
-methods = ["fedrame_momentum0.5"]
+
+methods = ["fedavg"]
 models = ["cnn"]
-datasets = ["cifar100"]
-distributions = ["alpha0.5"]
-correction = "0.001"
+datasets = ["cifar10", "cifar100"]
+distributions = ["iid", "alpha0.1", "alpha0.5"]
 
-# method = "fedavg"
-# model = "cnn"
-# dataset = "cifar100"
-# distribution = "iid"
-date = "0928"
+date = "1009"
 
 for method in methods:
     for model in models:
         for dataset in datasets:
             for distribution in distributions:
                 try:
-                    log_file_path = f"logs/{date}/{method}_{model}_{dataset}_{distribution}_epochs10.log"
-                    # log_file_path = f"logs/{date}/{method}_{model}_{dataset}_{distribution}_correction{correction}.log"
+                    log_file_path = f"logs/{date}/{method}_{model}_{dataset}_{distribution}.log"
+                    # log_file_path = f"logs/{date}/{method}_{model}_{dataset}_{distribution}_epochs10.log"
                     with open(log_file_path, "r") as file:
                         log_content = file.read()
 
