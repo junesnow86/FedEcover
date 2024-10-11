@@ -175,6 +175,7 @@ for indices_a_subset in subset_indices_list:
             Subset(global_train_dataset, train_indices),
             batch_size=BATCH_SIZE,
             shuffle=True,
+            num_workers=4,
         )
     )
     val_loaders.append(
@@ -182,6 +183,7 @@ for indices_a_subset in subset_indices_list:
             Subset(global_train_dataset, val_indices),
             batch_size=BATCH_SIZE,
             shuffle=False,
+            num_workers=4,
         )
     )
 
