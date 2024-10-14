@@ -36,6 +36,26 @@ def vanilla_federated_averaging(models, client_weights):
     return avg_weights
 
 
+def federated_averaging(local_state_dicts, client_weights):
+    """
+    Perform federated averaging on the local models' state_dicts.
+    """
+    assert len(local_state_dicts) == len(client_weights), "Length mismatch"
+    avg_state_dict = {}
+    keys = local_state_dicts[0].keys()
+
+    for key in keys:
+        layer_params = [
+            local_state_dict[key].clone().detach() * client_weight
+            for local_state_dict, client_weight in zip(
+                local_state_dicts, client_weights
+            )
+        ]
+        avg_state_dict[key] = sum(layer_params) / sum(client_weights)
+
+    return avg_state_dict
+
+
 @measure_time(repeats=1)
 def aggregate_cnn(
     global_model: CNN,
@@ -49,21 +69,30 @@ def aggregate_cnn(
     aggregate_conv_layers(
         global_model.layer1[0],
         [model.layer1[0] for model in local_models],
-        [pruned_indices_dict["layer1"] for pruned_indices_dict in model_pruned_indices_dicts],
+        [
+            pruned_indices_dict["layer1"]
+            for pruned_indices_dict in model_pruned_indices_dicts
+        ],
         client_weights,
     )
 
     aggregate_conv_layers(
         global_model.layer2[0],
         [model.layer2[0] for model in local_models],
-        [pruned_indices_dict["layer2"] for pruned_indices_dict in model_pruned_indices_dicts],
+        [
+            pruned_indices_dict["layer2"]
+            for pruned_indices_dict in model_pruned_indices_dicts
+        ],
         client_weights,
     )
 
     aggregate_conv_layers(
         global_model.layer3[0],
         [model.layer3[0] for model in local_models],
-        [pruned_indices_dict["layer3"] for pruned_indices_dict in model_pruned_indices_dicts],
+        [
+            pruned_indices_dict["layer3"]
+            for pruned_indices_dict in model_pruned_indices_dicts
+        ],
         client_weights,
     )
 
@@ -71,7 +100,10 @@ def aggregate_cnn(
     aggregate_linear_layers(
         global_model.fc,
         [model.fc for model in local_models],
-        [pruned_indices_dict["fc"] for pruned_indices_dict in model_pruned_indices_dicts],
+        [
+            pruned_indices_dict["fc"]
+            for pruned_indices_dict in model_pruned_indices_dicts
+        ],
         client_weights,
     )
 
@@ -91,7 +123,10 @@ def aggregate_resnet18(
         [
             model.conv1[0] for model in local_models
         ],  # use index 0 because of nn.Sequential, due to DropoutScaling module
-        [pruned_indices_dict["conv1"] for pruned_indices_dict in model_pruned_indices_dicts],
+        [
+            pruned_indices_dict["conv1"]
+            for pruned_indices_dict in model_pruned_indices_dicts
+        ],
         client_weights,
     )
 
@@ -131,7 +166,10 @@ def aggregate_resnet18(
     aggregate_linear_layers(
         global_model.fc,
         [model.fc for model in local_models],
-        [pruned_indices_dict["fc"] for pruned_indices_dict in model_pruned_indices_dicts],
+        [
+            pruned_indices_dict["fc"]
+            for pruned_indices_dict in model_pruned_indices_dicts
+        ],
         client_weights,
     )
 
