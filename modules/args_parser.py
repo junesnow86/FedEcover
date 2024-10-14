@@ -70,7 +70,7 @@ def get_args(print_args=True):
     parser.add_argument(
         "--batch-size",
         type=int,
-        default=128,
+        default=32,
         help="Batch size for local training",
     )
     parser.add_argument(
@@ -102,6 +102,19 @@ def get_args(print_args=True):
         type=int,
         default=42,
         help="Random seed for reproducibility",
+    )
+    parser.add_argument(
+        "--norm-type",
+        type=str,
+        choices=["sbn", "ln"],
+        default="ln",
+        help="Normalization type for ResNet model",
+    )
+    parser.add_argument(
+        "--num-workers",
+        type=int,
+        default=2,
+        help="Number of workers for DataLoader",
     )
 
     args = parser.parse_args()
@@ -136,5 +149,7 @@ def get_args(print_args=True):
         print(f"Batch size: {args.batch_size}")
         print(f"Learning rate: {args.lr}")
         print(f"Random seed: {args.seed}")
+        print(f"Normalization type: {args.norm_type}")
+        print(f"Number of workers: {args.num_workers}")
 
     return args

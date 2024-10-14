@@ -182,7 +182,7 @@ for indices_a_subset in subset_indices_list:
             Subset(global_train_dataset, train_indices),
             batch_size=BATCH_SIZE,
             shuffle=True,
-            num_workers=4,
+            num_workers=args.num_workers,
         )
     )
     val_loaders.append(
@@ -190,25 +190,34 @@ for indices_a_subset in subset_indices_list:
             Subset(global_train_dataset, val_indices),
             batch_size=BATCH_SIZE,
             shuffle=False,
-            num_workers=4,
+            num_workers=args.num_workers,
         )
     )
 
 
 # <======================================== Model preparation ========================================>
-if "cifar" in DATASET:
-    input_shape = [32, 32]
-elif DATASET == "tiny-imagenet":
-    input_shape = [64, 64]
-else:
-    raise ValueError(f"Dataset {DATASET} not supported.")
-
 if MODEL_TYPE == "cnn":
     global_model = CNN(num_classes=NUM_CLASSES)
 elif MODEL_TYPE == "resnet":
-    global_model = custom_resnet18(
-        num_classes=NUM_CLASSES, weights=None, input_shape=input_shape
-    )
+    if args.norm_type == "sbn":
+        global_model = custom_resnet18(
+            num_classes=NUM_CLASSES, weights=None, norm_type=args.norm_type
+        )
+    elif args.norm_type == "ln":
+        if "cifar" in DATASET:
+            input_shape = [32, 32]
+        elif DATASET == "tiny-imagenet":
+            input_shape = [64, 64]
+        else:
+            raise ValueError(f"Dataset {DATASET} not supported.")
+        global_model = custom_resnet18(
+            num_classes=NUM_CLASSES,
+            weights=None,
+            norm_type=args.norm_type,
+            input_shape=input_shape,
+        )
+    else:
+        raise ValueError(f"Normalization type {args.norm_type} not supported.")
 else:
     raise ValueError(f"Model type {MODEL_TYPE} not supported.")
 print(f"[Model Architecture]\n{global_model}")
@@ -248,6 +257,7 @@ if METHOD == "fedavg":
         model_type=MODEL_TYPE,
         select_ratio=SELECT_RATIO,
         scaling=True,
+        norm_type=args.norm_type,
     )
 elif METHOD == "heterofl":
     server = ServerStatic(
@@ -259,6 +269,7 @@ elif METHOD == "heterofl":
         model_type=MODEL_TYPE,
         select_ratio=SELECT_RATIO,
         scaling=True,
+        norm_type=args.norm_type,
     )
 elif METHOD == "fedrolex":
     server = ServerFedRolex(
@@ -271,6 +282,7 @@ elif METHOD == "fedrolex":
         select_ratio=SELECT_RATIO,
         scaling=True,
         rolling_step=-1,
+        norm_type=args.norm_type,
     )
 elif METHOD == "fedrd":
     server = ServerRD(
@@ -282,6 +294,7 @@ elif METHOD == "fedrd":
         model_type=MODEL_TYPE,
         select_ratio=SELECT_RATIO,
         scaling=True,
+        norm_type=args.norm_type,
     )
 elif METHOD == "fedrame":
     server = ServerFedRAME(
@@ -295,6 +308,7 @@ elif METHOD == "fedrame":
         scaling=True,
         eta_g=args.eta_g,
         dynamic_eta_g=args.dynamic_eta_g,
+        norm_type=args.norm_type,
     )
 
 

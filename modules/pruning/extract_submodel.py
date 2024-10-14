@@ -153,6 +153,7 @@ def extract_submodel_resnet(
     p: float,
     scaling: bool = True,
     dataset: str = "cifar10",
+    norm_type: str = "ln",
 ):
     submodel = copy.deepcopy(original_model)
 
@@ -165,32 +166,42 @@ def extract_submodel_resnet(
     else:
         sublayer_conv1 = nn.Sequential(sublayer_conv1)
     submodel.conv1 = sublayer_conv1
-    if dataset == "cifar10" or dataset == "cifar100":
-        submodel.bn1 = nn.LayerNorm(
-            normalized_shape=[submodel.conv1[0].out_channels, 16, 16],
-            elementwise_affine=False,
-        )
-    elif dataset == "tiny-imagenet":
-        submodel.bn1 = nn.LayerNorm(
-            normalized_shape=[submodel.conv1[0].out_channels, 32, 32],
-            elementwise_affine=False,
-        )
+    if norm_type == "ln":
+        if dataset == "cifar10" or dataset == "cifar100":
+            submodel.bn1 = nn.LayerNorm(
+                normalized_shape=[submodel.conv1[0].out_channels, 16, 16],
+                elementwise_affine=False,
+            )
+        elif dataset == "tiny-imagenet":
+            submodel.bn1 = nn.LayerNorm(
+                normalized_shape=[submodel.conv1[0].out_channels, 32, 32],
+                elementwise_affine=False,
+            )
+        else:
+            raise ValueError("Invalid dataset")
+    elif norm_type == "sbn":
+        submodel.bn1 = nn.BatchNorm2d(submodel.conv1[0].out_channels, affine=False, track_running_stats=False)
+    else:
+        raise ValueError("Invalid norm_type")
 
     layers = ["layer1", "layer2", "layer3", "layer4"]
-    if dataset == "cifar10" or dataset == "cifar100":
-        layernorm_shapes = [
-            [64, 8, 8],
-            [128, 4, 4],
-            [256, 2, 2],
-            [512, 1, 1],
-        ]
-    elif dataset == "tiny-imagenet":
-        layernorm_shapes = [
-            [64, 16, 16],
-            [128, 8, 8],
-            [256, 4, 4],
-            [512, 2, 2],
-        ]
+    if norm_type == "ln":
+        if dataset == "cifar10" or dataset == "cifar100":
+            layernorm_shapes = [
+                [64, 8, 8],
+                [128, 4, 4],
+                [256, 2, 2],
+                [512, 1, 1],
+            ]
+        elif dataset == "tiny-imagenet":
+            layernorm_shapes = [
+                [64, 16, 16],
+                [128, 8, 8],
+                [256, 4, 4],
+                [512, 2, 2],
+            ]
+        else:
+            raise ValueError("Invalid dataset")
     blocks = ["0", "1"]
     convs = ["conv1", "conv2"]
 
@@ -206,13 +217,20 @@ def extract_submodel_resnet(
                 else:
                     sublayer_conv = nn.Sequential(sublayer_conv)
                 submodel._modules[layer][int(block)]._modules[conv] = sublayer_conv
-                layernorm_shape = layernorm_shapes[i]
-                layernorm_shape[0] = sublayer_conv[0].out_channels
-                submodel._modules[layer][int(block)]._modules[f"bn{int(conv[-1])}"] = (
-                    nn.LayerNorm(
-                        normalized_shape=layernorm_shape, elementwise_affine=False
+                if norm_type == "ln":
+                    layernorm_shape = layernorm_shapes[i]
+                    layernorm_shape[0] = sublayer_conv[0].out_channels
+                    submodel._modules[layer][int(block)]._modules[f"bn{int(conv[-1])}"] = (
+                        nn.LayerNorm(
+                            normalized_shape=layernorm_shape, elementwise_affine=False
+                        )
                     )
-                )
+                elif norm_type == "sbn":
+                    submodel._modules[layer][int(block)]._modules[f"bn{int(conv[-1])}"] = (
+                        nn.BatchNorm2d(sublayer_conv[0].out_channels, affine=False, track_running_stats=False)
+                    )
+                else:
+                    raise ValueError("Invalid norm_type")
 
             if layer != "layer1" and block == "0":
                 sublayer_downsample = extract_sublayer_conv2d(
@@ -226,11 +244,18 @@ def extract_submodel_resnet(
                 else:
                     sublayer_downsample = nn.Sequential(sublayer_downsample)
                 submodel._modules[layer][int(block)].downsample[0] = sublayer_downsample
-                layernorm_shape = layernorm_shapes[i]
-                layernorm_shape[0] = sublayer_downsample[0].out_channels
-                submodel._modules[layer][int(block)].downsample[1] = nn.LayerNorm(
-                    normalized_shape=layernorm_shape, elementwise_affine=False
-                )
+                if norm_type == "ln":
+                    layernorm_shape = layernorm_shapes[i]
+                    layernorm_shape[0] = sublayer_downsample[0].out_channels
+                    submodel._modules[layer][int(block)].downsample[1] = nn.LayerNorm(
+                        normalized_shape=layernorm_shape, elementwise_affine=False
+                    )
+                elif norm_type == "sbn":
+                    submodel._modules[layer][int(block)].downsample[1] = (
+                        nn.BatchNorm2d(sublayer_downsample[0].out_channels, affine=False, track_running_stats=False)
+                    )
+                else:
+                    raise ValueError("Invalid norm_type")
 
     sublayer_fc = extract_sublayer_linear(
         original_model.fc,

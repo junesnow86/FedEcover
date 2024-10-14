@@ -11,7 +11,6 @@ from modules.pruning import (
     SubmodelLayerParamIndicesDict,
     extract_submodel_cnn,
     extract_submodel_resnet,
-    generate_index_groups,
 )
 
 
@@ -27,6 +26,7 @@ class ServerHomo:
         select_ratio: float = 0.1,
         scaling: bool = True,
         eta_g: float = 1.0,
+        norm_type: str = "ln",
     ):
         assert model_type in ["cnn", "resnet"]
 
@@ -39,6 +39,7 @@ class ServerHomo:
         self.select_ratio = select_ratio
         self.scaling = scaling
         self.eta_g = eta_g
+        self.norm_type = norm_type
         self.global_model = self.initialize_global_model(global_model)
 
     def initialize_global_model(self, original_model: nn.Module):
@@ -162,6 +163,7 @@ class ServerHomo:
                 p=1 - self.client_capacity,
                 scaling=True,
                 dataset=self.dataset,
+                norm_type=self.norm_type,
             )
         else:
             raise ValueError("Invalid model type")
@@ -215,6 +217,7 @@ class ServerBase:
         scaling: bool = True,
         eta_g: float = 1.0,
         dynamic_eta_g: bool = False,
+        norm_type: str = "ln",
     ):
         assert len(client_capacities) == num_clients
         assert model_type in ["cnn", "resnet"]
@@ -230,6 +233,7 @@ class ServerBase:
 
         self.eta_g = eta_g
         self.dynamic_eta_g = dynamic_eta_g
+        self.norm_type = norm_type
 
     def get_client_submodel_param_indices_dict(self, client_id: int):
         raise NotImplementedError(
@@ -277,6 +281,7 @@ class ServerBase:
                     p=1 - selected_client_capacities[i],
                     scaling=True,
                     dataset=self.dataset,
+                    norm_type=self.norm_type,
                 )
                 for i in range(len(selected_client_ids))
             ]
@@ -431,6 +436,171 @@ class ServerBase:
         )
 
 
+class ServerStatic(ServerBase):
+    def __init__(
+        self,
+        global_model: nn.Module,
+        dataset: str,
+        num_clients: int,
+        client_capacities: List[float],
+        model_out_dim: int,
+        model_type: str = "cnn",
+        select_ratio: float = 0.1,
+        scaling: bool = True,
+        norm_type: str = "ln",
+    ):
+        super().__init__(
+            global_model=global_model,
+            dataset=dataset,
+            num_clients=num_clients,
+            client_capacities=client_capacities,
+            model_out_dim=model_out_dim,
+            model_type=model_type,
+            select_ratio=select_ratio,
+            scaling=scaling,
+            norm_type=norm_type,
+        )
+
+        self.initialize_param_indices_dicts()
+
+    def initialize_param_indices_dicts(self):
+        self.model_param_indices_dicts = []
+        if self.model_type == "cnn":
+            for client_id in range(self.num_clients):
+                client_capacity = self.client_capacities[client_id]
+                model_param_indices_dict = {
+                    "layer1.0": np.arange(int(64 * client_capacity)),
+                    "layer2.0": np.arange(int(128 * client_capacity)),
+                    "layer3.0": np.arange(int(256 * client_capacity)),
+                }
+                self.model_param_indices_dicts.append(model_param_indices_dict)
+        elif self.model_type == "resnet":
+            layers = ["layer1", "layer2", "layer3", "layer4"]
+            layer_out_channels = [64, 128, 256, 512]
+            blocks = ["0", "1"]
+            convs = ["conv1", "conv2"]
+            for client_id in range(self.num_clients):
+                client_capacity = self.client_capacities[client_id]
+                model_param_indices_dict = {
+                    "conv1": np.arange(int(64 * client_capacity)),
+                }
+                for i, layer in enumerate(layers):
+                    out_channels = layer_out_channels[i]
+                    for block in blocks:
+                        for conv in convs:
+                            model_param_indices_dict[f"{layer}.{block}.{conv}"] = (
+                                np.arange(int(out_channels * client_capacity))
+                            )
+                self.model_param_indices_dicts.append(model_param_indices_dict)
+        else:
+            raise ValueError("Invalid model type")
+
+    def get_client_submodel_param_indices_dict(
+        self, client_id: int
+    ) -> SubmodelBlockParamIndicesDict:
+        model_param_indices_dict = self.model_param_indices_dicts[client_id]
+
+        # Construct a submodel param indices dict for the client
+        submodel_param_indices_dict = SubmodelBlockParamIndicesDict()
+        if self.model_type == "cnn":
+            previous_layer_indices = np.arange(3)
+            for layer, indices in model_param_indices_dict.items():
+                # Note: the layer in the dict is sorted due to Python's dict implementation
+                submodel_param_indices_dict[layer] = SubmodelLayerParamIndicesDict(
+                    {"in": previous_layer_indices, "out": indices}
+                )
+                previous_layer_indices = indices
+
+            # The last fc layer
+            H, W = 1, 1
+            flatten_previous_layer_indices = []
+            for out_channnel_idx in previous_layer_indices:
+                start_idx = out_channnel_idx * H * W
+                end_idx = (out_channnel_idx + 1) * H * W
+                flatten_previous_layer_indices.extend(list(range(start_idx, end_idx)))
+            flatten_previous_layer_indices = np.sort(flatten_previous_layer_indices)
+            submodel_param_indices_dict["fc"] = SubmodelLayerParamIndicesDict(
+                {
+                    "in": flatten_previous_layer_indices,
+                    "out": np.arange(self.model_out_dim),
+                }
+            )
+        elif self.model_type == "resnet":
+            previous_layer_indices = np.arange(3)
+            for layer, indices in model_param_indices_dict.items():
+                # Note: the layer in the dict is sorted due to Python's dict implementation
+                submodel_param_indices_dict[layer] = SubmodelLayerParamIndicesDict(
+                    {"in": previous_layer_indices, "out": indices}
+                )
+                previous_layer_indices = indices
+
+                if len(layer.split(".")) == 1:
+                    continue
+
+                resnet_layer = layer.split(".")[0]
+                block = layer.split(".")[1]
+                conv = layer.split(".")[2]
+                if resnet_layer != "layer1" and block == "0" and conv == "conv2":
+                    # Add the downsample layer
+                    downsample_layer = f"{resnet_layer}.{block}.downsample.0"
+                    submodel_param_indices_dict[downsample_layer] = (
+                        SubmodelLayerParamIndicesDict(
+                            {
+                                "in": submodel_param_indices_dict[
+                                    f"{resnet_layer}.{block}.conv1"
+                                ]["in"],
+                                "out": submodel_param_indices_dict[
+                                    f"{resnet_layer}.{block}.conv2"
+                                ]["out"],
+                            }
+                        )
+                    )
+                elif conv == "conv2":
+                    # There is no downsample layer, the conv2 out indices should stay the same as conv1(of the same block) in indices
+                    # due to the residual connection
+                    assert np.all(
+                        submodel_param_indices_dict[f"{resnet_layer}.{block}.conv1"][
+                            "in"
+                        ]
+                        == submodel_param_indices_dict[f"{resnet_layer}.{block}.conv2"][
+                            "out"
+                        ]
+                    ), "The indices of conv1 and conv2 should be the same due to the residual connection"
+
+            # The last fc layer
+            H, W = 1, 1
+            flatten_previous_layer_indices = []
+            for out_channnel_idx in previous_layer_indices:
+                start_idx = out_channnel_idx * H * W
+                end_idx = (out_channnel_idx + 1) * H * W
+                flatten_previous_layer_indices.extend(list(range(start_idx, end_idx)))
+            flatten_previous_layer_indices = np.sort(flatten_previous_layer_indices)
+            submodel_param_indices_dict["fc"] = SubmodelLayerParamIndicesDict(
+                {
+                    "in": flatten_previous_layer_indices,
+                    "out": np.arange(self.model_out_dim),
+                }
+            )
+        else:
+            raise ValueError("Invalid model type")
+
+        return submodel_param_indices_dict
+
+    def step(
+        self,
+        local_state_dicts: List[OrderedDict],
+        selected_client_ids: List[int],
+        submodel_param_indices_dicts: List[SubmodelBlockParamIndicesDict],
+        client_weights: List[int] = None,
+    ):
+        self.aggregate(
+            local_state_dicts,
+            selected_client_ids,
+            submodel_param_indices_dicts,
+            client_weights,
+        )
+
+
 class ServerFedRolex(ServerBase):
     def __init__(
         self,
@@ -443,6 +613,7 @@ class ServerFedRolex(ServerBase):
         select_ratio: float = 0.1,
         scaling: bool = True,
         rolling_step: int = -1,
+        norm_type: str = "ln",
     ):
         super().__init__(
             global_model=global_model,
@@ -453,6 +624,7 @@ class ServerFedRolex(ServerBase):
             model_type=model_type,
             select_ratio=select_ratio,
             scaling=scaling,
+            norm_type=norm_type,
         )
 
         self.rolling_step = rolling_step
@@ -615,169 +787,6 @@ class ServerFedRolex(ServerBase):
         self.round += 1
 
 
-class ServerStatic(ServerBase):
-    def __init__(
-        self,
-        global_model: nn.Module,
-        dataset: str,
-        num_clients: int,
-        client_capacities: List[float],
-        model_out_dim: int,
-        model_type: str = "cnn",
-        select_ratio: float = 0.1,
-        scaling: bool = True,
-    ):
-        super().__init__(
-            global_model=global_model,
-            dataset=dataset,
-            num_clients=num_clients,
-            client_capacities=client_capacities,
-            model_out_dim=model_out_dim,
-            model_type=model_type,
-            select_ratio=select_ratio,
-            scaling=scaling,
-        )
-
-        self.initialize_param_indices_dicts()
-
-    def initialize_param_indices_dicts(self):
-        self.model_param_indices_dicts = []
-        if self.model_type == "cnn":
-            for client_id in range(self.num_clients):
-                client_capacity = self.client_capacities[client_id]
-                model_param_indices_dict = {
-                    "layer1.0": np.arange(int(64 * client_capacity)),
-                    "layer2.0": np.arange(int(128 * client_capacity)),
-                    "layer3.0": np.arange(int(256 * client_capacity)),
-                }
-                self.model_param_indices_dicts.append(model_param_indices_dict)
-        elif self.model_type == "resnet":
-            layers = ["layer1", "layer2", "layer3", "layer4"]
-            layer_out_channels = [64, 128, 256, 512]
-            blocks = ["0", "1"]
-            convs = ["conv1", "conv2"]
-            for client_id in range(self.num_clients):
-                client_capacity = self.client_capacities[client_id]
-                model_param_indices_dict = {
-                    "conv1": np.arange(int(64 * client_capacity)),
-                }
-                for i, layer in enumerate(layers):
-                    out_channels = layer_out_channels[i]
-                    for block in blocks:
-                        for conv in convs:
-                            model_param_indices_dict[f"{layer}.{block}.{conv}"] = (
-                                np.arange(int(out_channels * client_capacity))
-                            )
-                self.model_param_indices_dicts.append(model_param_indices_dict)
-        else:
-            raise ValueError("Invalid model type")
-
-    def get_client_submodel_param_indices_dict(
-        self, client_id: int
-    ) -> SubmodelBlockParamIndicesDict:
-        model_param_indices_dict = self.model_param_indices_dicts[client_id]
-
-        # Construct a submodel param indices dict for the client
-        submodel_param_indices_dict = SubmodelBlockParamIndicesDict()
-        if self.model_type == "cnn":
-            previous_layer_indices = np.arange(3)
-            for layer, indices in model_param_indices_dict.items():
-                # Note: the layer in the dict is sorted due to Python's dict implementation
-                submodel_param_indices_dict[layer] = SubmodelLayerParamIndicesDict(
-                    {"in": previous_layer_indices, "out": indices}
-                )
-                previous_layer_indices = indices
-
-            # The last fc layer
-            H, W = 1, 1
-            flatten_previous_layer_indices = []
-            for out_channnel_idx in previous_layer_indices:
-                start_idx = out_channnel_idx * H * W
-                end_idx = (out_channnel_idx + 1) * H * W
-                flatten_previous_layer_indices.extend(list(range(start_idx, end_idx)))
-            flatten_previous_layer_indices = np.sort(flatten_previous_layer_indices)
-            submodel_param_indices_dict["fc"] = SubmodelLayerParamIndicesDict(
-                {
-                    "in": flatten_previous_layer_indices,
-                    "out": np.arange(self.model_out_dim),
-                }
-            )
-        elif self.model_type == "resnet":
-            previous_layer_indices = np.arange(3)
-            for layer, indices in model_param_indices_dict.items():
-                # Note: the layer in the dict is sorted due to Python's dict implementation
-                submodel_param_indices_dict[layer] = SubmodelLayerParamIndicesDict(
-                    {"in": previous_layer_indices, "out": indices}
-                )
-                previous_layer_indices = indices
-
-                if len(layer.split(".")) == 1:
-                    continue
-
-                resnet_layer = layer.split(".")[0]
-                block = layer.split(".")[1]
-                conv = layer.split(".")[2]
-                if resnet_layer != "layer1" and block == "0" and conv == "conv2":
-                    # Add the downsample layer
-                    downsample_layer = f"{resnet_layer}.{block}.downsample.0"
-                    submodel_param_indices_dict[downsample_layer] = (
-                        SubmodelLayerParamIndicesDict(
-                            {
-                                "in": submodel_param_indices_dict[
-                                    f"{resnet_layer}.{block}.conv1"
-                                ]["in"],
-                                "out": submodel_param_indices_dict[
-                                    f"{resnet_layer}.{block}.conv2"
-                                ]["out"],
-                            }
-                        )
-                    )
-                elif conv == "conv2":
-                    # There is no downsample layer, the conv2 out indices should stay the same as conv1(of the same block) in indices
-                    # due to the residual connection
-                    assert np.all(
-                        submodel_param_indices_dict[f"{resnet_layer}.{block}.conv1"][
-                            "in"
-                        ]
-                        == submodel_param_indices_dict[f"{resnet_layer}.{block}.conv2"][
-                            "out"
-                        ]
-                    ), "The indices of conv1 and conv2 should be the same due to the residual connection"
-
-            # The last fc layer
-            H, W = 1, 1
-            flatten_previous_layer_indices = []
-            for out_channnel_idx in previous_layer_indices:
-                start_idx = out_channnel_idx * H * W
-                end_idx = (out_channnel_idx + 1) * H * W
-                flatten_previous_layer_indices.extend(list(range(start_idx, end_idx)))
-            flatten_previous_layer_indices = np.sort(flatten_previous_layer_indices)
-            submodel_param_indices_dict["fc"] = SubmodelLayerParamIndicesDict(
-                {
-                    "in": flatten_previous_layer_indices,
-                    "out": np.arange(self.model_out_dim),
-                }
-            )
-        else:
-            raise ValueError("Invalid model type")
-
-        return submodel_param_indices_dict
-
-    def step(
-        self,
-        local_state_dicts: List[OrderedDict],
-        selected_client_ids: List[int],
-        submodel_param_indices_dicts: List[SubmodelBlockParamIndicesDict],
-        client_weights: List[int] = None,
-    ):
-        self.aggregate(
-            local_state_dicts,
-            selected_client_ids,
-            submodel_param_indices_dicts,
-            client_weights,
-        )
-
-
 class ServerRD(ServerBase):
     def __init__(
         self,
@@ -789,16 +798,18 @@ class ServerRD(ServerBase):
         model_type: str = "cnn",
         select_ratio: float = 0.1,
         scaling: bool = True,
+        norm_type: str = "ln",
     ):
         super().__init__(
-            global_model,
-            dataset,
-            num_clients,
-            client_capacities,
-            model_out_dim,
-            model_type,
-            select_ratio,
-            scaling,
+            global_model=global_model,
+            dataset=dataset,
+            num_clients=num_clients,
+            client_capacities=client_capacities,
+            model_out_dim=model_out_dim,
+            model_type=model_type,
+            select_ratio=select_ratio,
+            scaling=scaling,
+            norm_type=norm_type,
         )
 
     def get_client_submodel_param_indices_dict(
@@ -939,271 +950,6 @@ class ServerRD(ServerBase):
         )
 
 
-class ServerRDBagging(ServerBase):
-    def __init__(
-        self,
-        global_model: nn.Module,
-        num_clients: int,
-        client_capacities: List[float],
-        model_out_dim: int,
-        model_type: str = "cnn",
-        select_ratio: float = 0.1,
-        scaling: bool = True,
-        strategy: str = "p-based-steady",
-    ):
-        super().__init__(
-            global_model,
-            num_clients,
-            client_capacities,
-            model_out_dim,
-            model_type,
-            select_ratio,
-            scaling,
-        )
-
-        assert strategy in ["steady", "frequent", "client"]
-        self.strategy = strategy
-        self.capacity_set = set(client_capacities)
-        if strategy == "steady" or strategy == "frequent":
-            self.submodel_param_indices_dict_queues = {}  # the key type is str, a p value in string format; the value type is List[SubmodelBlockParamIndicesDict]
-            for client_capacity in self.capacity_set:
-                self.submodel_param_indices_dict_queues[f"{client_capacity:.2f}"] = []
-        else:
-            self.submodel_param_indices_dict_queues = [
-                [] for _ in range(self.num_clients)
-            ]  # the index is the client id; the value type is List[SubmodelBlockParamIndicesDict]
-
-    def get_client_submodel_param_indices_dict(self, client_id: int):
-        client_capacity = self.client_capacities[client_id]
-        if self.strategy == "steady" or self.strategy == "frequent":
-            # Note: `submodel_param_indices_dict_queues` is a quote, so the changes will be reflected in the original object
-            submodel_param_indices_dict_queue = self.submodel_param_indices_dict_queues[
-                f"{client_capacity:.2f}"
-            ]
-        else:
-            submodel_param_indices_dict_queue = self.submodel_param_indices_dict_queues[
-                client_id
-            ]
-
-        if len(submodel_param_indices_dict_queue) == 0:
-            # Reload the queue
-            # Construct a queue of submodel param indices dicts for the client
-            if self.model_type == "cnn":
-                layers = ["layer1.0", "layer2.0", "layer3.0"]
-                layer_out_channels = [64, 128, 256]
-                layer_indices_groups = {
-                    layer: generate_index_groups(
-                        layer_out_channels[i],
-                        int(client_capacity * layer_out_channels[i]),
-                    )
-                    for i, layer in enumerate(layers)
-                }
-
-                # Align the lengths of the groups
-                queue_length = min(
-                    [len(layer_indices_groups[layer]) for layer in layers]
-                )
-                for layer in layers:
-                    layer_indices_groups[layer] = layer_indices_groups[layer][
-                        :queue_length
-                    ]
-
-                # Note: Sort the indices
-                for layer in layers:
-                    for i in range(len(layer_indices_groups[layer])):
-                        layer_indices_groups[layer][i] = np.sort(
-                            layer_indices_groups[layer][i]
-                        )
-
-                for i in range(queue_length):
-                    submodel_param_indices_dict = SubmodelBlockParamIndicesDict()
-                    previous_layer_indices = np.arange(3)
-                    for layer in layers:
-                        current_layer_indices = layer_indices_groups[layer][i]
-                        submodel_param_indices_dict[layer] = (
-                            SubmodelLayerParamIndicesDict(
-                                {
-                                    "in": previous_layer_indices,
-                                    "out": current_layer_indices,
-                                }
-                            )
-                        )
-                        previous_layer_indices = current_layer_indices
-
-                    # The last fc layer
-                    H, W = 1, 1
-                    flatten_previous_layer_indices = []
-                    for out_channnel_idx in previous_layer_indices:
-                        start_idx = out_channnel_idx * H * W
-                        end_idx = (out_channnel_idx + 1) * H * W
-                        flatten_previous_layer_indices.extend(
-                            list(range(start_idx, end_idx))
-                        )
-                    # Note: Sort the indices
-                    flatten_previous_layer_indices = np.sort(
-                        flatten_previous_layer_indices
-                    )
-                    submodel_param_indices_dict["fc"] = SubmodelLayerParamIndicesDict(
-                        {
-                            "in": flatten_previous_layer_indices,
-                            "out": np.arange(self.model_out_dim),
-                        }
-                    )
-
-                    submodel_param_indices_dict_queue.append(
-                        submodel_param_indices_dict
-                    )
-            elif self.model_type == "resnet":
-                layer_indices_groups = {}
-                layer_indices_groups["conv1"] = generate_index_groups(
-                    64, int(client_capacity * 64)
-                )
-
-                layers = ["layer1", "layer2", "layer3", "layer4"]
-                layer_out_channels = [64, 128, 256, 512]
-                blocks = ["0", "1"]
-                convs = ["conv1", "conv2"]
-
-                for i, layer in enumerate(layers):
-                    out_channels = layer_out_channels[i]
-                    group_size = int(client_capacity * out_channels)
-                    for block in blocks:
-                        if layer != "layer1" and block == "0":
-                            has_downsample = True
-                        else:
-                            has_downsample = False
-
-                        for conv in convs:
-                            if not has_downsample and conv == "conv2":
-                                # There is no downsample layer, the conv2 out indices should stay the same as conv1(of the same block) in indices
-                                # due to the residual connection
-                                continue
-                            layer_indices_groups[f"{layer}.{block}.{conv}"] = (
-                                generate_index_groups(out_channels, group_size)
-                            )
-
-                # Align the lengths of the groups
-                queue_length = min(
-                    [len(queue) for queue in layer_indices_groups.values()]
-                )
-                for key in layer_indices_groups.keys():
-                    layer_indices_groups[key] = layer_indices_groups[key][:queue_length]
-
-                # Note: Sort the indices
-                for key in layer_indices_groups.keys():
-                    for i in range(len(layer_indices_groups[key])):
-                        layer_indices_groups[key][i] = np.sort(
-                            layer_indices_groups[key][i]
-                        )
-
-                for i in range(queue_length):
-                    submodel_param_indices_dict = SubmodelBlockParamIndicesDict()
-                    previous_layer_indices = np.arange(3)
-                    current_layer_indices = layer_indices_groups["conv1"][i]
-                    submodel_param_indices_dict["conv1"] = (
-                        SubmodelLayerParamIndicesDict(
-                            {"in": previous_layer_indices, "out": current_layer_indices}
-                        )
-                    )
-                    previous_layer_indices = current_layer_indices
-
-                    for layer in layers:
-                        for block in blocks:
-                            if layer != "layer1" and block == "0":
-                                has_downsample = True
-                            else:
-                                has_downsample = False
-
-                            for conv in convs:
-                                if not has_downsample and conv == "conv2":
-                                    # There is no downsample layer, the conv2 out indices should stay the same as conv1(of the same block) in indices
-                                    # due to the residual connection
-                                    current_layer_indices = submodel_param_indices_dict[
-                                        f"{layer}.{block}.conv1"
-                                    ]["in"]
-                                else:
-                                    current_layer_indices = layer_indices_groups[
-                                        f"{layer}.{block}.{conv}"
-                                    ][i]
-                                submodel_param_indices_dict[
-                                    f"{layer}.{block}.{conv}"
-                                ] = SubmodelLayerParamIndicesDict(
-                                    {
-                                        "in": previous_layer_indices,
-                                        "out": current_layer_indices,
-                                    }
-                                )
-                                previous_layer_indices = current_layer_indices
-
-                            if has_downsample:
-                                # Add the downsample layer
-                                submodel_param_indices_dict[
-                                    f"{layer}.{block}.downsample.0"
-                                ] = SubmodelLayerParamIndicesDict(
-                                    {
-                                        "in": submodel_param_indices_dict[
-                                            f"{layer}.{block}.conv1"
-                                        ]["in"],
-                                        "out": submodel_param_indices_dict[
-                                            f"{layer}.{block}.conv2"
-                                        ]["out"],
-                                    }
-                                )
-
-                    H, W = 1, 1
-                    flatten_previous_layer_indices = []
-                    for out_channnel_idx in previous_layer_indices:
-                        start_idx = out_channnel_idx * H * W
-                        end_idx = (out_channnel_idx + 1) * H * W
-                        flatten_previous_layer_indices.extend(
-                            list(range(start_idx, end_idx))
-                        )
-                    # Note: Sort the indices
-                    flatten_previous_layer_indices = np.sort(
-                        flatten_previous_layer_indices
-                    )
-                    submodel_param_indices_dict["fc"] = SubmodelLayerParamIndicesDict(
-                        {
-                            "in": flatten_previous_layer_indices,
-                            "out": np.arange(self.model_out_dim),
-                        }
-                    )
-                    submodel_param_indices_dict_queue.append(
-                        submodel_param_indices_dict
-                    )
-            else:
-                raise ValueError("Invalid model type")
-
-        if self.strategy == "steady":
-            return submodel_param_indices_dict_queue[-1]
-        else:
-            return submodel_param_indices_dict_queue.pop()
-
-    def step(
-        self,
-        local_state_dicts: List[OrderedDict],
-        selected_client_ids: List[int],
-        submodel_param_indices_dicts: List[SubmodelBlockParamIndicesDict],
-        client_weights: List[int],
-    ):
-        self.aggregate(
-            local_state_dicts,
-            selected_client_ids,
-            submodel_param_indices_dicts,
-            client_weights,
-        )
-
-        selected_capacites = [
-            f"{self.client_capacities[client_id]:.2f}"
-            for client_id in selected_client_ids
-        ]
-        selected_capacites = list(set(selected_capacites))
-
-        if self.strategy == "steady":
-            for client_capacity in selected_capacites:
-                self.submodel_param_indices_dict_queues[client_capacity].pop()
-
-
 class ServerFedRAME(ServerBase):
     def __init__(
         self,
@@ -1217,18 +963,20 @@ class ServerFedRAME(ServerBase):
         scaling: bool = True,
         eta_g: float = 1.0,
         dynamic_eta_g: bool = False,
+        norm_type: str = "ln",
     ):
         super().__init__(
-            global_model,
-            dataset,
-            num_clients,
-            client_capacities,
-            model_out_dim,
-            model_type,
-            select_ratio,
-            scaling,
-            eta_g,
-            dynamic_eta_g,
+            global_model=global_model,
+            dataset=dataset,
+            num_clients=num_clients,
+            client_capacities=client_capacities,
+            model_out_dim=model_out_dim,
+            model_type=model_type,
+            select_ratio=select_ratio,
+            scaling=scaling,
+            eta_g=eta_g,
+            dynamic_eta_g=dynamic_eta_g,
+            norm_type=norm_type,
         )
 
         self.initialize_unused_param_indices_for_layers()
