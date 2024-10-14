@@ -2,56 +2,40 @@ import argparse
 
 
 def get_args(print_args=True):
-    """Initialize the global parser configuration.
-
-    Returns:
-        args: Argparse namespace with all configs.
-    """
     parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        "--method",
+        type=str,
+        choices=[
+            "fedavg",
+            "heterofl",
+            "fedrolex",
+            "fedrd",
+            "fedrame",
+        ],
+        default="fedavg",
+        help="Federated learning method",
+    )
     parser.add_argument(
         "--model",
         type=str,
         choices=["cnn", "resnet"],
         default="cnn",
-        help="Model to use for training",
+        help="Model type",
     )
     parser.add_argument(
         "--dataset",
         type=str,
         choices=["cifar10", "cifar100", "tiny-imagenet"],
         default="cifar10",
-        help="Dataset to use for training",
+        help="Dataset",
     )
     parser.add_argument(
         "--distribution",
         type=str,
-        choices=["iid", "non-iid"],
         default="iid",
         help="Data distribution for clients",
-    )
-    parser.add_argument(
-        "--alpha",
-        type=float,
-        default=1.0,
-        help="Alpha value for Dirichlet distribution",
-    )
-    parser.add_argument(
-        "--method",
-        type=str,
-        choices=[
-            "fedavg",
-            "scaffold",
-            "heterofl",
-            "fedrolex",
-            "fedrd",
-            "rdbagging-frequent",
-            "rdbagging-steady",
-            "rdbagging-client",
-            "legacy",
-            "fedrame",
-        ],
-        default="fedavg",
-        help="Federated learning method",
     )
     parser.add_argument(
         "--num-clients",
@@ -96,23 +80,16 @@ def get_args(print_args=True):
         help="Learning rate for local training",
     )
     parser.add_argument(
-        "--dynamic-eta_g",
-        type=str,
-        default="False",
-        help="Dynamic Eta_g for aggregation",
-    )
-    parser.add_argument(
         "--eta_g",
         type=float,
         default=1.0,
         help="Eta_g for aggregation",
     )
     parser.add_argument(
-        "--aggregation",
+        "--dynamic-eta_g",
         type=str,
-        choices=["sparse", "recovery"],
-        default="sparse",
-        help="Aggregation method to use",
+        default="False",
+        help="Dynamic Eta_g for aggregation",
     )
     parser.add_argument(
         "--plot-data-distribution",
@@ -125,12 +102,6 @@ def get_args(print_args=True):
         type=int,
         default=42,
         help="Random seed for reproducibility",
-    )
-    parser.add_argument(
-        "--save-dir",
-        type=str,
-        default=None,
-        help="Directory to save the results",
     )
 
     args = parser.parse_args()
@@ -146,12 +117,15 @@ def get_args(print_args=True):
         args.dynamic_eta_g = False
 
     if print_args:
+        print(f"Method: {args.method}")
         print(f"Model: {args.model}")
         print(f"Dataset: {args.dataset}")
         print(f"Data distribution: {args.distribution}")
-        if args.distribution == "non-iid":
-            print(f"Alpha: {args.alpha}")
-        print(f"Method: {args.method}")
+        if args.distribution != "iid":
+            try:
+                args.distribution = float(args.distribution.split("alpha")[1])
+            except ValueError:
+                raise ValueError("Alpha value must be a float")
         print(f"Dynamic Global learning rate: {args.dynamic_eta_g}")
         print(f"Global learning rate: {args.eta_g}")
         print(f"Number of clients: {args.num_clients}")
@@ -161,11 +135,6 @@ def get_args(print_args=True):
         print(f"Number of local epochs: {args.epochs}")
         print(f"Batch size: {args.batch_size}")
         print(f"Learning rate: {args.lr}")
-        print(f"Aggregation method: {args.aggregation}")
         print(f"Random seed: {args.seed}")
-        if args.save_dir is None:
-            print("Results will not be saved.")
-        else:
-            print(f"Results save directory: {args.save_dir}")
 
     return args
