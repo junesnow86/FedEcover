@@ -14,7 +14,7 @@ from modules.constants import NORMALIZATION_STATS
 from modules.data import TinyImageNet, create_non_iid_data
 from modules.evaluation import evaluate_acc
 from modules.models import CNN, custom_resnet18
-from modules.server import (
+from modules.servers import (
     ServerFedRAME,
     ServerFedRolex,
     ServerHomo,
