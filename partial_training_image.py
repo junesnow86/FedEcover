@@ -10,7 +10,7 @@ from torch.utils.data import DataLoader, Subset
 from torchvision import datasets, transforms
 
 from modules.args_parser import get_args
-from modules.constants import NORMALIZATION_STATS
+from modules.constants import NORMALIZATION_STATS, OPTIONAL_CLIENT_CAPACITY_DISTRIBUTIONS
 from modules.data import TinyImageNet, create_non_iid_data
 from modules.evaluation import evaluate_acc
 from modules.models import CNN, custom_resnet18
@@ -60,14 +60,31 @@ torch.backends.cudnn.benchmark = False
 
 
 # <======================================== Data preparation ========================================>
-transform = transforms.Compose(
-    [
-        transforms.ToTensor(),
-        transforms.Normalize(
-            NORMALIZATION_STATS[DATASET]["mean"], NORMALIZATION_STATS[DATASET]["std"]
-        ),
-    ]
-)
+if "cifar" in DATASET:
+    transform = transforms.Compose(
+        [
+            transforms.RandomHorizontalFlip(),
+            transforms.RandomCrop(32, padding=4),
+            transforms.ToTensor(),
+            transforms.Normalize(
+                NORMALIZATION_STATS[DATASET]["mean"], NORMALIZATION_STATS[DATASET]["std"]
+            ),
+        ]
+    )
+elif DATASET == "tiny-imagenet":
+    transform = transforms.Compose(
+        [
+            transforms.RandomHorizontalFlip(),
+            transforms.RandomCrop(64, padding=4),
+            transforms.ToTensor(),
+            transforms.Normalize(
+                mean=NORMALIZATION_STATS[DATASET]["mean"],
+                std=NORMALIZATION_STATS[DATASET]["std"],
+            ),
+        ]
+    )
+else:
+    raise ValueError(f"Dataset {DATASET} not supported.")
 
 if DATASET == "cifar10":
     global_train_dataset = datasets.CIFAR10(
@@ -227,8 +244,10 @@ print(
 
 
 # <======================================== Server preparation ========================================>
-optional_dropout_rates = [0.0, 0.25, 0.5, 0.75, 0.9]
-weights = [0.05, 0.1, 0.15, 0.2, 0.5]
+client_capacity_distribution = OPTIONAL_CLIENT_CAPACITY_DISTRIBUTIONS[args.client_capacity_distribution]
+client_capacities = [t[0] for t in client_capacity_distribution]
+optional_dropout_rates = [1 - capacity for capacity in client_capacities]
+weights = [t[1] for t in client_capacity_distribution]
 if METHOD in ["fedavg"]:
     max_dropout_rate = max(optional_dropout_rates)
     client_dropout_rates = [max_dropout_rate] * NUM_CLIENTS
@@ -243,9 +262,10 @@ for rate in client_dropout_rates:
         dropout_rate_count[rate] += 1
     else:
         dropout_rate_count[rate] = 1
+print(f"Possible client dropout rates: {optional_dropout_rates}")
+print(f"Weights: {weights}")
 print(f"Client dropout rates: {client_dropout_rates}")
 print(f"Client dropout rate count: {dropout_rate_count}")
-optional_model_pruned_indices_dicts = {p: [] for p in optional_dropout_rates}
 
 if METHOD == "fedavg":
     server = ServerHomo(
@@ -309,6 +329,7 @@ elif METHOD == "fedrame":
         eta_g=args.eta_g,
         dynamic_eta_g=args.dynamic_eta_g,
         norm_type=args.norm_type,
+        shrinking=args.shrinking,
     )
 
 
