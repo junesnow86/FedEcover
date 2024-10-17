@@ -64,13 +64,13 @@ def get_args(print_args=True):
     parser.add_argument(
         "--epochs",
         type=int,
-        default=1,
+        default=10,
         help="Number of epochs of local training",
     )
     parser.add_argument(
         "--batch-size",
         type=int,
-        default=32,
+        default=64,
         help="Batch size for local training",
     )
     parser.add_argument(
@@ -116,6 +116,25 @@ def get_args(print_args=True):
         default=2,
         help="Number of workers for DataLoader",
     )
+    parser.add_argument(
+        "--client-capacity-distribution",
+        type=int,
+        default=0,
+        choices=[0, 1, 2, 3, 4],
+        help="Which client capacity distribution group to use",
+    )
+    parser.add_argument(
+        "--use-neuron-combination",
+        type=str,
+        default="False",
+        help="Use neuron combination for FedRAME",
+    )
+    parser.add_argument(
+        "--shrinking",
+        type=str,
+        default="False",
+        help="Use shrinking for FedRAME",
+    )
 
     args = parser.parse_args()
 
@@ -128,6 +147,11 @@ def get_args(print_args=True):
         args.dynamic_eta_g = True
     else:
         args.dynamic_eta_g = False
+
+    if args.shrinking == "True":
+        args.shrinking = True
+    else:
+        args.shrinking = False
 
     if print_args:
         print(f"Method: {args.method}")
@@ -151,5 +175,7 @@ def get_args(print_args=True):
         print(f"Random seed: {args.seed}")
         print(f"Normalization type: {args.norm_type}")
         print(f"Number of workers: {args.num_workers}")
+        print(f"Client capacity distribution: {args.client_capacity_distribution}")
+        print(f"Use shrinking: {args.shrinking}")
 
     return args
