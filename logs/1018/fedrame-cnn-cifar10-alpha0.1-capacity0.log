@@ -1,0 +1,95 @@
+Method: fedrame
+Model: cnn
+Dataset: cifar10
+Data distribution: alpha0.1
+Dynamic Global learning rate: False
+Global learning rate: 1.0
+Number of clients: 10
+Client selection ratio: 1.0
+Local training data ratio: 0.9
+Number of rounds: 200
+Number of local epochs: 5
+Batch size: 64
+Learning rate: 0.001
+Random seed: 42
+Normalization type: sbn
+Number of workers: 2
+Client capacity distribution: 0
+Use shrinking: False
+[Model Architecture]
+CNN(
+  (layer1): Sequential(
+    (0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  )
+  (layer2): Sequential(
+    (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  )
+  (layer3): Sequential(
+    (0): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  )
+  (adaptive_pool): AdaptiveAvgPool2d(output_size=(1, 1))
+  (fc): Linear(in_features=256, out_features=10, bias=True)
+)
+Global Model size: 1.42 MB
+Possible client dropout rates: [0.0, 0.25, 0.5, 0.75, 0.9]
+Weights: [0.05, 0.1, 0.15, 0.2, 0.5]
+Client dropout rates: [0.9, 0.0, 0.5, 0.5, 0.9, 0.9, 0.9, 0.25, 0.75, 0.0]
+Client dropout rate count: {0.9: 4, 0.0: 2, 0.5: 2, 0.25: 1, 0.75: 1}
+Round 1
+Selected 10 client IDs: [9 0 2 3 1 7 4 6 8 5]
+Param name: layer1.0.weight, param overlap: 0.4250, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.4250, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.2962, param coverage: 1.0000, param coverage ablation: 0.7384
+Param name: layer2.0.bias, param overlap: 0.4258, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer3.0.weight, param overlap: 0.2956, param coverage: 1.0000, param coverage ablation: 0.7155
+Param name: layer3.0.bias, param overlap: 0.4250, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.4250, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.4647, mean Coverage: 1.0000, mean Coverage Ablation: 0.9317
+Client 9	Dropout Rate: 0.0	Model Size: 1.42 MB	Train Loss: 0.5957	Train Acc: 0.8074	Local Validation  Loss: 0.5039	Local Validation Acc: 0.8381	Global Validation Loss: 4.8783	Global Validation Acc: 0.1697
+Client 0	Dropout Rate: 0.9	Model Size: 0.01 MB	Train Loss: 0.7973	Train Acc: 0.7012	Local Validation  Loss: 0.8754	Local Validation Acc: 0.6813	Global Validation Loss: 7.7951	Global Validation Acc: 0.2481
+Client 2	Dropout Rate: 0.5	Model Size: 0.36 MB	Train Loss: 0.9620	Train Acc: 0.6567	Local Validation  Loss: 0.9992	Local Validation Acc: 0.6576	Global Validation Loss: 7.7844	Global Validation Acc: 0.1285
+Client 3	Dropout Rate: 0.5	Model Size: 0.36 MB	Train Loss: 0.5113	Train Acc: 0.8590	Local Validation  Loss: 0.5316	Local Validation Acc: 0.8514	Global Validation Loss: 5.9456	Global Validation Acc: 0.1212
+Client 1	Dropout Rate: 0.0	Model Size: 1.42 MB	Train Loss: 0.8627	Train Acc: 0.6571	Local Validation  Loss: 0.9494	Local Validation Acc: 0.6398	Global Validation Loss: 5.6295	Global Validation Acc: 0.1487
+Client 7	Dropout Rate: 0.25	Model Size: 0.80 MB	Train Loss: 0.2223	Train Acc: 0.9379	Local Validation  Loss: 0.2516	Local Validation Acc: 0.9250	Global Validation Loss: 5.3430	Global Validation Acc: 0.1053
+Client 4	Dropout Rate: 0.9	Model Size: 0.01 MB	Train Loss: 0.3760	Train Acc: 0.8794	Local Validation  Loss: 0.3786	Local Validation Acc: 0.8884	Global Validation Loss: 8.3833	Global Validation Acc: 0.1644
+Client 6	Dropout Rate: 0.9	Model Size: 0.01 MB	Train Loss: 0.4705	Train Acc: 0.7897	Local Validation  Loss: 0.4330	Local Validation Acc: 0.8148	Global Validation Loss: 10.3910	Global Validation Acc: 0.1539
+Client 8	Dropout Rate: 0.75	Model Size: 0.09 MB	Train Loss: 0.7621	Train Acc: 0.7070	Local Validation  Loss: 0.7747	Local Validation Acc: 0.7040	Global Validation Loss: 6.0314	Global Validation Acc: 0.3264
+Client 5	Dropout Rate: 0.9	Model Size: 0.01 MB	Train Loss: 0.1300	Train Acc: 0.9688	Local Validation  Loss: 0.0900	Local Validation Acc: 0.9755	Global Validation Loss: 8.1090	Global Validation Acc: 0.1284
+Aggregated
+Global Test Loss: 2.2670	Global Test Acc: 0.1559
+Client 9	Local Validation Loss: 2.1433(1.6394)	Local Validation Acc: 0.3143(-0.5238)
+Client 0	Local Validation Loss: 2.3652(1.4897)	Local Validation Acc: 0.1294(-0.5519)
+Client 2	Local Validation Loss: 2.2248(1.2255)	Local Validation Acc: 0.0911(-0.5665)
+Client 3	Local Validation Loss: 2.5135(1.9819)	Local Validation Acc: 0.0286(-0.8229)
+Client 1	Local Validation Loss: 2.1372(1.1879)	Local Validation Acc: 0.4735(-0.1663)
+Client 7	Local Validation Loss: 2.2099(1.9582)	Local Validation Acc: 0.0000(-0.9250)
+Client 4	Local Validation Loss: 2.4927(2.1140)	Local Validation Acc: 0.0112(-0.8772)
+Client 6	Local Validation Loss: 2.3496(1.9166)	Local Validation Acc: 0.0058(-0.8090)
+Client 8	Local Validation Loss: 2.1823(1.4076)	Local Validation Acc: 0.1679(-0.5361)
+Client 5	Local Validation Loss: 2.1826(2.0926)	Local Validation Acc: 0.0178(-0.9577)
+Average: 0.1270 | 0.0000 (compared to average)
+Drpout Rate 0.0: 0.4076 | 0.2806 (compared to average)
+Drpout Rate 0.25: 0.0000 | -0.1270 (compared to average)
+Drpout Rate 0.5: 0.0586 | -0.0684 (compared to average)
+Drpout Rate 0.75: 0.1617 | 0.0347 (compared to average)
+Drpout Rate 0.9: 0.0440 | -0.0830 (compared to average)
+Round 1 use time: 2.43 min, ETA: 8.05 hours
+================================================================================
+Round 2
+Selected 10 client IDs: [1 7 6 8 5 4 2 0 3 9]
+Param name: layer1.0.weight, param overlap: 0.3812, param coverage: 1.0000, param coverage ablation: 0.9844
+Param name: layer1.0.bias, param overlap: 0.3812, param coverage: 1.0000, param coverage ablation: 0.9844
+Param name: layer2.0.weight, param overlap: 0.2297, param coverage: 0.9725, param coverage ablation: 0.3807
+Param name: layer2.0.bias, param overlap: 0.3820, param coverage: 1.0000, param coverage ablation: 0.9688
+Param name: layer3.0.weight, param overlap: 0.2323, param coverage: 0.9729, param coverage ablation: 0.3922
+Param name: layer3.0.bias, param overlap: 0.3852, param coverage: 1.0000, param coverage ablation: 0.9727
+Param name: fc.weight, param overlap: 0.3852, param coverage: 1.0000, param coverage ablation: 0.9727
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.4221, mean Coverage: 0.9932, mean Coverage Ablation: 0.8320

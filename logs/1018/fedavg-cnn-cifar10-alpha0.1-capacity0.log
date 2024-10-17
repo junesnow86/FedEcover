@@ -1,0 +1,77 @@
+Method: fedavg
+Model: cnn
+Dataset: cifar10
+Data distribution: alpha0.1
+Dynamic Global learning rate: False
+Global learning rate: 1.0
+Number of clients: 10
+Client selection ratio: 1.0
+Local training data ratio: 0.9
+Number of rounds: 200
+Number of local epochs: 5
+Batch size: 64
+Learning rate: 0.001
+Random seed: 42
+Normalization type: sbn
+Number of workers: 2
+Client capacity distribution: 0
+Use shrinking: False
+[Model Architecture]
+CNN(
+  (layer1): Sequential(
+    (0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  )
+  (layer2): Sequential(
+    (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  )
+  (layer3): Sequential(
+    (0): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  )
+  (adaptive_pool): AdaptiveAvgPool2d(output_size=(1, 1))
+  (fc): Linear(in_features=256, out_features=10, bias=True)
+)
+Global Model size: 1.42 MB
+Possible client dropout rates: [0.0, 0.25, 0.5, 0.75, 0.9]
+Weights: [0.05, 0.1, 0.15, 0.2, 0.5]
+Client dropout rates: [0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9]
+Client dropout rate count: {0.9: 10}
+Round 1
+Selected 10 client IDs: [9 0 2 3 1 7 4 6 8 5]
+Client 9	Dropout Rate: 0.9	Model Size: 0.01 MB	Train Loss: 0.6194	Train Acc: 0.7958	Local Validation  Loss: 0.5139	Local Validation Acc: 0.8476	Global Validation Loss: 4.9744	Global Validation Acc: 0.1634
+Client 0	Dropout Rate: 0.9	Model Size: 0.01 MB	Train Loss: 0.8558	Train Acc: 0.6829	Local Validation  Loss: 0.8893	Local Validation Acc: 0.6717	Global Validation Loss: 6.0430	Global Validation Acc: 0.2437
+Client 2	Dropout Rate: 0.9	Model Size: 0.01 MB	Train Loss: 0.9222	Train Acc: 0.6699	Local Validation  Loss: 0.9571	Local Validation Acc: 0.6724	Global Validation Loss: 7.6192	Global Validation Acc: 0.1691
+Client 3	Dropout Rate: 0.9	Model Size: 0.01 MB	Train Loss: 0.5163	Train Acc: 0.8552	Local Validation  Loss: 0.5616	Local Validation Acc: 0.8571	Global Validation Loss: 6.3121	Global Validation Acc: 0.1060
+Client 1	Dropout Rate: 0.9	Model Size: 0.01 MB	Train Loss: 0.8279	Train Acc: 0.6859	Local Validation  Loss: 0.8750	Local Validation Acc: 0.6494	Global Validation Loss: 5.6561	Global Validation Acc: 0.1794
+Client 7	Dropout Rate: 0.9	Model Size: 0.01 MB	Train Loss: 0.2210	Train Acc: 0.9393	Local Validation  Loss: 0.2621	Local Validation Acc: 0.9313	Global Validation Loss: 6.2648	Global Validation Acc: 0.1150
+Client 4	Dropout Rate: 0.9	Model Size: 0.01 MB	Train Loss: 0.3765	Train Acc: 0.8755	Local Validation  Loss: 0.4076	Local Validation Acc: 0.8906	Global Validation Loss: 7.8189	Global Validation Acc: 0.1711
+Client 6	Dropout Rate: 0.9	Model Size: 0.01 MB	Train Loss: 0.5019	Train Acc: 0.7578	Local Validation  Loss: 0.4480	Local Validation Acc: 0.7641	Global Validation Loss: 9.5627	Global Validation Acc: 0.1418
+Client 8	Dropout Rate: 0.9	Model Size: 0.01 MB	Train Loss: 0.9717	Train Acc: 0.6119	Local Validation  Loss: 0.9770	Local Validation Acc: 0.6083	Global Validation Loss: 6.2713	Global Validation Acc: 0.2528
+Client 5	Dropout Rate: 0.9	Model Size: 0.01 MB	Train Loss: 0.1323	Train Acc: 0.9693	Local Validation  Loss: 0.0952	Local Validation Acc: 0.9733	Global Validation Loss: 7.1546	Global Validation Acc: 0.1109
+Aggregated
+Global Test Loss: 2.2557	Global Test Acc: 0.1584
+Client 9	Local Validation Loss: 1.9496(1.4357)	Local Validation Acc: 0.1524(-0.6952)
+Client 0	Local Validation Loss: 2.4887(1.5994)	Local Validation Acc: 0.0706(-0.6011)
+Client 2	Local Validation Loss: 1.8937(0.9366)	Local Validation Acc: 0.4458(-0.2266)
+Client 3	Local Validation Loss: 2.5405(1.9789)	Local Validation Acc: 0.0571(-0.8000)
+Client 1	Local Validation Loss: 2.3858(1.5108)	Local Validation Acc: 0.1024(-0.5470)
+Client 7	Local Validation Loss: 2.0223(1.7602)	Local Validation Acc: 0.2625(-0.6687)
+Client 4	Local Validation Loss: 2.4424(2.0347)	Local Validation Acc: 0.0536(-0.8371)
+Client 6	Local Validation Loss: 2.1114(1.6634)	Local Validation Acc: 0.1520(-0.6121)
+Client 8	Local Validation Loss: 2.0308(1.0538)	Local Validation Acc: 0.2157(-0.3927)
+Client 5	Local Validation Loss: 2.3924(2.2972)	Local Validation Acc: 0.0334(-0.9399)
+Average: 0.1464 | 0.0000 (compared to average)
+Drpout Rate 0.0: nan | nan (compared to average)
+Drpout Rate 0.25: nan | nan (compared to average)
+Drpout Rate 0.5: nan | nan (compared to average)
+Drpout Rate 0.75: nan | nan (compared to average)
+Drpout Rate 0.9: 0.1464 | 0.0000 (compared to average)
+Round 1 use time: 2.01 min, ETA: 6.68 hours
+================================================================================
+Round 2
+Selected 10 client IDs: [9 6 2 8 0 1 3 5 4 7]
