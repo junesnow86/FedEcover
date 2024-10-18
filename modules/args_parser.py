@@ -44,7 +44,7 @@ def get_args(print_args=True):
         help="Number of clients to simulate",
     )
     parser.add_argument(
-        "--select-ratio",
+        "--client-select-ratio",
         type=float,
         default=0.1,
         help="Ratio of selected clients per round",
@@ -52,7 +52,7 @@ def get_args(print_args=True):
     parser.add_argument(
         "--local-train-ratio",
         type=float,
-        default=0.8,
+        default=1.0,
         help="Ratio of local training data",
     )
     parser.add_argument(
@@ -78,6 +78,12 @@ def get_args(print_args=True):
         type=float,
         default=0.001,
         help="Learning rate for local training",
+    )
+    parser.add_argument(
+        "--weight-decay",
+        type=float,
+        default=0.0,
+        help="Weight decay for local training",
     )
     parser.add_argument(
         "--eta_g",
@@ -107,7 +113,7 @@ def get_args(print_args=True):
         "--norm-type",
         type=str,
         choices=["sbn", "ln"],
-        default="ln",
+        default="sbn",
         help="Normalization type for ResNet model",
     )
     parser.add_argument(
@@ -123,18 +129,6 @@ def get_args(print_args=True):
         choices=[0, 1, 2, 3, 4],
         help="Which client capacity distribution group to use",
     )
-    parser.add_argument(
-        "--use-neuron-combination",
-        type=str,
-        default="False",
-        help="Use neuron combination for FedRAME",
-    )
-    parser.add_argument(
-        "--shrinking",
-        type=str,
-        default="False",
-        help="Use shrinking for FedRAME",
-    )
 
     args = parser.parse_args()
 
@@ -148,11 +142,6 @@ def get_args(print_args=True):
     else:
         args.dynamic_eta_g = False
 
-    if args.shrinking == "True":
-        args.shrinking = True
-    else:
-        args.shrinking = False
-
     if print_args:
         print(f"Method: {args.method}")
         print(f"Model: {args.model}")
@@ -163,19 +152,19 @@ def get_args(print_args=True):
                 args.distribution = float(args.distribution.split("alpha")[1])
             except ValueError:
                 raise ValueError("Alpha value must be a float")
-        print(f"Dynamic Global learning rate: {args.dynamic_eta_g}")
-        print(f"Global learning rate: {args.eta_g}")
+        print(f"Global step size: {args.eta_g}")
+        print(f"Dynamic Global step size: {args.dynamic_eta_g}")
         print(f"Number of clients: {args.num_clients}")
-        print(f"Client selection ratio: {args.select_ratio}")
+        print(f"Client selection ratio: {args.client_select_ratio}")
         print(f"Local training data ratio: {args.local_train_ratio}")
         print(f"Number of rounds: {args.rounds}")
         print(f"Number of local epochs: {args.epochs}")
         print(f"Batch size: {args.batch_size}")
         print(f"Learning rate: {args.lr}")
+        print(f"Weight decay: {args.weight_decay}")
         print(f"Random seed: {args.seed}")
         print(f"Normalization type: {args.norm_type}")
         print(f"Number of workers: {args.num_workers}")
         print(f"Client capacity distribution: {args.client_capacity_distribution}")
-        print(f"Use shrinking: {args.shrinking}")
 
     return args

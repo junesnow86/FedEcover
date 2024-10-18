@@ -23,6 +23,8 @@ class ServerRD(ServerBase):
         select_ratio: float = 0.1,
         scaling: bool = True,
         norm_type: str = "ln",
+        eta_g: float = 1.0,
+        dynamic_eta_g: bool = False,
     ):
         super().__init__(
             global_model=global_model,
@@ -34,6 +36,8 @@ class ServerRD(ServerBase):
             select_ratio=select_ratio,
             scaling=scaling,
             norm_type=norm_type,
+            eta_g=eta_g,
+            dynamic_eta_g=dynamic_eta_g,
         )
 
     def get_client_submodel_param_indices_dict(

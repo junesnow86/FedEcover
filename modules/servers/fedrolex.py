@@ -22,8 +22,10 @@ class ServerFedRolex(ServerBase):
         model_type: str = "cnn",
         select_ratio: float = 0.1,
         scaling: bool = True,
-        rolling_step: int = -1,
         norm_type: str = "ln",
+        eta_g: float = 1.0,
+        dynamic_eta_g: bool = False,
+        rolling_step: int = -1,
     ):
         super().__init__(
             global_model=global_model,
@@ -35,6 +37,8 @@ class ServerFedRolex(ServerBase):
             select_ratio=select_ratio,
             scaling=scaling,
             norm_type=norm_type,
+            eta_g=eta_g,
+            dynamic_eta_g=dynamic_eta_g,
         )
 
         self.rolling_step = rolling_step

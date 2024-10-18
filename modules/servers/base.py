@@ -22,10 +22,9 @@ class ServerBase:
         model_type: str = "cnn",
         select_ratio: float = 0.1,
         scaling: bool = True,
+        norm_type: str = "ln",
         eta_g: float = 1.0,
         dynamic_eta_g: bool = False,
-        norm_type: str = "ln",
-        shrinking: bool = False,
     ):
         assert len(client_capacities) == num_clients
         assert model_type in ["cnn", "resnet"]
@@ -42,7 +41,6 @@ class ServerBase:
         self.eta_g = eta_g
         self.dynamic_eta_g = dynamic_eta_g
         self.norm_type = norm_type
-        self.shrinking = shrinking
 
     def get_client_submodel_param_indices_dict(self, client_id: int):
         raise NotImplementedError(
@@ -210,39 +208,33 @@ class ServerBase:
 
             # Update global params
             nonzero_indices = averaging_weight_accumulator > 0
-            if not self.shrinking:
-                if param.dim() == 4:
-                    new_param = param_accumulator[nonzero_indices] / averaging_weight_accumulator[nonzero_indices][:, None, None]
-                    delta = param_delta_accumulator[nonzero_indices] / averaging_weight_accumulator[nonzero_indices][:, None, None]
-                    assert torch.allclose(new_param, param.data[nonzero_indices] + delta, atol=1e-5), "testing"
-                    # This is a convolution weight
-                    param.data[nonzero_indices] = (
-                        param_accumulator[nonzero_indices]
-                        / averaging_weight_accumulator[nonzero_indices][:, None, None]
-                    )
-                    # param.data[nonzero_indices] += (
-                    #     param_delta_accumulator[nonzero_indices]
-                    #     / averaging_weight_accumulator[nonzero_indices][:, None, None]
-                    # )
-                elif param.dim() == 2:
-                    # This is a linear weight
-                    param.data[nonzero_indices] = (
-                        param_accumulator[nonzero_indices]
-                        / averaging_weight_accumulator[nonzero_indices]
-                    )
-                elif param.dim() == 1:
-                    # This is a bias
-                    param.data[nonzero_indices] = (
-                        param_accumulator[nonzero_indices]
-                        / averaging_weight_accumulator[nonzero_indices]
-                    )
-                else:
-                    raise ValueError(f"Invalid parameter dimension: {param.dim()}")
-            else:
+            if param.dim() == 4:
+                new_param = param_accumulator[nonzero_indices] / averaging_weight_accumulator[nonzero_indices][:, None, None]
+                delta = param_delta_accumulator[nonzero_indices] / averaging_weight_accumulator[nonzero_indices][:, None, None]
+                assert torch.allclose(new_param, param.data[nonzero_indices] + delta, atol=1e-5), "testing"
+                # This is a convolution weight
                 param.data[nonzero_indices] = (
                     param_accumulator[nonzero_indices]
-                    / len(selected_client_ids)
+                    / averaging_weight_accumulator[nonzero_indices][:, None, None]
                 )
+                # param.data[nonzero_indices] += (
+                #     param_delta_accumulator[nonzero_indices]
+                #     / averaging_weight_accumulator[nonzero_indices][:, None, None]
+                # )
+            elif param.dim() == 2:
+                # This is a linear weight
+                param.data[nonzero_indices] = (
+                    param_accumulator[nonzero_indices]
+                    / averaging_weight_accumulator[nonzero_indices]
+                )
+            elif param.dim() == 1:
+                # This is a bias
+                param.data[nonzero_indices] = (
+                    param_accumulator[nonzero_indices]
+                    / averaging_weight_accumulator[nonzero_indices]
+                )
+            else:
+                raise ValueError(f"Invalid parameter dimension: {param.dim()}")
 
             non_zero_values = averaging_weight_accumulator[
                 averaging_weight_accumulator > 0

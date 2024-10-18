@@ -22,10 +22,9 @@ class ServerFedRAME(ServerBase):
         model_type: str = "cnn",
         select_ratio: float = 0.1,
         scaling: bool = True,
+        norm_type: str = "ln",
         eta_g: float = 1.0,
         dynamic_eta_g: bool = False,
-        norm_type: str = "ln",
-        shrinking: bool = False,
     ):
         super().__init__(
             global_model=global_model,
@@ -39,7 +38,6 @@ class ServerFedRAME(ServerBase):
             eta_g=eta_g,
             dynamic_eta_g=dynamic_eta_g,
             norm_type=norm_type,
-            shrinking=shrinking,
         )
 
         self.initialize_unused_param_indices_for_layers()

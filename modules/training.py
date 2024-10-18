@@ -18,7 +18,6 @@ def train(
     model.train()
 
     for epoch in tqdm(range(epochs), leave=False, desc="Training Epochs"):
-    # for epoch in range(epochs):
         training_loss = 0
         for _, (data, target) in tqdm(enumerate(dataloader), leave=False, total=len(dataloader), desc="Training Batches"):
             data, target = data.to(device), target.to(device)
@@ -42,7 +41,7 @@ def train(
                 f"Train Epoch: {epoch}/{epochs}\tAverage Training Loss: {training_loss:.6f}\tAccuracy: {correct}/{len(dataloader.dataset)} ({100. * correct / len(dataloader.dataset):.0f}%)"
             )
 
-    # Calculate the final training loss
+    # Calculate the final loss on the training data
     train_loss = 0.0
     with torch.no_grad():
         for data, target in dataloader:

@@ -7,9 +7,8 @@ from torch.utils.data import Dataset
 
 
 class TinyImageNet(Dataset):
-    def __init__(self, root_dir: str, split="train", transform=None):
-        self.root_dir = root_dir
-        self.split = split
+    def __init__(self, root: str, train=True, transform=None):
+        self.root = root
         self.transform = transform
         self.data = []
         self.targets = []
@@ -17,21 +16,19 @@ class TinyImageNet(Dataset):
 
         self._load_label_to_idx()
 
-        if self.split == "train":
+        if train:
             self._load_train_data()
-        elif self.split == "val":
-            self._load_val_data()
         else:
-            raise ValueError("Invalid split")
+            self._load_val_data()
 
     def _load_label_to_idx(self):
-        train_dir = os.path.join(self.root_dir, "train")
+        train_dir = os.path.join(self.root, "train")
         classes = sorted(os.listdir(train_dir))
         for idx, cls in enumerate(classes):
             self.label_to_idx[cls] = idx
 
     def _load_train_data(self):
-        train_dir = os.path.join(self.root_dir, "train")
+        train_dir = os.path.join(self.root, "train")
         classes = sorted(os.listdir(train_dir))
 
         for _, cls in enumerate(classes):
@@ -43,7 +40,7 @@ class TinyImageNet(Dataset):
                 self.targets.append(self.label_to_idx[cls])
 
     def _load_val_data(self):
-        val_dir = os.path.join(self.root_dir, "val")
+        val_dir = os.path.join(self.root, "val")
         with open(os.path.join(val_dir, "val_annotations.txt"), "r") as f:
             for line in f:
                 img, cls = line.strip().split("\t")[:2]
@@ -53,7 +50,7 @@ class TinyImageNet(Dataset):
 
     def __len__(self):
         return len(self.data)
-    
+
     def __getitem__(self, idx):
         img_path, cls = self.data[idx]
         image = Image.open(img_path).convert("RGB")
@@ -64,6 +61,7 @@ class TinyImageNet(Dataset):
         label_idx = self.label_to_idx[cls]
 
         return image, label_idx
+
 
 # Create input-output pairs for next word prediction
 class NextWordPredictionDataset(Dataset):
