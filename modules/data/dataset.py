@@ -8,7 +8,7 @@ from torch.utils.data import Dataset
 
 class TinyImageNet(Dataset):
     def __init__(self, root: str, train=True, transform=None):
-        self.root = root
+        self.root = os.path.join(root, "tiny-imagenet-200")
         self.transform = transform
         self.data = []
         self.targets = []
