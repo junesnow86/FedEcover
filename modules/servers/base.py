@@ -25,6 +25,9 @@ class ServerBase:
         norm_type: str = "ln",
         eta_g: float = 1.0,
         dynamic_eta_g: bool = False,
+        global_lr_decay: bool = False,
+        gamma: float = 0.5,
+        decay_step: int = 100,
     ):
         assert len(client_capacities) == num_clients
         assert model_type in ["cnn", "resnet"]
@@ -41,6 +44,11 @@ class ServerBase:
         self.eta_g = eta_g
         self.dynamic_eta_g = dynamic_eta_g
         self.norm_type = norm_type
+
+        self.round = 0
+        self.global_lr_decay = global_lr_decay
+        self.gamma = gamma
+        self.decay_step = decay_step
 
     def get_client_submodel_param_indices_dict(self, client_id: int):
         raise NotImplementedError(
@@ -213,26 +221,30 @@ class ServerBase:
                 delta = param_delta_accumulator[nonzero_indices] / averaging_weight_accumulator[nonzero_indices][:, None, None]
                 assert torch.allclose(new_param, param.data[nonzero_indices] + delta, atol=1e-5), "testing"
                 # This is a convolution weight
-                param.data[nonzero_indices] = (
-                    param_accumulator[nonzero_indices]
-                    / averaging_weight_accumulator[nonzero_indices][:, None, None]
-                )
-                # param.data[nonzero_indices] += (
-                #     param_delta_accumulator[nonzero_indices]
+                # param.data[nonzero_indices] = (
+                #     param_accumulator[nonzero_indices]
                 #     / averaging_weight_accumulator[nonzero_indices][:, None, None]
                 # )
-            elif param.dim() == 2:
-                # This is a linear weight
-                param.data[nonzero_indices] = (
-                    param_accumulator[nonzero_indices]
+                param.data[nonzero_indices] += (
+                    param_delta_accumulator[nonzero_indices]
+                    / averaging_weight_accumulator[nonzero_indices][:, None, None]
+                )
+            elif param.dim() == 2 or param.dim() == 1:
+                # This is a bias or linear weight
+                # param.data[nonzero_indices] = (
+                #     param_accumulator[nonzero_indices]
+                #     / averaging_weight_accumulator[nonzero_indices]
+                # )
+                param.data[nonzero_indices] += (
+                    param_delta_accumulator[nonzero_indices]
                     / averaging_weight_accumulator[nonzero_indices]
                 )
-            elif param.dim() == 1:
+            # elif param.dim() == 1:
                 # This is a bias
-                param.data[nonzero_indices] = (
-                    param_accumulator[nonzero_indices]
-                    / averaging_weight_accumulator[nonzero_indices]
-                )
+                # param.data[nonzero_indices] = (
+                #     param_accumulator[nonzero_indices]
+                #     / averaging_weight_accumulator[nonzero_indices]
+                # )
             else:
                 raise ValueError(f"Invalid parameter dimension: {param.dim()}")
 
@@ -277,6 +289,10 @@ class ServerBase:
         print(
             f"eta_g: {self.eta_g:.4f}, mean Overlap: {mean_overlap:.4f}, mean Coverage: {mean_coverage:.4f}, mean Coverage Ablation: {mean_coverage_ablation:.4f}"
         )
+
+        self.round += 1
+        if self.global_lr_decay and self.round == self.decay_step:
+            self.eta_g *= self.gamma
 
     def step(self):
         raise NotImplementedError(
