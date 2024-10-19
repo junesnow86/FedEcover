@@ -129,6 +129,13 @@ def get_args(print_args=True):
         choices=[0, 1, 2, 3, 4],
         help="Which client capacity distribution group to use",
     )
+    parser.add_argument(
+        "--param-delta-norm",
+        type=str,
+        default="mean",
+        choices=["mean", "uniform"],
+        help="Parameter delta norm type",
+    )
 
     args = parser.parse_args()
 
@@ -166,5 +173,6 @@ def get_args(print_args=True):
         print(f"Normalization type: {args.norm_type}")
         print(f"Number of workers: {args.num_workers}")
         print(f"Client capacity distribution: {args.client_capacity_distribution}")
+        print(f"Parameter delta norm type: {args.param_delta_norm}")
 
     return args
