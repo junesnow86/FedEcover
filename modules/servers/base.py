@@ -28,9 +28,11 @@ class ServerBase:
         global_lr_decay: bool = False,
         gamma: float = 0.5,
         decay_step: int = 100,
+        param_delta_norm: str = "mean",
     ):
         assert len(client_capacities) == num_clients
         assert model_type in ["cnn", "resnet"]
+        assert param_delta_norm in ["mean", "uniform"]
 
         self.global_model = global_model
         self.dataset = dataset
@@ -49,6 +51,7 @@ class ServerBase:
         self.global_lr_decay = global_lr_decay
         self.gamma = gamma
         self.decay_step = decay_step
+        self.param_delta_norm = param_delta_norm
 
     def get_client_submodel_param_indices_dict(self, client_id: int):
         raise NotImplementedError(
@@ -122,6 +125,11 @@ class ServerBase:
         if client_weights is None:
             client_weights = [1] * len(selected_client_ids)
 
+        if self.param_delta_norm == "uniform":
+            # client_weight_base = sum(client_weights)
+            mean_capacity = sum(self.client_capacities) / len(self.client_capacities)
+            client_weight_base = sum(client_weights) * mean_capacity
+
         self.old_global_params = {
             name: param.clone().detach()
             for name, param in self.global_model.named_parameters()
@@ -134,6 +142,8 @@ class ServerBase:
         for client_id in selected_client_ids:
             if self.client_capacities[client_id] >= 1.0:
                 num_full_models += 1
+
+        named_parameters_delta = {}
 
         for param_name, param in self.global_model.named_parameters():
             param_accumulator = torch.zeros_like(param.data)
@@ -199,7 +209,10 @@ class ServerBase:
                     param_delta_accumulator[np.ix_(out_indices, in_indices)] += (
                         local_param[
                             np.ix_(range(len(out_indices)), range(len(in_indices)))
-                        ] - self.old_global_params[param_name][np.ix_(out_indices, in_indices)]
+                        ]
+                        - self.old_global_params[param_name][
+                            np.ix_(out_indices, in_indices)
+                        ]
                     ) * client_weight
                     averaging_weight_accumulator[np.ix_(out_indices, in_indices)] += (
                         client_weight
@@ -214,39 +227,38 @@ class ServerBase:
                     ) * client_weight
                     averaging_weight_accumulator[out_indices] += client_weight
 
-            # Update global params
+            # Normalize the accumulated param value
             nonzero_indices = averaging_weight_accumulator > 0
             if param.dim() == 4:
-                new_param = param_accumulator[nonzero_indices] / averaging_weight_accumulator[nonzero_indices][:, None, None]
-                delta = param_delta_accumulator[nonzero_indices] / averaging_weight_accumulator[nonzero_indices][:, None, None]
-                assert torch.allclose(new_param, param.data[nonzero_indices] + delta, atol=1e-5), "testing"
-                # This is a convolution weight
-                # param.data[nonzero_indices] = (
-                #     param_accumulator[nonzero_indices]
-                #     / averaging_weight_accumulator[nonzero_indices][:, None, None]
-                # )
-                param.data[nonzero_indices] += (
-                    param_delta_accumulator[nonzero_indices]
-                    / averaging_weight_accumulator[nonzero_indices][:, None, None]
-                )
+                if self.param_delta_norm == "mean":
+                    param_delta_accumulator[nonzero_indices] /= (
+                        averaging_weight_accumulator[nonzero_indices][:, None, None]
+                    )
+                elif self.param_delta_norm == "uniform":
+                    print(f"Client weight base: {client_weight_base}")
+                    # param_delta_accumulator[nonzero_indices] /= sum(client_weights)
+                    param_delta_accumulator[nonzero_indices] /= client_weight_base
+                else:
+                    raise ValueError(
+                        f"Invalid delta normalization: {self.param_delta_norm}"
+                    )
             elif param.dim() == 2 or param.dim() == 1:
-                # This is a bias or linear weight
-                # param.data[nonzero_indices] = (
-                #     param_accumulator[nonzero_indices]
-                #     / averaging_weight_accumulator[nonzero_indices]
-                # )
-                param.data[nonzero_indices] += (
-                    param_delta_accumulator[nonzero_indices]
-                    / averaging_weight_accumulator[nonzero_indices]
-                )
-            # elif param.dim() == 1:
-                # This is a bias
-                # param.data[nonzero_indices] = (
-                #     param_accumulator[nonzero_indices]
-                #     / averaging_weight_accumulator[nonzero_indices]
-                # )
+                if self.param_delta_norm == "mean":
+                    param_delta_accumulator[nonzero_indices] /= (
+                        averaging_weight_accumulator[nonzero_indices]
+                    )
+                elif self.param_delta_norm == "uniform":
+                    print(f"Client weight base: {client_weight_base}")
+                    # param_delta_accumulator[nonzero_indices] /= sum(client_weights)
+                    param_delta_accumulator[nonzero_indices] /= client_weight_base
+                else:
+                    raise ValueError(
+                        f"Invalid delta normalization: {self.param_delta_norm}"
+                    )
             else:
                 raise ValueError(f"Invalid parameter dimension: {param.dim()}")
+
+            named_parameters_delta[param_name] = param_delta_accumulator
 
             non_zero_values = averaging_weight_accumulator[
                 averaging_weight_accumulator > 0
@@ -274,14 +286,12 @@ class ServerBase:
             named_parameter_coverages_ablation
         )
 
-        # Weighted averaing using old global params and updated global params
         if self.dynamic_eta_g:
             self.eta_g = mean_overlap
 
+        # Update global model
         for param_name, param in self.global_model.named_parameters():
-            param.data = (1 - self.eta_g) * self.old_global_params[
-                param_name
-            ] + self.eta_g * param.data
+            param.data += self.eta_g * named_parameters_delta[param_name]
             print(
                 f"Param name: {param_name}, param overlap: {named_parameter_overlaps[param_name]:.4f}, param coverage: {named_parameter_coverages[param_name]:.4f}, param coverage ablation: {named_parameter_coverages_ablation[param_name]:.4f}"
             )

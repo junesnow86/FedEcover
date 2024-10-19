@@ -25,6 +25,7 @@ class ServerFedRAME(ServerBase):
         norm_type: str = "ln",
         eta_g: float = 1.0,
         dynamic_eta_g: bool = False,
+        param_delta_norm: str = "mean",
     ):
         super().__init__(
             global_model=global_model,
@@ -38,6 +39,7 @@ class ServerFedRAME(ServerBase):
             eta_g=eta_g,
             dynamic_eta_g=dynamic_eta_g,
             norm_type=norm_type,
+            param_delta_norm=param_delta_norm,
         )
 
         self.initialize_unused_param_indices_for_layers()

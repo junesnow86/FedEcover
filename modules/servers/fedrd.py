@@ -25,6 +25,7 @@ class ServerRD(ServerBase):
         norm_type: str = "ln",
         eta_g: float = 1.0,
         dynamic_eta_g: bool = False,
+        param_delta_norm: str = "mean",
     ):
         super().__init__(
             global_model=global_model,
@@ -38,6 +39,7 @@ class ServerRD(ServerBase):
             norm_type=norm_type,
             eta_g=eta_g,
             dynamic_eta_g=dynamic_eta_g,
+            param_delta_norm=param_delta_norm,
         )
 
     def get_client_submodel_param_indices_dict(

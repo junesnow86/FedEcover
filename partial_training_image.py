@@ -272,6 +272,7 @@ elif args.method == "heterofl":
         norm_type=args.norm_type,
         eta_g=args.eta_g,
         dynamic_eta_g=args.dynamic_eta_g,
+        param_delta_norm=args.param_delta_norm,
     )
 elif args.method == "fedrolex":
     server = ServerFedRolex(
@@ -284,6 +285,7 @@ elif args.method == "fedrolex":
         select_ratio=args.client_select_ratio,
         scaling=True,
         norm_type=args.norm_type,
+        param_delta_norm=args.param_delta_norm,
         rolling_step=-1,
     )
 elif args.method == "fedrd":
@@ -299,6 +301,7 @@ elif args.method == "fedrd":
         norm_type=args.norm_type,
         eta_g=args.eta_g,
         dynamic_eta_g=args.dynamic_eta_g,
+        param_delta_norm=args.param_delta_norm,
     )
 elif args.method == "fedrame":
     server = ServerFedRAME(
@@ -313,6 +316,7 @@ elif args.method == "fedrame":
         norm_type=args.norm_type,
         eta_g=args.eta_g,
         dynamic_eta_g=args.dynamic_eta_g,
+        param_delta_norm=args.param_delta_norm,
     )
 
 

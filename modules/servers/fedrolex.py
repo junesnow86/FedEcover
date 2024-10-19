@@ -25,6 +25,7 @@ class ServerFedRolex(ServerBase):
         norm_type: str = "ln",
         eta_g: float = 1.0,
         dynamic_eta_g: bool = False,
+        param_delta_norm: str = "mean",
         rolling_step: int = -1,
     ):
         super().__init__(
@@ -39,6 +40,7 @@ class ServerFedRolex(ServerBase):
             norm_type=norm_type,
             eta_g=eta_g,
             dynamic_eta_g=dynamic_eta_g,
+            param_delta_norm=param_delta_norm,
         )
 
         self.rolling_step = rolling_step
