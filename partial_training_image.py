@@ -228,6 +228,7 @@ client_capacity_distribution = OPTIONAL_CLIENT_CAPACITY_DISTRIBUTIONS[
 optional_client_capacities = [t[0] for t in client_capacity_distribution]
 weights = [t[1] for t in client_capacity_distribution]
 if args.method in ["fedavg"]:
+    capacity_counts = [args.num_clients]
     min_capacity = min(optional_client_capacities)
     client_capacities = [min_capacity] * args.num_clients
 else:
@@ -364,7 +365,7 @@ for round in range(args.rounds):
     # <---------------------------------------- Local Training ---------------------------------------->
     for i, client_id in enumerate(selected_client_ids):
         optimizer = optim.Adam(
-            all_client_models[client_id].parameters(), lr=args.lr, weight_decay=5e-4
+            all_client_models[client_id].parameters(), lr=args.lr, weight_decay=args.weight_decay
         )
 
         # Train the client model
