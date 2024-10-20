@@ -22,13 +22,13 @@ class ServerBase:
         model_type: str = "cnn",
         select_ratio: float = 0.1,
         scaling: bool = True,
-        norm_type: str = "ln",
+        norm_type: str = "sbn",
         eta_g: float = 1.0,
         dynamic_eta_g: bool = False,
+        param_delta_norm: str = "mean",
         global_lr_decay: bool = False,
         gamma: float = 0.5,
-        decay_step: int = 100,
-        param_delta_norm: str = "mean",
+        decay_steps: List[int] = [100, 200],
     ):
         assert len(client_capacities) == num_clients
         assert model_type in ["cnn", "resnet"]
@@ -50,7 +50,7 @@ class ServerBase:
         self.round = 0
         self.global_lr_decay = global_lr_decay
         self.gamma = gamma
-        self.decay_step = decay_step
+        self.decay_steps = decay_steps
         self.param_delta_norm = param_delta_norm
 
     def get_client_submodel_param_indices_dict(self, client_id: int):
@@ -301,7 +301,7 @@ class ServerBase:
         )
 
         self.round += 1
-        if self.global_lr_decay and self.round == self.decay_step:
+        if self.global_lr_decay and self.round in self.decay_steps:
             self.eta_g *= self.gamma
 
     def step(self):

@@ -136,6 +136,18 @@ def get_args(print_args=True):
         choices=["mean", "uniform"],
         help="Parameter delta norm type",
     )
+    parser.add_argument(
+        "--global-lr-decay",
+        type=str,
+        default="False",
+        help="Global learning rate decay",
+    )
+    parser.add_argument(
+        "--gamma",
+        type=float,
+        default=0.5,
+        help="Gamma for learning rate decay",
+    )
 
     args = parser.parse_args()
 
@@ -148,6 +160,11 @@ def get_args(print_args=True):
         args.dynamic_eta_g = True
     else:
         args.dynamic_eta_g = False
+
+    if args.global_lr_decay == "True":
+        args.global_lr_decay = True
+    else:
+        args.global_lr_decay = False
 
     if print_args:
         print(f"Method: {args.method}")
@@ -174,5 +191,7 @@ def get_args(print_args=True):
         print(f"Number of workers: {args.num_workers}")
         print(f"Client capacity distribution: {args.client_capacity_distribution}")
         print(f"Parameter delta norm type: {args.param_delta_norm}")
+        print(f"Global learning rate decay: {args.global_lr_decay}")
+        print(f"Gamma: {args.gamma}")
 
     return args

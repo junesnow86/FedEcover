@@ -22,10 +22,13 @@ class ServerRD(ServerBase):
         model_type: str = "cnn",
         select_ratio: float = 0.1,
         scaling: bool = True,
-        norm_type: str = "ln",
+        norm_type: str = "sbn",
         eta_g: float = 1.0,
         dynamic_eta_g: bool = False,
         param_delta_norm: str = "mean",
+        global_lr_decay: bool = False,
+        gamma: float = 0.5,
+        decay_steps: List[int] = [100, 200],
     ):
         super().__init__(
             global_model=global_model,
@@ -40,6 +43,9 @@ class ServerRD(ServerBase):
             eta_g=eta_g,
             dynamic_eta_g=dynamic_eta_g,
             param_delta_norm=param_delta_norm,
+            global_lr_decay=global_lr_decay,
+            gamma=gamma,
+            decay_steps=decay_steps,
         )
 
     def get_client_submodel_param_indices_dict(

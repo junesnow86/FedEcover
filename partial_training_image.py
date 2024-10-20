@@ -252,11 +252,10 @@ if args.method == "fedavg":
         global_model=global_model,
         dataset=args.dataset,
         num_clients=args.num_clients,
-        client_capacity=min(optional_client_capacities),
+        client_capacities=client_capacities,
         model_out_dim=NUM_CLASSES,
         model_type=args.model,
         select_ratio=args.client_select_ratio,
-        scaling=True,
         norm_type=args.norm_type,
     )
 elif args.method == "heterofl":
@@ -273,6 +272,8 @@ elif args.method == "heterofl":
         eta_g=args.eta_g,
         dynamic_eta_g=args.dynamic_eta_g,
         param_delta_norm=args.param_delta_norm,
+        global_lr_decay=args.global_lr_decay,
+        gamma=args.gamma,
     )
 elif args.method == "fedrolex":
     server = ServerFedRolex(
@@ -286,6 +287,8 @@ elif args.method == "fedrolex":
         scaling=True,
         norm_type=args.norm_type,
         param_delta_norm=args.param_delta_norm,
+        global_lr_decay=args.global_lr_decay,
+        gamma=args.gamma,
         rolling_step=-1,
     )
 elif args.method == "fedrd":
@@ -302,6 +305,8 @@ elif args.method == "fedrd":
         eta_g=args.eta_g,
         dynamic_eta_g=args.dynamic_eta_g,
         param_delta_norm=args.param_delta_norm,
+        global_lr_decay=args.global_lr_decay,
+        gamma=args.gamma,
     )
 elif args.method == "fedrame":
     server = ServerFedRAME(
@@ -317,6 +322,8 @@ elif args.method == "fedrame":
         eta_g=args.eta_g,
         dynamic_eta_g=args.dynamic_eta_g,
         param_delta_norm=args.param_delta_norm,
+        global_lr_decay=args.global_lr_decay,
+        gamma=args.gamma,
     )
 
 
@@ -369,7 +376,9 @@ for round in range(args.rounds):
     # <---------------------------------------- Local Training ---------------------------------------->
     for i, client_id in enumerate(selected_client_ids):
         optimizer = optim.Adam(
-            all_client_models[client_id].parameters(), lr=args.lr, weight_decay=args.weight_decay
+            all_client_models[client_id].parameters(),
+            lr=args.lr,
+            weight_decay=args.weight_decay,
         )
 
         # Train the client model

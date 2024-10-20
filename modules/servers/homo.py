@@ -11,34 +11,33 @@ from modules.pruning import (
     extract_submodel_cnn,
     extract_submodel_resnet,
 )
+from .base import ServerBase
 
 
-class ServerHomo:
+class ServerHomo(ServerBase):
     def __init__(
         self,
         global_model: nn.Module,
         dataset: str,
         num_clients: int,
-        client_capacity: float,
+        client_capacities: List[float],
         model_out_dim: int,
         model_type: str = "cnn",
         select_ratio: float = 0.1,
-        scaling: bool = True,
-        eta_g: float = 1.0,
-        norm_type: str = "ln",
+        norm_type: str = "sbn",
     ):
-        assert model_type in ["cnn", "resnet"]
+        super().__init__(
+            global_model=global_model,
+            dataset=dataset,
+            num_clients=num_clients,
+            client_capacities=client_capacities,
+            model_out_dim=model_out_dim,
+            model_type=model_type,
+            select_ratio=select_ratio,
+            norm_type=norm_type,
+        )
 
-        # self.global_model = global_model
-        self.model_type = model_type
-        self.dataset = dataset
-        self.num_clients = num_clients
-        self.client_capacity = client_capacity
-        self.model_out_dim = model_out_dim
-        self.select_ratio = select_ratio
-        self.scaling = scaling
-        self.eta_g = eta_g
-        self.norm_type = norm_type
+        self.client_capacity = min(client_capacities)
         self.global_model = self.initialize_global_model(global_model)
 
     def initialize_global_model(self, original_model: nn.Module):

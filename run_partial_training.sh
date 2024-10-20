@@ -5,4 +5,4 @@
 # source ~/.zshrc
 # conda activate rd-pruning
 pip install -r requirements.txt
-python partial_training_image.py --method ${1} --model ${2} --dataset ${3} --distribution ${4} --rounds ${5} --epochs ${6} --batch-size ${7} --eta_g ${8} --dynamic-eta_g ${9} >> ${10}
+python partial_training_image.py --method ${1} --model ${2} --dataset ${3} --distribution ${4} --num-clients ${5} --client-select-ratio ${6} --local-train-ratio ${7} --rounds ${8} --epochs ${9} --batch-size ${10} --lr ${11} --weight-decay ${12} --eta_g ${13} --dynamic-eta_g ${14} --norm-type ${15} --client-capacity-distribution ${16} --global-lr-decay ${17} --gamma ${18} >> ${19}
