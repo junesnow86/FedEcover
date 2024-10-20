@@ -201,8 +201,23 @@ class ServerHomo(ServerBase):
     ):
         if client_weights is None:
             client_weights = [1] * len(selected_client_ids)
+
+        self.old_global_params = {
+            name: param.clone().detach()
+            for name, param in self.global_model.named_parameters()
+        }
+
         aggregated_state_dict = federated_averaging(local_state_dicts, client_weights)
         self.global_model.load_state_dict(aggregated_state_dict)
+
+        for name, param in self.global_model.named_parameters():
+            param.data = (1 - self.eta_g) * self.old_global_params[
+                name
+            ] + self.eta_g * param.data
+
+        self.round += 1
+        if self.global_lr_decay and self.round in self.decay_steps:
+            self.eta_g *= self.gamma
 
     def step(
         self,
