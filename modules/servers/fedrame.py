@@ -28,7 +28,7 @@ class ServerFedRAME(ServerBase):
         param_delta_norm: str = "mean",
         global_lr_decay: bool = False,
         gamma: float = 0.5,
-        decay_steps: List[int] = [100, 200],
+        decay_steps: List[int] = [50, 100],
     ):
         super().__init__(
             global_model=global_model,
@@ -137,7 +137,8 @@ class ServerFedRAME(ServerBase):
                 previous_layer_indices = current_layer_indices
 
             # The last fc layer
-            H, W = 1, 1
+            # H, W = 1, 1
+            H, W = 4, 4
             flatten_previous_layer_indices = []
             for out_channnel_idx in previous_layer_indices:
                 start_idx = out_channnel_idx * H * W

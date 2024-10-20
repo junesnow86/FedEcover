@@ -28,7 +28,7 @@ class ServerBase:
         param_delta_norm: str = "mean",
         global_lr_decay: bool = False,
         gamma: float = 0.5,
-        decay_steps: List[int] = [100, 200],
+        decay_steps: List[int] = [50, 100],
     ):
         assert len(client_capacities) == num_clients
         assert model_type in ["cnn", "resnet"]
@@ -292,6 +292,7 @@ class ServerBase:
         # Update global model
         for param_name, param in self.global_model.named_parameters():
             param.data += self.eta_g * named_parameters_delta[param_name]
+            # param.data = (1 - self.eta_g) * self.old_global_params[param_name] + self.eta_g * param.data
             print(
                 f"Param name: {param_name}, param overlap: {named_parameter_overlaps[param_name]:.4f}, param coverage: {named_parameter_coverages[param_name]:.4f}, param coverage ablation: {named_parameter_coverages_ablation[param_name]:.4f}"
             )

@@ -63,7 +63,7 @@ else:
 train_transform = transforms.Compose(
     [
         transforms.RandomHorizontalFlip(),
-        transforms.RandomCrop(input_image_size, padding=4),
+        # transforms.RandomCrop(input_image_size, padding=4),
         transforms.ToTensor(),
         transforms.Normalize(
             mean=NORMALIZATION_STATS[args.dataset]["mean"],

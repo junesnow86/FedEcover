@@ -25,6 +25,11 @@ class ServerHomo(ServerBase):
         model_type: str = "cnn",
         select_ratio: float = 0.1,
         norm_type: str = "sbn",
+        eta_g: float = 1.0,
+        dynamic_eta_g: bool = False,
+        global_lr_decay: bool = False,
+        gamma: float = 0.5,
+        decay_steps: List[int] = [50, 100],
     ):
         super().__init__(
             global_model=global_model,
@@ -35,6 +40,11 @@ class ServerHomo(ServerBase):
             model_type=model_type,
             select_ratio=select_ratio,
             norm_type=norm_type,
+            eta_g=eta_g,
+            dynamic_eta_g=dynamic_eta_g,
+            global_lr_decay=global_lr_decay,
+            gamma=gamma,
+            decay_steps=decay_steps,
         )
 
         self.client_capacity = min(client_capacities)
@@ -59,7 +69,8 @@ class ServerHomo(ServerBase):
                 previous_layer_indices = indices
 
             # The last fc layer
-            H, W = 1, 1
+            # H, W = 1, 1
+            H, W = 4, 4
             flatten_previous_layer_indices = []
             for out_channnel_idx in previous_layer_indices:
                 start_idx = out_channnel_idx * H * W
