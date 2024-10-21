@@ -55,22 +55,33 @@ torch.backends.cudnn.benchmark = False
 # <======================================== Data preparation ========================================>
 if "cifar" in args.dataset:
     input_image_size = 32
+    train_transform = transforms.Compose(
+        [
+            transforms.RandomHorizontalFlip(),
+            # transforms.RandomCrop(input_image_size, padding=4),
+            transforms.ToTensor(),
+            transforms.Normalize(
+                mean=NORMALIZATION_STATS[args.dataset]["mean"],
+                std=NORMALIZATION_STATS[args.dataset]["std"],
+            ),
+        ]
+    )
 elif args.dataset == "tiny-imagenet":
     input_image_size = 64
+    train_transform = transforms.Compose(
+        [
+            transforms.RandomHorizontalFlip(),
+            transforms.RandomCrop(input_image_size, padding=4),
+            transforms.ToTensor(),
+            transforms.Normalize(
+                mean=NORMALIZATION_STATS[args.dataset]["mean"],
+                std=NORMALIZATION_STATS[args.dataset]["std"],
+            ),
+        ]
+    )
 else:
     raise ValueError(f"Dataset {args.dataset} not supported.")
 
-train_transform = transforms.Compose(
-    [
-        transforms.RandomHorizontalFlip(),
-        # transforms.RandomCrop(input_image_size, padding=4),
-        transforms.ToTensor(),
-        transforms.Normalize(
-            mean=NORMALIZATION_STATS[args.dataset]["mean"],
-            std=NORMALIZATION_STATS[args.dataset]["std"],
-        ),
-    ]
-)
 test_transform = transforms.Compose(
     [
         transforms.ToTensor(),
