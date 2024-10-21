@@ -289,6 +289,10 @@ class ServerBase:
         if self.dynamic_eta_g:
             self.eta_g = mean_overlap
 
+        print(
+            f"eta_g: {self.eta_g:.4f}, mean Overlap: {mean_overlap:.4f}, mean Coverage: {mean_coverage:.4f}, mean Coverage Ablation: {mean_coverage_ablation:.4f}"
+        )
+
         # Update global model
         for param_name, param in self.global_model.named_parameters():
             param.data += self.eta_g * named_parameters_delta[param_name]
@@ -297,13 +301,12 @@ class ServerBase:
                 f"Param name: {param_name}, param overlap: {named_parameter_overlaps[param_name]:.4f}, param coverage: {named_parameter_coverages[param_name]:.4f}, param coverage ablation: {named_parameter_coverages_ablation[param_name]:.4f}"
             )
 
-        print(
-            f"eta_g: {self.eta_g:.4f}, mean Overlap: {mean_overlap:.4f}, mean Coverage: {mean_coverage:.4f}, mean Coverage Ablation: {mean_coverage_ablation:.4f}"
-        )
-
         self.round += 1
         if self.global_lr_decay and self.round in self.decay_steps:
             self.eta_g *= self.gamma
+            print(
+                f"Decaying global learning rate at round {self.round}, new eta_g: {self.eta_g:.4f}"
+            )
 
     def step(self):
         raise NotImplementedError(

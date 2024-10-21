@@ -258,6 +258,13 @@ print(f"Weights: {weights}")
 print(f"Capacity counts: {capacity_counts}")
 print(f"Specific client capacities: {client_capacities}")
 
+if abs(args.gamma - 0.9) < 1e-6:
+    decay_steps = [i for i in range(10, 201, 10)]
+elif abs(args.gamma - 0.5) < 1e-6:
+    decay_steps = [50, 100]
+else:
+    decay_steps = []
+
 if args.method == "fedavg":
     server = ServerHomo(
         global_model=global_model,
@@ -268,6 +275,11 @@ if args.method == "fedavg":
         model_type=args.model,
         select_ratio=args.client_select_ratio,
         norm_type=args.norm_type,
+        eta_g=args.eta_g,
+        dynamic_eta_g=args.dynamic_eta_g,
+        global_lr_decay=args.global_lr_decay,
+        gamma=args.gamma,
+        decay_steps=decay_steps,
     )
 elif args.method == "heterofl":
     server = ServerStatic(
@@ -285,6 +297,7 @@ elif args.method == "heterofl":
         param_delta_norm=args.param_delta_norm,
         global_lr_decay=args.global_lr_decay,
         gamma=args.gamma,
+        decay_steps=decay_steps,
     )
 elif args.method == "fedrolex":
     server = ServerFedRolex(
@@ -300,6 +313,7 @@ elif args.method == "fedrolex":
         param_delta_norm=args.param_delta_norm,
         global_lr_decay=args.global_lr_decay,
         gamma=args.gamma,
+        decay_steps=decay_steps,
         rolling_step=-1,
     )
 elif args.method == "fedrd":
@@ -318,6 +332,7 @@ elif args.method == "fedrd":
         param_delta_norm=args.param_delta_norm,
         global_lr_decay=args.global_lr_decay,
         gamma=args.gamma,
+        decay_steps=decay_steps,
     )
 elif args.method == "fedrame":
     server = ServerFedRAME(
@@ -335,6 +350,7 @@ elif args.method == "fedrame":
         param_delta_norm=args.param_delta_norm,
         global_lr_decay=args.global_lr_decay,
         gamma=args.gamma,
+        decay_steps=decay_steps,
     )
 
 

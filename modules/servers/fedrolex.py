@@ -207,4 +207,3 @@ class ServerFedRolex(ServerBase):
             client_weights,
         )
         self.roll_indices()
-        self.round += 1

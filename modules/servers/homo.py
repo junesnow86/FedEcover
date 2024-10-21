@@ -210,6 +210,8 @@ class ServerHomo(ServerBase):
         aggregated_state_dict = federated_averaging(local_state_dicts, client_weights)
         self.global_model.load_state_dict(aggregated_state_dict)
 
+        print(f"eta_g: {self.eta_g:.4f}")
+
         for name, param in self.global_model.named_parameters():
             param.data = (1 - self.eta_g) * self.old_global_params[
                 name
@@ -218,6 +220,7 @@ class ServerHomo(ServerBase):
         self.round += 1
         if self.global_lr_decay and self.round in self.decay_steps:
             self.eta_g *= self.gamma
+            print(f"Decaying global learning rate at round {self.round}, new eta_g: {self.eta_g:.4f}")
 
     def step(
         self,
