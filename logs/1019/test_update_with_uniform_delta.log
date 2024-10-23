@@ -1,0 +1,1317 @@
+Method: fedrame
+Model: cnn
+Dataset: cifar100
+Data distribution: alpha0.5
+Global step size: 1.0
+Dynamic Global step size: False
+Number of clients: 100
+Client selection ratio: 0.1
+Local training data ratio: 1.0
+Number of rounds: 200
+Number of local epochs: 5
+Batch size: 64
+Learning rate: 0.001
+Weight decay: 0.0001
+Random seed: 42
+Normalization type: sbn
+Number of workers: 2
+Client capacity distribution: 2
+Parameter delta norm type: uniform
+[Model Architecture]
+CNN(
+  (layer1): Sequential(
+    (0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  )
+  (layer2): Sequential(
+    (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  )
+  (layer3): Sequential(
+    (0): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  )
+  (adaptive_pool): AdaptiveAvgPool2d(output_size=(1, 1))
+  (fc): Linear(in_features=256, out_features=100, bias=True)
+)
+Global Model size: 1.51 MB
+Optional client capacities: [1.0, 0.5, 0.1]
+Weights: [0.1, 0.4, 0.5]
+Capacity counts: [10, 40, 50]
+Specific client capacities: [0.5, 0.5, 0.1, 1.0, 0.1, 0.1, 1.0, 0.1, 0.5, 0.1, 0.1, 0.5, 0.1, 0.1, 0.1, 0.5, 0.5, 0.1, 0.1, 0.5, 0.5, 0.5, 0.5, 0.1, 0.1, 0.5, 0.1, 0.5, 0.1, 0.5, 1.0, 0.5, 0.1, 0.1, 0.1, 0.5, 0.1, 0.1, 0.1, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.1, 0.1, 0.1, 1.0, 0.5, 0.1, 0.5, 1.0, 0.1, 0.5, 0.5, 0.1, 0.1, 0.5, 0.1, 0.5, 1.0, 1.0, 0.1, 0.1, 0.5, 0.1, 0.5, 0.1, 0.5, 1.0, 0.1, 0.1, 0.1, 0.1, 0.1, 0.5, 0.1, 0.1, 0.1, 0.1, 0.5, 0.5, 0.1, 0.1, 1.0, 0.1, 0.1, 0.5, 0.1, 0.1, 0.5, 0.5, 0.5, 0.5, 0.5, 0.1, 1.0, 0.5, 0.1]
+Round 1
+Selected 10 client IDs: [29 11 65 43 32 13 47  3 83  7]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.3281, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.3281, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.1843, param coverage: 0.9247, param coverage ablation: 0.5963
+Param name: layer2.0.bias, param overlap: 0.3281, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer3.0.weight, param overlap: 0.1831, param coverage: 0.9161, param coverage ablation: 0.5856
+Param name: layer3.0.bias, param overlap: 0.3266, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.3266, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.3756, mean Coverage: 0.9801, mean Coverage Ablation: 0.8977
+Client 29	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.3771	Train Acc: 0.1553	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8765	Global Validation Acc: 0.0233
+Client 11	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.2094	Train Acc: 0.2216	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8967	Global Validation Acc: 0.0372
+Client 65	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.4804	Train Acc: 0.1604	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7626	Global Validation Acc: 0.0259
+Client 43	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.2732	Train Acc: 0.1813	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8248	Global Validation Acc: 0.0332
+Client 32	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5861	Train Acc: 0.1479	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5063	Global Validation Acc: 0.0195
+Client 13	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7161	Train Acc: 0.1439	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3449	Global Validation Acc: 0.0219
+Client 47	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.8369	Train Acc: 0.0911	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2584	Global Validation Acc: 0.0141
+Client 3	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.1706	Train Acc: 0.2075	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8862	Global Validation Acc: 0.0319
+Client 83	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7979	Train Acc: 0.1289	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3021	Global Validation Acc: 0.0211
+Client 7	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.8769	Train Acc: 0.0881	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2987	Global Validation Acc: 0.0157
+Aggregated
+Global Test Loss: 4.5970	Global Test Acc: 0.0203
+Round 1 use time: 0.91 min, ETA: 3.01 hours
+================================================================================
+Round 2
+Selected 10 client IDs: [82 37 73  4 40 78 26 35 58 72]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.2547, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.2547, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.1409, param coverage: 0.7356, param coverage ablation: 0.7356
+Param name: layer2.0.bias, param overlap: 0.2539, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer3.0.weight, param overlap: 0.1419, param coverage: 0.7349, param coverage ablation: 0.7349
+Param name: layer3.0.bias, param overlap: 0.2578, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.2578, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.3202, mean Coverage: 0.9338, mean Coverage Ablation: 0.9338
+Client 82	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.3199	Train Acc: 0.2019	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.0418	Global Validation Acc: 0.0336
+Client 37	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.8127	Train Acc: 0.1045	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2775	Global Validation Acc: 0.0157
+Client 73	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7379	Train Acc: 0.1335	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4977	Global Validation Acc: 0.0166
+Client 4	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7223	Train Acc: 0.1022	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.1703	Global Validation Acc: 0.0168
+Client 40	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.3686	Train Acc: 0.1543	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.3948	Global Validation Acc: 0.0293
+Client 78	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.8849	Train Acc: 0.0747	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.0798	Global Validation Acc: 0.0201
+Client 26	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5635	Train Acc: 0.1606	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6338	Global Validation Acc: 0.0295
+Client 35	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.4545	Train Acc: 0.1653	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8542	Global Validation Acc: 0.0256
+Client 58	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.4702	Train Acc: 0.1526	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7140	Global Validation Acc: 0.0285
+Client 72	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.8182	Train Acc: 0.0702	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2906	Global Validation Acc: 0.0186
+Aggregated
+Global Test Loss: 4.5912	Global Test Acc: 0.0197
+Round 2 use time: 0.88 min, ETA: 2.90 hours
+================================================================================
+Round 3
+Selected 10 client IDs: [69 23 37  0 34 56  9 75 67 94]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.2437, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.2437, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.1343, param coverage: 0.7142, param coverage ablation: 0.7142
+Param name: layer2.0.bias, param overlap: 0.2492, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer3.0.weight, param overlap: 0.1341, param coverage: 0.7210, param coverage ablation: 0.7210
+Param name: layer3.0.bias, param overlap: 0.2473, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.2473, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.3125, mean Coverage: 0.9294, mean Coverage Ablation: 0.9294
+Client 69	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.6359	Train Acc: 0.1208	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8588	Global Validation Acc: 0.0296
+Client 23	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.8265	Train Acc: 0.1140	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3844	Global Validation Acc: 0.0184
+Client 37	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.8005	Train Acc: 0.0788	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3844	Global Validation Acc: 0.0129
+Client 0	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.2768	Train Acc: 0.1583	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.3324	Global Validation Acc: 0.0287
+Client 34	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.8851	Train Acc: 0.1128	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.1033	Global Validation Acc: 0.0200
+Client 56	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6354	Train Acc: 0.1257	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6436	Global Validation Acc: 0.0219
+Client 9	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4517	Train Acc: 0.2176	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7256	Global Validation Acc: 0.0209
+Client 75	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.8066	Train Acc: 0.0983	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3038	Global Validation Acc: 0.0194
+Client 67	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.4501	Train Acc: 0.1723	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7790	Global Validation Acc: 0.0302
+Client 94	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.5769	Train Acc: 0.1601	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8250	Global Validation Acc: 0.0417
+Aggregated
+Global Test Loss: 4.5852	Global Test Acc: 0.0265
+Round 3 use time: 0.88 min, ETA: 2.89 hours
+================================================================================
+Round 4
+Selected 10 client IDs: [24 76 70 79  7 98 66  5 50 15]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.2844, param coverage: 1.0000, param coverage ablation: 0.9688
+Param name: layer1.0.bias, param overlap: 0.2844, param coverage: 1.0000, param coverage ablation: 0.9688
+Param name: layer2.0.weight, param overlap: 0.1577, param coverage: 0.9276, param coverage ablation: 0.4537
+Param name: layer2.0.bias, param overlap: 0.2859, param coverage: 1.0000, param coverage ablation: 0.9844
+Param name: layer3.0.weight, param overlap: 0.1577, param coverage: 0.9200, param coverage ablation: 0.4449
+Param name: layer3.0.bias, param overlap: 0.2844, param coverage: 1.0000, param coverage ablation: 0.9609
+Param name: fc.weight, param overlap: 0.2844, param coverage: 1.0000, param coverage ablation: 0.9609
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.3424, mean Coverage: 0.9810, mean Coverage Ablation: 0.8428
+Client 24	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7037	Train Acc: 0.1191	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3569	Global Validation Acc: 0.0196
+Client 76	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.4950	Train Acc: 0.1309	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.1760	Global Validation Acc: 0.0348
+Client 70	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.5033	Train Acc: 0.1570	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5606	Global Validation Acc: 0.0301
+Client 79	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.8053	Train Acc: 0.0983	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2075	Global Validation Acc: 0.0240
+Client 7	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.8462	Train Acc: 0.0929	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2134	Global Validation Acc: 0.0139
+Client 98	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.4722	Train Acc: 0.1426	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8726	Global Validation Acc: 0.0339
+Client 66	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.8129	Train Acc: 0.1061	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2286	Global Validation Acc: 0.0207
+Client 5	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.8809	Train Acc: 0.0987	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2767	Global Validation Acc: 0.0137
+Client 50	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5924	Train Acc: 0.1504	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8833	Global Validation Acc: 0.0170
+Client 15	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.4908	Train Acc: 0.1810	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4484	Global Validation Acc: 0.0404
+Aggregated
+Global Test Loss: 4.5700	Global Test Acc: 0.0301
+Round 4 use time: 0.90 min, ETA: 2.95 hours
+================================================================================
+Round 5
+Selected 10 client IDs: [31 71 21 78 30 59 95 74 12 20]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.3172, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.3172, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.1765, param coverage: 0.9418, param coverage ablation: 0.5784
+Param name: layer2.0.bias, param overlap: 0.3219, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer3.0.weight, param overlap: 0.1842, param coverage: 0.9524, param coverage ablation: 0.6188
+Param name: layer3.0.bias, param overlap: 0.3309, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.3309, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.3723, mean Coverage: 0.9868, mean Coverage Ablation: 0.8997
+Client 31	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.4891	Train Acc: 0.1593	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7037	Global Validation Acc: 0.0404
+Client 71	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7349	Train Acc: 0.0960	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2548	Global Validation Acc: 0.0162
+Client 21	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.3600	Train Acc: 0.1749	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6677	Global Validation Acc: 0.0325
+Client 78	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.9172	Train Acc: 0.0633	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3398	Global Validation Acc: 0.0157
+Client 30	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.1062	Train Acc: 0.2281	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6541	Global Validation Acc: 0.0362
+Client 59	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7034	Train Acc: 0.1382	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6097	Global Validation Acc: 0.0145
+Client 95	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.4330	Train Acc: 0.1656	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.0814	Global Validation Acc: 0.0272
+Client 74	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7414	Train Acc: 0.1082	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6682	Global Validation Acc: 0.0216
+Client 12	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7360	Train Acc: 0.1243	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3492	Global Validation Acc: 0.0240
+Client 20	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.2418	Train Acc: 0.1607	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.1068	Global Validation Acc: 0.0376
+Aggregated
+Global Test Loss: 4.5416	Global Test Acc: 0.0339
+Round 5 use time: 0.91 min, ETA: 2.97 hours
+================================================================================
+Round 6
+Selected 10 client IDs: [95 27 33 13 20 85 39 45 68 62]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.3859, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.3859, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.2267, param coverage: 0.9872, param coverage ablation: 0.3776
+Param name: layer2.0.bias, param overlap: 0.3883, param coverage: 1.0000, param coverage ablation: 0.9922
+Param name: layer3.0.weight, param overlap: 0.2356, param coverage: 0.9908, param coverage ablation: 0.4296
+Param name: layer3.0.bias, param overlap: 0.4000, param coverage: 1.0000, param coverage ablation: 0.9883
+Param name: fc.weight, param overlap: 0.4000, param coverage: 1.0000, param coverage ablation: 0.9883
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.4278, mean Coverage: 0.9972, mean Coverage Ablation: 0.8470
+Client 95	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.3961	Train Acc: 0.1656	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.9947	Global Validation Acc: 0.0310
+Client 27	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.5084	Train Acc: 0.1618	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7887	Global Validation Acc: 0.0267
+Client 33	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6639	Train Acc: 0.1214	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2547	Global Validation Acc: 0.0249
+Client 13	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5817	Train Acc: 0.1295	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2336	Global Validation Acc: 0.0234
+Client 20	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.2106	Train Acc: 0.1567	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.1404	Global Validation Acc: 0.0365
+Client 85	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.4430	Train Acc: 0.1393	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5788	Global Validation Acc: 0.0397
+Client 39	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.3417	Train Acc: 0.1862	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.0203	Global Validation Acc: 0.0307
+Client 45	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6648	Train Acc: 0.1036	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3030	Global Validation Acc: 0.0249
+Client 68	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7596	Train Acc: 0.1122	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3132	Global Validation Acc: 0.0194
+Client 62	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.4921	Train Acc: 0.1315	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5578	Global Validation Acc: 0.0217
+Aggregated
+Global Test Loss: 4.4902	Global Test Acc: 0.0329
+Round 6 use time: 0.95 min, ETA: 3.08 hours
+================================================================================
+Round 7
+Selected 10 client IDs: [24  3 30 67 95 80 64 93 68 94]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.3750, param coverage: 1.0000, param coverage ablation: 0.9688
+Param name: layer1.0.bias, param overlap: 0.3750, param coverage: 1.0000, param coverage ablation: 0.9688
+Param name: layer2.0.weight, param overlap: 0.2140, param coverage: 0.9781, param coverage ablation: 0.3164
+Param name: layer2.0.bias, param overlap: 0.3844, param coverage: 1.0000, param coverage ablation: 0.9844
+Param name: layer3.0.weight, param overlap: 0.2210, param coverage: 0.9836, param coverage ablation: 0.3476
+Param name: layer3.0.bias, param overlap: 0.3875, param coverage: 1.0000, param coverage ablation: 0.9961
+Param name: fc.weight, param overlap: 0.3875, param coverage: 1.0000, param coverage ablation: 0.9961
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.4180, mean Coverage: 0.9952, mean Coverage Ablation: 0.8223
+Client 24	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7061	Train Acc: 0.1096	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3173	Global Validation Acc: 0.0231
+Client 3	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.0463	Train Acc: 0.1956	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6878	Global Validation Acc: 0.0332
+Client 30	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.0508	Train Acc: 0.2172	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.9294	Global Validation Acc: 0.0411
+Client 67	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.3098	Train Acc: 0.1969	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.1462	Global Validation Acc: 0.0315
+Client 95	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.3882	Train Acc: 0.1384	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8819	Global Validation Acc: 0.0326
+Client 80	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6316	Train Acc: 0.1380	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4016	Global Validation Acc: 0.0280
+Client 64	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4873	Train Acc: 0.1232	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8941	Global Validation Acc: 0.0287
+Client 93	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.2328	Train Acc: 0.1783	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.9576	Global Validation Acc: 0.0406
+Client 68	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5754	Train Acc: 0.1242	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7207	Global Validation Acc: 0.0171
+Client 94	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.4276	Train Acc: 0.1719	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7547	Global Validation Acc: 0.0444
+Aggregated
+Global Test Loss: 4.4395	Global Test Acc: 0.0327
+Round 7 use time: 0.95 min, ETA: 3.07 hours
+================================================================================
+Round 8
+Selected 10 client IDs: [36 28 56 83 71 62 81 33 55 78]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.2375, param coverage: 1.0000, param coverage ablation: 0.9375
+Param name: layer1.0.bias, param overlap: 0.2375, param coverage: 1.0000, param coverage ablation: 0.9375
+Param name: layer2.0.weight, param overlap: 0.1354, param coverage: 0.8201, param coverage ablation: 0.2748
+Param name: layer2.0.bias, param overlap: 0.2383, param coverage: 1.0000, param coverage ablation: 0.9141
+Param name: layer3.0.weight, param overlap: 0.1320, param coverage: 0.8181, param coverage ablation: 0.2426
+Param name: layer3.0.bias, param overlap: 0.2383, param coverage: 1.0000, param coverage ablation: 0.9062
+Param name: fc.weight, param overlap: 0.2383, param coverage: 1.0000, param coverage ablation: 0.9062
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.3072, mean Coverage: 0.9548, mean Coverage Ablation: 0.7649
+Client 36	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5104	Train Acc: 0.1624	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4451	Global Validation Acc: 0.0257
+Client 28	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7419	Train Acc: 0.1160	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4458	Global Validation Acc: 0.0227
+Client 56	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5382	Train Acc: 0.1576	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6468	Global Validation Acc: 0.0247
+Client 83	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6069	Train Acc: 0.1146	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5202	Global Validation Acc: 0.0227
+Client 71	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5918	Train Acc: 0.1253	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6693	Global Validation Acc: 0.0311
+Client 62	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.4618	Train Acc: 0.1354	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6329	Global Validation Acc: 0.0364
+Client 81	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.2109	Train Acc: 0.1805	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7923	Global Validation Acc: 0.0236
+Client 33	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6723	Train Acc: 0.1185	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3036	Global Validation Acc: 0.0302
+Client 55	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1134	Train Acc: 0.2096	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.9179	Global Validation Acc: 0.0359
+Client 78	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7618	Train Acc: 0.0860	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4816	Global Validation Acc: 0.0230
+Aggregated
+Global Test Loss: 4.4175	Global Test Acc: 0.0336
+Round 8 use time: 0.89 min, ETA: 2.85 hours
+================================================================================
+Round 9
+Selected 10 client IDs: [30 36 76 95 67  7 70 13 56 72]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.3484, param coverage: 1.0000, param coverage ablation: 0.9844
+Param name: layer1.0.bias, param overlap: 0.3484, param coverage: 1.0000, param coverage ablation: 0.9844
+Param name: layer2.0.weight, param overlap: 0.2087, param coverage: 0.9735, param coverage ablation: 0.2722
+Param name: layer2.0.bias, param overlap: 0.3539, param coverage: 1.0000, param coverage ablation: 0.9844
+Param name: layer3.0.weight, param overlap: 0.2028, param coverage: 0.9692, param coverage ablation: 0.2430
+Param name: layer3.0.bias, param overlap: 0.3410, param coverage: 1.0000, param coverage ablation: 0.9492
+Param name: fc.weight, param overlap: 0.3410, param coverage: 1.0000, param coverage ablation: 0.9492
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.3930, mean Coverage: 0.9928, mean Coverage Ablation: 0.7959
+Client 30	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.0185	Train Acc: 0.2318	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8688	Global Validation Acc: 0.0392
+Client 36	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.3649	Train Acc: 0.1822	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6944	Global Validation Acc: 0.0314
+Client 76	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.3148	Train Acc: 0.1472	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.5605	Global Validation Acc: 0.0419
+Client 95	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.3180	Train Acc: 0.1342	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8865	Global Validation Acc: 0.0390
+Client 67	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.2669	Train Acc: 0.1969	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7190	Global Validation Acc: 0.0304
+Client 7	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7869	Train Acc: 0.0976	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3354	Global Validation Acc: 0.0152
+Client 70	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.2906	Train Acc: 0.1942	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5326	Global Validation Acc: 0.0383
+Client 13	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6343	Train Acc: 0.1319	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2952	Global Validation Acc: 0.0213
+Client 56	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4471	Train Acc: 0.1557	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6856	Global Validation Acc: 0.0308
+Client 72	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6418	Train Acc: 0.1075	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4463	Global Validation Acc: 0.0219
+Aggregated
+Global Test Loss: 4.3812	Global Test Acc: 0.0342
+Round 9 use time: 0.93 min, ETA: 2.97 hours
+================================================================================
+Round 10
+Selected 10 client IDs: [91 80 19 66 18 65 93 44 35 43]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.3594, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.3594, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.1761, param coverage: 0.9012, param coverage ablation: 0.9012
+Param name: layer2.0.bias, param overlap: 0.3563, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer3.0.weight, param overlap: 0.1802, param coverage: 0.8999, param coverage ablation: 0.8999
+Param name: layer3.0.bias, param overlap: 0.3695, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.3695, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.3963, mean Coverage: 0.9751, mean Coverage Ablation: 0.9751
+Client 91	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0918	Train Acc: 0.2205	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.0893	Global Validation Acc: 0.0441
+Client 80	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5711	Train Acc: 0.1357	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3803	Global Validation Acc: 0.0214
+Client 19	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1421	Train Acc: 0.1902	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7483	Global Validation Acc: 0.0406
+Client 66	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5458	Train Acc: 0.1367	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5875	Global Validation Acc: 0.0264
+Client 18	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6090	Train Acc: 0.0974	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4945	Global Validation Acc: 0.0161
+Client 65	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.2217	Train Acc: 0.1833	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8188	Global Validation Acc: 0.0306
+Client 93	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1375	Train Acc: 0.2102	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.9537	Global Validation Acc: 0.0451
+Client 44	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.2941	Train Acc: 0.1772	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7410	Global Validation Acc: 0.0321
+Client 35	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.2543	Train Acc: 0.1837	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.0113	Global Validation Acc: 0.0397
+Client 43	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.9749	Train Acc: 0.2236	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.9361	Global Validation Acc: 0.0436
+Aggregated
+Global Test Loss: 4.3474	Global Test Acc: 0.0374
+Round 10 use time: 0.93 min, ETA: 2.94 hours
+================================================================================
+Round 11
+Selected 10 client IDs: [41 16  3 95 64 37 94 31 57 51]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.4031, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.4031, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.2161, param coverage: 0.9642, param coverage ablation: 0.7185
+Param name: layer2.0.bias, param overlap: 0.3937, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer3.0.weight, param overlap: 0.2112, param coverage: 0.9666, param coverage ablation: 0.7187
+Param name: layer3.0.bias, param overlap: 0.4016, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.4016, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.4288, mean Coverage: 0.9914, mean Coverage Ablation: 0.9296
+Client 41	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.2875	Train Acc: 0.1773	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5248	Global Validation Acc: 0.0333
+Client 16	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.3797	Train Acc: 0.1762	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5366	Global Validation Acc: 0.0363
+Client 3	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 2.8562	Train Acc: 0.2262	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7921	Global Validation Acc: 0.0417
+Client 95	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1942	Train Acc: 0.1782	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.9512	Global Validation Acc: 0.0428
+Client 64	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7166	Train Acc: 0.1039	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4621	Global Validation Acc: 0.0181
+Client 37	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7534	Train Acc: 0.1130	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4779	Global Validation Acc: 0.0185
+Client 94	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.3646	Train Acc: 0.1779	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6291	Global Validation Acc: 0.0474
+Client 31	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.3150	Train Acc: 0.1616	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6961	Global Validation Acc: 0.0366
+Client 57	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7006	Train Acc: 0.1002	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3670	Global Validation Acc: 0.0219
+Client 51	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0528	Train Acc: 0.1786	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6534	Global Validation Acc: 0.0460
+Aggregated
+Global Test Loss: 4.3192	Global Test Acc: 0.0368
+Round 11 use time: 0.95 min, ETA: 2.99 hours
+================================================================================
+Round 12
+Selected 10 client IDs: [72 93 44 73 15 61 34 19 30 65]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.4281, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.4281, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.2562, param coverage: 0.9921, param coverage ablation: 0.5094
+Param name: layer2.0.bias, param overlap: 0.4297, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer3.0.weight, param overlap: 0.2582, param coverage: 0.9948, param coverage ablation: 0.5227
+Param name: layer3.0.bias, param overlap: 0.4387, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.4387, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.4597, mean Coverage: 0.9984, mean Coverage Ablation: 0.8790
+Client 72	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6740	Train Acc: 0.0899	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5090	Global Validation Acc: 0.0200
+Client 93	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0870	Train Acc: 0.1975	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.9815	Global Validation Acc: 0.0467
+Client 44	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.2334	Train Acc: 0.1664	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7892	Global Validation Acc: 0.0352
+Client 73	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4419	Train Acc: 0.1638	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6187	Global Validation Acc: 0.0308
+Client 15	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.2485	Train Acc: 0.1868	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5417	Global Validation Acc: 0.0420
+Client 61	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.1399	Train Acc: 0.1537	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6760	Global Validation Acc: 0.0349
+Client 34	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7718	Train Acc: 0.1051	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4210	Global Validation Acc: 0.0236
+Client 19	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0641	Train Acc: 0.2164	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8454	Global Validation Acc: 0.0439
+Client 30	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 2.8932	Train Acc: 0.2391	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7767	Global Validation Acc: 0.0462
+Client 65	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.2018	Train Acc: 0.1812	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7372	Global Validation Acc: 0.0320
+Aggregated
+Global Test Loss: 4.2948	Global Test Acc: 0.0392
+Round 12 use time: 0.98 min, ETA: 3.07 hours
+================================================================================
+Round 13
+Selected 10 client IDs: [46 45  9 97 29  2 87 25 89 43]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.2687, param coverage: 1.0000, param coverage ablation: 0.9688
+Param name: layer1.0.bias, param overlap: 0.2687, param coverage: 1.0000, param coverage ablation: 0.9688
+Param name: layer2.0.weight, param overlap: 0.1500, param coverage: 0.8558, param coverage ablation: 0.3694
+Param name: layer2.0.bias, param overlap: 0.2758, param coverage: 1.0000, param coverage ablation: 0.9766
+Param name: layer3.0.weight, param overlap: 0.1554, param coverage: 0.9151, param coverage ablation: 0.4390
+Param name: layer3.0.bias, param overlap: 0.2902, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.2902, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.3374, mean Coverage: 0.9714, mean Coverage Ablation: 0.8403
+Client 46	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4714	Train Acc: 0.1385	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6257	Global Validation Acc: 0.0345
+Client 45	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6374	Train Acc: 0.1121	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3416	Global Validation Acc: 0.0290
+Client 9	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.2577	Train Acc: 0.2396	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6269	Global Validation Acc: 0.0268
+Client 97	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 2.9893	Train Acc: 0.2347	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.1355	Global Validation Acc: 0.0503
+Client 29	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0983	Train Acc: 0.1786	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6606	Global Validation Acc: 0.0352
+Client 2	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4229	Train Acc: 0.1844	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7630	Global Validation Acc: 0.0342
+Client 87	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6729	Train Acc: 0.1058	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4584	Global Validation Acc: 0.0263
+Client 25	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1431	Train Acc: 0.2197	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7202	Global Validation Acc: 0.0391
+Client 89	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5261	Train Acc: 0.1616	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4896	Global Validation Acc: 0.0322
+Client 43	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.9318	Train Acc: 0.2342	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7303	Global Validation Acc: 0.0474
+Aggregated
+Global Test Loss: 4.2823	Global Test Acc: 0.0401
+Round 13 use time: 0.92 min, ETA: 2.88 hours
+================================================================================
+Round 14
+Selected 10 client IDs: [ 3 18 31 72 78 87 40 52 96 58]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.3531, param coverage: 1.0000, param coverage ablation: 0.8750
+Param name: layer1.0.bias, param overlap: 0.3531, param coverage: 1.0000, param coverage ablation: 0.8750
+Param name: layer2.0.weight, param overlap: 0.2134, param coverage: 0.9706, param coverage ablation: 0.2974
+Param name: layer2.0.bias, param overlap: 0.3570, param coverage: 1.0000, param coverage ablation: 0.9609
+Param name: layer3.0.weight, param overlap: 0.2196, param coverage: 0.9857, param coverage ablation: 0.3302
+Param name: layer3.0.bias, param overlap: 0.3645, param coverage: 1.0000, param coverage ablation: 0.9688
+Param name: fc.weight, param overlap: 0.3645, param coverage: 1.0000, param coverage ablation: 0.9688
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.4031, mean Coverage: 0.9945, mean Coverage Ablation: 0.7845
+Client 3	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 2.7834	Train Acc: 0.2517	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8798	Global Validation Acc: 0.0416
+Client 18	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4956	Train Acc: 0.1515	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7288	Global Validation Acc: 0.0205
+Client 31	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1696	Train Acc: 0.2084	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8381	Global Validation Acc: 0.0454
+Client 72	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5553	Train Acc: 0.1228	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6958	Global Validation Acc: 0.0245
+Client 78	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.8144	Train Acc: 0.0882	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.1918	Global Validation Acc: 0.0239
+Client 87	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7652	Train Acc: 0.0998	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3338	Global Validation Acc: 0.0200
+Client 40	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.9643	Train Acc: 0.2058	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.3348	Global Validation Acc: 0.0425
+Client 52	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.1478	Train Acc: 0.2065	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5372	Global Validation Acc: 0.0360
+Client 96	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.8009	Train Acc: 0.0924	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.1762	Global Validation Acc: 0.0194
+Client 58	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.2699	Train Acc: 0.1706	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7378	Global Validation Acc: 0.0327
+Aggregated
+Global Test Loss: 4.2691	Global Test Acc: 0.0446
+Round 14 use time: 0.95 min, ETA: 2.93 hours
+================================================================================
+Round 15
+Selected 10 client IDs: [54  1 93 31 63 12 58 73 71 17]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.2875, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.2875, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.1491, param coverage: 0.8044, param coverage ablation: 0.8044
+Param name: layer2.0.bias, param overlap: 0.2867, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer3.0.weight, param overlap: 0.1468, param coverage: 0.8090, param coverage ablation: 0.8090
+Param name: layer3.0.bias, param overlap: 0.2871, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.2871, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.3415, mean Coverage: 0.9517, mean Coverage Ablation: 0.9517
+Client 54	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0131	Train Acc: 0.2056	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8967	Global Validation Acc: 0.0421
+Client 1	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.8403	Train Acc: 0.1809	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.1283	Global Validation Acc: 0.0371
+Client 93	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0531	Train Acc: 0.2102	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.9617	Global Validation Acc: 0.0487
+Client 31	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1747	Train Acc: 0.1920	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6384	Global Validation Acc: 0.0457
+Client 63	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6412	Train Acc: 0.1065	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3912	Global Validation Acc: 0.0289
+Client 12	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7245	Train Acc: 0.1243	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3983	Global Validation Acc: 0.0235
+Client 58	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1994	Train Acc: 0.1849	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6767	Global Validation Acc: 0.0380
+Client 73	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4098	Train Acc: 0.1781	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5357	Global Validation Acc: 0.0313
+Client 71	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5961	Train Acc: 0.1106	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4160	Global Validation Acc: 0.0282
+Client 17	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5869	Train Acc: 0.1398	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2096	Global Validation Acc: 0.0224
+Aggregated
+Global Test Loss: 4.2673	Global Test Acc: 0.0432
+Round 15 use time: 0.89 min, ETA: 2.75 hours
+================================================================================
+Round 16
+Selected 10 client IDs: [80 98 25 62 27 40 56 69 41 83]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.3922, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.3922, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.2080, param coverage: 0.9501, param coverage ablation: 0.6783
+Param name: layer2.0.bias, param overlap: 0.3945, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer3.0.weight, param overlap: 0.2056, param coverage: 0.9668, param coverage ablation: 0.7129
+Param name: layer3.0.bias, param overlap: 0.3906, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.3906, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.4217, mean Coverage: 0.9896, mean Coverage Ablation: 0.9239
+Client 80	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5365	Train Acc: 0.1493	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4397	Global Validation Acc: 0.0271
+Client 98	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.2019	Train Acc: 0.1880	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5151	Global Validation Acc: 0.0554
+Client 25	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0563	Train Acc: 0.2214	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8307	Global Validation Acc: 0.0408
+Client 62	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.1870	Train Acc: 0.1567	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6127	Global Validation Acc: 0.0421
+Client 27	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.2269	Train Acc: 0.1871	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.5214	Global Validation Acc: 0.0351
+Client 40	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.9321	Train Acc: 0.2058	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.3182	Global Validation Acc: 0.0452
+Client 56	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.3117	Train Acc: 0.1876	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5899	Global Validation Acc: 0.0341
+Client 69	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.3505	Train Acc: 0.1320	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5855	Global Validation Acc: 0.0406
+Client 41	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1415	Train Acc: 0.2032	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5190	Global Validation Acc: 0.0411
+Client 83	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4963	Train Acc: 0.1527	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5493	Global Validation Acc: 0.0284
+Aggregated
+Global Test Loss: 4.2465	Global Test Acc: 0.0485
+Round 16 use time: 0.94 min, ETA: 2.89 hours
+================================================================================
+Round 17
+Selected 10 client IDs: [66 63 15 33  6 18 23 41 88 53]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.2672, param coverage: 1.0000, param coverage ablation: 0.9375
+Param name: layer1.0.bias, param overlap: 0.2672, param coverage: 1.0000, param coverage ablation: 0.9375
+Param name: layer2.0.weight, param overlap: 0.1470, param coverage: 0.8595, param coverage ablation: 0.3553
+Param name: layer2.0.bias, param overlap: 0.2719, param coverage: 1.0000, param coverage ablation: 0.9609
+Param name: layer3.0.weight, param overlap: 0.1515, param coverage: 0.8881, param coverage ablation: 0.4161
+Param name: layer3.0.bias, param overlap: 0.2848, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.2848, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.3343, mean Coverage: 0.9684, mean Coverage Ablation: 0.8259
+Client 66	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5558	Train Acc: 0.1265	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3779	Global Validation Acc: 0.0263
+Client 63	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6289	Train Acc: 0.1137	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2957	Global Validation Acc: 0.0232
+Client 15	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1056	Train Acc: 0.2155	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3537	Global Validation Acc: 0.0478
+Client 33	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5634	Train Acc: 0.1358	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3434	Global Validation Acc: 0.0317
+Client 6	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.2314	Train Acc: 0.1581	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7954	Global Validation Acc: 0.0332
+Client 18	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6023	Train Acc: 0.1169	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2279	Global Validation Acc: 0.0198
+Client 23	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6531	Train Acc: 0.1079	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.1287	Global Validation Acc: 0.0260
+Client 41	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1749	Train Acc: 0.1992	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6054	Global Validation Acc: 0.0358
+Client 88	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1400	Train Acc: 0.1660	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5111	Global Validation Acc: 0.0489
+Client 53	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5255	Train Acc: 0.1432	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2669	Global Validation Acc: 0.0274
+Aggregated
+Global Test Loss: 4.2254	Global Test Acc: 0.0471
+Round 17 use time: 0.92 min, ETA: 2.80 hours
+================================================================================
+Round 18
+Selected 10 client IDs: [98  6 58 52 27  8 64 76 63 38]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.4297, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.4297, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.2525, param coverage: 0.9938, param coverage ablation: 0.4983
+Param name: layer2.0.bias, param overlap: 0.4250, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer3.0.weight, param overlap: 0.2635, param coverage: 0.9962, param coverage ablation: 0.5525
+Param name: layer3.0.bias, param overlap: 0.4543, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.4543, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.4636, mean Coverage: 0.9988, mean Coverage Ablation: 0.8814
+Client 98	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1776	Train Acc: 0.2042	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6045	Global Validation Acc: 0.0506
+Client 6	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.1629	Train Acc: 0.1698	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7263	Global Validation Acc: 0.0409
+Client 58	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.2123	Train Acc: 0.1634	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5076	Global Validation Acc: 0.0354
+Client 52	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.0897	Train Acc: 0.2129	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5037	Global Validation Acc: 0.0417
+Client 27	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1370	Train Acc: 0.2047	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4811	Global Validation Acc: 0.0367
+Client 8	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1977	Train Acc: 0.1933	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7075	Global Validation Acc: 0.0458
+Client 64	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4845	Train Acc: 0.1280	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.0479	Global Validation Acc: 0.0312
+Client 76	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1549	Train Acc: 0.1943	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.9345	Global Validation Acc: 0.0523
+Client 63	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5396	Train Acc: 0.1588	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4452	Global Validation Acc: 0.0343
+Client 38	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4950	Train Acc: 0.1553	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4811	Global Validation Acc: 0.0280
+Aggregated
+Global Test Loss: 4.2056	Global Test Acc: 0.0517
+Round 18 use time: 0.96 min, ETA: 2.92 hours
+================================================================================
+Round 19
+Selected 10 client IDs: [15 79 45 40 13 88 51 43 76 94]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.3469, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.3469, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.1757, param coverage: 0.8826, param coverage ablation: 0.8826
+Param name: layer2.0.bias, param overlap: 0.3594, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer3.0.weight, param overlap: 0.1770, param coverage: 0.9081, param coverage ablation: 0.9081
+Param name: layer3.0.bias, param overlap: 0.3641, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.3641, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.3918, mean Coverage: 0.9738, mean Coverage Ablation: 0.9738
+Client 15	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1781	Train Acc: 0.1954	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2537	Global Validation Acc: 0.0424
+Client 79	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.8456	Train Acc: 0.1218	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.1266	Global Validation Acc: 0.0309
+Client 45	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5623	Train Acc: 0.1142	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5166	Global Validation Acc: 0.0250
+Client 40	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.8642	Train Acc: 0.2016	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.0910	Global Validation Acc: 0.0510
+Client 13	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5227	Train Acc: 0.1535	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5762	Global Validation Acc: 0.0245
+Client 88	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1428	Train Acc: 0.1870	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4641	Global Validation Acc: 0.0544
+Client 51	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0204	Train Acc: 0.2026	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6241	Global Validation Acc: 0.0449
+Client 43	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.9308	Train Acc: 0.2324	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5308	Global Validation Acc: 0.0522
+Client 76	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1459	Train Acc: 0.1759	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.3765	Global Validation Acc: 0.0522
+Client 94	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.2862	Train Acc: 0.2016	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3995	Global Validation Acc: 0.0535
+Aggregated
+Global Test Loss: 4.1918	Global Test Acc: 0.0604
+Round 19 use time: 0.92 min, ETA: 2.76 hours
+================================================================================
+Round 20
+Selected 10 client IDs: [49 17 32  3  5 69 94  1 80  9]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.3391, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.3391, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.1961, param coverage: 0.9758, param coverage ablation: 0.6779
+Param name: layer2.0.bias, param overlap: 0.3383, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer3.0.weight, param overlap: 0.1810, param coverage: 0.9554, param coverage ablation: 0.6110
+Param name: layer3.0.bias, param overlap: 0.3191, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.3191, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.3790, mean Coverage: 0.9914, mean Coverage Ablation: 0.9111
+Client 49	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0251	Train Acc: 0.2533	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4533	Global Validation Acc: 0.0550
+Client 17	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5055	Train Acc: 0.1437	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2970	Global Validation Acc: 0.0231
+Client 32	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4383	Train Acc: 0.1716	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4523	Global Validation Acc: 0.0222
+Client 3	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 2.7579	Train Acc: 0.2534	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7052	Global Validation Acc: 0.0507
+Client 5	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7842	Train Acc: 0.0830	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3471	Global Validation Acc: 0.0132
+Client 69	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.2642	Train Acc: 0.1857	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5288	Global Validation Acc: 0.0501
+Client 94	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.2788	Train Acc: 0.2016	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4387	Global Validation Acc: 0.0559
+Client 1	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0335	Train Acc: 0.1680	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.9206	Global Validation Acc: 0.0383
+Client 80	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6624	Train Acc: 0.1357	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2708	Global Validation Acc: 0.0248
+Client 9	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.2032	Train Acc: 0.2440	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.9017	Global Validation Acc: 0.0302
+Aggregated
+Global Test Loss: 4.1875	Global Test Acc: 0.0657
+Round 20 use time: 0.92 min, ETA: 2.76 hours
+================================================================================
+Round 21
+Selected 10 client IDs: [42 26 62 13 41 86 29 61 24 33]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.3406, param coverage: 1.0000, param coverage ablation: 0.9062
+Param name: layer1.0.bias, param overlap: 0.3406, param coverage: 1.0000, param coverage ablation: 0.9062
+Param name: layer2.0.weight, param overlap: 0.2001, param coverage: 0.9519, param coverage ablation: 0.2290
+Param name: layer2.0.bias, param overlap: 0.3461, param coverage: 1.0000, param coverage ablation: 0.9219
+Param name: layer3.0.weight, param overlap: 0.2077, param coverage: 0.9727, param coverage ablation: 0.2622
+Param name: layer3.0.bias, param overlap: 0.3574, param coverage: 1.0000, param coverage ablation: 0.9648
+Param name: fc.weight, param overlap: 0.3574, param coverage: 1.0000, param coverage ablation: 0.9648
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.3938, mean Coverage: 0.9906, mean Coverage Ablation: 0.7694
+Client 42	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.2926	Train Acc: 0.1804	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2777	Global Validation Acc: 0.0533
+Client 26	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4960	Train Acc: 0.1770	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7347	Global Validation Acc: 0.0333
+Client 62	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.1575	Train Acc: 0.2031	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3851	Global Validation Acc: 0.0466
+Client 13	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4639	Train Acc: 0.1415	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.1863	Global Validation Acc: 0.0232
+Client 41	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1883	Train Acc: 0.1912	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4246	Global Validation Acc: 0.0370
+Client 86	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.3766	Train Acc: 0.1725	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6713	Global Validation Acc: 0.0345
+Client 29	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.9885	Train Acc: 0.2155	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5174	Global Validation Acc: 0.0476
+Client 61	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.3112	Train Acc: 0.1982	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2091	Global Validation Acc: 0.0326
+Client 24	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6062	Train Acc: 0.1191	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2899	Global Validation Acc: 0.0273
+Client 33	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5494	Train Acc: 0.1474	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2820	Global Validation Acc: 0.0279
+Aggregated
+Global Test Loss: 4.1818	Global Test Acc: 0.0655
+Round 21 use time: 0.94 min, ETA: 2.80 hours
+================================================================================
+Round 22
+Selected 10 client IDs: [84  1 50  3 78 74 92 63 76  7]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.2750, param coverage: 1.0000, param coverage ablation: 0.9688
+Param name: layer1.0.bias, param overlap: 0.2750, param coverage: 1.0000, param coverage ablation: 0.9688
+Param name: layer2.0.weight, param overlap: 0.1505, param coverage: 0.8799, param coverage ablation: 0.3850
+Param name: layer2.0.bias, param overlap: 0.2750, param coverage: 1.0000, param coverage ablation: 0.9375
+Param name: layer3.0.weight, param overlap: 0.1523, param coverage: 0.9005, param coverage ablation: 0.4134
+Param name: layer3.0.bias, param overlap: 0.2863, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.2863, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.3376, mean Coverage: 0.9725, mean Coverage Ablation: 0.8342
+Client 84	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5911	Train Acc: 0.1519	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4123	Global Validation Acc: 0.0201
+Client 1	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.8339	Train Acc: 0.1938	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8636	Global Validation Acc: 0.0413
+Client 50	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4086	Train Acc: 0.1735	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4386	Global Validation Acc: 0.0251
+Client 3	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 2.7156	Train Acc: 0.2517	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8706	Global Validation Acc: 0.0475
+Client 78	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6175	Train Acc: 0.1018	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3257	Global Validation Acc: 0.0270
+Client 74	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5731	Train Acc: 0.0989	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7322	Global Validation Acc: 0.0242
+Client 92	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.8610	Train Acc: 0.2488	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8918	Global Validation Acc: 0.0577
+Client 63	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6422	Train Acc: 0.1408	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3927	Global Validation Acc: 0.0273
+Client 76	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0716	Train Acc: 0.1616	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8739	Global Validation Acc: 0.0565
+Client 7	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5198	Train Acc: 0.1262	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4371	Global Validation Acc: 0.0389
+Aggregated
+Global Test Loss: 4.1932	Global Test Acc: 0.0666
+Round 22 use time: 0.91 min, ETA: 2.71 hours
+================================================================================
+Round 23
+Selected 10 client IDs: [61 84 70  4 22 38 41 23 19 26]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.3609, param coverage: 1.0000, param coverage ablation: 0.9375
+Param name: layer1.0.bias, param overlap: 0.3609, param coverage: 1.0000, param coverage ablation: 0.9375
+Param name: layer2.0.weight, param overlap: 0.2220, param coverage: 0.9774, param coverage ablation: 0.3552
+Param name: layer2.0.bias, param overlap: 0.3609, param coverage: 1.0000, param coverage ablation: 0.9531
+Param name: layer3.0.weight, param overlap: 0.2201, param coverage: 0.9833, param coverage ablation: 0.3475
+Param name: layer3.0.bias, param overlap: 0.3617, param coverage: 1.0000, param coverage ablation: 0.9688
+Param name: fc.weight, param overlap: 0.3617, param coverage: 1.0000, param coverage ablation: 0.9688
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.4060, mean Coverage: 0.9951, mean Coverage Ablation: 0.8085
+Client 61	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.0726	Train Acc: 0.2183	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6542	Global Validation Acc: 0.0446
+Client 84	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6568	Train Acc: 0.1460	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6242	Global Validation Acc: 0.0176
+Client 70	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.1449	Train Acc: 0.2045	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2412	Global Validation Acc: 0.0465
+Client 4	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7529	Train Acc: 0.0859	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.1605	Global Validation Acc: 0.0190
+Client 22	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0681	Train Acc: 0.2058	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2826	Global Validation Acc: 0.0479
+Client 38	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7706	Train Acc: 0.1522	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4157	Global Validation Acc: 0.0259
+Client 41	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0707	Train Acc: 0.1972	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5772	Global Validation Acc: 0.0434
+Client 23	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5522	Train Acc: 0.1322	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3243	Global Validation Acc: 0.0328
+Client 19	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.9060	Train Acc: 0.2492	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4595	Global Validation Acc: 0.0527
+Client 26	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.3655	Train Acc: 0.1953	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7380	Global Validation Acc: 0.0346
+Aggregated
+Global Test Loss: 4.1790	Global Test Acc: 0.0682
+Round 23 use time: 0.94 min, ETA: 2.77 hours
+================================================================================
+Round 24
+Selected 10 client IDs: [63 13 37 75  0 83 99 61  2 41]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.2391, param coverage: 1.0000, param coverage ablation: 0.8906
+Param name: layer1.0.bias, param overlap: 0.2391, param coverage: 1.0000, param coverage ablation: 0.8906
+Param name: layer2.0.weight, param overlap: 0.1356, param coverage: 0.8740, param coverage ablation: 0.2832
+Param name: layer2.0.bias, param overlap: 0.2445, param coverage: 1.0000, param coverage ablation: 0.9375
+Param name: layer3.0.weight, param overlap: 0.1385, param coverage: 0.8647, param coverage ablation: 0.3061
+Param name: layer3.0.bias, param overlap: 0.2457, param coverage: 1.0000, param coverage ablation: 0.9570
+Param name: fc.weight, param overlap: 0.2457, param coverage: 1.0000, param coverage ablation: 0.9570
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.3110, mean Coverage: 0.9673, mean Coverage Ablation: 0.7778
+Client 63	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6882	Train Acc: 0.1173	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3754	Global Validation Acc: 0.0240
+Client 13	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5709	Train Acc: 0.1655	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2778	Global Validation Acc: 0.0300
+Client 37	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5795	Train Acc: 0.1318	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2081	Global Validation Acc: 0.0336
+Client 75	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5863	Train Acc: 0.1026	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3796	Global Validation Acc: 0.0290
+Client 0	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.8096	Train Acc: 0.2296	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.4130	Global Validation Acc: 0.0509
+Client 83	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4451	Train Acc: 0.1575	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3895	Global Validation Acc: 0.0291
+Client 99	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.8197	Train Acc: 0.0908	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 4.8754	Global Validation Acc: 0.0208
+Client 61	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 2.9438	Train Acc: 0.2160	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3790	Global Validation Acc: 0.0442
+Client 2	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6363	Train Acc: 0.1471	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6668	Global Validation Acc: 0.0247
+Client 41	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0798	Train Acc: 0.2092	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7039	Global Validation Acc: 0.0399
+Aggregated
+Global Test Loss: 4.1889	Global Test Acc: 0.0650
+Round 24 use time: 0.90 min, ETA: 2.64 hours
+================================================================================
+Round 25
+Selected 10 client IDs: [85 96 62 26 70 38 29 76 83 79]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.3703, param coverage: 1.0000, param coverage ablation: 0.6562
+Param name: layer1.0.bias, param overlap: 0.3703, param coverage: 1.0000, param coverage ablation: 0.6562
+Param name: layer2.0.weight, param overlap: 0.2258, param coverage: 0.9847, param coverage ablation: 0.0652
+Param name: layer2.0.bias, param overlap: 0.3680, param coverage: 1.0000, param coverage ablation: 0.6094
+Param name: layer3.0.weight, param overlap: 0.2599, param coverage: 0.9966, param coverage ablation: 0.1329
+Param name: layer3.0.bias, param overlap: 0.4211, param coverage: 1.0000, param coverage ablation: 0.9492
+Param name: fc.weight, param overlap: 0.4211, param coverage: 1.0000, param coverage ablation: 0.9492
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.4296, mean Coverage: 0.9977, mean Coverage Ablation: 0.6273
+Client 85	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.1164	Train Acc: 0.2054	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2914	Global Validation Acc: 0.0667
+Client 96	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7045	Train Acc: 0.1150	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2220	Global Validation Acc: 0.0292
+Client 62	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.0751	Train Acc: 0.2031	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4372	Global Validation Acc: 0.0591
+Client 26	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4132	Train Acc: 0.1953	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5656	Global Validation Acc: 0.0331
+Client 70	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.0676	Train Acc: 0.2211	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3704	Global Validation Acc: 0.0477
+Client 38	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4794	Train Acc: 0.1366	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5776	Global Validation Acc: 0.0255
+Client 29	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.9927	Train Acc: 0.2117	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8961	Global Validation Acc: 0.0449
+Client 76	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0802	Train Acc: 0.2004	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7131	Global Validation Acc: 0.0559
+Client 83	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4151	Train Acc: 0.1671	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3667	Global Validation Acc: 0.0332
+Client 79	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4867	Train Acc: 0.1624	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7015	Global Validation Acc: 0.0367
+Aggregated
+Global Test Loss: 4.1764	Global Test Acc: 0.0702
+Round 25 use time: 0.96 min, ETA: 2.81 hours
+================================================================================
+Round 26
+Selected 10 client IDs: [12 39 64 71 60 38 78 86 42 99]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.2109, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.2109, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.1187, param coverage: 0.6327, param coverage ablation: 0.6327
+Param name: layer2.0.bias, param overlap: 0.2078, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer3.0.weight, param overlap: 0.1192, param coverage: 0.6271, param coverage ablation: 0.6271
+Param name: layer3.0.bias, param overlap: 0.2129, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.2129, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.2867, mean Coverage: 0.9075, mean Coverage Ablation: 0.9075
+Client 12	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6088	Train Acc: 0.1515	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3812	Global Validation Acc: 0.0261
+Client 39	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.9414	Train Acc: 0.2248	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6028	Global Validation Acc: 0.0530
+Client 64	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6088	Train Acc: 0.1039	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3230	Global Validation Acc: 0.0253
+Client 71	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4564	Train Acc: 0.1169	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3503	Global Validation Acc: 0.0304
+Client 60	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1040	Train Acc: 0.2265	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5082	Global Validation Acc: 0.0427
+Client 38	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4900	Train Acc: 0.1366	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8207	Global Validation Acc: 0.0280
+Client 78	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6156	Train Acc: 0.0950	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4156	Global Validation Acc: 0.0341
+Client 86	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4961	Train Acc: 0.1608	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6838	Global Validation Acc: 0.0323
+Client 42	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.2002	Train Acc: 0.1716	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4368	Global Validation Acc: 0.0561
+Client 99	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5777	Train Acc: 0.1396	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 4.9214	Global Validation Acc: 0.0351
+Aggregated
+Global Test Loss: 4.1574	Global Test Acc: 0.0663
+Round 26 use time: 0.88 min, ETA: 2.55 hours
+================================================================================
+Round 27
+Selected 10 client IDs: [21 32 44 33 34 91 48 76 79 43]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.3594, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.3594, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.1949, param coverage: 0.9573, param coverage ablation: 0.6628
+Param name: layer2.0.bias, param overlap: 0.3594, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer3.0.weight, param overlap: 0.1937, param coverage: 0.9536, param coverage ablation: 0.6538
+Param name: layer3.0.bias, param overlap: 0.3609, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.3609, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.3986, mean Coverage: 0.9889, mean Coverage Ablation: 0.9146
+Client 21	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0874	Train Acc: 0.2200	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3578	Global Validation Acc: 0.0463
+Client 32	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4112	Train Acc: 0.1834	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6728	Global Validation Acc: 0.0322
+Client 44	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0763	Train Acc: 0.2007	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6786	Global Validation Acc: 0.0484
+Client 33	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5394	Train Acc: 0.1387	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2796	Global Validation Acc: 0.0312
+Client 34	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.3748	Train Acc: 0.1615	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2259	Global Validation Acc: 0.0393
+Client 91	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.9576	Train Acc: 0.2475	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6005	Global Validation Acc: 0.0564
+Client 48	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.0377	Train Acc: 0.2114	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2105	Global Validation Acc: 0.0528
+Client 76	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0929	Train Acc: 0.1779	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8834	Global Validation Acc: 0.0524
+Client 79	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5060	Train Acc: 0.1560	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4371	Global Validation Acc: 0.0356
+Client 43	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.8341	Train Acc: 0.2641	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6230	Global Validation Acc: 0.0583
+Aggregated
+Global Test Loss: 4.1372	Global Test Acc: 0.0668
+Round 27 use time: 0.93 min, ETA: 2.68 hours
+================================================================================
+Round 28
+Selected 10 client IDs: [52 20 38 34 73 53  2 76 51  5]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.2812, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.2812, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.1556, param coverage: 0.9261, param coverage ablation: 0.4620
+Param name: layer2.0.bias, param overlap: 0.2789, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer3.0.weight, param overlap: 0.1535, param coverage: 0.8902, param coverage ablation: 0.4220
+Param name: layer3.0.bias, param overlap: 0.2785, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.2785, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.3384, mean Coverage: 0.9770, mean Coverage Ablation: 0.8605
+Client 52	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.0560	Train Acc: 0.2258	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4214	Global Validation Acc: 0.0449
+Client 20	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.9239	Train Acc: 0.2262	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6492	Global Validation Acc: 0.0569
+Client 38	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5309	Train Acc: 0.1366	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.0970	Global Validation Acc: 0.0287
+Client 34	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7113	Train Acc: 0.1206	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2955	Global Validation Acc: 0.0309
+Client 73	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6163	Train Acc: 0.1320	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7508	Global Validation Acc: 0.0154
+Client 53	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5448	Train Acc: 0.1432	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5587	Global Validation Acc: 0.0356
+Client 2	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.3940	Train Acc: 0.1732	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4218	Global Validation Acc: 0.0317
+Client 76	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0636	Train Acc: 0.1943	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7034	Global Validation Acc: 0.0563
+Client 51	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.9477	Train Acc: 0.2135	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3933	Global Validation Acc: 0.0532
+Client 5	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.8289	Train Acc: 0.0987	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.0299	Global Validation Acc: 0.0166
+Aggregated
+Global Test Loss: 4.1268	Global Test Acc: 0.0719
+Round 28 use time: 0.91 min, ETA: 2.60 hours
+================================================================================
+Round 29
+Selected 10 client IDs: [40  6 57  3 37 73 19 20 48 83]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.4078, param coverage: 1.0000, param coverage ablation: 0.7969
+Param name: layer1.0.bias, param overlap: 0.4078, param coverage: 1.0000, param coverage ablation: 0.7969
+Param name: layer2.0.weight, param overlap: 0.2552, param coverage: 0.9889, param coverage ablation: 0.1345
+Param name: layer2.0.bias, param overlap: 0.4180, param coverage: 1.0000, param coverage ablation: 0.8594
+Param name: layer3.0.weight, param overlap: 0.2864, param coverage: 0.9960, param coverage ablation: 0.2148
+Param name: layer3.0.bias, param overlap: 0.4512, param coverage: 1.0000, param coverage ablation: 0.9531
+Param name: fc.weight, param overlap: 0.4512, param coverage: 1.0000, param coverage ablation: 0.9531
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.4597, mean Coverage: 0.9981, mean Coverage Ablation: 0.7136
+Client 40	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.7656	Train Acc: 0.2325	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7711	Global Validation Acc: 0.0564
+Client 6	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.0512	Train Acc: 0.1488	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6431	Global Validation Acc: 0.0460
+Client 57	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4751	Train Acc: 0.1456	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3649	Global Validation Acc: 0.0437
+Client 3	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 2.6308	Train Acc: 0.2619	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7296	Global Validation Acc: 0.0494
+Client 37	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5254	Train Acc: 0.1421	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4811	Global Validation Acc: 0.0298
+Client 73	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5619	Train Acc: 0.1367	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5480	Global Validation Acc: 0.0197
+Client 19	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.9296	Train Acc: 0.2426	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3769	Global Validation Acc: 0.0568
+Client 20	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.9185	Train Acc: 0.2222	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5877	Global Validation Acc: 0.0610
+Client 48	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 2.9663	Train Acc: 0.2261	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6041	Global Validation Acc: 0.0555
+Client 83	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5366	Train Acc: 0.1551	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6265	Global Validation Acc: 0.0302
+Aggregated
+Global Test Loss: 4.1404	Global Test Acc: 0.0717
+Round 29 use time: 0.98 min, ETA: 2.79 hours
+================================================================================
+Round 30
+Selected 10 client IDs: [ 8 47 21 35  9 22 29 81 71 27]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.3719, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.3719, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.1872, param coverage: 0.8875, param coverage ablation: 0.8875
+Param name: layer2.0.bias, param overlap: 0.3602, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer3.0.weight, param overlap: 0.1767, param coverage: 0.9305, param coverage ablation: 0.9305
+Param name: layer3.0.bias, param overlap: 0.3703, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.3703, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.4011, mean Coverage: 0.9772, mean Coverage Ablation: 0.9772
+Client 8	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1487	Train Acc: 0.2227	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5609	Global Validation Acc: 0.0482
+Client 47	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5092	Train Acc: 0.1292	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5846	Global Validation Acc: 0.0264
+Client 21	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0222	Train Acc: 0.2279	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4431	Global Validation Acc: 0.0520
+Client 35	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.9302	Train Acc: 0.2245	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7850	Global Validation Acc: 0.0486
+Client 9	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.2347	Train Acc: 0.2220	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4987	Global Validation Acc: 0.0256
+Client 22	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.9907	Train Acc: 0.1845	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3627	Global Validation Acc: 0.0488
+Client 29	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.8698	Train Acc: 0.2117	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5785	Global Validation Acc: 0.0521
+Client 81	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0623	Train Acc: 0.2331	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6766	Global Validation Acc: 0.0327
+Client 71	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5537	Train Acc: 0.1190	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5442	Global Validation Acc: 0.0291
+Client 27	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0602	Train Acc: 0.2300	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5826	Global Validation Acc: 0.0510
+Aggregated
+Global Test Loss: 4.1199	Global Test Acc: 0.0711
+Round 30 use time: 0.93 min, ETA: 2.63 hours
+================================================================================
+Round 31
+Selected 10 client IDs: [78 85 44 23 33 51 84  4 50 18]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.2344, param coverage: 1.0000, param coverage ablation: 0.9688
+Param name: layer1.0.bias, param overlap: 0.2344, param coverage: 1.0000, param coverage ablation: 0.9688
+Param name: layer2.0.weight, param overlap: 0.1341, param coverage: 0.8479, param coverage ablation: 0.2777
+Param name: layer2.0.bias, param overlap: 0.2437, param coverage: 1.0000, param coverage ablation: 0.9766
+Param name: layer3.0.weight, param overlap: 0.1389, param coverage: 0.8650, param coverage ablation: 0.3192
+Param name: layer3.0.bias, param overlap: 0.2484, param coverage: 1.0000, param coverage ablation: 0.9219
+Param name: fc.weight, param overlap: 0.2484, param coverage: 1.0000, param coverage ablation: 0.9219
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.3103, mean Coverage: 0.9641, mean Coverage Ablation: 0.7943
+Client 78	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6697	Train Acc: 0.1063	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.1917	Global Validation Acc: 0.0282
+Client 85	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 3.0213	Train Acc: 0.2107	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4056	Global Validation Acc: 0.0697
+Client 44	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0388	Train Acc: 0.2116	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6697	Global Validation Acc: 0.0455
+Client 23	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5803	Train Acc: 0.1368	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3567	Global Validation Acc: 0.0295
+Client 33	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4249	Train Acc: 0.1676	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3689	Global Validation Acc: 0.0396
+Client 51	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.8534	Train Acc: 0.2092	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5372	Global Validation Acc: 0.0524
+Client 84	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5768	Train Acc: 0.1617	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.0623	Global Validation Acc: 0.0306
+Client 4	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.3738	Train Acc: 0.1881	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4433	Global Validation Acc: 0.0378
+Client 50	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4055	Train Acc: 0.1805	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7182	Global Validation Acc: 0.0274
+Client 18	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4541	Train Acc: 0.1450	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6484	Global Validation Acc: 0.0284
+Aggregated
+Global Test Loss: 4.1122	Global Test Acc: 0.0725
+Round 31 use time: 0.89 min, ETA: 2.51 hours
+================================================================================
+Round 32
+Selected 10 client IDs: [42 72 11 19 13 95 39 25 76 50]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.3656, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.3656, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.1854, param coverage: 0.9032, param coverage ablation: 0.9032
+Param name: layer2.0.bias, param overlap: 0.3695, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer3.0.weight, param overlap: 0.1800, param coverage: 0.9350, param coverage ablation: 0.9350
+Param name: layer3.0.bias, param overlap: 0.3688, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.3688, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.4005, mean Coverage: 0.9798, mean Coverage Ablation: 0.9798
+Client 42	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1866	Train Acc: 0.1769	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3446	Global Validation Acc: 0.0547
+Client 72	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.8045	Train Acc: 0.0768	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4981	Global Validation Acc: 0.0187
+Client 11	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.8413	Train Acc: 0.2775	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4715	Global Validation Acc: 0.0564
+Client 19	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.9032	Train Acc: 0.2230	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4781	Global Validation Acc: 0.0493
+Client 13	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4606	Train Acc: 0.1391	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2879	Global Validation Acc: 0.0232
+Client 95	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0807	Train Acc: 0.1845	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5903	Global Validation Acc: 0.0477
+Client 39	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.9400	Train Acc: 0.2416	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7474	Global Validation Acc: 0.0541
+Client 25	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.9323	Train Acc: 0.2408	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6480	Global Validation Acc: 0.0520
+Client 76	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.9938	Train Acc: 0.1943	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.9640	Global Validation Acc: 0.0599
+Client 50	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.2524	Train Acc: 0.1841	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6337	Global Validation Acc: 0.0298
+Aggregated
+Global Test Loss: 4.1080	Global Test Acc: 0.0768
+Round 32 use time: 0.94 min, ETA: 2.63 hours
+================================================================================
+Round 33
+Selected 10 client IDs: [65 26 60 96 66 22 52 19 20 13]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.3578, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.3578, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.1962, param coverage: 0.9603, param coverage ablation: 0.6703
+Param name: layer2.0.bias, param overlap: 0.3609, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer3.0.weight, param overlap: 0.1869, param coverage: 0.9614, param coverage ablation: 0.6303
+Param name: layer3.0.bias, param overlap: 0.3504, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.3504, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.3951, mean Coverage: 0.9902, mean Coverage Ablation: 0.9126
+Client 65	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.9487	Train Acc: 0.2313	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5753	Global Validation Acc: 0.0457
+Client 26	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.3552	Train Acc: 0.2099	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6297	Global Validation Acc: 0.0338
+Client 60	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0823	Train Acc: 0.2265	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.1568	Global Validation Acc: 0.0496
+Client 96	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5524	Train Acc: 0.1376	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3606	Global Validation Acc: 0.0435
+Client 66	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4548	Train Acc: 0.1592	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5343	Global Validation Acc: 0.0325
+Client 22	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1109	Train Acc: 0.2194	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4727	Global Validation Acc: 0.0562
+Client 52	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 2.8610	Train Acc: 0.2301	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5490	Global Validation Acc: 0.0472
+Client 19	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.8795	Train Acc: 0.2393	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5082	Global Validation Acc: 0.0537
+Client 20	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.8997	Train Acc: 0.2123	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8233	Global Validation Acc: 0.0574
+Client 13	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5265	Train Acc: 0.1247	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2743	Global Validation Acc: 0.0252
+Aggregated
+Global Test Loss: 4.1059	Global Test Acc: 0.0772
+Round 33 use time: 0.95 min, ETA: 2.64 hours
+================================================================================
+Round 34
+Selected 10 client IDs: [ 8 10  1 29 96 31 81 22 64 88]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.3703, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.3703, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.1887, param coverage: 0.8877, param coverage ablation: 0.8877
+Param name: layer2.0.bias, param overlap: 0.3648, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer3.0.weight, param overlap: 0.1782, param coverage: 0.9110, param coverage ablation: 0.9110
+Param name: layer3.0.bias, param overlap: 0.3617, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.3617, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.3995, mean Coverage: 0.9748, mean Coverage Ablation: 0.9748
+Client 8	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0860	Train Acc: 0.2248	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3695	Global Validation Acc: 0.0603
+Client 10	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5686	Train Acc: 0.1534	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3004	Global Validation Acc: 0.0305
+Client 1	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.8655	Train Acc: 0.2532	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2400	Global Validation Acc: 0.0487
+Client 29	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.6850	Train Acc: 0.2485	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6081	Global Validation Acc: 0.0571
+Client 96	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.8677	Train Acc: 0.1006	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2387	Global Validation Acc: 0.0216
+Client 31	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0473	Train Acc: 0.2131	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5109	Global Validation Acc: 0.0548
+Client 81	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.9970	Train Acc: 0.2155	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6051	Global Validation Acc: 0.0362
+Client 22	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1692	Train Acc: 0.2117	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.1199	Global Validation Acc: 0.0598
+Client 64	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5306	Train Acc: 0.1256	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5845	Global Validation Acc: 0.0264
+Client 88	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0220	Train Acc: 0.1870	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3973	Global Validation Acc: 0.0602
+Aggregated
+Global Test Loss: 4.0946	Global Test Acc: 0.0766
+Round 34 use time: 0.93 min, ETA: 2.58 hours
+================================================================================
+Round 35
+Selected 10 client IDs: [50 51 58 69 72  4 93 63 87 95]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.2844, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.2844, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.1458, param coverage: 0.8048, param coverage ablation: 0.8048
+Param name: layer2.0.bias, param overlap: 0.2836, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer3.0.weight, param overlap: 0.1459, param coverage: 0.8131, param coverage ablation: 0.8131
+Param name: layer3.0.bias, param overlap: 0.2902, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.2902, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.3406, mean Coverage: 0.9522, mean Coverage Ablation: 0.9522
+Client 50	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.2591	Train Acc: 0.1841	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.0709	Global Validation Acc: 0.0262
+Client 51	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.8706	Train Acc: 0.2179	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.1930	Global Validation Acc: 0.0522
+Client 58	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.9873	Train Acc: 0.1903	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5146	Global Validation Acc: 0.0496
+Client 69	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1875	Train Acc: 0.1834	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3167	Global Validation Acc: 0.0522
+Client 72	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5305	Train Acc: 0.1250	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5800	Global Validation Acc: 0.0289
+Client 4	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.2944	Train Acc: 0.1963	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5374	Global Validation Acc: 0.0466
+Client 93	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.8502	Train Acc: 0.2442	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.7499	Global Validation Acc: 0.0545
+Client 63	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5486	Train Acc: 0.1227	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.1645	Global Validation Acc: 0.0292
+Client 87	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5298	Train Acc: 0.1297	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4125	Global Validation Acc: 0.0344
+Client 95	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1515	Train Acc: 0.1782	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2480	Global Validation Acc: 0.0542
+Aggregated
+Global Test Loss: 4.0786	Global Test Acc: 0.0760
+Round 35 use time: 0.91 min, ETA: 2.51 hours
+================================================================================
+Round 36
+Selected 10 client IDs: [79 36 65 13 14 33 57 99 89 27]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.1656, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.1656, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.1155, param coverage: 0.4103, param coverage ablation: 0.4103
+Param name: layer2.0.bias, param overlap: 0.1641, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer3.0.weight, param overlap: 0.1136, param coverage: 0.4395, param coverage ablation: 0.4395
+Param name: layer3.0.bias, param overlap: 0.1738, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.1738, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.2590, mean Coverage: 0.8562, mean Coverage Ablation: 0.8562
+Client 79	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6543	Train Acc: 0.1432	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2219	Global Validation Acc: 0.0316
+Client 36	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.3669	Train Acc: 0.1525	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5640	Global Validation Acc: 0.0321
+Client 65	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.9131	Train Acc: 0.2208	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5991	Global Validation Acc: 0.0486
+Client 13	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5138	Train Acc: 0.1463	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2245	Global Validation Acc: 0.0250
+Client 14	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5272	Train Acc: 0.1382	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8461	Global Validation Acc: 0.0323
+Client 33	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4711	Train Acc: 0.1618	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2590	Global Validation Acc: 0.0382
+Client 57	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5849	Train Acc: 0.1248	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.5093	Global Validation Acc: 0.0257
+Client 99	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 4.1779	Train Acc: 0.0471	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 4.7067	Global Validation Acc: 0.0207
+Client 89	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.7164	Train Acc: 0.1279	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4806	Global Validation Acc: 0.0272
+Client 27	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0365	Train Acc: 0.2183	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6072	Global Validation Acc: 0.0449
+Aggregated
+Global Test Loss: 4.0739	Global Test Acc: 0.0765
+Round 36 use time: 0.87 min, ETA: 2.37 hours
+================================================================================
+Round 37
+Selected 10 client IDs: [49 69 63 33 61 82 92 87 78 21]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.3531, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.3531, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.1848, param coverage: 0.9390, param coverage ablation: 0.6051
+Param name: layer2.0.bias, param overlap: 0.3484, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer3.0.weight, param overlap: 0.1869, param coverage: 0.9506, param coverage ablation: 0.6261
+Param name: layer3.0.bias, param overlap: 0.3609, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.3609, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.3935, mean Coverage: 0.9862, mean Coverage Ablation: 0.9039
+Client 49	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.8226	Train Acc: 0.2814	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3197	Global Validation Acc: 0.0575
+Client 69	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0957	Train Acc: 0.2125	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4305	Global Validation Acc: 0.0544
+Client 63	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6049	Train Acc: 0.1300	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3731	Global Validation Acc: 0.0271
+Client 33	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5404	Train Acc: 0.1647	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.1667	Global Validation Acc: 0.0362
+Client 61	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 2.8262	Train Acc: 0.2316	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6062	Global Validation Acc: 0.0416
+Client 82	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.8286	Train Acc: 0.2679	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.8061	Global Validation Acc: 0.0440
+Client 92	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.8761	Train Acc: 0.2370	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4266	Global Validation Acc: 0.0584
+Client 87	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5639	Train Acc: 0.1297	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4222	Global Validation Acc: 0.0361
+Client 78	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5894	Train Acc: 0.1380	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3595	Global Validation Acc: 0.0378
+Client 21	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0107	Train Acc: 0.2397	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4734	Global Validation Acc: 0.0524
+Aggregated
+Global Test Loss: 4.0580	Global Test Acc: 0.0771
+Round 37 use time: 0.95 min, ETA: 2.58 hours
+================================================================================
+Round 38
+Selected 10 client IDs: [42  5 67 18 23 97 24 49 94 98]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.3469, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.3469, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.1842, param coverage: 0.9307, param coverage ablation: 0.5878
+Param name: layer2.0.bias, param overlap: 0.3469, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer3.0.weight, param overlap: 0.1874, param coverage: 0.9445, param coverage ablation: 0.6207
+Param name: layer3.0.bias, param overlap: 0.3598, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.3598, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.3915, mean Coverage: 0.9844, mean Coverage Ablation: 0.9011
+Client 42	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.1196	Train Acc: 0.1926	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2727	Global Validation Acc: 0.0582
+Client 5	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6868	Train Acc: 0.0964	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.0714	Global Validation Acc: 0.0225
+Client 67	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0400	Train Acc: 0.2282	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2824	Global Validation Acc: 0.0447
+Client 18	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.5209	Train Acc: 0.1342	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.6778	Global Validation Acc: 0.0309
+Client 23	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.6528	Train Acc: 0.1170	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.2197	Global Validation Acc: 0.0266
+Client 97	Capacity: 1.0	Model Size: 1.51 MB	Train Loss: 2.7558	Train Acc: 0.2798	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.9209	Global Validation Acc: 0.0581
+Client 24	Capacity: 0.1	Model Size: 0.02 MB	Train Loss: 3.4723	Train Acc: 0.1361	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.4372	Global Validation Acc: 0.0309
+Client 49	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 2.8496	Train Acc: 0.2739	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3955	Global Validation Acc: 0.0580
+Client 94	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0617	Train Acc: 0.2292	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3342	Global Validation Acc: 0.0600
+Client 98	Capacity: 0.5	Model Size: 0.40 MB	Train Loss: 3.0532	Train Acc: 0.1912	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 5.3738	Global Validation Acc: 0.0567
+Aggregated
+Global Test Loss: 4.0441	Global Test Acc: 0.0771
+Round 38 use time: 0.96 min, ETA: 2.60 hours
+================================================================================
+Round 39
+Selected 10 client IDs: [19 32 85 51 79 98 67 72 58 18]
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Sum of client weights: 10
+Param name: layer1.0.weight, param overlap: 0.3516, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer1.0.bias, param overlap: 0.3516, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer2.0.weight, param overlap: 0.1894, param coverage: 0.9440, param coverage ablation: 0.6221
+Param name: layer2.0.bias, param overlap: 0.3539, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: layer3.0.weight, param overlap: 0.1887, param coverage: 0.9582, param coverage ablation: 0.6504
+Param name: layer3.0.bias, param overlap: 0.3605, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.weight, param overlap: 0.3605, param coverage: 1.0000, param coverage ablation: 1.0000
+Param name: fc.bias, param overlap: 1.0000, param coverage: 1.0000, param coverage ablation: 1.0000
+eta_g: 1.0000, mean Overlap: 0.3945, mean Coverage: 0.9878, mean Coverage Ablation: 0.9091
