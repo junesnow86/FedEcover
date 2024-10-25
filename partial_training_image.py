@@ -53,21 +53,13 @@ torch.backends.cudnn.benchmark = False
 
 
 # <======================================== Data preparation ========================================>
-if "cifar" in args.dataset:
-    input_image_size = 32
-    train_transform = transforms.Compose(
-        [
-            transforms.RandomHorizontalFlip(),
-            # transforms.RandomCrop(input_image_size, padding=4),
-            transforms.ToTensor(),
-            transforms.Normalize(
-                mean=NORMALIZATION_STATS[args.dataset]["mean"],
-                std=NORMALIZATION_STATS[args.dataset]["std"],
-            ),
-        ]
-    )
-elif args.dataset == "tiny-imagenet":
-    input_image_size = 64
+if args.data_augmentation:
+    if "cifar" in args.dataset:
+        input_image_size = 32
+    elif args.dataset == "tiny-imagenet":
+        input_image_size = 64
+    else:
+        raise ValueError(f"Dataset {args.dataset} not supported.")
     train_transform = transforms.Compose(
         [
             transforms.RandomHorizontalFlip(),
@@ -80,7 +72,15 @@ elif args.dataset == "tiny-imagenet":
         ]
     )
 else:
-    raise ValueError(f"Dataset {args.dataset} not supported.")
+    train_transform = transforms.Compose(
+        [
+            transforms.ToTensor(),
+            transforms.Normalize(
+                mean=NORMALIZATION_STATS[args.dataset]["mean"],
+                std=NORMALIZATION_STATS[args.dataset]["std"],
+            ),
+        ]
+    )
 
 test_transform = transforms.Compose(
     [
@@ -259,11 +259,15 @@ print(f"Capacity counts: {capacity_counts}")
 print(f"Specific client capacities: {client_capacities}")
 
 if abs(args.gamma - 0.9) < 1e-6:
-    decay_steps = [i for i in range(10, 201, 10)]
+    # decay_steps = [i for i in range(10, 201, 10)]
+    decay_steps = [i for i in range(10, 101, 10)]
+elif abs(args.gamma - 0.8) < 1e-6:
+    decay_steps = [20, 40, 60, 80, 100, 120, 140, 160, 180, 200]
 elif abs(args.gamma - 0.5) < 1e-6:
     decay_steps = [50, 100]
 else:
     decay_steps = []
+print(f"Decay steps: {decay_steps}")
 
 if args.method == "fedavg":
     server = ServerHomo(
