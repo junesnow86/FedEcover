@@ -259,8 +259,7 @@ print(f"Capacity counts: {capacity_counts}")
 print(f"Specific client capacities: {client_capacities}")
 
 if abs(args.gamma - 0.9) < 1e-6:
-    # decay_steps = [i for i in range(10, 201, 10)]
-    decay_steps = [i for i in range(10, 101, 10)]
+    decay_steps = [i for i in range(10, 201, 10)]
 elif abs(args.gamma - 0.8) < 1e-6:
     decay_steps = [20, 40, 60, 80, 100, 120, 140, 160, 180, 200]
 elif abs(args.gamma - 0.5) < 1e-6:
