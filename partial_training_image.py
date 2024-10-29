@@ -60,17 +60,29 @@ if args.data_augmentation:
         input_image_size = 64
     else:
         raise ValueError(f"Dataset {args.dataset} not supported.")
-    train_transform = transforms.Compose(
-        [
-            transforms.RandomHorizontalFlip(),
-            transforms.RandomCrop(input_image_size, padding=4),
-            transforms.ToTensor(),
-            transforms.Normalize(
-                mean=NORMALIZATION_STATS[args.dataset]["mean"],
-                std=NORMALIZATION_STATS[args.dataset]["std"],
-            ),
-        ]
-    )
+    if "cifar" in args.dataset and args.num_clients == 100:
+        train_transform = transforms.Compose(
+            [
+                transforms.RandomHorizontalFlip(),
+                transforms.ToTensor(),
+                transforms.Normalize(
+                    mean=NORMALIZATION_STATS[args.dataset]["mean"],
+                    std=NORMALIZATION_STATS[args.dataset]["std"],
+                ),
+            ]
+        )
+    else:
+        train_transform = transforms.Compose(
+            [
+                transforms.RandomHorizontalFlip(),
+                transforms.RandomCrop(input_image_size, padding=4),
+                transforms.ToTensor(),
+                transforms.Normalize(
+                    mean=NORMALIZATION_STATS[args.dataset]["mean"],
+                    std=NORMALIZATION_STATS[args.dataset]["std"],
+                ),
+            ]
+        )
 else:
     train_transform = transforms.Compose(
         [
