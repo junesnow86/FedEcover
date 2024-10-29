@@ -150,10 +150,10 @@ elif isinstance(args.distribution, float):
         # Plot the class distribution of each client
         num_classes = len(class_distributions[0])
         ind = np.arange(num_classes)
-        width = 0.35
+        width = 0.5
         colors = plt.get_cmap("tab20", len(client_ids))
         bottom = np.zeros(num_classes)
-        plt.figure(figsize=(20, 10))
+        plt.figure(figsize=(16, 9))
         for i, client_id in enumerate(client_ids):
             class_counts = list(class_distributions[i].values())
             plt.bar(
@@ -163,17 +163,25 @@ elif isinstance(args.distribution, float):
                 label=f"Client {client_id}",
                 color=colors(i),
                 bottom=bottom,
-                alpha=0.7,
             )
             bottom += class_counts
-        plt.title("Class Distribution of Each Client")
         plt.xlabel("Class")
         plt.ylabel("Number of Samples")
-        plt.xticks(ind, [str(i) for i in range(NUM_CLASSES)])
+        if args.dataset == "tiny-imagenet":
+            xticks = np.arange(0, num_classes, step=2)
+        else:
+            xticks = np.arange(0, num_classes)
+        xtick_labels = [str(i) for i in xticks]
+        plt.xticks(xticks, xtick_labels, rotation=90)
         plt.legend(bbox_to_anchor=(0.5, -0.1), loc="upper center", ncol=10)
+
+        plt.gca().margins(
+            x=0
+        )  # Adjust the margins to reduce space between bars and y-axis
         plt.savefig(
             f"class_distribution_{args.dataset}_alpha{alpha}.png", bbox_inches="tight"
         )
+        exit()
 else:
     raise ValueError(f"Data distribution {args.distribution} not supported.")
 
