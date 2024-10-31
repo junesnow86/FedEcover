@@ -94,7 +94,8 @@ class ServerFedRAME(ServerBase):
                 out_channels
             )  # Reload
             additional_indices = np.random.choice(
-                self.unused_param_indices_for_layers[layer],
+                # self.unused_param_indices_for_layers[layer],
+                np.setdiff1d(self.unused_param_indices_for_layers[layer], current_layer_indices),
                 remaining_sample_num,
                 replace=False,
             )
@@ -115,6 +116,11 @@ class ServerFedRAME(ServerBase):
             self.unused_param_indices_for_layers[layer] = np.setdiff1d(
                 self.unused_param_indices_for_layers[layer], current_layer_indices
             )
+
+        # Check for duplicates before returning
+        if len(current_layer_indices) != len(np.unique(current_layer_indices)):
+            raise ValueError("Duplicate indices found")
+
         return current_layer_indices  # The returned indices are sorted
 
     def get_client_submodel_param_indices_dict(self, client_id: int):
