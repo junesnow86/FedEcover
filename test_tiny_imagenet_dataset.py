@@ -14,6 +14,8 @@ train_transform = transforms.Compose(
     [
         transforms.RandomHorizontalFlip(),
         transforms.RandomCrop(64, padding=4),
+        # transforms.RandomRotation(15),
+        # transforms.RandomAffine(degrees=0, translate=(0.1, 0.1), scale=(0.8, 1.2)),  # 随机仿射变换
         transforms.ToTensor(),
         transforms.Normalize(
             mean=NORMALIZATION_STATS["imagenet"]["mean"],
@@ -56,8 +58,8 @@ model = custom_resnet18(
 
 
 critertion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=1e-3, weight_decay=5e-4)
-train_loss = train(model, optimizer, critertion, train_loader, epochs=100, verbose=False)
+optimizer = optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-4)
+train_loss = train(model, optimizer, critertion, train_loader, epochs=200, verbose=True)
 
 evaluation_results = evaluate_acc(model, val_loader)
 print(f"Validation accuracy: {evaluation_results['accuracy']:.4f}")
