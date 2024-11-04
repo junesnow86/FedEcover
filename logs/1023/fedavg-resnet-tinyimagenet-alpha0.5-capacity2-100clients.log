@@ -1,0 +1,198 @@
+Method: fedavg
+Model: resnet
+Dataset: tiny-imagenet
+Data distribution: alpha0.5
+Global step size: 1.0
+Dynamic Global step size: False
+Number of clients: 100
+Client selection ratio: 0.1
+Local training data ratio: 1.0
+Number of rounds: 500
+Number of local epochs: 5
+Batch size: 16
+Learning rate: 0.001
+Weight decay: 0.0001
+Random seed: 42
+Normalization type: sbn
+Number of workers: 2
+Client capacity distribution: 2
+Parameter delta norm type: mean
+Global learning rate decay: True
+Gamma: 0.9
+[Model Architecture]
+ResNet(
+  (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+  (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+  (relu): ReLU(inplace=True)
+  (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  (layer1): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+    )
+  )
+  (layer2): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      (downsample): Sequential(
+        (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+    )
+  )
+  (layer3): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      (downsample): Sequential(
+        (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+    )
+  )
+  (layer4): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      (downsample): Sequential(
+        (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+    )
+  )
+  (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+  (fc): Linear(in_features=512, out_features=200, bias=True)
+)
+Global Model size: 42.99 MB
+Optional client capacities: [1.0, 0.5, 0.1]
+Weights: [0.1, 0.4, 0.5]
+Capacity counts: [100]
+Specific client capacities: [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
+Round 1
+Selected 10 client IDs: [11 66  9 92 12 45 73 44 97 35]
+eta_g: 1.0000
+Client 11	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 4.2011	Train Acc: 0.0800	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.4900	Global Validation Acc: 0.0129
+Client 66	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 4.3642	Train Acc: 0.0700	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.3831	Global Validation Acc: 0.0126
+Client 9	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 4.2073	Train Acc: 0.1100	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.5076	Global Validation Acc: 0.0088
+Client 92	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 4.1426	Train Acc: 0.0981	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.6065	Global Validation Acc: 0.0107
+Client 12	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 4.3550	Train Acc: 0.0728	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.2920	Global Validation Acc: 0.0126
+Client 45	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 4.1930	Train Acc: 0.0914	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.5029	Global Validation Acc: 0.0147
+Client 73	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 4.0647	Train Acc: 0.1184	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.5809	Global Validation Acc: 0.0123
+Client 44	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 4.1494	Train Acc: 0.0907	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.4866	Global Validation Acc: 0.0103
+Client 97	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 4.2447	Train Acc: 0.0703	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.5988	Global Validation Acc: 0.0116
+Client 35	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 4.3002	Train Acc: 0.0861	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.3505	Global Validation Acc: 0.0116
+Aggregated
+Global Test Loss: 5.4084	Global Test Acc: 0.0072
+Round 1 use time: 14.19 min, ETA: 118.03 hours
+================================================================================
+Round 2
+Selected 10 client IDs: [79 96 11 45 42 63 57 68 17 15]
+eta_g: 1.0000
+Client 79	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 4.1462	Train Acc: 0.0928	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.3477	Global Validation Acc: 0.0153
+Client 96	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 4.2638	Train Acc: 0.0798	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.3296	Global Validation Acc: 0.0131
+Client 11	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 4.1015	Train Acc: 0.1039	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.6193	Global Validation Acc: 0.0126
+Client 45	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 4.1384	Train Acc: 0.0925	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.6079	Global Validation Acc: 0.0166
+Client 42	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 4.2361	Train Acc: 0.0795	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.3141	Global Validation Acc: 0.0141
+Client 63	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 4.0555	Train Acc: 0.0931	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.4021	Global Validation Acc: 0.0150
+Client 57	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 4.1460	Train Acc: 0.0824	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.3112	Global Validation Acc: 0.0182
+Client 68	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 4.2501	Train Acc: 0.0751	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.3971	Global Validation Acc: 0.0102
+Client 17	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 4.0823	Train Acc: 0.1032	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.4137	Global Validation Acc: 0.0136
+Client 15	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 4.1394	Train Acc: 0.0961	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.2645	Global Validation Acc: 0.0155
+Aggregated
+Global Test Loss: 5.2774	Global Test Acc: 0.0160
+Round 2 use time: 5.64 min, ETA: 46.80 hours
+================================================================================
+Round 3
+Selected 10 client IDs: [48 73 81 21 18 40 74 78 33 96]
+eta_g: 1.0000
+Client 48	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 4.0319	Train Acc: 0.0921	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.3343	Global Validation Acc: 0.0130
+Client 73	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.8730	Train Acc: 0.1279	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.5568	Global Validation Acc: 0.0151
+Client 81	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.8625	Train Acc: 0.1261	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.4874	Global Validation Acc: 0.0155
+Client 21	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 4.0408	Train Acc: 0.1019	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.2557	Global Validation Acc: 0.0194
+Client 18	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.9379	Train Acc: 0.1012	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.3702	Global Validation Acc: 0.0185
+Client 40	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.9443	Train Acc: 0.1064	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.4463	Global Validation Acc: 0.0172
+Client 74	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.9922	Train Acc: 0.1111	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.3353	Global Validation Acc: 0.0191
+Client 78	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.9766	Train Acc: 0.0933	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.2787	Global Validation Acc: 0.0175
+Client 33	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.9743	Train Acc: 0.1170	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.3729	Global Validation Acc: 0.0163
+Client 96	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 4.0861	Train Acc: 0.0911	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.3201	Global Validation Acc: 0.0188
+Aggregated
+Global Test Loss: 5.2077	Global Test Acc: 0.0200
+Round 3 use time: 5.87 min, ETA: 48.60 hours
+================================================================================
+Round 4
+Selected 10 client IDs: [57 14 10 36 62 26 22 88 23 37]
+eta_g: 1.0000
+Client 57	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.9411	Train Acc: 0.1075	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.1391	Global Validation Acc: 0.0206
+Client 14	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.7676	Train Acc: 0.1316	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.4882	Global Validation Acc: 0.0208
+Client 10	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.8704	Train Acc: 0.1218	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.2301	Global Validation Acc: 0.0191
+Client 36	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.6939	Train Acc: 0.1477	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.5103	Global Validation Acc: 0.0239
+Client 62	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.9272	Train Acc: 0.1144	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.1377	Global Validation Acc: 0.0210
+Client 26	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.8034	Train Acc: 0.1324	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.4206	Global Validation Acc: 0.0165
+Client 22	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.8091	Train Acc: 0.1281	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.2625	Global Validation Acc: 0.0190
+Client 88	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.9094	Train Acc: 0.1096	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.1584	Global Validation Acc: 0.0210
+Client 23	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.9343	Train Acc: 0.1101	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.2145	Global Validation Acc: 0.0186
+Client 37	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.8816	Train Acc: 0.1366	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.1902	Global Validation Acc: 0.0190
+Aggregated
+Global Test Loss: 5.0908	Global Test Acc: 0.0258
+Round 4 use time: 5.99 min, ETA: 49.53 hours
+================================================================================
+Round 5
+Selected 10 client IDs: [97 72 32 44 86 60 28 22 11 13]
+eta_g: 1.0000
+Client 97	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.7229	Train Acc: 0.1279	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.3046	Global Validation Acc: 0.0220
+Client 72	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.7702	Train Acc: 0.1247	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.2590	Global Validation Acc: 0.0195
+Client 32	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.6269	Train Acc: 0.1416	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.4009	Global Validation Acc: 0.0205
+Client 44	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.7185	Train Acc: 0.1315	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.2774	Global Validation Acc: 0.0220
+Client 86	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.7850	Train Acc: 0.1267	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.1418	Global Validation Acc: 0.0233
+Client 60	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.7443	Train Acc: 0.1442	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.2532	Global Validation Acc: 0.0184
+Client 28	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.7488	Train Acc: 0.1512	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.1518	Global Validation Acc: 0.0226
+Client 22	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.7195	Train Acc: 0.1292	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.2338	Global Validation Acc: 0.0226
+Client 11	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.7685	Train Acc: 0.1314	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.2840	Global Validation Acc: 0.0219
+Client 13	Capacity: 0.1	Model Size: 0.46 MB	Train Loss: 3.7550	Train Acc: 0.1396	Local Validation  Loss: 0.0000	Local Validation Acc: 0.0000	Global Validation Loss: 6.1600	Global Validation Acc: 0.0209
+Aggregated
+Global Test Loss: 5.0613	Global Test Acc: 0.0319
+Round 5 use time: 5.98 min, ETA: 49.35 hours
+================================================================================
+Round 6
+Selected 10 client IDs: [82  6 26 53 94 34 77 14 25 48]
