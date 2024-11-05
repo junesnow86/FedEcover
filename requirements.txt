@@ -1,4 +1,3 @@
-datasets
 matplotlib
 torch
 torchvision
