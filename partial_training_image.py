@@ -422,6 +422,8 @@ for round in range(args.rounds):
         raise NotImplementedError
 
     print(f"Selected {len(selected_client_ids)} client IDs: {selected_client_ids}")
+    distribution_time = time()
+    print(f"Submodel distribution time: {distribution_time - round_start_time:.2f} sec")
 
     # <---------------------------------------- Local Training ---------------------------------------->
     for i, client_id in enumerate(selected_client_ids):
@@ -479,6 +481,9 @@ for round in range(args.rounds):
             "global_val_acc": client_global_evaluation_result["accuracy"],
         }
 
+    local_training_time = time()
+    print(f"Local training time: {(local_training_time - distribution_time) / 60:.2f} min")
+
     # <---------------------------------------- Aggregation ---------------------------------------->
     if args.method in ["fedavg"]:
         server.step(
@@ -497,6 +502,9 @@ for round in range(args.rounds):
         )
     else:
         raise NotImplementedError
+
+    aggregation_time = time()
+    print(f"Aggregation time: {(aggregation_time - local_training_time) / 60:.2f} min")
 
     # <---------------------------------------- Global Model Evaluation ---------------------------------------->
     global_evaluation_result = evaluate_acc(
@@ -527,6 +535,9 @@ for round in range(args.rounds):
                     "accuracy"
                 ],
             }
+
+    global_evaluation_time = time()
+    print(f"Global model evaluation time: {(global_evaluation_time - aggregation_time) / 60:.2f} min")
 
     # <---------------------------------------- Print Results ---------------------------------------->
     # Print client evaluation results
@@ -568,6 +579,9 @@ for round in range(args.rounds):
                 f"Local Validation Loss: {local_val_loss:.4f}({loss_gap:.4f})\t"
                 f"Local Validation Acc: {local_val_acc:.4f}({acc_gap:.4f})"
             )
+
+    print_results_time = time()
+    print(f"Print results time: {(print_results_time - global_evaluation_time) / 60:.2f} min")
 
     # Estimate ETA
     round_end_time = time()
