@@ -1,4 +1,6 @@
-# zero-footprint-dropout
+# FedEcover
+
+Experimental implementation for paper **FedEcover: Fast and Stable Converging Model-Heterogeneous Federated Learning with Efficient-Coverage Submodel Extraction**.
 
 ## Download Tiny ImageNet
 
