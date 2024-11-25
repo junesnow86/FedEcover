@@ -42,6 +42,7 @@ plt.figure()
 plt.grid(True)
 
 fedavg_mean_acc = None
+reach_rounds = {}
 
 for i, method in enumerate(methods):
     # Read the CSV file
@@ -72,14 +73,19 @@ for i, method in enumerate(methods):
 
     try:
         first_reach_round = rounds[acc >= fedavg_mean_acc].iloc[0]
+        reach_rounds[method] = first_reach_round
         if method == "fedavg":
             fedavg_reach_round = first_reach_round
-        speedup = fedavg_reach_round / first_reach_round
-        print(
-            f"{label} first reaches FedAvg mean accuracy at round {first_reach_round}, Speedup: {speedup:.2f}"
-        )
     except IndexError:
-        print(f"{label} never reachs FedAvg mean accuracy")
+        first_reach_round = None
+
+for method in methods:
+    label = method_labels.get(method, method)
+    if reach_rounds.get(method, None) is not None:
+        speedup = fedavg_reach_round / reach_rounds[method]
+        print(f"{label} reaches FedAvg mean accuracy at round {reach_rounds[method]}, speedup: {speedup:.2f}")
+    else:
+        print(f"{label} never reaches FedAvg mean accuracy")
 
 plt.legend()
 plt.xlabel("Communication Round", fontsize=14)

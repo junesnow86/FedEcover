@@ -26,7 +26,7 @@ method_labels = {
     "fedrame2-no-gsd": "FedEcover w/o GSD",
 }
 
-# 从CSV文件读取数据
+# Read data from csv files
 accuracy_df = pd.read_csv("alpha_effects_accuracy_10clients.csv")
 speedup_df = pd.read_csv("alpha_effects_speedup_10clients.csv")
 
@@ -42,19 +42,19 @@ speedup = {
     for method in methods
 }
 
-# 创建图表
+# Create a figure and set the x-axis label and y-axis label
 fig, ax1 = plt.subplots()
 ax1.set_xlabel("Alpha", fontsize=14)
 ax1.set_ylabel("Accuracy (%)", fontsize=14)
 
-# 创建第二个Y轴
+# Create a second y-axis for the speedup
 ax2 = ax1.twinx()
 ax2.set_ylabel("Speedup", fontsize=14)
 
 bar_width = 0.1
 index = np.arange(len(alphas))
 
-# 绘制准确率曲线
+# Plot the accuracy line chart
 for method in methods:
     ax1.plot(
         index + bar_width * (len(methods) - 1) / 2,
@@ -67,10 +67,10 @@ for method in methods:
 ax1.tick_params(axis="y")
 ax1.set_xticks(
     index + bar_width * (len(methods) - 1) / 2
-)  # 设置x轴刻度为条形图的中间点
-ax1.set_xticklabels(alphas)  # 设置x轴刻度标签为alpha数值
+)  # Set the x-axis ticks to the midpoints of the bars in the bar chart.
+ax1.set_xticklabels(alphas)  # Set the x-axis tick labels to alpha values.
 
-# 绘制加速比条形图
+# Plot a bar chart of speedup.
 bars = []
 for i, method in enumerate(methods):
     bar = ax2.bar(
@@ -87,11 +87,8 @@ ax2.tick_params(axis="y")
 ax2.legend(loc="upper left")
 ax2.set_xticks(
     index + bar_width * (len(methods) - 1) / 2
-)  # 设置x轴刻度为条形图的中间点
+)
 ax2.set_xticklabels(alphas)
 
-# 调整图表与边界的间距
-plt.subplots_adjust(top=0.95)
-
-# 显示图表
+plt.subplots_adjust(top=0.95)  # Adjust the spacing between the chart and the boundaries.
 plt.savefig("alpha_effects_comparison_10clients.png")
