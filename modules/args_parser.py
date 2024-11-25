@@ -11,8 +11,8 @@ def get_args(print_args=True):
             "fedavg",
             "heterofl",
             "fedrolex",
-            "fedrd",
-            "fedrame",
+            "fd",
+            "fedecover",
         ],
         default="fedavg",
         help="Federated learning method",
@@ -58,7 +58,7 @@ def get_args(print_args=True):
     parser.add_argument(
         "--rounds",
         type=int,
-        default=200,
+        default=300,
         help="Number of rounds to train",
     )
     parser.add_argument(
@@ -82,7 +82,7 @@ def get_args(print_args=True):
     parser.add_argument(
         "--weight-decay",
         type=float,
-        default=0.0,
+        default=0.0001,
         help="Weight decay for local training",
     )
     parser.add_argument(

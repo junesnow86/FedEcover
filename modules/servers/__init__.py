@@ -1,5 +1,5 @@
-from .fedrame import ServerFedRAME
-from .fedrd import ServerRD
+from .fd import ServerFD
+from .fedecover import ServerFedEcover
 from .fedrolex import ServerFedRolex
 from .homo import ServerHomo
 from .static import ServerStatic
@@ -8,6 +8,6 @@ __all__ = [
     "ServerHomo",
     "ServerStatic",
     "ServerFedRolex",
-    "ServerRD",
-    "ServerFedRAME",
+    "ServerFD",
+    "ServerFedEcover",
 ]

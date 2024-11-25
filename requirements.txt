@@ -2,3 +2,4 @@ matplotlib
 torch
 torchvision
 tqdm
+pandas
