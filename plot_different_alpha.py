@@ -6,24 +6,21 @@ method_colors = {
     "fedavg": "C0",
     "heterofl": "C1",
     "fedrolex": "C2",
-    "fedrd": "C4",
-    "fedrame": "C6",
-    "fedrame2": "C3",
+    "fd": "C4",
+    "fedecover": "C3",
 }
 
 method_labels = {
     "fedavg": "FedAvg + GSD",
     "heterofl": "HeteroFL + GSD",
     "fedrolex": "FedRolex + GSD",
-    "fedrd": "FD-m + GSD",
-    "fedrame": "FedEcover0",
-    "fedrame2": "FedEcover",
+    "fd": "FD-m + GSD",
+    "fedecover": "FedEcover",
     "fedavg-no-gsd": "FedAvg w/o GSD",
     "heterofl-no-gsd": "HeteroFL w/o GSD",
     "fedrolex-no-gsd": "FedRolex w/o GSD",
-    "fedrd-no-gsd": "FD-m w/o GSD",
-    "fedrame-no-gsd": "FedEcover0 w/o GSD",
-    "fedrame2-no-gsd": "FedEcover w/o GSD",
+    "fd-no-gsd": "FD-m w/o GSD",
+    "fedecover-no-gsd": "FedEcover w/o GSD",
 }
 
 # Read data from csv files
