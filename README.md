@@ -37,4 +37,4 @@ For example, to plot the accuracy comparison figure showed in Fig. 7 (c), you ne
 
 We suggest the same naming way as above for log files because the naming among training, extracting results, and plotting figures codes are coupled in this implementation. We provide an example of extracting results in [extract_accuracy_from_log.py](extract_accuracy_from_log.py) and an example of plotting figures in [plot_accuracy_comparison.py](plot_accuracy_comparison.py). Running [plot_accuracy_comparison.py](plot_accuracy_comparison.py) will also print the mean accuracy and std statistics.
 
-We also provide a plotting script for reproducing Fig. 10. Note that it needs user to manually collect accuracy results from different methods with different alpha values first. We provide the results used for our paper in [results](results) directory as examples.
+We also provide a plotting script [plot_different_alpha.py](plot_different_alpha.py) for reproducing Fig. 10. Note that it needs user to manually collect accuracy results from different methods with different alpha values first. We provide the results used for our paper in [results](results) directory as examples.
