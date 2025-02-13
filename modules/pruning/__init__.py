@@ -1,6 +1,7 @@
 from .extract_submodel import (
     extract_submodel_cnn,
     extract_submodel_control_variates,
+    extract_submodel_femnistcnn,
     extract_submodel_resnet,
     extract_submodel_update_direction,
 )
@@ -38,4 +39,5 @@ __all__ = [
     "generate_index_groups",
     "extract_submodel_control_variates",
     "extract_submodel_update_direction",
+    "extract_submodel_femnistcnn",
 ]

@@ -3,6 +3,7 @@ NORMALIZATION_STATS = {
     "cifar100": {"mean": [0.5071, 0.4867, 0.4408], "std": [0.2675, 0.2565, 0.2761]},
     "imagenet": {"mean": [0.485, 0.456, 0.406], "std": [0.229, 0.224, 0.225]},
     "tiny-imagenet": {"mean": [0.485, 0.456, 0.406], "std": [0.229, 0.224, 0.225]},
+    "celeba": {"mean": [0.5, 0.5, 0.5], "std": [0.5, 0.5, 0.5]},
 }
 
 OPTIONAL_CLIENT_CAPACITY_DISTRIBUTIONS = [

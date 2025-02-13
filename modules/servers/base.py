@@ -8,6 +8,7 @@ from modules.pruning import (
     SubmodelBlockParamIndicesDict,
     extract_submodel_cnn,
     extract_submodel_resnet,
+    extract_submodel_femnistcnn,
 )
 
 
@@ -24,15 +25,12 @@ class ServerBase:
         scaling: bool = True,
         norm_type: str = "sbn",
         eta_g: float = 1.0,
-        dynamic_eta_g: bool = False,
-        param_delta_norm: str = "mean",
         global_lr_decay: bool = False,
         gamma: float = 0.5,
         decay_steps: List[int] = [50, 100],
     ):
         assert len(client_capacities) == num_clients
-        assert model_type in ["cnn", "resnet"]
-        assert param_delta_norm in ["mean", "uniform"]
+        assert model_type in ["cnn", "resnet", "femnistcnn"]
 
         self.global_model = global_model
         self.dataset = dataset
@@ -44,14 +42,12 @@ class ServerBase:
         self.scaling = scaling
 
         self.eta_g = eta_g
-        self.dynamic_eta_g = dynamic_eta_g
         self.norm_type = norm_type
 
         self.round = 0
         self.global_lr_decay = global_lr_decay
         self.gamma = gamma
         self.decay_steps = decay_steps
-        self.param_delta_norm = param_delta_norm
 
     def get_client_submodel_param_indices_dict(self, client_id: int):
         raise NotImplementedError(
@@ -80,6 +76,18 @@ class ServerBase:
         if self.model_type == "cnn":
             selected_client_submodels = [
                 extract_submodel_cnn(
+                    original_model=self.global_model,
+                    submodel_param_indices_dict=selected_submodel_param_indices_dicts[
+                        i
+                    ],
+                    p=1 - selected_client_capacities[i],
+                    scaling=True,
+                )
+                for i in range(len(selected_client_ids))
+            ]
+        elif self.model_type == "femnistcnn":
+            selected_client_submodels = [
+                extract_submodel_femnistcnn(
                     original_model=self.global_model,
                     submodel_param_indices_dict=selected_submodel_param_indices_dicts[
                         i
@@ -125,19 +133,11 @@ class ServerBase:
         if client_weights is None:
             client_weights = [1] * len(selected_client_ids)
 
-        if self.param_delta_norm == "uniform":
-            # client_weight_base = sum(client_weights)
-            mean_capacity = sum(self.client_capacities) / len(self.client_capacities)
-            client_weight_base = sum(client_weights) * mean_capacity
-
         self.old_global_params = {
             name: param.clone().detach()
             for name, param in self.global_model.named_parameters()
         }
 
-        named_parameter_overlaps = {}
-        named_parameter_coverages = {}
-        named_parameter_coverages_ablation = {}
         num_full_models = 0
         for client_id in selected_client_ids:
             if self.client_capacities[client_id] >= 1.0:
@@ -230,76 +230,22 @@ class ServerBase:
             # Normalize the accumulated param value
             nonzero_indices = averaging_weight_accumulator > 0
             if param.dim() == 4:
-                if self.param_delta_norm == "mean":
-                    param_delta_accumulator[nonzero_indices] /= (
-                        averaging_weight_accumulator[nonzero_indices][:, None, None]
-                    )
-                elif self.param_delta_norm == "uniform":
-                    print(f"Client weight base: {client_weight_base}")
-                    # param_delta_accumulator[nonzero_indices] /= sum(client_weights)
-                    param_delta_accumulator[nonzero_indices] /= client_weight_base
-                else:
-                    raise ValueError(
-                        f"Invalid delta normalization: {self.param_delta_norm}"
-                    )
+                param_delta_accumulator[nonzero_indices] /= (
+                    averaging_weight_accumulator[nonzero_indices][:, None, None]
+                )
             elif param.dim() == 2 or param.dim() == 1:
-                if self.param_delta_norm == "mean":
-                    param_delta_accumulator[nonzero_indices] /= (
-                        averaging_weight_accumulator[nonzero_indices]
-                    )
-                elif self.param_delta_norm == "uniform":
-                    print(f"Client weight base: {client_weight_base}")
-                    # param_delta_accumulator[nonzero_indices] /= sum(client_weights)
-                    param_delta_accumulator[nonzero_indices] /= client_weight_base
-                else:
-                    raise ValueError(
-                        f"Invalid delta normalization: {self.param_delta_norm}"
-                    )
+                param_delta_accumulator[nonzero_indices] /= (
+                    averaging_weight_accumulator[nonzero_indices]
+                )
             else:
                 raise ValueError(f"Invalid parameter dimension: {param.dim()}")
 
             named_parameters_delta[param_name] = param_delta_accumulator
 
-            non_zero_values = averaging_weight_accumulator[
-                averaging_weight_accumulator > 0
-            ]
-            overlap = non_zero_values.mean().item() / len(selected_client_ids)
-            named_parameter_overlaps[param_name] = overlap
-
-            coverage = (
-                averaging_weight_accumulator > 0
-            ).sum().item() / averaging_weight_accumulator.numel()
-            named_parameter_coverages[param_name] = coverage
-
-            coverage_ablation = (
-                (averaging_weight_accumulator - num_full_models) > 0
-            ).sum().item() / averaging_weight_accumulator.numel()
-            named_parameter_coverages_ablation[param_name] = coverage_ablation
-
-        mean_overlap = sum(named_parameter_overlaps.values()) / len(
-            named_parameter_overlaps
-        )
-        mean_coverage = sum(named_parameter_coverages.values()) / len(
-            named_parameter_coverages
-        )
-        mean_coverage_ablation = sum(named_parameter_coverages_ablation.values()) / len(
-            named_parameter_coverages_ablation
-        )
-
-        if self.dynamic_eta_g:
-            self.eta_g = mean_overlap
-
-        print(
-            f"eta_g: {self.eta_g:.4f}, mean Overlap: {mean_overlap:.4f}, mean Coverage: {mean_coverage:.4f}, mean Coverage Ablation: {mean_coverage_ablation:.4f}"
-        )
-
         # Update global model
         for param_name, param in self.global_model.named_parameters():
             param.data += self.eta_g * named_parameters_delta[param_name]
             # param.data = (1 - self.eta_g) * self.old_global_params[param_name] + self.eta_g * param.data
-            print(
-                f"Param name: {param_name}, param overlap: {named_parameter_overlaps[param_name]:.4f}, param coverage: {named_parameter_coverages[param_name]:.4f}, param coverage ablation: {named_parameter_coverages_ablation[param_name]:.4f}"
-            )
 
         self.round += 1
         if self.global_lr_decay and self.round in self.decay_steps:

@@ -6,7 +6,7 @@ import torch
 import torch.nn as nn
 from torchvision.models import ResNet
 
-from modules.models import CNN, DropoutScaling
+from modules.models import CNN, FEMNISTCNN, DropoutScaling
 
 from .submodel_param_indices_dicts import (
     SubmodelBlockParamIndicesDict,
@@ -106,43 +106,64 @@ def extract_submodel_cnn(
     p: float,
     scaling: bool = True,
 ):
-    submodel = CNN()
+    submodel = copy.deepcopy(original_model)
 
-    sublayer_conv1 = extract_sublayer_conv2d(
-        original_model.layer1[0],
-        submodel_param_indices_dict["layer1.0"],
-    )
-    if scaling:
-        sublayer_conv1 = nn.Sequential(sublayer_conv1, DropoutScaling(p=p))
-    else:
-        sublayer_conv1 = nn.Sequential(sublayer_conv1)
-    submodel.layer1[0] = sublayer_conv1
-
-    sublayer_conv2 = extract_sublayer_conv2d(
-        original_model.layer2[0],
-        submodel_param_indices_dict["layer2.0"],
-    )
-    if scaling:
-        sublayer_conv2 = nn.Sequential(sublayer_conv2, DropoutScaling(p=p))
-    else:
-        sublayer_conv2 = nn.Sequential(sublayer_conv2)
-    submodel.layer2[0] = sublayer_conv2
-
-    sublayer_conv3 = extract_sublayer_conv2d(
-        original_model.layer3[0],
-        submodel_param_indices_dict["layer3.0"],
-    )
-    if scaling:
-        sublayer_conv3 = nn.Sequential(sublayer_conv3, DropoutScaling(p=p))
-    else:
-        sublayer_conv3 = nn.Sequential(sublayer_conv3)
-    submodel.layer3[0] = sublayer_conv3
+    for i in range(1, 4):
+        layer_name = f"layer{i}"
+        sublayer_conv = extract_sublayer_conv2d(
+            original_model._modules[layer_name][0],
+            submodel_param_indices_dict[f"{layer_name}.0"],
+        )
+        if scaling:
+            sublayer_conv = nn.Sequential(sublayer_conv, DropoutScaling(p=p))
+        else:
+            sublayer_conv = nn.Sequential(sublayer_conv)
+        submodel._modules[layer_name][0] = sublayer_conv
 
     sublayer_fc = extract_sublayer_linear(
         original_model.fc,
         submodel_param_indices_dict["fc"],
     )
     submodel.fc = sublayer_fc
+
+    return submodel
+
+
+def extract_submodel_femnistcnn(
+    original_model: FEMNISTCNN,
+    submodel_param_indices_dict: SubmodelBlockParamIndicesDict,
+    p: float,
+    scaling: bool = True,
+):
+    submodel = copy.deepcopy(original_model)
+
+    for i in range(1, 3):
+        layer_name = f"layer{i}"
+        sublayer_conv = extract_sublayer_conv2d(
+            original_model._modules[layer_name][0],
+            submodel_param_indices_dict[f"{layer_name}.0"],
+        )
+        if scaling:
+            sublayer_conv = nn.Sequential(sublayer_conv, DropoutScaling(p=p))
+        else:
+            sublayer_conv = nn.Sequential(sublayer_conv)
+        submodel._modules[layer_name][0] = sublayer_conv
+
+    sublayer_fc1 = extract_sublayer_linear(
+        original_model.fc1,
+        submodel_param_indices_dict["fc1"],
+    )
+    if scaling:
+        sublayer_fc1 = nn.Sequential(sublayer_fc1, DropoutScaling(p=p))
+    else:
+        sublayer_fc1 = nn.Sequential(sublayer_fc1)
+    submodel.fc1 = sublayer_fc1
+
+    sublayer_fc2 = extract_sublayer_linear(
+        original_model.fc2,
+        submodel_param_indices_dict["fc2"],
+    )
+    submodel.fc2 = sublayer_fc2
 
     return submodel
 
@@ -180,7 +201,9 @@ def extract_submodel_resnet(
         else:
             raise ValueError("Invalid dataset")
     elif norm_type == "sbn":
-        submodel.bn1 = nn.BatchNorm2d(submodel.conv1[0].out_channels, affine=False, track_running_stats=False)
+        submodel.bn1 = nn.BatchNorm2d(
+            submodel.conv1[0].out_channels, affine=False, track_running_stats=False
+        )
     else:
         raise ValueError("Invalid norm_type")
 
@@ -220,14 +243,18 @@ def extract_submodel_resnet(
                 if norm_type == "ln":
                     layernorm_shape = layernorm_shapes[i]
                     layernorm_shape[0] = sublayer_conv[0].out_channels
-                    submodel._modules[layer][int(block)]._modules[f"bn{int(conv[-1])}"] = (
-                        nn.LayerNorm(
-                            normalized_shape=layernorm_shape, elementwise_affine=False
-                        )
+                    submodel._modules[layer][int(block)]._modules[
+                        f"bn{int(conv[-1])}"
+                    ] = nn.LayerNorm(
+                        normalized_shape=layernorm_shape, elementwise_affine=False
                     )
                 elif norm_type == "sbn":
-                    submodel._modules[layer][int(block)]._modules[f"bn{int(conv[-1])}"] = (
-                        nn.BatchNorm2d(sublayer_conv[0].out_channels, affine=False, track_running_stats=False)
+                    submodel._modules[layer][int(block)]._modules[
+                        f"bn{int(conv[-1])}"
+                    ] = nn.BatchNorm2d(
+                        sublayer_conv[0].out_channels,
+                        affine=False,
+                        track_running_stats=False,
                     )
                 else:
                     raise ValueError("Invalid norm_type")
@@ -251,8 +278,10 @@ def extract_submodel_resnet(
                         normalized_shape=layernorm_shape, elementwise_affine=False
                     )
                 elif norm_type == "sbn":
-                    submodel._modules[layer][int(block)].downsample[1] = (
-                        nn.BatchNorm2d(sublayer_downsample[0].out_channels, affine=False, track_running_stats=False)
+                    submodel._modules[layer][int(block)].downsample[1] = nn.BatchNorm2d(
+                        sublayer_downsample[0].out_channels,
+                        affine=False,
+                        track_running_stats=False,
                     )
                 else:
                     raise ValueError("Invalid norm_type")

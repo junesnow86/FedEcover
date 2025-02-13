@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+from tqdm import tqdm
 
 
 def test(model, criterion, test_loader, device="cuda", num_classes=10):
@@ -58,7 +59,7 @@ def evaluate_acc(model, dataloader, device="cuda", class_wise=False):
         class_total = dict()
 
     with torch.no_grad():
-        for data, target in dataloader:
+        for data, target in tqdm(dataloader, total=len(dataloader), leave=False, desc="Evaluating"):
             data, target = data.to(device), target.to(device)
             output = model(data)
             test_loss += criterion(output, target).item()

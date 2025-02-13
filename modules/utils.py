@@ -1,3 +1,4 @@
+import os
 import time
 
 import numpy as np
@@ -59,3 +60,12 @@ def measure_time(repeats: int = 1):
         return wrapper
 
     return decorator
+
+
+def get_user_id_by_idx(idx, base_dir):
+    user_ids = sorted(os.listdir(base_dir))
+
+    if idx < 0 or idx >= len(user_ids):
+        raise IndexError("Index out of range for user IDs.")
+
+    return user_ids[idx]
