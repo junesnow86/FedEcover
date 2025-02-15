@@ -7,8 +7,8 @@ import torch.nn as nn
 from modules.pruning import (
     SubmodelBlockParamIndicesDict,
     extract_submodel_cnn,
-    extract_submodel_resnet,
     extract_submodel_femnistcnn,
+    extract_submodel_resnet,
 )
 
 
@@ -21,7 +21,7 @@ class ServerBase:
         client_capacities: List[float],
         model_out_dim: int,
         model_type: str = "cnn",
-        select_ratio: float = 0.1,
+        num_selected_clients: int = 10,
         scaling: bool = True,
         norm_type: str = "sbn",
         eta_g: float = 1.0,
@@ -38,7 +38,8 @@ class ServerBase:
         self.num_clients = num_clients
         self.client_capacities = client_capacities
         self.model_out_dim = model_out_dim
-        self.select_ratio = select_ratio
+        self.num_selected_clients = num_selected_clients
+        assert 0 < self.num_selected_clients <= self.num_clients
         self.scaling = scaling
 
         self.eta_g = eta_g
@@ -61,7 +62,7 @@ class ServerBase:
     ]:
         """Generate submodels for each client, according to each client's capacity and its rolling indices dict"""
         selected_client_ids = np.random.choice(
-            self.num_clients, int(self.num_clients * self.select_ratio), replace=False
+            self.num_clients, self.num_selected_clients, replace=False
         )
 
         selected_client_capacities = [

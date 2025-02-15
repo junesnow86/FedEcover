@@ -9,8 +9,10 @@ from modules.pruning import (
     SubmodelBlockParamIndicesDict,
     SubmodelLayerParamIndicesDict,
     extract_submodel_cnn,
+    extract_submodel_femnistcnn,
     extract_submodel_resnet,
 )
+
 from .base import ServerBase
 
 
@@ -23,7 +25,7 @@ class ServerHomo(ServerBase):
         client_capacities: List[float],
         model_out_dim: int,
         model_type: str = "cnn",
-        select_ratio: float = 0.1,
+        num_selected_clients: int = 10,
         norm_type: str = "sbn",
         eta_g: float = 1.0,
         global_lr_decay: bool = False,
@@ -37,7 +39,7 @@ class ServerHomo(ServerBase):
             client_capacities=client_capacities,
             model_out_dim=model_out_dim,
             model_type=model_type,
-            select_ratio=select_ratio,
+            num_selected_clients=num_selected_clients,
             norm_type=norm_type,
             eta_g=eta_g,
             global_lr_decay=global_lr_decay,
@@ -58,7 +60,10 @@ class ServerHomo(ServerBase):
 
             # Construct the submodel param indices dict
             self.submodel_param_indices_dict = SubmodelBlockParamIndicesDict()
-            previous_layer_indices = np.arange(3)
+            if self.dataset == "femnist":
+                previous_layer_indices = np.arange(1)
+            else:
+                previous_layer_indices = np.arange(3)
             for layer, indices in self.hidden_layer_neuron_indices_dict.items():
                 # Note: the layer in the dict is sorted due to Python's dict implementation
                 self.submodel_param_indices_dict[layer] = SubmodelLayerParamIndicesDict(
@@ -67,8 +72,12 @@ class ServerHomo(ServerBase):
                 previous_layer_indices = indices
 
             # The last fc layer
-            # H, W = 1, 1
-            H, W = 4, 4
+            if self.dataset in ["cifar10", "cifar100", "femnist"]:
+                H, W = 4, 4
+            elif self.dataset == "celeba":
+                H, W = 16, 16
+            else:
+                raise ValueError("Invalid dataset")
             flatten_previous_layer_indices = []
             for out_channnel_idx in previous_layer_indices:
                 start_idx = out_channnel_idx * H * W
@@ -84,6 +93,52 @@ class ServerHomo(ServerBase):
 
             # Extract submodel
             return extract_submodel_cnn(
+                original_model=original_model,
+                submodel_param_indices_dict=self.submodel_param_indices_dict,
+                p=1 - self.client_capacity,
+                scaling=True,
+            )
+        elif self.model_type == "femnistcnn":
+            self.hidden_layer_neuron_indices_dict = {
+                "layer1.0": np.arange(int(64 * self.client_capacity)),
+                "layer2.0": np.arange(int(128 * self.client_capacity)),
+            }
+
+            # Construct the submodel param indices dict
+            self.submodel_param_indices_dict = SubmodelBlockParamIndicesDict()
+            previous_layer_indices = np.arange(1)
+            for layer, indices in self.hidden_layer_neuron_indices_dict.items():
+                # Note: the layer in the dict is sorted due to Python's dict implementation
+                self.submodel_param_indices_dict[layer] = SubmodelLayerParamIndicesDict(
+                    {"in": previous_layer_indices, "out": indices}
+                )
+                previous_layer_indices = indices
+
+            # The first fc layer
+            H, W = 7, 7
+            flatten_previous_layer_indices = []
+            for out_channnel_idx in previous_layer_indices:
+                start_idx = out_channnel_idx * H * W
+                end_idx = (out_channnel_idx + 1) * H * W
+                flatten_previous_layer_indices.extend(list(range(start_idx, end_idx)))
+            flatten_previous_layer_indices = np.sort(flatten_previous_layer_indices)
+            self.submodel_param_indices_dict["fc1"] = SubmodelLayerParamIndicesDict(
+                {
+                    "in": flatten_previous_layer_indices,
+                    "out": np.arange(int(2048 * self.client_capacity)),
+                }
+            )
+
+            # The second fc layer
+            self.submodel_param_indices_dict["fc2"] = SubmodelLayerParamIndicesDict(
+                {
+                    "in": np.arange(int(2048 * self.client_capacity)),
+                    "out": np.arange(self.model_out_dim),
+                }
+            )
+
+            # Extract submodel
+            return extract_submodel_femnistcnn(
                 original_model=original_model,
                 submodel_param_indices_dict=self.submodel_param_indices_dict,
                 p=1 - self.client_capacity,
@@ -146,7 +201,9 @@ class ServerHomo(ServerBase):
                         == self.submodel_param_indices_dict[
                             f"{resnet_layer}.{block}.conv2"
                         ]["out"]
-                    ), "The indices of conv1 and conv2 should be the same due to the residual connection"
+                    ), (
+                        "The indices of conv1 and conv2 should be the same due to the residual connection"
+                    )
 
             # The last fc layer
             H, W = 1, 1
@@ -177,7 +234,7 @@ class ServerHomo(ServerBase):
 
     def distribute(self):
         selected_client_ids = np.random.choice(
-            self.num_clients, int(self.num_clients * self.select_ratio), replace=False
+            self.num_clients, self.num_selected_clients, replace=False
         )
 
         selected_client_submodels = [
@@ -218,7 +275,9 @@ class ServerHomo(ServerBase):
         self.round += 1
         if self.global_lr_decay and self.round in self.decay_steps:
             self.eta_g *= self.gamma
-            print(f"Decaying global learning rate at round {self.round}, new eta_g: {self.eta_g:.4f}")
+            print(
+                f"Decaying global learning rate at round {self.round}, new eta_g: {self.eta_g:.4f}"
+            )
 
     def step(
         self,

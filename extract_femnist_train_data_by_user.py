@@ -2,7 +2,7 @@ import json
 import os
 
 # 假设你的 JSON 文件名为 'data.json'
-input_file = "leaf/data/femnist/data/train/all_data_0_niid_0_keep_0_train_9.json"
+input_file = "/home/ljt/research/leaf/data/femnist/data/train/all_data_0_niid_0_keep_0_train_9.json"
 
 # 创建一个目录来存储每个用户的 JSON 文件
 output_dir = "data/femnist/train"

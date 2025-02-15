@@ -20,7 +20,7 @@ class ServerFedRolex(ServerBase):
         client_capacities: List[float],
         model_out_dim: int,
         model_type: str = "cnn",
-        select_ratio: float = 0.1,
+        num_selected_clients: int = 10,
         scaling: bool = True,
         norm_type: str = "sbn",
         eta_g: float = 1.0,
@@ -36,7 +36,7 @@ class ServerFedRolex(ServerBase):
             client_capacities=client_capacities,
             model_out_dim=model_out_dim,
             model_type=model_type,
-            select_ratio=select_ratio,
+            num_selected_clients=num_selected_clients,
             scaling=scaling,
             norm_type=norm_type,
             eta_g=eta_g,
@@ -58,6 +58,14 @@ class ServerFedRolex(ServerBase):
                     "layer1.0": np.arange(64),
                     "layer2.0": np.arange(128),
                     "layer3.0": np.arange(256),
+                }
+                self.model_rolling_indices_dicts.append(model_rolling_indices_dict)
+        elif self.model_type == "femnistcnn":
+            for _ in range(self.num_clients):
+                model_rolling_indices_dict = {
+                    "layer1.0": np.arange(64),
+                    "layer2.0": np.arange(128),
+                    "fc1": np.arange(2048),
                 }
                 self.model_rolling_indices_dicts.append(model_rolling_indices_dict)
         elif self.model_type == "resnet":
@@ -97,7 +105,10 @@ class ServerFedRolex(ServerBase):
         # Construct a submodel param indices dict for the client
         submodel_param_indices_dict = SubmodelBlockParamIndicesDict()
         if self.model_type == "cnn":
-            previous_layer_indices = np.arange(3)
+            if self.dataset == "femnist":
+                previous_layer_indices = np.arange(1)
+            else:
+                previous_layer_indices = np.arange(3)
             for layer, indices in model_rolling_indices_dict.items():
                 # Note: the layer in the dict is sorted due to Python's dict implementation
                 current_layer_indices = indices[: int(client_capacity * len(indices))]
@@ -109,8 +120,12 @@ class ServerFedRolex(ServerBase):
                 previous_layer_indices = current_layer_indices
 
             # The last fc layer
-            # H, W = 1, 1
-            H, W = 4, 4
+            if self.dataset in ["cifar10", "cifar100", "femnist"]:
+                H, W = 4, 4
+            elif self.dataset == "celeba":
+                H, W = 16, 16
+            else:
+                raise ValueError("Invalid dataset")
             flatten_previous_layer_indices = []
             for out_channnel_idx in previous_layer_indices:
                 start_idx = out_channnel_idx * H * W
@@ -121,6 +136,40 @@ class ServerFedRolex(ServerBase):
             submodel_param_indices_dict["fc"] = SubmodelLayerParamIndicesDict(
                 {
                     "in": flatten_previous_layer_indices,
+                    "out": np.arange(self.model_out_dim),
+                }
+            )
+        elif self.model_type == "femnistcnn":
+            previous_layer_indices = np.arange(1)
+            for layer, indices in model_rolling_indices_dict.items():
+                # Note: the layer in the dict is sorted due to Python's dict implementation
+                current_layer_indices = indices[: int(client_capacity * len(indices))]
+                # Note: Sort the indices
+                current_layer_indices = np.sort(current_layer_indices)
+
+                if layer == "fc1":
+                    H, W = 7, 7
+                    flatten_previous_layer_indices = []
+                    for out_channnel_idx in previous_layer_indices:
+                        start_idx = out_channnel_idx * H * W
+                        end_idx = (out_channnel_idx + 1) * H * W
+                        flatten_previous_layer_indices.extend(
+                            list(range(start_idx, end_idx))
+                        )
+                    flatten_previous_layer_indices = np.sort(
+                        flatten_previous_layer_indices
+                    )
+                    previous_layer_indices = flatten_previous_layer_indices
+
+                submodel_param_indices_dict[layer] = SubmodelLayerParamIndicesDict(
+                    {"in": previous_layer_indices, "out": current_layer_indices}
+                )
+                previous_layer_indices = current_layer_indices
+
+            # The last fc layer
+            submodel_param_indices_dict["fc2"] = SubmodelLayerParamIndicesDict(
+                {
+                    "in": previous_layer_indices,
                     "out": np.arange(self.model_out_dim),
                 }
             )
@@ -167,7 +216,9 @@ class ServerFedRolex(ServerBase):
                         == submodel_param_indices_dict[f"{resnet_layer}.{block}.conv2"][
                             "out"
                         ]
-                    ), "The indices of conv1 and conv2 should be the same due to the residual connection"
+                    ), (
+                        "The indices of conv1 and conv2 should be the same due to the residual connection"
+                    )
 
             # The last fc layer
             H, W = 1, 1

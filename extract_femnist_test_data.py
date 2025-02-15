@@ -1,7 +1,7 @@
 import json
 
 # 假设你的 JSON 文件名为 'data.json'
-input_file = "leaf/data/femnist/data/test/all_data_0_niid_0_keep_0_test_9.json"
+input_file = "/home/ljt/research/leaf/data/femnist/data/test/all_data_0_niid_0_keep_0_test_9.json"
 output_file = "data/femnist/test/test_data.json"
 
 # 读取 JSON 文件

@@ -34,9 +34,9 @@ method_labels = {
     "fedecover-no-gsd": "FedEcover w/o GSD",
 }
 
-print(
-    f"Model: {model}, Dataset: {dataset}, Distribution: {distribution}, Capacity: {capacity}, Num Clients: {num_clients}"
-)
+# print(
+#     f"Model: {model}, Dataset: {dataset}, Distribution: {distribution}, Capacity: {capacity}, Num Clients: {num_clients}"
+# )
 
 plt.figure()
 plt.grid(True)
@@ -47,7 +47,8 @@ reach_rounds = {}
 for i, method in enumerate(methods):
     # Read the CSV file
     try:
-        file_path = f"results/{method}_{model}_{dataset}_{distribution}_{capacity}_{num_clients}.csv"
+        # file_path = f"results/{method}_{model}_{dataset}_{distribution}_{capacity}_{num_clients}.csv"
+        file_path = f"results/20250215/{method}-femnist-cnn.csv"
         df = pd.read_csv(file_path)
     except FileNotFoundError:
         print(f"File {file_path} not found.")
@@ -83,7 +84,9 @@ for method in methods:
     label = method_labels.get(method, method)
     if reach_rounds.get(method, None) is not None:
         speedup = fedavg_reach_round / reach_rounds[method]
-        print(f"{label} reaches FedAvg mean accuracy at round {reach_rounds[method]}, speedup: {speedup:.2f}")
+        print(
+            f"{label} reaches FedAvg mean accuracy at round {reach_rounds[method]}, speedup: {speedup:.2f}"
+        )
     else:
         print(f"{label} never reaches FedAvg mean accuracy")
 
@@ -98,7 +101,8 @@ figure_dir = "figures"
 if not os.path.exists(figure_dir):
     os.makedirs(figure_dir)
 
-fig_save_path = f"figures/{model}_{dataset}_{distribution}_{capacity}_{num_clients}_{total_rounds}rounds.png"
+# fig_save_path = f"figures/{model}_{dataset}_{distribution}_{capacity}_{num_clients}_{total_rounds}rounds.png"
+fig_save_path = "figures/20250215/femnsit-cnn.png"
 plt.savefig(fig_save_path)
 print(f"Figure saved at {fig_save_path}")
 print("-" * 50)

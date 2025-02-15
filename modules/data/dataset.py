@@ -227,13 +227,43 @@ class FEMNIST(Dataset):
         root: str,
         train: bool = True,
         user_id: str = None,
+        resize: bool = False,
         augmentation: bool = False,
     ):
         self.root = os.path.join(root, "femnist")
         self.train = train
         self.user_id = user_id
         self._load_data()
-        self.transform = transforms.Normalize((0.5,), (0.5,))
+        if resize and augmentation:
+            self.transform = transforms.Compose(
+                [
+                    transforms.ToPILImage(),
+                    transforms.Resize((32, 32)),
+                    transforms.RandomHorizontalFlip(),
+                    transforms.ToTensor(),
+                    transforms.Normalize((0.5,), (0.5,)),
+                ]
+            )
+        elif resize:
+            self.transform = transforms.Compose(
+                [
+                    transforms.ToPILImage(),
+                    transforms.Resize((32, 32)),
+                    transforms.ToTensor(),
+                    transforms.Normalize((0.5,), (0.5,)),
+                ]
+            )
+        elif augmentation:
+            self.transform = transforms.Compose(
+                [
+                    transforms.ToPILImage(),
+                    transforms.RandomHorizontalFlip(),
+                    transforms.ToTensor(),
+                    transforms.Normalize((0.5,), (0.5,)),
+                ]
+            )
+        else:
+            self.transform = transforms.Normalize((0.5,), (0.5,))
 
     def _load_data(self):
         if self.train:

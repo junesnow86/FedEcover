@@ -42,3 +42,49 @@ For example, to plot the accuracy comparison figure showed in Fig. 7 (c), you ne
 We suggest the same naming way as above for log files because the naming among training, extracting results, and plotting figures codes are coupled in this implementation. We provide an example of extracting results in [extract_accuracy_from_log.py](extract_accuracy_from_log.py) and an example of plotting figures in [plot_accuracy_comparison.py](plot_accuracy_comparison.py). Running [plot_accuracy_comparison.py](plot_accuracy_comparison.py) will also print the mean accuracy and std statistics.
 
 We also provide a plotting script [plot_different_alpha.py](plot_different_alpha.py) for reproducing Fig. 10. Note that it needs user to manually collect accuracy results from different methods with different alpha values first. We provide the results used for our paper in [results](results) directory as examples.
+
+## Overview
+
+The FedEcover project provides tools for extracting accuracy data from log files generated during federated learning experiments. The main script, `extract_accuracy_from_log.py`, utilizes regular expressions to parse log files and extract relevant metrics such as "Global Test Loss" and "Global Test Acc" for each round of training.
+
+## Files
+
+- `extract_accuracy_from_log.py`: A Python script that extracts accuracy data from specified log files. It accepts a method name as input to determine the log file and the generated CSV file names.
+- `run_extraction.sh`: A shell script that executes the extraction script multiple times with different method names.
+
+## Usage
+
+### Running the Extraction Script
+
+To run the extraction script directly, you can execute the following command in your terminal:
+
+```bash
+python extract_accuracy_from_log.py <method>
+```
+
+Replace `<method>` with one of the following options:
+
+- `fedecover`
+- `fedavg`
+- `fd`
+
+This will generate a CSV file containing the extracted accuracy data.
+
+### Running the Shell Script
+
+To execute the extraction script for all methods at once, you can use the provided shell script:
+
+```bash
+bash run_extraction.sh
+```
+
+This will run the extraction script for each of the specified methods and generate the corresponding CSV files.
+
+## Requirements
+
+- Python 3.x
+- Required Python libraries: `csv`, `os`, `re`
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for more details.

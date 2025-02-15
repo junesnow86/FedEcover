@@ -20,7 +20,7 @@ class ServerFedEcover(ServerBase):
         client_capacities: List[float],
         model_out_dim: int,
         model_type: str = "cnn",
-        select_ratio: float = 0.1,
+        num_selected_clients: int = 10,
         scaling: bool = True,
         norm_type: str = "sbn",
         eta_g: float = 1.0,
@@ -35,7 +35,7 @@ class ServerFedEcover(ServerBase):
             client_capacities=client_capacities,
             model_out_dim=model_out_dim,
             model_type=model_type,
-            select_ratio=select_ratio,
+            num_selected_clients=num_selected_clients,
             scaling=scaling,
             norm_type=norm_type,
             eta_g=eta_g,
@@ -59,7 +59,7 @@ class ServerFedEcover(ServerBase):
                 )
         elif self.model_type == "femnistcnn":
             pivot_layers = ["layer1.0", "layer2.0", "fc1"]
-            out_channel_numbers = [32, 64, 2048]
+            out_channel_numbers = [64, 128, 2048]
             for i, pivot_layer in enumerate(pivot_layers):
                 self.unused_param_indices_for_layers[pivot_layer] = np.arange(
                     out_channel_numbers[i]
@@ -136,7 +136,10 @@ class ServerFedEcover(ServerBase):
         if self.model_type == "cnn":
             layers = ["layer1.0", "layer2.0", "layer3.0"]
             out_channel_numbers = [64, 128, 256]
-            previous_layer_indices = np.arange(3)
+            if self.dataset == "femnist":
+                previous_layer_indices = np.arange(1)
+            else:
+                previous_layer_indices = np.arange(3)
             for layer, out_channels in zip(layers, out_channel_numbers):
                 sample_num = int(client_capacity * out_channels)
                 current_layer_indices = self.random_choose_indices(
@@ -148,7 +151,7 @@ class ServerFedEcover(ServerBase):
                 previous_layer_indices = current_layer_indices
 
             # The last fc layer
-            if "cifar" in self.dataset:
+            if self.dataset in ["cifar10", "cifar100", "femnist"]:
                 H, W = 4, 4
             elif self.dataset == "celeba":
                 H, W = 16, 16
@@ -168,7 +171,7 @@ class ServerFedEcover(ServerBase):
             )
         elif self.model_type == "femnistcnn":
             layers = ["layer1.0", "layer2.0"]
-            out_channel_numbers = [32, 64]
+            out_channel_numbers = [64, 128]
             previous_layer_indices = np.arange(1)
             for layer, out_channels in zip(layers, out_channel_numbers):
                 sample_num = int(client_capacity * out_channels)

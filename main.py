@@ -98,7 +98,13 @@ if args.data_augmentation:
 else:
     DATA_AUGMENTATION = False
 
-global_test_dataset = DatasetClass(root="./data", train=False, augmentation=False)
+if args.dataset == "femnist" and args.model == "cnn":
+    global_test_dataset = DatasetClass(
+        root="./data", train=False, resize=True, augmentation=False
+    )
+else:
+    global_test_dataset = DatasetClass(root="./data", train=False, augmentation=False)
+
 global_test_loader = DataLoader(
     global_test_dataset, batch_size=args.batch_size, shuffle=False
 )
@@ -254,18 +260,16 @@ else:
 print(f"Optional client capacities: {optional_client_capacities}")
 print(f"Weights: {weights}")
 print(f"Capacity counts: {capacity_counts}")
-print(f"Specific client capacities: {client_capacities}")
 
 # Global learning rate decay setting
-if abs(args.gamma - 0.9) < 1e-6:
-    decay_steps = [i for i in range(10, 201, 10)]
-elif abs(args.gamma - 0.8) < 1e-6:
-    decay_steps = [20, 40, 60, 80, 100, 120, 140, 160, 180, 200]
-elif abs(args.gamma - 0.5) < 1e-6:
-    decay_steps = [50, 100]
-else:
-    decay_steps = []
+decay_steps = [i for i in range(args.Ti, args.Td + 1, args.Ti)]
 print(f"Decay steps: {decay_steps}")
+
+NUM_SELECTED_CLIENTS = (
+    args.client_select_num
+    if args.client_select_mode == "num"
+    else int(NUM_CLIENTS * args.client_select_ratio)
+)
 
 if args.method == "fedavg":
     server = ServerHomo(
@@ -275,7 +279,7 @@ if args.method == "fedavg":
         client_capacities=client_capacities,
         model_out_dim=NUM_CLASSES,
         model_type=args.model,
-        select_ratio=args.client_select_ratio,
+        num_selected_clients=NUM_SELECTED_CLIENTS,
         norm_type=args.norm_type,
         eta_g=args.eta_g,
         global_lr_decay=args.global_lr_decay,
@@ -290,7 +294,7 @@ elif args.method == "heterofl":
         client_capacities=client_capacities,
         model_out_dim=NUM_CLASSES,
         model_type=args.model,
-        select_ratio=args.client_select_ratio,
+        num_selected_clients=NUM_SELECTED_CLIENTS,
         scaling=True,
         norm_type=args.norm_type,
         eta_g=args.eta_g,
@@ -306,7 +310,7 @@ elif args.method == "fedrolex":
         client_capacities=client_capacities,
         model_out_dim=NUM_CLASSES,
         model_type=args.model,
-        select_ratio=args.client_select_ratio,
+        num_selected_clients=NUM_SELECTED_CLIENTS,
         scaling=True,
         norm_type=args.norm_type,
         global_lr_decay=args.global_lr_decay,
@@ -322,7 +326,7 @@ elif args.method == "fd":
         client_capacities=client_capacities,
         model_out_dim=NUM_CLASSES,
         model_type=args.model,
-        select_ratio=args.client_select_ratio,
+        num_selected_clients=NUM_SELECTED_CLIENTS,
         scaling=True,
         norm_type=args.norm_type,
         eta_g=args.eta_g,
@@ -338,7 +342,7 @@ elif args.method == "fedecover":
         client_capacities=client_capacities,
         model_out_dim=NUM_CLASSES,
         model_type=args.model,
-        select_ratio=args.client_select_ratio,
+        num_selected_clients=NUM_SELECTED_CLIENTS,
         scaling=True,
         norm_type=args.norm_type,
         eta_g=args.eta_g,
@@ -359,7 +363,9 @@ if args.dataset in ["cifar10", "cifar100", "tiny-imagenet"]:
 else:
     print("Naturally non-IID")
 print(f"Number of clients: {NUM_CLIENTS}")
+print(f"Client selection mode: {args.client_select_mode}")
 print(f"Client selection ratio per round: {args.client_select_ratio}")
+print(f"Number of selected clients: {NUM_SELECTED_CLIENTS}")
 print(f"Number of rounds: {args.rounds}")
 print(f"Client capacity distribution type: {args.client_capacity_distribution}")
 
@@ -377,6 +383,8 @@ if args.model == "resnet":
 print(f"Global step-size: {args.eta_g}")
 print(f"Whether use global step-size decay: {args.global_lr_decay}")
 print(f"Gamma: {args.gamma}")
+
+print("\n=== Evaluation Information ===\n")
 
 
 # <======================================== Training, aggregation and evaluation ========================================>
@@ -449,7 +457,13 @@ for round in range(args.rounds):
                 ".json", ""
             )
             train_loader = DataLoader(
-                FEMNIST(root="./data", train=True, user_id=user_id, augmentation=DATA_AUGMENTATION),
+                FEMNIST(
+                    root="./data",
+                    train=True,
+                    user_id=user_id,
+                    resize=(args.model == "cnn"),
+                    augmentation=DATA_AUGMENTATION,
+                ),
                 batch_size=args.batch_size,
                 shuffle=True,
                 num_workers=args.num_workers,

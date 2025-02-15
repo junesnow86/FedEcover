@@ -20,7 +20,7 @@ class ServerFD(ServerBase):
         client_capacities: List[float],
         model_out_dim: int,
         model_type: str = "cnn",
-        select_ratio: float = 0.1,
+        num_selected_clients: int = 10,
         scaling: bool = True,
         norm_type: str = "sbn",
         eta_g: float = 1.0,
@@ -35,7 +35,7 @@ class ServerFD(ServerBase):
             client_capacities=client_capacities,
             model_out_dim=model_out_dim,
             model_type=model_type,
-            select_ratio=select_ratio,
+            num_selected_clients=num_selected_clients,
             scaling=scaling,
             norm_type=norm_type,
             eta_g=eta_g,
@@ -54,7 +54,10 @@ class ServerFD(ServerBase):
         if self.model_type == "cnn":
             layers = ["layer1.0", "layer2.0", "layer3.0"]
             layer_out_channels = [64, 128, 256]
-            previous_layer_indices = np.arange(3)
+            if self.dataset == "femnist":
+                previous_layer_indices = np.arange(1)
+            else:
+                previous_layer_indices = np.arange(3)
             for layer, out_channels in zip(layers, layer_out_channels):
                 current_layer_indices = np.random.choice(
                     np.arange(out_channels),
@@ -69,18 +72,65 @@ class ServerFD(ServerBase):
                 previous_layer_indices = current_layer_indices
 
             # The last fc layer
-            # H, W = 1, 1
-            H, W = 4, 4
+            if self.dataset in ["cifar10", "cifar100", "femnist"]:
+                H, W = 4, 4
+            elif self.dataset == "celeba":
+                H, W = 16, 16
+            else:
+                raise ValueError("Invalid dataset")
             flatten_previous_layer_indices = []
             for out_channnel_idx in previous_layer_indices:
                 start_idx = out_channnel_idx * H * W
                 end_idx = (out_channnel_idx + 1) * H * W
                 flatten_previous_layer_indices.extend(list(range(start_idx, end_idx)))
-            # Note: Sort the indices
             flatten_previous_layer_indices = np.sort(flatten_previous_layer_indices)
             submodel_param_indices_dict["fc"] = SubmodelLayerParamIndicesDict(
                 {
                     "in": flatten_previous_layer_indices,
+                    "out": np.arange(self.model_out_dim),
+                }
+            )
+        elif self.model_type == "femnistcnn":
+            layers = ["layer1.0", "layer2.0"]
+            layer_out_channels = [64, 128]
+            previous_layer_indices = np.arange(1)
+            for layer, out_channels in zip(layers, layer_out_channels):
+                current_layer_indices = np.random.choice(
+                    np.arange(out_channels),
+                    int(client_capacity * out_channels),
+                    replace=False,
+                )
+                # Note: Sort the indices
+                current_layer_indices = np.sort(current_layer_indices)
+                submodel_param_indices_dict[layer] = SubmodelLayerParamIndicesDict(
+                    {"in": previous_layer_indices, "out": current_layer_indices}
+                )
+                previous_layer_indices = current_layer_indices
+
+            # The first fc layer
+            H, W = 7, 7
+            flatten_previous_layer_indices = []
+            for out_channnel_idx in previous_layer_indices:
+                start_idx = out_channnel_idx * H * W
+                end_idx = (out_channnel_idx + 1) * H * W
+                flatten_previous_layer_indices.extend(list(range(start_idx, end_idx)))
+            flatten_previous_layer_indices = np.sort(flatten_previous_layer_indices)
+            current_layer_indices = np.random.choice(
+                np.arange(2048), int(client_capacity * 2048), replace=False
+            )
+            current_layer_indices = np.sort(current_layer_indices)
+            submodel_param_indices_dict["fc1"] = SubmodelLayerParamIndicesDict(
+                {
+                    "in": flatten_previous_layer_indices,
+                    "out": current_layer_indices,
+                }
+            )
+            previous_layer_indices = current_layer_indices
+
+            # The second fc layer
+            submodel_param_indices_dict["fc2"] = SubmodelLayerParamIndicesDict(
+                {
+                    "in": previous_layer_indices,
                     "out": np.arange(self.model_out_dim),
                 }
             )

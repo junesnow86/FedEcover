@@ -14,6 +14,10 @@ class CNN(nn.Module):
             num_classes = 100
             in_channels = 3
             fc_size = 4
+        elif dataset == "femnist":
+            num_classes = 62
+            in_channels = 1
+            fc_size = 4
         elif dataset == "celeba":
             num_classes = 2
             in_channels = 3
@@ -62,17 +66,16 @@ class FEMNISTCNN(nn.Module):
             raise ValueError(f"Dataset {dataset} not supported")
 
         self.layer1 = nn.Sequential(
-            nn.Conv2d(in_channels, 32, kernel_size=5, padding=2),
+            nn.Conv2d(in_channels, 64, kernel_size=3, padding=1),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2),
         )
         self.layer2 = nn.Sequential(
-            nn.Conv2d(32, 64, kernel_size=5, padding=2),
+            nn.Conv2d(64, 128, kernel_size=3, padding=1),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2),
         )
-        # self.fc1 = nn.Linear(64 * 7 * 7, 2048)
-        self.fc1 = nn.Linear(64 * fc1_size * fc1_size, 2048)
+        self.fc1 = nn.Linear(128 * fc1_size * fc1_size, 2048)
         self.fc2 = nn.Linear(2048, num_classes)
 
     def forward(self, x):
