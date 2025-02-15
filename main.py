@@ -262,7 +262,7 @@ print(f"Weights: {weights}")
 print(f"Capacity counts: {capacity_counts}")
 
 # Global learning rate decay setting
-decay_steps = [i for i in range(args.Ti, args.Td + 1, args.Ti)]
+decay_steps = [i for i in range(args.Tdi, args.Tds + 1, args.Tdi)]
 print(f"Decay steps: {decay_steps}")
 
 NUM_SELECTED_CLIENTS = (
@@ -383,6 +383,8 @@ if args.model == "resnet":
 print(f"Global step-size: {args.eta_g}")
 print(f"Whether use global step-size decay: {args.global_lr_decay}")
 print(f"Gamma: {args.gamma}")
+print(f"GSD stop round: {args.Tds}")
+print(f"GSD decay interval: {args.Tdi}")
 
 print("\n=== Evaluation Information ===\n")
 
