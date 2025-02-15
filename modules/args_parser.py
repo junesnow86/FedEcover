@@ -154,13 +154,13 @@ def get_args():
         help="Decay coefficient for GSD",
     )
     parser.add_argument(
-        "--Td",
+        "--Tds",
         type=int,
         default=200,
         help="Stop round for GSD",
     )
     parser.add_argument(
-        "--Ti",
+        "--Tdi",
         type=int,
         default=10,
         help="Gamma decay update interval rounds",
