@@ -234,30 +234,11 @@ class FEMNIST(Dataset):
         self.train = train
         self.user_id = user_id
         self._load_data()
-        if resize and augmentation:
+        if resize:
             self.transform = transforms.Compose(
                 [
                     transforms.ToPILImage(),
                     transforms.Resize((32, 32)),
-                    transforms.RandomHorizontalFlip(),
-                    transforms.ToTensor(),
-                    transforms.Normalize((0.5,), (0.5,)),
-                ]
-            )
-        elif resize:
-            self.transform = transforms.Compose(
-                [
-                    transforms.ToPILImage(),
-                    transforms.Resize((32, 32)),
-                    transforms.ToTensor(),
-                    transforms.Normalize((0.5,), (0.5,)),
-                ]
-            )
-        elif augmentation:
-            self.transform = transforms.Compose(
-                [
-                    transforms.ToPILImage(),
-                    transforms.RandomHorizontalFlip(),
                     transforms.ToTensor(),
                     transforms.Normalize((0.5,), (0.5,)),
                 ]
