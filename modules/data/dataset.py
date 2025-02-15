@@ -12,62 +12,58 @@ from torchvision import datasets, transforms
 from modules.constants import NORMALIZATION_STATS
 
 
-class CIFAR10:
-    def __init__(self, root: str, train: bool = True, augmentation: bool = False):
-        if train and augmentation:
-            transform = transforms.Compose(
-                [
-                    transforms.RandomHorizontalFlip(),
-                    transforms.ToTensor(),
-                    transforms.Normalize(
-                        mean=NORMALIZATION_STATS["cifar10"]["mean"],
-                        std=NORMALIZATION_STATS["cifar10"]["std"],
-                    ),
-                ]
-            )
-        else:
-            transform = transforms.Compose(
-                [
-                    transforms.ToTensor(),
-                    transforms.Normalize(
-                        mean=NORMALIZATION_STATS["cifar10"]["mean"],
-                        std=NORMALIZATION_STATS["cifar10"]["std"],
-                    ),
-                ]
-            )
-
-        return datasets.CIFAR10(
-            root=root, train=train, transform=transform, download=False
+def CIFAR10(root: str, train: bool = True, augmentation: bool = False):
+    if train and augmentation:
+        transform = transforms.Compose(
+            [
+                transforms.RandomHorizontalFlip(),
+                transforms.ToTensor(),
+                transforms.Normalize(
+                    mean=NORMALIZATION_STATS["cifar10"]["mean"],
+                    std=NORMALIZATION_STATS["cifar10"]["std"],
+                ),
+            ]
+        )
+    else:
+        transform = transforms.Compose(
+            [
+                transforms.ToTensor(),
+                transforms.Normalize(
+                    mean=NORMALIZATION_STATS["cifar10"]["mean"],
+                    std=NORMALIZATION_STATS["cifar10"]["std"],
+                ),
+            ]
         )
 
+    return datasets.CIFAR10(root=root, train=train, transform=transform, download=False)
 
-class CIFAR100:
-    def __init__(self, root: str, train: bool = True, augmentation: bool = False):
-        if train and augmentation:
-            transform = transforms.Compose(
-                [
-                    transforms.RandomHorizontalFlip(),
-                    transforms.ToTensor(),
-                    transforms.Normalize(
-                        mean=NORMALIZATION_STATS["cifar100"]["mean"],
-                        std=NORMALIZATION_STATS["cifar100"]["std"],
-                    ),
-                ]
-            )
-        else:
-            transform = transforms.Compose(
-                [
-                    transforms.ToTensor(),
-                    transforms.Normalize(
-                        mean=NORMALIZATION_STATS["cifar100"]["mean"],
-                        std=NORMALIZATION_STATS["cifar100"]["std"],
-                    ),
-                ]
-            )
 
-        return datasets.CIFAR100(
-            root=root, train=train, transform=transform, download=False
+def CIFAR100(root: str, train: bool = True, augmentation: bool = False):
+    if train and augmentation:
+        transform = transforms.Compose(
+            [
+                transforms.RandomHorizontalFlip(),
+                transforms.ToTensor(),
+                transforms.Normalize(
+                    mean=NORMALIZATION_STATS["cifar100"]["mean"],
+                    std=NORMALIZATION_STATS["cifar100"]["std"],
+                ),
+            ]
         )
+    else:
+        transform = transforms.Compose(
+            [
+                transforms.ToTensor(),
+                transforms.Normalize(
+                    mean=NORMALIZATION_STATS["cifar100"]["mean"],
+                    std=NORMALIZATION_STATS["cifar100"]["std"],
+                ),
+            ]
+        )
+
+    return datasets.CIFAR100(
+        root=root, train=train, transform=transform, download=False
+    )
 
 
 class TinyImageNet(Dataset):
