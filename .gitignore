@@ -1,2 +1,5 @@
-data/*
 **/__pycache__
+data/*
+logs/*
+results/*
+figures/*
