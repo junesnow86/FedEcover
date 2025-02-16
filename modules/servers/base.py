@@ -1,5 +1,7 @@
+import os
 from typing import List, OrderedDict, Tuple
 
+import matplotlib.pyplot as plt
 import numpy as np
 import torch
 import torch.nn as nn
@@ -61,19 +63,19 @@ class ServerBase:
             pivot_layers = ["layer1.0", "layer2.0", "fc1"]
             out_channel_numbers = [64, 128, 2048]
         elif self.model_type == "resnet":
-            layers = ["layer1", "layer2", "layer3", "layer4"]
-            out_channel_numbers = [64, 128, 256, 512]
-            blocks = ["0", "1"]
-            pivot_layers = ["conv1"] + [
-                f"{layer}.{block}.conv1" for layer in layers for block in blocks
-            ]
+            pass
         else:
             raise ValueError("Invalid model type")
 
-        for i, pivot_layer in enumerate(pivot_layers):
-            self.neuron_selection_count[pivot_layer] = np.zeros(
-                out_channel_numbers[i], dtype=int
-            )
+        if self.model_type in ["cnn", "femnistcnn"]:
+            for i, pivot_layer in enumerate(pivot_layers):
+                self.neuron_selection_count[pivot_layer] = np.zeros(
+                    out_channel_numbers[i], dtype=int
+                )
+        elif self.model_type == "resnet":
+            pass
+        else:
+            raise ValueError("Invalid model type")
 
     def get_client_submodel_param_indices_dict(self, client_id: int):
         raise NotImplementedError(
@@ -284,3 +286,12 @@ class ServerBase:
         raise NotImplementedError(
             "This method should be implemented in the child class"
         )
+
+    def visualize_neuron_selection_count(self, save_dir: str = None):
+        for layer, count in self.neuron_selection_count.items():
+            plt.figure(figsize=(10, 6))
+            plt.bar(range(len(count)), count)
+            plt.xlabel("Neuron Index")
+            plt.ylabel("Selection Count")
+            if save_dir:
+                plt.savefig(os.path.join(save_dir, f"{layer}.png"))

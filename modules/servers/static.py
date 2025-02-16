@@ -176,10 +176,6 @@ class ServerStatic(ServerBase):
                 )
                 previous_layer_indices = indices
 
-                # Update the neuron selection count
-                for idx in indices:
-                    self.neuron_selection_count[layer][idx] += 1
-
                 if len(layer.split(".")) == 1:
                     continue
 

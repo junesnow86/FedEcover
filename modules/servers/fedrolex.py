@@ -194,10 +194,6 @@ class ServerFedRolex(ServerBase):
                 )
                 previous_layer_indices = current_layer_indices
 
-                # Update the neuron selection count
-                for idx in current_layer_indices:
-                    self.neuron_selection_count[layer][idx] += 1
-
                 if len(layer.split(".")) == 1:
                     continue
 

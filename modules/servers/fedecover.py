@@ -233,10 +233,6 @@ class ServerFedEcover(ServerBase):
             )
             previous_layer_indices = current_layer_indices
 
-            # Update the neuron selection count
-            for idx in current_layer_indices:
-                self.neuron_selection_count["conv1"][idx] += 1
-
             layers = ["layer1", "layer2", "layer3", "layer4"]
             layer_out_channels = [64, 128, 256, 512]
             blocks = ["0", "1"]
@@ -272,10 +268,6 @@ class ServerFedEcover(ServerBase):
                             )
                         )
                         previous_layer_indices = current_layer_indices
-
-                        # Update the neuron selection count
-                        for idx in current_layer_indices:
-                            self.neuron_selection_count[key][idx] += 1
 
                     if has_downsample:
                         key = f"{layer}.{block}.downsample.0"
