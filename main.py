@@ -353,7 +353,7 @@ elif args.method == "fedecover":
 
 
 # <======================================== Print arguments ========================================>
-print("\n=== Basic Information ===\n")
+print("\n" + "=" * 80 + "Basic Information" + "=" * 80 + "\n")
 print(f"Random seed: {args.seed}")
 print(f"Method: {args.method}")
 print(f"Model: {args.model}")
@@ -369,7 +369,7 @@ print(f"Number of selected clients: {NUM_SELECTED_CLIENTS}")
 print(f"Number of rounds: {args.rounds}")
 print(f"Client capacity distribution type: {args.client_capacity_distribution}")
 
-print("\n=== Local Training Information ===\n")
+print("\n" + "=" * 80 + "Local Training Information" + "=" * 80 + "\n")
 print(f"Number of local epochs: {args.epochs}")
 print(f"Batch size of local training: {args.batch_size}")
 print(f"Learning rate of local training: {args.lr}")
@@ -377,7 +377,7 @@ print(f"Weight decay of local training: {args.weight_decay}")
 print(f"Whether use data augmentation: {DATA_AUGMENTATION}")
 print(f"Number of dataloader workers: {args.num_workers}")
 
-print("\n=== Aggregation Information ===\n")
+print("\n" + "=" * 80 + "Aggregation Information" + "=" * 80 + "\n")
 if args.model == "resnet":
     print(f"Model normalization layer type: {args.norm_type}")
 print(f"Global step-size: {args.eta_g}")
@@ -386,7 +386,7 @@ print(f"Gamma: {args.gamma}")
 print(f"GSD stop round: {args.Tds}")
 print(f"GSD decay interval: {args.Tdi}")
 
-print("\n=== Evaluation Information ===\n")
+print("\n" + "=" * 80 + "Evaluation Information" + "=" * 80 + "\n")
 
 
 # <======================================== Training, aggregation and evaluation ========================================>
@@ -427,9 +427,11 @@ for round in range(args.rounds):
     else:
         raise NotImplementedError
 
-    print(f"Selected {len(selected_client_ids)} client IDs: {selected_client_ids}")
+    print(
+        f"{len(selected_client_ids)} are selected, specific IDs: {selected_client_ids}"
+    )
+
     distribution_time = time()
-    print(f"Submodel distribution time: {distribution_time - round_start_time:.2f} sec")
 
     # <---------------------------------------- Local Training ---------------------------------------->
     for i, client_id in enumerate(selected_client_ids):
@@ -502,9 +504,6 @@ for round in range(args.rounds):
         }
 
     local_training_time = time()
-    print(
-        f"Local training time: {(local_training_time - distribution_time) / 60:.2f} min"
-    )
 
     # <---------------------------------------- Aggregation ---------------------------------------->
     if args.method in ["fedavg"]:
@@ -526,7 +525,6 @@ for round in range(args.rounds):
         raise NotImplementedError
 
     aggregation_time = time()
-    print(f"Aggregation time: {(aggregation_time - local_training_time) / 60:.2f} min")
 
     # <---------------------------------------- Global Model Evaluation ---------------------------------------->
     global_evaluation_result = evaluate_acc(
@@ -537,9 +535,6 @@ for round in range(args.rounds):
     )
 
     global_evaluation_time = time()
-    print(
-        f"Global model evaluation time: {(global_evaluation_time - aggregation_time) / 60:.2f} min"
-    )
 
     # <---------------------------------------- Print Results ---------------------------------------->
     # Print client evaluation results
@@ -560,17 +555,30 @@ for round in range(args.rounds):
     )
 
     print_results_time = time()
-    print(
-        f"Print results time: {(print_results_time - global_evaluation_time) / 60:.2f} min"
-    )
 
     # Estimate ETA
     round_end_time = time()
     round_use_time = round_end_time - round_start_time
+
+    print(f"Submodel distribution time: {distribution_time - round_start_time:.2f} sec")
+    print(
+        f"Local training time: {(local_training_time - distribution_time) / 60:.2f} min"
+    )
+    print(f"Aggregation time: {(aggregation_time - local_training_time) / 60:.2f} min")
+    print(
+        f"Global model evaluation time: {(global_evaluation_time - aggregation_time) / 60:.2f} min"
+    )
+    print(
+        f"Print results time: {(print_results_time - global_evaluation_time) / 60:.2f} min"
+    )
     print(
         f"Round {round + 1} use time: {round_use_time / 60:.2f} min, ETA: {(args.rounds - round - 1) * round_use_time / 3600:.2f} hours"
     )
-    print("=" * 80)
+    print("-" * 80)
 
 end_time = time()
 print(f"Total use time: {(end_time - start_time) / 3600:.2f} hours")
+
+# Print the final neuron selection count
+print("\n" + "=" * 80 + "Neuron Selection Count" + "=" * 80 + "\n")
+print(server.neuron_selection_count)

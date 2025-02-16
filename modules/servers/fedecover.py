@@ -136,19 +136,25 @@ class ServerFedEcover(ServerBase):
         if self.model_type == "cnn":
             layers = ["layer1.0", "layer2.0", "layer3.0"]
             out_channel_numbers = [64, 128, 256]
+
             if self.dataset == "femnist":
                 previous_layer_indices = np.arange(1)
             else:
                 previous_layer_indices = np.arange(3)
+
             for layer, out_channels in zip(layers, out_channel_numbers):
                 sample_num = int(client_capacity * out_channels)
                 current_layer_indices = self.random_choose_indices(
                     layer, out_channels, sample_num
-                )
+                )  # random_choose_indices returns sorted indices
                 submodel_param_indices_dict[layer] = SubmodelLayerParamIndicesDict(
                     {"in": previous_layer_indices, "out": current_layer_indices}
                 )
                 previous_layer_indices = current_layer_indices
+
+                # Update the neuron selection count
+                for idx in current_layer_indices:
+                    self.neuron_selection_count[layer][idx] += 1
 
             # The last fc layer
             if self.dataset in ["cifar10", "cifar100", "femnist"]:
@@ -157,12 +163,14 @@ class ServerFedEcover(ServerBase):
                 H, W = 16, 16
             else:
                 raise ValueError("Invalid dataset")
+
             flatten_previous_layer_indices = []
             for out_channnel_idx in previous_layer_indices:
                 start_idx = out_channnel_idx * H * W
                 end_idx = (out_channnel_idx + 1) * H * W
                 flatten_previous_layer_indices.extend(list(range(start_idx, end_idx)))
             flatten_previous_layer_indices = np.sort(flatten_previous_layer_indices)
+
             submodel_param_indices_dict["fc"] = SubmodelLayerParamIndicesDict(
                 {
                     "in": flatten_previous_layer_indices,
@@ -173,6 +181,7 @@ class ServerFedEcover(ServerBase):
             layers = ["layer1.0", "layer2.0"]
             out_channel_numbers = [64, 128]
             previous_layer_indices = np.arange(1)
+
             for layer, out_channels in zip(layers, out_channel_numbers):
                 sample_num = int(client_capacity * out_channels)
                 current_layer_indices = self.random_choose_indices(
@@ -183,6 +192,10 @@ class ServerFedEcover(ServerBase):
                 )
                 previous_layer_indices = current_layer_indices
 
+                # Update the neuron selection count
+                for idx in current_layer_indices:
+                    self.neuron_selection_count[layer][idx] += 1
+
             # The first fc layer
             H, W = 7, 7
             flatten_previous_layer_indices = []
@@ -191,6 +204,7 @@ class ServerFedEcover(ServerBase):
                 end_idx = (out_channnel_idx + 1) * H * W
                 flatten_previous_layer_indices.extend(list(range(start_idx, end_idx)))
             flatten_previous_layer_indices = np.sort(flatten_previous_layer_indices)
+
             current_layer_indices = self.random_choose_indices(
                 "fc1", 2048, int(client_capacity * 2048)
             )
@@ -201,6 +215,9 @@ class ServerFedEcover(ServerBase):
                 }
             )
             previous_layer_indices = current_layer_indices
+            # Update the neuron selection count
+            for idx in current_layer_indices:
+                self.neuron_selection_count["fc1"][idx] += 1
 
             # The last fc layer
             submodel_param_indices_dict["fc2"] = SubmodelLayerParamIndicesDict(
@@ -215,6 +232,10 @@ class ServerFedEcover(ServerBase):
                 {"in": previous_layer_indices, "out": current_layer_indices}
             )
             previous_layer_indices = current_layer_indices
+
+            # Update the neuron selection count
+            for idx in current_layer_indices:
+                self.neuron_selection_count["conv1"][idx] += 1
 
             layers = ["layer1", "layer2", "layer3", "layer4"]
             layer_out_channels = [64, 128, 256, 512]
@@ -252,6 +273,10 @@ class ServerFedEcover(ServerBase):
                         )
                         previous_layer_indices = current_layer_indices
 
+                        # Update the neuron selection count
+                        for idx in current_layer_indices:
+                            self.neuron_selection_count[key][idx] += 1
+
                     if has_downsample:
                         key = f"{layer}.{block}.downsample.0"
                         submodel_param_indices_dict[key] = (
@@ -275,6 +300,7 @@ class ServerFedEcover(ServerBase):
                 end_idx = (out_channnel_idx + 1) * H * W
                 flatten_previous_layer_indices.extend(list(range(start_idx, end_idx)))
             flatten_previous_layer_indices = np.sort(flatten_previous_layer_indices)
+
             submodel_param_indices_dict["fc"] = SubmodelLayerParamIndicesDict(
                 {
                     "in": flatten_previous_layer_indices,

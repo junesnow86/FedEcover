@@ -50,6 +50,31 @@ class ServerBase:
         self.gamma = gamma
         self.decay_steps = decay_steps
 
+        self.initialize_neuron_selection_count()
+
+    def initialize_neuron_selection_count(self):
+        self.neuron_selection_count = {}
+        if self.model_type == "cnn":
+            pivot_layers = ["layer1.0", "layer2.0", "layer3.0"]
+            out_channel_numbers = [64, 128, 256]
+        elif self.model_type == "femnistcnn":
+            pivot_layers = ["layer1.0", "layer2.0", "fc1"]
+            out_channel_numbers = [64, 128, 2048]
+        elif self.model_type == "resnet":
+            layers = ["layer1", "layer2", "layer3", "layer4"]
+            out_channel_numbers = [64, 128, 256, 512]
+            blocks = ["0", "1"]
+            pivot_layers = ["conv1"] + [
+                f"{layer}.{block}.conv1" for layer in layers for block in blocks
+            ]
+        else:
+            raise ValueError("Invalid model type")
+
+        for i, pivot_layer in enumerate(pivot_layers):
+            self.neuron_selection_count[pivot_layer] = np.zeros(
+                out_channel_numbers[i], dtype=int
+            )
+
     def get_client_submodel_param_indices_dict(self, client_id: int):
         raise NotImplementedError(
             "This method should be implemented in the child class"

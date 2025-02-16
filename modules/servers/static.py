@@ -99,12 +99,17 @@ class ServerStatic(ServerBase):
                 previous_layer_indices = np.arange(1)
             else:
                 previous_layer_indices = np.arange(3)
+
             for layer, indices in model_param_indices_dict.items():
                 # Note: the layer in the dict is sorted due to Python's dict implementation
                 submodel_param_indices_dict[layer] = SubmodelLayerParamIndicesDict(
                     {"in": previous_layer_indices, "out": indices}
                 )
                 previous_layer_indices = indices
+
+                # Update the neuron selection count
+                for idx in indices:
+                    self.neuron_selection_count[layer][idx] += 1
 
             # The last fc layer
             if self.dataset in ["cifar10", "cifar100", "femnist"]:
@@ -113,12 +118,14 @@ class ServerStatic(ServerBase):
                 H, W = 16, 16
             else:
                 raise ValueError("Invalid dataset")
+
             flatten_previous_layer_indices = []
             for out_channnel_idx in previous_layer_indices:
                 start_idx = out_channnel_idx * H * W
                 end_idx = (out_channnel_idx + 1) * H * W
                 flatten_previous_layer_indices.extend(list(range(start_idx, end_idx)))
             flatten_previous_layer_indices = np.sort(flatten_previous_layer_indices)
+
             submodel_param_indices_dict["fc"] = SubmodelLayerParamIndicesDict(
                 {
                     "in": flatten_previous_layer_indices,
@@ -149,6 +156,10 @@ class ServerStatic(ServerBase):
                 )
                 previous_layer_indices = indices
 
+                # Update the neuron selection count
+                for idx in indices:
+                    self.neuron_selection_count[layer][idx] += 1
+
             # The last fc layer
             submodel_param_indices_dict["fc2"] = SubmodelLayerParamIndicesDict(
                 {
@@ -164,6 +175,10 @@ class ServerStatic(ServerBase):
                     {"in": previous_layer_indices, "out": indices}
                 )
                 previous_layer_indices = indices
+
+                # Update the neuron selection count
+                for idx in indices:
+                    self.neuron_selection_count[layer][idx] += 1
 
                 if len(layer.split(".")) == 1:
                     continue
@@ -208,6 +223,7 @@ class ServerStatic(ServerBase):
                 end_idx = (out_channnel_idx + 1) * H * W
                 flatten_previous_layer_indices.extend(list(range(start_idx, end_idx)))
             flatten_previous_layer_indices = np.sort(flatten_previous_layer_indices)
+
             submodel_param_indices_dict["fc"] = SubmodelLayerParamIndicesDict(
                 {
                     "in": flatten_previous_layer_indices,

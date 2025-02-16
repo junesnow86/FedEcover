@@ -96,9 +96,7 @@ class ServerFedRolex(ServerBase):
                     shift=self.rolling_step,
                 )
 
-    def get_client_submodel_param_indices_dict(
-        self, client_id: int
-    ) -> SubmodelBlockParamIndicesDict:
+    def get_client_submodel_param_indices_dict(self, client_id: int):
         model_rolling_indices_dict = self.model_rolling_indices_dicts[client_id]
         client_capacity = self.client_capacities[client_id]
 
@@ -109,6 +107,7 @@ class ServerFedRolex(ServerBase):
                 previous_layer_indices = np.arange(1)
             else:
                 previous_layer_indices = np.arange(3)
+
             for layer, indices in model_rolling_indices_dict.items():
                 # Note: the layer in the dict is sorted due to Python's dict implementation
                 current_layer_indices = indices[: int(client_capacity * len(indices))]
@@ -119,6 +118,10 @@ class ServerFedRolex(ServerBase):
                 )
                 previous_layer_indices = current_layer_indices
 
+                # Update the neuron selection count
+                for idx in current_layer_indices:
+                    self.neuron_selection_count[layer][idx] += 1
+
             # The last fc layer
             if self.dataset in ["cifar10", "cifar100", "femnist"]:
                 H, W = 4, 4
@@ -126,13 +129,14 @@ class ServerFedRolex(ServerBase):
                 H, W = 16, 16
             else:
                 raise ValueError("Invalid dataset")
+
             flatten_previous_layer_indices = []
             for out_channnel_idx in previous_layer_indices:
                 start_idx = out_channnel_idx * H * W
                 end_idx = (out_channnel_idx + 1) * H * W
                 flatten_previous_layer_indices.extend(list(range(start_idx, end_idx)))
-            # Note: Sort the indices
             flatten_previous_layer_indices = np.sort(flatten_previous_layer_indices)
+
             submodel_param_indices_dict["fc"] = SubmodelLayerParamIndicesDict(
                 {
                     "in": flatten_previous_layer_indices,
@@ -141,6 +145,7 @@ class ServerFedRolex(ServerBase):
             )
         elif self.model_type == "femnistcnn":
             previous_layer_indices = np.arange(1)
+
             for layer, indices in model_rolling_indices_dict.items():
                 # Note: the layer in the dict is sorted due to Python's dict implementation
                 current_layer_indices = indices[: int(client_capacity * len(indices))]
@@ -166,6 +171,10 @@ class ServerFedRolex(ServerBase):
                 )
                 previous_layer_indices = current_layer_indices
 
+                # Update the neuron selection count
+                for idx in current_layer_indices:
+                    self.neuron_selection_count[layer][idx] += 1
+
             # The last fc layer
             submodel_param_indices_dict["fc2"] = SubmodelLayerParamIndicesDict(
                 {
@@ -184,6 +193,10 @@ class ServerFedRolex(ServerBase):
                     {"in": previous_layer_indices, "out": current_layer_indices}
                 )
                 previous_layer_indices = current_layer_indices
+
+                # Update the neuron selection count
+                for idx in current_layer_indices:
+                    self.neuron_selection_count[layer][idx] += 1
 
                 if len(layer.split(".")) == 1:
                     continue
@@ -227,8 +240,8 @@ class ServerFedRolex(ServerBase):
                 start_idx = out_channnel_idx * H * W
                 end_idx = (out_channnel_idx + 1) * H * W
                 flatten_previous_layer_indices.extend(list(range(start_idx, end_idx)))
-            # Note: Sort the indices
             flatten_previous_layer_indices = np.sort(flatten_previous_layer_indices)
+
             submodel_param_indices_dict["fc"] = SubmodelLayerParamIndicesDict(
                 {
                     "in": flatten_previous_layer_indices,

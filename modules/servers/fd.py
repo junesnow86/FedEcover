@@ -54,22 +54,28 @@ class ServerFD(ServerBase):
         if self.model_type == "cnn":
             layers = ["layer1.0", "layer2.0", "layer3.0"]
             layer_out_channels = [64, 128, 256]
+
             if self.dataset == "femnist":
                 previous_layer_indices = np.arange(1)
             else:
                 previous_layer_indices = np.arange(3)
+
             for layer, out_channels in zip(layers, layer_out_channels):
-                current_layer_indices = np.random.choice(
-                    np.arange(out_channels),
-                    int(client_capacity * out_channels),
-                    replace=False,
+                current_layer_indices = np.sort(
+                    np.random.choice(
+                        np.arange(out_channels),
+                        int(client_capacity * out_channels),
+                        replace=False,
+                    )
                 )
-                # Note: Sort the indices
-                current_layer_indices = np.sort(current_layer_indices)
                 submodel_param_indices_dict[layer] = SubmodelLayerParamIndicesDict(
                     {"in": previous_layer_indices, "out": current_layer_indices}
                 )
                 previous_layer_indices = current_layer_indices
+
+                # Update the neuron selection count
+                for idx in current_layer_indices:
+                    self.neuron_selection_count[layer][idx] += 1
 
             # The last fc layer
             if self.dataset in ["cifar10", "cifar100", "femnist"]:
@@ -78,12 +84,14 @@ class ServerFD(ServerBase):
                 H, W = 16, 16
             else:
                 raise ValueError("Invalid dataset")
+
             flatten_previous_layer_indices = []
             for out_channnel_idx in previous_layer_indices:
                 start_idx = out_channnel_idx * H * W
                 end_idx = (out_channnel_idx + 1) * H * W
                 flatten_previous_layer_indices.extend(list(range(start_idx, end_idx)))
             flatten_previous_layer_indices = np.sort(flatten_previous_layer_indices)
+
             submodel_param_indices_dict["fc"] = SubmodelLayerParamIndicesDict(
                 {
                     "in": flatten_previous_layer_indices,
@@ -94,18 +102,23 @@ class ServerFD(ServerBase):
             layers = ["layer1.0", "layer2.0"]
             layer_out_channels = [64, 128]
             previous_layer_indices = np.arange(1)
+
             for layer, out_channels in zip(layers, layer_out_channels):
-                current_layer_indices = np.random.choice(
-                    np.arange(out_channels),
-                    int(client_capacity * out_channels),
-                    replace=False,
+                current_layer_indices = np.sort(
+                    np.random.choice(
+                        np.arange(out_channels),
+                        int(client_capacity * out_channels),
+                        replace=False,
+                    )
                 )
-                # Note: Sort the indices
-                current_layer_indices = np.sort(current_layer_indices)
                 submodel_param_indices_dict[layer] = SubmodelLayerParamIndicesDict(
                     {"in": previous_layer_indices, "out": current_layer_indices}
                 )
                 previous_layer_indices = current_layer_indices
+
+                # Update the neuron selection count
+                for idx in current_layer_indices:
+                    self.neuron_selection_count[layer][idx] += 1
 
             # The first fc layer
             H, W = 7, 7
@@ -115,10 +128,12 @@ class ServerFD(ServerBase):
                 end_idx = (out_channnel_idx + 1) * H * W
                 flatten_previous_layer_indices.extend(list(range(start_idx, end_idx)))
             flatten_previous_layer_indices = np.sort(flatten_previous_layer_indices)
-            current_layer_indices = np.random.choice(
-                np.arange(2048), int(client_capacity * 2048), replace=False
+
+            current_layer_indices = np.sort(
+                np.random.choice(
+                    np.arange(2048), int(client_capacity * 2048), replace=False
+                )
             )
-            current_layer_indices = np.sort(current_layer_indices)
             submodel_param_indices_dict["fc1"] = SubmodelLayerParamIndicesDict(
                 {
                     "in": flatten_previous_layer_indices,
@@ -126,6 +141,9 @@ class ServerFD(ServerBase):
                 }
             )
             previous_layer_indices = current_layer_indices
+            # Update the neuron selection count
+            for idx in current_layer_indices:
+                self.neuron_selection_count["fc1"][idx] += 1
 
             # The second fc layer
             submodel_param_indices_dict["fc2"] = SubmodelLayerParamIndicesDict(
@@ -136,15 +154,19 @@ class ServerFD(ServerBase):
             )
         elif self.model_type == "resnet":
             previous_layer_indices = np.arange(3)
-            current_layer_indices = np.random.choice(
-                np.arange(64), int(client_capacity * 64), replace=False
+            current_layer_indices = np.sort(
+                np.random.choice(
+                    np.arange(64), int(client_capacity * 64), replace=False
+                )
             )
-            # Note: Sort the indices
-            current_layer_indices = np.sort(current_layer_indices)
             submodel_param_indices_dict["conv1"] = SubmodelLayerParamIndicesDict(
                 {"in": previous_layer_indices, "out": current_layer_indices}
             )
             previous_layer_indices = current_layer_indices
+
+            # Update the neuron selection count
+            for idx in current_layer_indices:
+                self.neuron_selection_count["conv1"][idx] += 1
 
             layers = ["layer1", "layer2", "layer3", "layer4"]
             layer_out_channels = [64, 128, 256, 512]
@@ -159,6 +181,7 @@ class ServerFD(ServerBase):
                         has_downsample = False
 
                     for conv in convs:
+                        key = f"{layer}.{block}.{conv}"
                         if not has_downsample and conv == "conv2":
                             # There is no downsample layer, the conv2 out indices should stay the same as conv1(of the same block) in indices
                             # due to the residual connection
@@ -166,14 +189,15 @@ class ServerFD(ServerBase):
                                 f"{layer}.{block}.conv1"
                             ]["in"]
                         else:
-                            current_layer_indices = np.random.choice(
-                                np.arange(layer_out_channels[i]),
-                                int(client_capacity * layer_out_channels[i]),
-                                replace=False,
+                            current_layer_indices = np.sort(
+                                np.random.choice(
+                                    np.arange(layer_out_channels[i]),
+                                    int(client_capacity * layer_out_channels[i]),
+                                    replace=False,
+                                )
                             )
-                            # Note: Sort the indices
-                            current_layer_indices = np.sort(current_layer_indices)
-                        submodel_param_indices_dict[f"{layer}.{block}.{conv}"] = (
+
+                        submodel_param_indices_dict[key] = (
                             SubmodelLayerParamIndicesDict(
                                 {
                                     "in": previous_layer_indices,
@@ -183,9 +207,13 @@ class ServerFD(ServerBase):
                         )
                         previous_layer_indices = current_layer_indices
 
+                        # Update the neuron selection count
+                        for idx in current_layer_indices:
+                            self.neuron_selection_count[key][idx] += 1
+
                     if has_downsample:
-                        # Add the downsample layer
-                        submodel_param_indices_dict[f"{layer}.{block}.downsample.0"] = (
+                        key = f"{layer}.{block}.downsample.0"
+                        submodel_param_indices_dict[key] = (
                             SubmodelLayerParamIndicesDict(
                                 {
                                     "in": submodel_param_indices_dict[
@@ -205,8 +233,8 @@ class ServerFD(ServerBase):
                 start_idx = out_channnel_idx * H * W
                 end_idx = (out_channnel_idx + 1) * H * W
                 flatten_previous_layer_indices.extend(list(range(start_idx, end_idx)))
-            # Note: Sort the indices
             flatten_previous_layer_indices = np.sort(flatten_previous_layer_indices)
+
             submodel_param_indices_dict["fc"] = SubmodelLayerParamIndicesDict(
                 {
                     "in": flatten_previous_layer_indices,
