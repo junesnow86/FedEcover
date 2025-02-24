@@ -24,7 +24,9 @@ class PositionalEncoding(nn.Module):
                 pe[pos, i] = math.sin(pos / (10000 ** ((2 * i) / emb_dim)))
                 pe[pos, i + 1] = math.cos(pos / (10000 ** ((2 * (i + 1)) / emb_dim)))
 
-        pe = pe.unsqueeze(0)  # insert a dimension at the 0th position, shape (1, max_seq_len, emb_dim)
+        pe = pe.unsqueeze(
+            0
+        )  # insert a dimension at the 0th position, shape (1, max_seq_len, emb_dim)
         self.register_buffer("pe", pe)
 
     def forward(self, x):
@@ -204,6 +206,31 @@ class DecoderBlock(nn.Module):
         # ffn_output = self.dropout(ffn_output)
         x = x + ffn_output
         x = self.norm3(x)
+        return x
+
+
+class GPT2DecoderBlock(nn.Module):
+    def __init__(self, d_model=768, num_heads=12, d_ff=3072):
+        super().__init__()
+        self.num_heads = num_heads
+        self.d_model = d_model
+        self.d_ff = d_ff
+
+        self.self_attn = nn.MultiheadAttention(d_model, num_heads)
+        self.ffn = nn.Sequential(
+            nn.Linear(d_model, d_ff), nn.ReLU(), nn.Linear(d_ff, d_model)
+        )
+        self.norm1 = nn.LayerNorm(d_model)
+        self.norm2 = nn.LayerNorm(d_model)
+
+    def forward(self, x, mask=None):
+        attn_output, _ = self.self_attn(x, x, x, attn_mask=mask)
+        x = x + attn_output
+        x = self.norm1(x)
+
+        ffn_output = self.ffn(x)
+        x = x + ffn_output
+        x = self.norm2(x)
         return x
 
 

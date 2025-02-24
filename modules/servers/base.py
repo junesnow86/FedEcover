@@ -287,11 +287,51 @@ class ServerBase:
             "This method should be implemented in the child class"
         )
 
-    def visualize_neuron_selection_count(self, save_dir: str = None):
+    def visualize_neuron_selection_count(
+        self, save_dir: str = None, y_min=None, y_max=None, type="bar"
+    ):
         for layer, count in self.neuron_selection_count.items():
-            plt.figure(figsize=(10, 6))
-            plt.bar(range(len(count)), count)
-            plt.xlabel("Neuron Index")
-            plt.ylabel("Selection Count")
+            # scaled_count = count / np.max(count)
+            mean_count = np.mean(count)
+            diff_from_mean = count - mean_count
+            plt.figure()
+            if type == "bar":
+                # plt.bar(range(len(scaled_count)), scaled_count)
+                plt.bar(range(len(diff_from_mean)), diff_from_mean, linewidth=2)
+                plt.xlabel("Neuron Index", fontsize=16)
+                plt.ylabel("Selection Count (Diff from Mean)", fontsize=16)
+                plt.xticks(fontsize=14)
+                plt.yticks(fontsize=14)
+            elif type == "image":
+                side_length = int(np.sqrt(len(diff_from_mean)))
+                diff_from_mean_2d = diff_from_mean.reshape(side_length, side_length)
+                plt.imshow(diff_from_mean_2d, cmap="viridis", aspect="auto")
+                colorbar = plt.colorbar(label="Selection Count (Diff from Mean)")
+                colorbar.ax.tick_params(labelsize=16)
+                plt.xlabel("Neuron Index", fontsize=16)
+                # plt.ylabel("Layer", fontsize=18)
+                plt.xticks(fontsize=14)
+                # plt.yticks([0], [layer], fontsize=14)
+            else:
+                raise ValueError("Invalid type")
+
+            if y_min is not None:
+                plt.ylim(bottom=y_min)
+            if y_max is not None:
+                plt.ylim(top=y_max)
+
+            # plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)
+
             if save_dir:
-                plt.savefig(os.path.join(save_dir, f"{layer}.png"))
+                plt.savefig(
+                    os.path.join(save_dir, f"{layer}-{type}.pdf"), bbox_inches="tight"
+                )
+
+    def save_neuron_selection_count(self, save_path: str):
+        if "fc1" in self.neuron_selection_count:
+            np.save(save_path, self.neuron_selection_count["fc1"])
+        else:
+            raise KeyError("Key 'fc' not found in neuron_selection_count")
+
+    def load_neuron_selection_count(self, load_path: str):
+        self.neuron_selection_count["fc1"] = np.load(load_path)

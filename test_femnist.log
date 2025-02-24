@@ -131,3 +131,89 @@ Trained 3100 users
 Test accuracy: 0.8399                                                                                                                                                                      
 Trained 3200 users                                                                                                                                                                         
 Test accuracy: 0.8360
+
+========================
+
+self.transform = transforms.Compose(
+    [
+        transforms.ToPILImage(),
+        transforms.RandomRotation(degrees=10),
+        transforms.RandomAffine(
+            degrees=0, translate=(0.1, 0.1), scale=(0.9, 1.1)
+        ),
+        transforms.ToTensor(),
+        transforms.Normalize((0.5,), (0.5,)),
+    ]
+)
+
+Trained 100 users                                                                                                                                                                                   
+Test accuracy: 0.3472                                                                                                                                                                               
+Trained 200 users                                                                                                                                                                                   
+Test accuracy: 0.4924                                                                                                                                                                               
+Trained 300 users                                                                                                                                                                                   
+Test accuracy: 0.5975                                                                                                                                                                               
+Trained 400 users                                                                                                                                                                                   
+Test accuracy: 0.6437                                                                                                                                                                               
+Trained 500 users                                                                                                                                                                                   
+Test accuracy: 0.6217                                                                                                                                                                               
+Trained 600 users                                                                                                                                                                                   
+Test accuracy: 0.6323                                                                                                                                                                               
+Trained 700 users                                                                                                                                                                                   
+Test accuracy: 0.6620                                                                                                                                                                               
+Trained 800 users                                                                                                                                                                                   
+Test accuracy: 0.6532                                                                                                                                                                               
+Trained 900 users                                                                                                                                                                                   
+Test accuracy: 0.5622                                                                                                                                                                               
+Trained 1000 users                                                                                                                                                                                  
+Test accuracy: 0.6642                                                                                                                                                                               
+Trained 1100 users                                                                                                                                                                                  
+Test accuracy: 0.6612
+
+========================
+
+self.transform = transforms.Compose(
+    [
+        transforms.ToPILImage(),
+        transforms.RandomAffine(
+            degrees=0, translate=(0.1, 0.1), scale=(0.9, 1.1)
+        ),
+        transforms.ToTensor(),
+        transforms.Normalize((0.5,), (0.5,)),
+    ]
+)
+
+Trained 100 users                                                                                                                                                                                   
+Test accuracy: 0.6282                                                                                                                                                                               
+Trained 200 users                                                                                                                                                                                   
+Test accuracy: 0.6569                                                                                                                                                                               
+Trained 300 users                                                                                                                                                                                   
+Test accuracy: 0.7099                                                                                                                                                                               
+Trained 400 users                                                                                                                                                                                   
+Test accuracy: 0.7457                                                                                                                                                                               
+Trained 500 users                                                                                                                                                                                   
+Test accuracy: 0.7213                                                                                                                                                                               
+Trained 600 users                                                                                                                                                                                   
+Test accuracy: 0.6983                                                                                                                                                                               
+Trained 700 users                                                                                                                                                                                   
+Test accuracy: 0.7219                                                                                                                                                                               
+Trained 800 users                                                                                                                                                                                   
+Test accuracy: 0.7548                                                                                                                                                                               
+Trained 900 users                                                                                                                                                                                   
+Test accuracy: 0.7305                                                                                                                                                                               
+Trained 1000 users                                                                                                                                                                                  
+Test accuracy: 0.7348                                                                                                                                                                               
+Trained 1100 users                                                                                                                                                                                  
+Test accuracy: 0.7145                                                                                                                                                                               
+Trained 1200 users                                                                                                                                                                                  
+Test accuracy: 0.7438                                                                                                                                                                               
+Trained 1300 users                                                                                                                                                                                  
+Test accuracy: 0.7528                                                                                                                                                                               
+Trained 1400 users                                                                                                                                                                                  
+Test accuracy: 0.7445                                                                                                                                                                               
+Trained 1500 users                                                                                                                                                                                  
+Test accuracy: 0.7543                                                                                                                                                                               
+Trained 1600 users                                                                                                                                                                                  
+Test accuracy: 0.7480
+
+========================
+

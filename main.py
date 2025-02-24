@@ -154,7 +154,7 @@ if args.dataset in ["cifar10", "cifar100", "tiny-imagenet"]:
             plt.title("Total Number of Samples of Each Client")
             plt.xlabel("Client ID")
             plt.ylabel("Number of Samples")
-            plt.savefig(f"num_samples_distribution_{args.dataset}_alpha{alpha}.png")
+            plt.savefig(f"num_samples_distribution_{args.dataset}_alpha{alpha}.svg")
 
             # Plot the class distribution of each client
             num_classes = len(class_distributions[0])
@@ -188,7 +188,7 @@ if args.dataset in ["cifar10", "cifar100", "tiny-imagenet"]:
                 x=0
             )  # Adjust the margins to reduce space between bars and y-axis
             plt.savefig(
-                f"class_distribution_{args.dataset}_alpha{alpha}.png",
+                f"class_distribution_{args.dataset}_alpha{alpha}.svg",
                 bbox_inches="tight",
             )
             exit()

@@ -3,16 +3,6 @@ import os
 import matplotlib.pyplot as plt
 import pandas as pd
 
-model = "cnn"
-dataset = "cifar100"
-distribution = "alpha0.5"
-capacity = "capacity0"
-num_clients = "100clients"
-methods = ["fedavg", "heterofl", "fedrolex", "fd", "fedecover"]
-
-avg_line_start_round = 200  # Specify the round to start calculating the mean and std
-total_rounds = 300
-
 method_colors = {
     "fedavg": "C0",
     "heterofl": "C1",
@@ -34,9 +24,61 @@ method_labels = {
     "fedecover-no-gsd": "FedEcover w/o GSD",
 }
 
-# print(
-#     f"Model: {model}, Dataset: {dataset}, Distribution: {distribution}, Capacity: {capacity}, Num Clients: {num_clients}"
+avg_line_start_round = 200  # Specify the round to start calculating the mean and std
+total_rounds = 300
+
+# methods = ["fedavg", "heterofl", "fedrolex", "fd", "fedecover"]
+# methods = ["fedecover", "fedecover-no-gsd"]
+# methods = ["fd", "fd-no-gsd"]
+# methods = ["fedrolex", "fedrolex-no-gsd"]
+# methods = ["heterofl", "heterofl-no-gsd"]
+methods = ["fedavg", "fedavg-no-gsd"]
+
+model = "cnn"
+dataset = "cifar100"
+distribution = "alpha0.5"
+capacity = "capacity0"
+num_clients = "100clients"
+
+# sub_dir = "param-sensitivity/Tds200-Tdi10"
+# sub_dir = "param-sensitivity/Tds100-Tdi10"
+# sub_dir = "param-sensitivity/no-gsd"
+# sub_dir = "iid-gsd"
+# sub_dir = "20250217"
+# sub_dir = "femnist20250219"
+# sub_dir = "small-client-amount"
+sub_dir = "ablation"
+csv_dir = "results"
+fig_dir = "figures"
+if sub_dir:
+    csv_dir = os.path.join(csv_dir, sub_dir)
+    fig_dir = os.path.join(fig_dir, sub_dir)
+if not os.path.exists(fig_dir):
+    os.makedirs(fig_dir)
+
+# fig_save_path = os.path.join(
+#     fig_dir,
+#     f"{model}-{dataset}-{distribution}-{capacity}-{num_clients}.pdf",
 # )
+# fig_save_path = os.path.join(fig_dir, "fedecover-ablation-10clients.pdf")
+# fig_save_path = os.path.join(fig_dir, "fd-ablation-10clients.pdf")
+# fig_save_path = os.path.join(fig_dir, "fedrolex-ablation-10clients.pdf")
+# fig_save_path = os.path.join(fig_dir, "heterofl-ablation-10clients.pdf")
+# fig_save_path = os.path.join(fig_dir, "fedavg-ablation-10clients.pdf")
+# fig_save_path = os.path.join(fig_dir, "fedecover-ablation-100clients.pdf")
+# fig_save_path = os.path.join(fig_dir, "fd-ablation-100clients.pdf")
+# fig_save_path = os.path.join(fig_dir, "fedrolex-ablation-100clients.pdf")
+# fig_save_path = os.path.join(fig_dir, "heterofl-ablation-100clients.pdf")
+fig_save_path = os.path.join(fig_dir, "fedavg-ablation-100clients.pdf")
+# fig_save_path = os.path.join(fig_dir, "femnist-epochs3-num10.pdf")
+# fig_save_path = os.path.join(fig_dir, "femnist-epochs3-num10.svg")
+# fig_save_path = os.path.join(fig_dir, "femnist-epochs5-num10-gamma0.9-Tds100-Tdi5.pdf")
+# fig_save_path = os.path.join(fig_dir, "gamma0.95-Tds100-Tdi10.svg")
+# fig_save_path = os.path.join(fig_dir, "no-gsd.png")
+# fig_save_path = os.path.join(fig_dir, "fedecover-iid.pdf")
+# fig_save_path = os.path.join(fig_dir, "fd-iid.pdf")
+# fig_save_path = os.path.join(fig_dir, "fedrolex-iid.pdf")
+# fig_save_path = os.path.join(fig_dir, "heterofl-iid.pdf")
 
 plt.figure()
 plt.grid(True)
@@ -47,11 +89,20 @@ reach_rounds = {}
 for i, method in enumerate(methods):
     # Read the CSV file
     try:
-        # file_path = f"results/{method}_{model}_{dataset}_{distribution}_{capacity}_{num_clients}.csv"
-        file_path = f"results/20250215/{method}-femnist-cnn.csv"
-        df = pd.read_csv(file_path)
+        csv_path = os.path.join(
+            csv_dir,
+            f"{method}-{model}-{dataset}-{distribution}-{capacity}-{num_clients}.csv",
+        )
+        # csv_path = os.path.join(csv_dir, f"{method}-femnist-epochs3-num10.csv")
+        # csv_path = os.path.join(csv_dir, f"{method}-no-gsd.csv")
+        # csv_path = os.path.join(csv_dir, f"{method}-gamma0.95-Tds100-Tdi10.csv")
+        # csv_path = os.path.join(
+        #     csv_dir, f"{method}-femnist-epochs5-num10-gamma0.9-Tds100-Tdi5.csv"
+        # )
+        # csv_path = os.path.join(csv_dir, f"{method}-iid.csv")
+        df = pd.read_csv(csv_path)
     except FileNotFoundError:
-        print(f"File {file_path} not found.")
+        print(f'Warning: file "{csv_path}" not found.')
         continue
 
     # Extract the Round and Aggregated Test Acc columns
@@ -61,7 +112,11 @@ for i, method in enumerate(methods):
     # Plot the accuracy curve for the method
     label = method_labels.get(method, method)
     color = method_colors.get(method, "black")
-    plt.plot(rounds, acc, label=f"{label}", color=color)
+    if len(methods) == 2:
+        linewidth = 1 if color == "black" else 2
+    else:
+        linewidth = None
+    plt.plot(rounds, acc, label=f"{label}", color=color, linewidth=linewidth)
 
     # Calculate mean and standard deviation after avg_line_start_round
     acc_after_avg_line_start_round = acc[rounds > avg_line_start_round]
@@ -90,19 +145,12 @@ for method in methods:
     else:
         print(f"{label} never reaches FedAvg mean accuracy")
 
-plt.legend()
-plt.xlabel("Communication Round", fontsize=14)
-plt.ylabel("Top-1 Accuracy (%)", fontsize=14)
+plt.legend(fontsize=16, loc="lower right")
+plt.xlabel("Communication Round", fontsize=20)
+plt.ylabel("Top-1 Accuracy (%)", fontsize=20)
+plt.tick_params(axis="both", which="major", labelsize=16)  # Increase tick size
+# plt.ylim(40, 80)
 
-plt.tick_params(axis="both", which="major", labelsize=12)  # Increase tick size
-plt.subplots_adjust(left=0.1, right=0.95, top=0.95)
-
-figure_dir = "figures"
-if not os.path.exists(figure_dir):
-    os.makedirs(figure_dir)
-
-# fig_save_path = f"figures/{model}_{dataset}_{distribution}_{capacity}_{num_clients}_{total_rounds}rounds.png"
-fig_save_path = "figures/20250215/femnsit-cnn.png"
-plt.savefig(fig_save_path)
+plt.savefig(fig_save_path, bbox_inches="tight")
 print(f"Figure saved at {fig_save_path}")
 print("-" * 50)

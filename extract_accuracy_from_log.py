@@ -1,4 +1,5 @@
 import csv
+import os
 import re
 import sys
 
@@ -10,11 +11,53 @@ method = sys.argv[1]
 model = "cnn"
 dataset = "cifar100"
 distribution = "alpha0.5"
-capacity = "capacity0"
-num_clients = "100clients"
+capacity = "capacity2"
+num_clients = "10clients"
 
-# log_file_path = f"logs/{method}-{model}-{dataset}-{distribution}-{capacity}-{num_clients}.log"
-log_file_path = f"logs/20250215/{method}-femnist-cnn.log"
+# sub_dir = "param-sensitivity/Tds100-Tdi10"
+# sub_dir = "20250217"
+# sub_dir = "iid-gsd"
+# sub_dir = "femnist20250219"
+sub_dir = "ablation"
+
+log_dir_root = "logs"
+if sub_dir:
+    log_dir = os.path.join(log_dir_root, sub_dir)
+else:
+    log_dir = log_dir_root
+if not os.path.exists(log_dir):
+    os.makedirs(log_dir)
+
+csv_dir_root = "results"
+if sub_dir:
+    csv_dir = os.path.join(csv_dir_root, sub_dir)
+else:
+    csv_dir = csv_dir_root
+if not os.path.exists(csv_dir):
+    os.makedirs(csv_dir)
+
+log_file_path = os.path.join(
+    log_dir,
+    f"{method}-{model}-{dataset}-{distribution}-{capacity}-{num_clients}.log",
+)
+csv_file_path = os.path.join(
+    csv_dir,
+    f"{method}-{model}-{dataset}-{distribution}-{capacity}-{num_clients}.csv",
+)
+# log_file_path = os.path.join(log_dir, f"{method}-Tds100-Tdi10.log")
+# csv_file_path = os.path.join(csv_dir, f"{method}-Tds100-Tdi10.csv")
+# log_file_path = os.path.join(log_dir, f"{method}-Tds200-Tdi10.log")
+# csv_file_path = os.path.join(csv_dir, f"{method}-Tds200-Tdi10.csv")
+# log_file_path = os.path.join(log_dir, f"{method}-femnist-epochs5-num10.log")
+# csv_file_path = os.path.join(csv_dir, f"{method}-femnist-epochs5-num10.csv")
+# log_file_path = os.path.join(
+#     log_dir, f"{method}-femnist-epochs5-num10-gamma0.9-Tds100-Tdi5.log"
+# )
+# csv_file_path = os.path.join(
+#     csv_dir, f"{method}-femnist-epochs5-num10-gamma0.9-Tds100-Tdi5.csv"
+# )
+# log_file_path = os.path.join(log_dir, f"{method}-iid-no-gsd.log")
+# csv_file_path = os.path.join(csv_dir, f"{method}-iid-no-gsd.csv")
 
 try:
     with open(log_file_path, "r") as file:
@@ -41,9 +84,6 @@ data = [
 ]
 
 # Write the data to a CSV file
-# csv_file_path = f"results/{method}_{model}_{dataset}_{distribution}_{capacity}_{num_clients}.csv"
-csv_file_path = f"results/20250215/{method}-femnist-cnn.csv"
-
 try:
     with open(csv_file_path, "w", newline="") as csvfile:
         fieldnames = [
@@ -55,6 +95,6 @@ try:
         writer.writeheader()
         writer.writerows(data)
 except IOError:
-    print(f"Could not write to {csv_file_path}")
+    print(f"Error: could not write to {csv_file_path}")
 else:
-    print(f"Data has been written to {csv_file_path}")
+    print(f"Success: data has been written to {csv_file_path}")
