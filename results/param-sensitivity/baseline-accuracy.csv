@@ -1,0 +1,6 @@
+Method,Accuracy
+fedavg,24.91
+heterofl,15.31
+fedrolex,19.05
+fd,31.79
+fedecover,33.57
