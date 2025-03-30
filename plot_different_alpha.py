@@ -38,9 +38,9 @@ if not os.path.exists(fig_dir):
 # accuracy_df = pd.read_csv("alpha_effects_accuracy_10clients.csv")
 # speedup_df = pd.read_csv("alpha_effects_speedup_10clients.csv")
 accuracy_df = pd.read_csv(
-    os.path.join(csv_dir, "different_alpha_accuracy_10clients.csv")
+    os.path.join(csv_dir, "different_alpha_accuracy_100clients.csv")
 )
-speedup_df = pd.read_csv(os.path.join(csv_dir, "different_alpha_speedup_10clients.csv"))
+speedup_df = pd.read_csv(os.path.join(csv_dir, "different_alpha_speedup_100clients.csv"))
 
 methods = accuracy_df["Method"].tolist()
 alphas = accuracy_df.columns[1:].astype(float).tolist()
@@ -102,8 +102,9 @@ ax2.tick_params(axis="y")
 ax2.legend(loc="upper center", bbox_to_anchor=(0.5, -0.175), ncol=3, fontsize=12)
 ax2.set_xticks(index + bar_width * (len(methods) - 1) / 2)
 ax2.set_xticklabels(alphas, fontdict={"fontsize": 16})
+ax2.set_yticklabels(ax2.get_yticks(), fontdict={"fontsize": 16})
 
 # plt.subplots_adjust(
 #     top=0.95
 # )  # Adjust the spacing between the chart and the boundaries.
-plt.savefig(os.path.join(fig_dir, "different-alpha-10clients.pdf"), bbox_inches="tight")
+plt.savefig(os.path.join(fig_dir, "different-alpha-100clients.pdf"), bbox_inches="tight")
