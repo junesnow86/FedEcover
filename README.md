@@ -1,6 +1,6 @@
 # FedEcover
 
-Experimental implementation for paper **FedEcover: Fast and Stable Converging Model-Heterogeneous Federated Learning with Efficient-Coverage Submodel Extraction** using [Pytorch](https://pytorch.org/).
+[PyTorch](https://pytorch.org/) experimental implementation for paper **FedEcover: Fast and Stable Converging Model-Heterogeneous Federated Learning with Efficient-Coverage Submodel Extraction** (Accepted by ICDE 2025).
 
 ## Download Datasets
 
@@ -19,7 +19,7 @@ unzip tiny-imagenet-200.zip
 
 ### FEMNIST
 
-Generate data with [the official code of LEAF](https://github.com/TalwalkarLab/leaf/tree/master/data/femnist) and utilize `extract_femnist_data.py` to extract generated data.
+Generate data with [the official code of LEAF](https://github.com/TalwalkarLab/leaf/tree/master/data/femnist) and utilize `scripts/data_processing/extract_femnist_data.py` to extract generated data.
 
 ## Reproduce Experimental Results
 
@@ -39,9 +39,9 @@ python main.py --method fedecover --model resnet --dataset tiny-imagenet --distr
 
 For example, to plot the accuracy comparison figure showed in Fig. 7 (c), you need to run the above command five times by specifying different methods (`fedavg`, `heterofl`, `fedrolex`, `fd`, `fedecover`) each time. Then manually run the extracting script and the plotting script in the repository.
 
-We suggest the same naming way as above for log files because the naming among training, extracting results, and plotting figures codes are coupled in this implementation. We provide an example of extracting results in [extract_accuracy_from_log.py](extract_accuracy_from_log.py) and an example of plotting figures in [plot_accuracy_comparison.py](plot_accuracy_comparison.py). Running [plot_accuracy_comparison.py](plot_accuracy_comparison.py) will also print the mean accuracy and std statistics.
+We suggest the same naming way as above for log files because the naming among training, extracting results, and plotting figures codes are coupled in this implementation. We provide an example of extracting results with [extract_accuracy_from_log.py](scripts/visualization/extract_accuracy_from_log.py) and an example of plotting figures with [plot_accuracy_comparison.py](scripts/visualization/plot_accuracy_comparison.py). 
 
 We also provide:
 
-- [plot_different_alpha.py](plot_different_alpha.py) for reproducing Fig. 9. Note that it needs user to manually collect accuracy results from different methods with different alpha values first. We provide the results used for our paper in [results/different-alpha](results/different-alpha/) directory as examples.
-- [plot_param_sensitivity_gamma.py](plot_param_sensitivity_gamma.py) for reproducing the results in hyperparameter analysis using the results in [results/param-sensitivity](results/param-sensitivity).
+- [plot_different_alpha.py](scripts/visualization/plot_different_alpha.py) for reproducing Fig. 9. Note that it needs user to manually collect accuracy results from different methods with different alpha values first. We provide the results used for our paper in [results/different-alpha](results/different-alpha/) directory as examples.
+- [plot_param_sensitivity_gamma.py](scripts/visualization/plot_param_sensitivity_gamma.py) for reproducing the results in hyperparameter analysis using the results in [results/param-sensitivity](results/param-sensitivity).
